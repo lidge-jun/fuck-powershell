@@ -1,0 +1,17 @@
+{
+  "name": "fuck-powershell-docs",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "bun ../scripts/sync-cases.mjs",
+    "dev": "bun run sync && astro dev",
+    "build": "bun run sync && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.41.7",
+    "astro": "^7.2.2",
+    "sharp": "^0.35.3"
+  }
+}
