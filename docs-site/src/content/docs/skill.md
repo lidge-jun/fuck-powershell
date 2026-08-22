@@ -3,9 +3,16 @@ title: Install the skill
 description: An installable agent skill distilled from the archive.
 ---
 
-The repo ships `skills/powershell-landmines/` — a distilled skill for
-Codex/Claude-style agents: a 10-rule pre-flight checklist plus per-category
-reference files generated from the case archive.
+The repo ships `skills/powershell-landmines/` — a query-first skill for
+Codex/Claude-style agents backed by the landmine graph.
+
+## Getting started
+
+1. **Pull the corpus** — `git clone https://github.com/lidge-jun/fuck-powershell ~/.fuck-powershell`
+2. **Preflight before patching** — `bun ~/.fuck-powershell/scripts/fp.mjs preflight --runtime node --operation spawn --target npm`
+3. **Read the top cases** — `bun ~/.fuck-powershell/scripts/fp.mjs case spawn-npm-enoent-einval`
+4. **Patch with the constraints applied.**
+5. **Postflight the diff** — `fp search "<risky tokens>"`, `fp errors einval`.
 
 ## With skill-installer
 

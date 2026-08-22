@@ -101,6 +101,42 @@ header.header {
 .case-badges { gap: 0.4rem; margin: 0.2rem 0 1.6rem; }
 .case-badges .badge { font-size: 0.74rem; padding: 0.24rem 0.7rem; }
 
+/* ---------- cases index cards ---------- */
+.cc-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.1rem; margin-top: 1.4rem; align-items: start;
+}
+.cc-card {
+  background: var(--sl-color-gray-6, #161618);
+  border: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+  border-radius: var(--fp-radius);
+  padding: 1.1rem 1.2rem 0.5rem;
+}
+:root[data-theme="light"] .cc-card { background: #ffffff; }
+.cc-head { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+.cc-glyph {
+  width: 40px; height: 40px; border-radius: 22%; flex: none;
+  display: grid; place-items: center;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22);
+}
+.cc-glyph svg { width: 22px; height: 22px; }
+.cc-title { display: grid; line-height: 1.3; }
+.cc-title strong { font-size: 1rem; }
+.cc-title span { font-size: 0.82rem; color: var(--sl-color-gray-3); }
+.cc-count {
+  margin-left: auto; font-size: 0.78rem; color: var(--sl-color-gray-3);
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  border-radius: 9999px; padding: 0.15rem 0.6rem;
+}
+.cc-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.55rem 0.15rem; font-size: 0.9rem;
+  color: var(--sl-color-text); text-decoration: none;
+  border-top: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+}
+.cc-row:hover span:first-child { color: var(--sl-color-text-accent); }
+.cc-chev { color: var(--sl-color-gray-4); }
+
 /* ---------- case badges (emitted by scripts/sync-cases.mjs) ---------- */
 .case-badges {
   display: flex; flex-wrap: wrap; gap: 0.45rem;
