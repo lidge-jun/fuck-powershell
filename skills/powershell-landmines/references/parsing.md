@@ -1,4 +1,83 @@
 
+# your allowlist matches on a basename computed with split slash, so every Windows client silently bypasses it
+
+## Symptom
+
+A filter works. You tested it, the tests pass, and it does nothing for a subset
+of your users — the ones on Windows. Blocklists do not block, allowlists do not
+allow, caches never hit, and routing sends things to the wrong place.
+
+There is no error, because a basename computation cannot fail. It just returns
+the wrong string, and the comparison that follows honestly reports no match.
+
+The version that cost real money: a server elided oversized skill bundles by
+matching the directory basename against a blocklist. Windows clients sent
+`C:\Users\me\.claude\skills\claude-api`, the basename came out as the whole
+path, nothing matched, and 790,000-character bundles went to a metered model.
+
+## Repro
+
+```js
+const dir = "C:\\Users\\me\\.claude\\skills\\claude-api";
+
+dir.split("/").filter(Boolean).pop();
+// "C:\Users\me\.claude\skills\claude-api"   <- the entire path
+
+blocked.includes(that);   // false, forever
+```
+
+The POSIX input works, which is why this ships:
+
+```js
+"/home/me/.claude/skills/claude-api".split("/").pop();   // "claude-api"
+```
+
+## Cause
+
+`split("/")` on a backslash-separated path finds no separators, so it returns a
+one-element array and `.pop()` hands back the input unchanged. Every subsequent
+string operation is then comparing a full path against a bare name.
+
+This is specifically a hazard for paths that arrive as DATA rather than being
+built locally: a request body, a config value, a manifest entry, a log line. Code
+that builds paths with `path.join` gets the host's separator and stays consistent
+with itself; code that receives a path from a client gets the CLIENT's separator,
+and on a POSIX server that is the one separator your local tests never produce.
+
+`path.basename` does not save you here either. The POSIX build of it — which is
+what `node:path` gives you on a Linux server — treats backslash as an ordinary
+filename character, so it returns the same wrong answer as the manual split.
+
+Three variants to expect in the same input: backslash (`C:\a\b`), mixed
+(`C:/a\b`), and UNC (`\\\\server\\share\\b`).
+
+## Workaround
+
+Normalize separators before you split, at the point the untrusted path enters:
+
+```js
+const base = dir.replace(/\\/g, "/").split("/").filter(Boolean).pop()?.toLowerCase() ?? "";
+```
+
+If both separators are possible and you want the platform-correct answer, use
+`path.win32.basename` explicitly for client-supplied Windows paths rather than
+the ambient `path.basename`, whose behavior depends on where your server happens
+to run.
+
+And when a security or cost decision depends on the result, add a test with a
+backslash path. This class of bug is invisible to every fixture written by
+someone on a Mac.
+
+---
+
+`zip-entry-drive-letter-escapes` is the same blindness pointed at absoluteness
+rather than at the basename: POSIX path logic applied to a Windows path that a
+Windows API will happily honor.
+
+
+---
+
+
 # ConvertTo-Json defaults to -Depth 2 and replaces your data with the string System.Collections.Hashtable
 
 ## Symptom
@@ -196,6 +275,95 @@ quantity, price or threshold that is wrong by orders of magnitude.
 `$PSVersionTable`: `5.1.26100.7705`, Edition `Desktop`, Windows 11, culture
 `en-US`. The behaviour is separator-driven, not host-locale-driven — an en-US
 host mangles comma-decimal data exactly as shown above.
+
+
+---
+
+
+# parsing schtasks or sc output works until the machine is not English, because Windows tools translate their column headings and status words
+
+## Symptom
+
+A status check that reads a built-in Windows tool's output reports the wrong
+thing on a machine whose system language is not English. The service is
+installed and your code says it is not; the task is running and your code decides
+it is stale and reinstalls it — writing the same definition that failed the same
+comparison, so the loop never terminates.
+
+Nothing throws. Text was searched for a substring, the substring was not there,
+and the absence was read as a fact about the system.
+
+## Repro
+
+On an English machine:
+
+```
+C:\> schtasks /Query /TN MyTask /FO LIST
+TaskName:      \MyTask
+Status:        Ready
+```
+
+On a Korean one, same task, same command:
+
+```
+C:\> schtasks /Query /TN MyTask /FO LIST
+작업 이름:     \MyTask
+상태:          준비
+```
+
+So the check inverts:
+
+```js
+out.includes("Ready")        // true on en-US, false everywhere else
+out.includes("Running")      // same
+```
+
+`sc query`, `net`, `tasklist`, and `icacls` all localize the same way, and their
+error text localizes too — so error CLASSIFICATION by message matching fails in
+the same places.
+
+## Cause
+
+Windows built-in command-line tools are localized: the headings, the state words,
+and the error messages are all translated to the system UI language. Only the
+structure and the exit code are stable.
+
+That makes any `includes("Ready")` a test of the machine's language rather than
+of its state, and English is the one language where the bug is invisible.
+
+There is a second, subtler version of this that survives translation: encoding
+round-trips. Task Scheduler exports task XML with its own entity encoding, so a
+needle you escaped yourself (`&quot;`) never matches the literal `"` the export
+contains. Same failure shape — two spellings of one value compared as strings —
+and it is permanent rather than locale-dependent.
+
+## Workaround
+
+Ask for structured output and parse the structure, not the prose:
+
+```
+schtasks /Query /TN MyTask /XML        # XML, element names are not translated
+sc.exe query MyService                 # exit code 1060 = does not exist
+Get-ScheduledTask -TaskName MyTask     # PowerShell objects, typed .State enum
+```
+
+Prefer, in order: an exit code, a typed object from a PowerShell cmdlet, XML or
+JSON element names, and only then text. When you must compare XML values, decode
+entities on both sides exactly once before comparing — and decode once, not
+repeatedly, so `&amp;quot;` cannot impersonate a quote.
+
+For liveness, do not parse a tool's opinion at all: check the thing itself. An
+identity-verified probe of your own process answers the real question and is
+immune to every translation.
+
+Keep localized text out of user-facing output too. Echoing a decoded-wrong,
+locale-specific line back to a user turns one bug into two.
+
+---
+
+`env-domain-principal` is the identity version of this mistake: trusting an
+environment-derived string instead of resolving the real principal. This is the
+output version — trusting a tool's prose instead of its structure.
 
 
 ---

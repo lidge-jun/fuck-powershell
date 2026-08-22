@@ -67,7 +67,7 @@ Cases: [windowstyle-hidden-vs-windowshide](/fuck-powershell/cases/args-quoting/w
 
 Windows tools end lines with CRLF, so splitting text on LF alone leaves a trailing CR on every line; exact comparisons and anchored patterns then fail against a character that is invisible in editors, diffs, and terminal output.
 
-Cases: [split-n-leaves-cr](/fuck-powershell/cases/encoding/split-n-leaves-cr/)
+Cases: [split-n-leaves-cr](/fuck-powershell/cases/encoding/split-n-leaves-cr/) · [lf-pure-transform-mixes-eol](/fuck-powershell/cases/encoding/lf-pure-transform-mixes-eol/)
 
 ## culture parsing
 
@@ -79,7 +79,7 @@ Cases: [culture-comma-decimal-cast](/fuck-powershell/cases/parsing/culture-comma
 
 5.1 cmdlets default to UTF-16LE or ANSI when writing; 7 defaults to BOM-less UTF-8 — same code, different bytes.
 
-Cases: [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [utf8-bom-still-breaks-grep](/fuck-powershell/cases/encoding/utf8-bom-still-breaks-grep/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
+Cases: [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [redirected-ps-output-mojibake](/fuck-powershell/cases/encoding/redirected-ps-output-mojibake/) · [utf8-bom-still-breaks-grep](/fuck-powershell/cases/encoding/utf8-bom-still-breaks-grep/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
 
 ## default shell selection
 
@@ -153,11 +153,17 @@ ConvertTo-Json defaults to -Depth 2, replacing deeper data with type names; 5.1/
 
 Cases: [convertto-json-depth-two](/fuck-powershell/cases/parsing/convertto-json-depth-two/)
 
+## localized tool output
+
+Windows built-in command-line tools translate their column headings, status words, and error messages to the system UI language, so only structure and exit codes are stable; matching English substrings tests the machine's language rather than its state.
+
+Cases: [localized-cli-output-parsing](/fuck-powershell/cases/parsing/localized-cli-output-parsing/)
+
 ## mandatory file locking
 
 Windows enforces file locks at the OS level: a handle opened without FILE_SHARE_DELETE blocks deletes and renames until it closes, where POSIX unlink only removes a name and lets the data outlive its last reference.
 
-Cases: [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+Cases: [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
 
 ## native argv rebuild
 
@@ -241,5 +247,5 @@ Cases: [dollar-backslash-vars](/fuck-powershell/cases/args-quoting/dollar-backsl
 
 Win32 trims trailing dots/spaces from paths at the API boundary; different runtimes normalize differently, so existence checks disagree.
 
-Cases: [esm-is-main-file-url](/fuck-powershell/cases/env-paths/esm-is-main-file-url/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [zip-entry-drive-letter-escapes](/fuck-powershell/cases/parsing/zip-entry-drive-letter-escapes/)
+Cases: [esm-is-main-file-url](/fuck-powershell/cases/env-paths/esm-is-main-file-url/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [basename-split-slash-only](/fuck-powershell/cases/parsing/basename-split-slash-only/) · [zip-entry-drive-letter-escapes](/fuck-powershell/cases/parsing/zip-entry-drive-letter-escapes/)
 

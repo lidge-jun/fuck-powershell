@@ -127,6 +127,106 @@ BOM helps PowerShell 5.1 and actively breaks a batch file.
 ---
 
 
+# editing one section of a CRLF file with LF-pure string code leaves a mixed-EOL file that every later diff and hash disagrees about
+
+## Symptom
+
+Your tool edits a config file — injects a section, removes a block, rewrites a
+key — and the result looks perfect. Then, days later:
+
+- a diff shows the whole file changed when you touched four lines
+- a content hash you store for change detection never matches again
+- an idempotent operation is not idempotent; running it twice produces a third
+  state
+- a block your remove-function knows how to match no longer matches, so removal
+  reports success and removes nothing
+
+The file is now half CRLF and half LF, and nothing in your editor shows it.
+
+## Repro
+
+```js
+// a config that was written on Windows
+const original = "a=1\r\nb=2\r\n";
+
+// an ordinary LF-pure transform: split, insert, join
+const lines = original.split("\n");
+lines.splice(1, 0, "injected=true");
+const result = lines.join("\n");
+
+JSON.stringify(result);
+// "a=1\r\ninjected=true\nb=2\r\n"
+//        ^^^^ original CRLF   ^^ your new LF
+```
+
+Two lines now end differently from their neighbours. Open it in any editor and it
+looks identical to what you intended.
+
+## Cause
+
+Nearly all line-oriented string code is LF-pure: it splits on `"\n"`, joins with
+`"\n"`, and builds new lines with `"\n"` in template literals. That is correct
+for the lines it CREATES and wrong for the file it creates them in, because the
+existing lines kept their CRs — `split("\n")` leaves them attached to the ends of
+the elements rather than consuming them.
+
+So the transform silently mixes terminators, and each downstream consumer breaks
+differently:
+
+- **git** with `core.autocrlf` normalizes on the way in, so the file that looked
+  fine locally arrives changed everywhere
+- **content hashes** cover bytes, and the bytes moved
+- **your own remove-function**, if its pattern is LF-only, will not match the
+  block it just wrote in a CRLF context — that is how a removal reports success
+  while the block stays in the file and keeps taking effect
+
+The last one is the expensive shape, because the tool tells you the state is one
+thing and the file says another.
+
+## Workaround
+
+Normalize at the boundary and restore on write, rather than teaching every
+transform about CRLF:
+
+```js
+function dominantEol(text) {
+  const crlf = (text.match(/\r\n/g) ?? []).length;
+  if (crlf === 0) return "\n";
+  const bareLf = (text.match(/\n/g) ?? []).length - crlf;
+  return crlf >= bareLf ? "\r\n" : "\n";
+}
+
+function applyEol(text, eol) {
+  const lf = text.replace(/\r\n/g, "\n");
+  return eol === "\n" ? lf : lf.replace(/\n/g, "\r\n");
+}
+
+const raw = readFileSync(path, "utf8");
+const eol = dominantEol(raw);                 // measure BEFORE touching anything
+let content = applyEol(raw, "\n");            // LF-pure interior
+content = yourExistingTransforms(content);    // unchanged
+writeFileSync(path, applyEol(content, eol));  // restore on the way out
+```
+
+Two details worth keeping. Measure the dominant ending from the ORIGINAL bytes,
+not after any transform, or a file that was already mixed drifts further each
+run. And if you hash for change detection, hash the FINAL bytes you wrote — a
+hash of the LF interior will never match the file on disk.
+
+Any pattern that matches a line you wrote earlier needs `\r?` for the same
+reason: `/^# BEGIN block$/m` does not match `# BEGIN block\r`.
+
+---
+
+`split-n-leaves-cr` is the read side of this mechanism: a CR survives into a
+comparison and a match fails. This is the write side — the CRs you did not
+consume stay in the file and the ones you add are missing, so the artifact itself
+becomes inconsistent.
+
+
+---
+
+
 # Out-File writes UTF-16; your POSIX tools read garbage
 
 ## Symptom
@@ -159,6 +259,95 @@ default to BOM-less UTF-8, so the same script writes different bytes per runtime
 - On 5.1, when you need BOM-less UTF-8, drop to .NET:
   `[System.IO.File]::WriteAllText($path, $text)`.
 - Lint generated artifacts for BOMs in CI.
+
+
+---
+
+
+# capturing PowerShell output from another program mangles every non-ASCII character, because redirected output is encoded in the console codepage
+
+## Symptom
+
+You shell out to `powershell.exe -Command` from Node, Python, or Go to ask
+Windows something it only tells PowerShell — a profile path, an account name, a
+registry value. The answer comes back correct for English users and corrupted for
+everyone else:
+
+```
+expected: C:\Users\정준\AppData\Local
+received: C:\Users\ъ á\AppData\Local
+```
+
+Run the same command interactively and it prints perfectly. The corruption
+appears only when the output is captured, which means it survives every manual
+test and fails on the user's machine.
+
+## Repro
+
+```js
+const { execFileSync } = require("node:child_process");
+const out = execFileSync("powershell.exe",
+  ["-NoProfile", "-Command", "[Environment]::GetFolderPath('LocalApplicationData')"],
+  { encoding: "utf8" });
+// non-ASCII characters in the path arrive as replacement junk
+```
+
+Decoding as UTF-8 is not the bug and switching to `latin1` is not the fix: the
+bytes are in whatever the active codepage is — 949, 932, 1252 — which you do not
+know and cannot assume.
+
+## Cause
+
+Windows PowerShell 5.1 encodes redirected output using `[Console]::OutputEncoding`,
+which defaults to the console's active codepage rather than to UTF-8. A legacy
+codepage cannot represent most non-ASCII characters, so they are replaced during
+encoding — before your process ever sees a byte. The information is gone at the
+source; no decoding choice on your side can recover it.
+
+It is invisible interactively because the console renders with the same codepage
+it encoded with, so the round trip looks lossless on screen.
+
+PowerShell 7 defaults to UTF-8 and mostly avoids this, but you do not get to
+choose which one is on the machine: `powershell.exe` is 5.1 and is the one
+guaranteed to exist.
+
+## Workaround
+
+Do not let the text cross the boundary as text. Have PowerShell encode the value
+into ASCII on its side and decode it on yours:
+
+```js
+const expr = "[Environment]::GetFolderPath('LocalApplicationData')";
+const script = [
+  "$ErrorActionPreference = 'Stop'",
+  `$v = [string](${expr})`,
+  "$b = [System.Text.Encoding]::Unicode.GetBytes($v)",
+  "[Console]::Out.Write([Convert]::ToBase64String($b))",
+].join("; ");
+
+const b64 = execFileSync("powershell.exe",
+  ["-NoLogo", "-NoProfile", "-NonInteractive", "-Command", script],
+  { encoding: "utf8" });
+
+const value = Buffer.from(b64.trim(), "base64").toString("utf16le");
+```
+
+Base64 is pure ASCII, so every codepage transmits it unchanged, and UTF-16LE is
+what Windows strings already are — no lossy step anywhere in the chain. Validate
+the base64 shape before decoding, so a PowerShell error message on stdout fails
+loudly instead of decoding into garbage.
+
+Setting `[Console]::OutputEncoding = [Text.Encoding]::UTF8` inside the script is
+the lighter fix and works in many cases, but it mutates console state your caller
+may share, and on 5.1 it interacts badly with a host that has already written
+output.
+
+---
+
+The corpus's other encoding cases are about files you WRITE — BOMs, UTF-16
+defaults, CP949 script files. This one is about a value in flight: the file
+system is fine, the string is fine, and the pipe between two processes is where
+it dies.
 
 
 ---

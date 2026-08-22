@@ -2,12 +2,12 @@
 
 **A local failure-intelligence engine for coding agents on Windows.**
 
-54 reproducible cases of Windows shell & process landmines — alias traps, spawn
+70 reproducible cases of Windows shell & process landmines — alias traps, spawn
 semantics, PATH/PATHEXT resolution, encodings, exit codes, cmd.exe re-parsing,
-PowerShell 5.1 legacy behavior — bound into a typed ontology (211 nodes,
-428 edges) that an agent can QUERY BEFORE PATCHING instead of debugging after
-the explosion. PowerShell is the brand; the corpus is the whole Windows
-interop minefield.
+mandatory file locking, CRLF residue, localized tool output, PowerShell 5.1
+legacy behavior — bound into a typed ontology (251 nodes, 526 edges) that an
+agent can QUERY BEFORE PATCHING instead of debugging after the explosion.
+PowerShell is the brand; the corpus is the whole Windows interop minefield.
 
 The name is the mood. The content is serious: every case is a real failure with
 a **Symptom / Repro / Cause / Workaround** writeup and a citation to a real
@@ -30,7 +30,7 @@ constraints:
 
 | layer | what it is | where |
 |---|---|---|
-| Cases | 54 markdown files, canonical source of truth | [cases/](cases/) |
+| Cases | 70 markdown files, canonical source of truth | [cases/](cases/) |
 | Ontology | typed graph generated from case frontmatter, V1-V11 validated | [ontology/](ontology/) + `scripts/build-graph.mjs` |
 | fp engine | graph-walking lookup CLI: preflight / search / errors / case | `scripts/fp.mjs` |
 | Agent skill | query-first retrieval policy + fallback rules | [skills/powershell-landmines/](skills/powershell-landmines/) |

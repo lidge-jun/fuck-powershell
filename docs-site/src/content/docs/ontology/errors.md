@@ -21,7 +21,7 @@ Saw an error? Find the landmine.
 
 Node reports EBUSY when Windows refuses a rename or delete because another handle holds the file without FILE_SHARE_DELETE; the error names neither the holder nor the reason.
 
-[unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+[atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
 
 ## eftype
 
@@ -45,7 +45,7 @@ File or command not found — on Windows often a PATHEXT/extension resolution mi
 
 Operation not permitted — including WindowsApps appExecLink spawn denials.
 
-[windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+[windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
 
 ## exit-code-leak
 
@@ -75,7 +75,7 @@ Node's ESM loader rejects a specifier whose scheme is not file, data, or node; o
 
 Corrupted text output from encoding mismatches (UTF-16/BOM/ANSI vs UTF-8).
 
-[ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
+[ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [redirected-ps-output-mojibake](/fuck-powershell/cases/encoding/redirected-ps-output-mojibake/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
 
 ## nativecommanderror
 
