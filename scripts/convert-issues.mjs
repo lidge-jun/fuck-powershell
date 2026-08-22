@@ -47,7 +47,7 @@ for (const [n, [id, cat]] of Object.entries(MAP)) {
   if (!FAILS.includes(failure)) failure = "silent";
   const context = (meta.context ?? "script").toLowerCase().split(/[,\s]+/).filter(c => CTXS.includes(c));
   // title: strip the "category:" prefix from the issue title
-  const title = d.title.replace(/^[a-z-]+:\s*/i, "").replace(/"/g, "'");
+  const title = d.title.replace(/^[a-z-]+:\s*/i, "").replace(/"/g, "'").replace(/\\/g, "");
   // body: drop header line, normalize sections
   let rest = lines.slice(1).join("\n").trim();
   rest = rest.replace(/^## Workaround \(verified\)/m, "## Workaround");

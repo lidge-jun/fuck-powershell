@@ -1,6 +1,6 @@
 ---
 id: start-process-no-lastexitcode
-title: "Start-Process never sets \, so a failed process inherits the previous command's success"
+title: "Start-Process never sets LASTEXITCODE, so a failed process inherits the previous command's success"
 category: exit-codes
 versions: "both"
 failure: silent
@@ -11,7 +11,7 @@ refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/17
 ---
 
-# Start-Process never sets \, so a failed process inherits the previous command's success
+# Start-Process never sets LASTEXITCODE, so a failed process inherits the previous command's success
 
 ## Symptom
 
