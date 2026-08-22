@@ -15,7 +15,7 @@ Saw an error? Find the landmine.
 
 'X is not recognized as an internal or external command' — stale PATH snapshot or wrong-shell syntax.
 
-[actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [cmd-posix-env-prefix](/fuck-powershell/cases/ci-agents/cmd-posix-env-prefix/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/)
+[npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [cmd-posix-env-prefix](/fuck-powershell/cases/ci-agents/cmd-posix-env-prefix/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/)
 
 ## eftype
 
@@ -57,7 +57,7 @@ Downstream JSON parse failure after the shell shredded quoted arguments.
 
 Corrupted text output from encoding mismatches (UTF-16/BOM/ANSI vs UTF-8).
 
-[ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
+[ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
 
 ## nativecommanderror
 

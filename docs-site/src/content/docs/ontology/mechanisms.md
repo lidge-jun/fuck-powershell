@@ -43,7 +43,7 @@ Cases: [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent
 
 Any command line routed through cmd.exe is re-tokenized; metacharacters and newlines inside arguments become command syntax.
 
-Cases: [cmd-start-ampersand-splits](/fuck-powershell/cases/args-quoting/cmd-start-ampersand-splits/) · [cmd-shim-reparses-argv](/fuck-powershell/cases/args-quoting/cmd-shim-reparses-argv/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
+Cases: [cmd-start-ampersand-splits](/fuck-powershell/cases/args-quoting/cmd-start-ampersand-splits/) · [cmd-shim-reparses-argv](/fuck-powershell/cases/args-quoting/cmd-shim-reparses-argv/) · [shell-true-fallback-injects](/fuck-powershell/cases/args-quoting/shell-true-fallback-injects/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
 
 ## collection unrolling
 
@@ -79,13 +79,13 @@ Cases: [culture-comma-decimal-cast](/fuck-powershell/cases/parsing/culture-comma
 
 5.1 cmdlets default to UTF-16LE or ANSI when writing; 7 defaults to BOM-less UTF-8 — same code, different bytes.
 
-Cases: [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [utf8-bom-still-breaks-grep](/fuck-powershell/cases/encoding/utf8-bom-still-breaks-grep/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
+Cases: [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [utf8-bom-still-breaks-grep](/fuck-powershell/cases/encoding/utf8-bom-still-breaks-grep/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
 
 ## default shell selection
 
 CI runners pick a default shell per OS (pwsh on windows-latest); unmarked run: steps inherit it.
 
-Cases: [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/)
+Cases: [npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/)
 
 ## env casing
 
@@ -97,7 +97,7 @@ Cases: [env-path-vs-PATH-casing](/fuck-powershell/cases/env-paths/env-path-vs-PA
 
 USERDOMAIN/USERNAME env vars are writable, unreliable identity sources; workgroup machines put the computer name in USERDOMAIN.
 
-Cases: [env-domain-principal](/fuck-powershell/cases/env-paths/env-domain-principal/)
+Cases: [wslenv-shared-with-host](/fuck-powershell/cases/env-paths/wslenv-shared-with-host/) · [env-domain-principal](/fuck-powershell/cases/env-paths/env-domain-principal/)
 
 ## errorrecord format
 
@@ -115,7 +115,7 @@ Cases: [execution-policy-file-block](/fuck-powershell/cases/ci-agents/execution-
 
 Exit codes cross process/host boundaries by convention, not guarantee: hosts, wrappers, and CI steps each apply their own rule.
 
-Cases: [pwsh-leaks-lastexitcode](/fuck-powershell/cases/exit-codes/pwsh-leaks-lastexitcode/) · [explorer-exits-one](/fuck-powershell/cases/exit-codes/explorer-exits-one/) · [start-process-no-lastexitcode](/fuck-powershell/cases/exit-codes/start-process-no-lastexitcode/) · [exit-code-vs-dollar-q](/fuck-powershell/cases/exit-codes/exit-code-vs-dollar-q/)
+Cases: [pwsh-leaks-lastexitcode](/fuck-powershell/cases/exit-codes/pwsh-leaks-lastexitcode/) · [explorer-exits-one](/fuck-powershell/cases/exit-codes/explorer-exits-one/) · [start-process-no-lastexitcode](/fuck-powershell/cases/exit-codes/start-process-no-lastexitcode/) · [exit-code-vs-dollar-q](/fuck-powershell/cases/exit-codes/exit-code-vs-dollar-q/) · [startup-artifact-is-not-a-process](/fuck-powershell/cases/exit-codes/startup-artifact-is-not-a-process/)
 
 ## extension dispatch
 
