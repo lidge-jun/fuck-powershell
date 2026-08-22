@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/18
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7]
+  invokes: [command-numeric-cast]
+  caused_by: [mechanism-culture-parsing]
+  mitigated_by: [workaround-numberstyles-float]
 ---
 
 # casting a comma-decimal string gives a number 100x too large, with no error

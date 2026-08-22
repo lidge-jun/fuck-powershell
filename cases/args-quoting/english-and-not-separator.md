@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/commit/a00f1a4618c683e173af1e17ee06e4a25e0434a1
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-remove-item]
+  manifests_as: [error-parameterbinding]
+  caused_by: [mechanism-prose-as-argument]
+  mitigated_by: [workaround-semicolon-separator]
 ---
 
 # The English word 'and' is not a statement separator

@@ -9,6 +9,10 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/commit/1b626e4f8120d47ba40ded812ca300acb9ac1a94
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows, env-win32-api]
+  caused_by: [mechanism-pathext-resolution]
+  mitigated_by: [workaround-shim-all-siblings, workaround-get-command]
 ---
 
 # A sibling .exe silently beats your .cmd shim — PATHEXT rank order

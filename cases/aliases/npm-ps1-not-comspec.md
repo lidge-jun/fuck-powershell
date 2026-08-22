@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/380e26346e1b90824937ee409c4ddf40c1d57102
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, shell-cmd, env-windows]
+  invokes: [command-npm, command-get-command]
+  manifests_as: [error-pssecurityexception]
+  caused_by: [mechanism-pathext-resolution, mechanism-execution-policy-gate]
+  mitigated_by: [workaround-get-command]
 ---
 
 # npm's .ps1 shim wins the PATH race and nothing can run it

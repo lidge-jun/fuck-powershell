@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/commit/79f923dc5d3751054a0ca59838289409b2520622
+ontology:
+  affects: [runtime-node, shell-cmd, env-windows, env-win32-api]
+  invokes: [command-npm]
+  caused_by: [mechanism-pathext-resolution]
+  mitigated_by: [workaround-skip-relative-path-entries, workaround-absolute-spawn]
 ---
 
 # A '.' entry on PATH lets the repo you just opened execute its own npm

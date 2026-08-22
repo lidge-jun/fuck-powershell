@@ -9,6 +9,10 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/commit/371aa579d61c5772a26c55ecfb907ca4541a5320
+ontology:
+  affects: [runtime-node, env-windows, env-win32-api]
+  caused_by: [mechanism-env-casing]
+  mitigated_by: [workaround-env-remerge]
 ---
 
 # Spreading {...env, PATH} leaves the old Path sitting next to it

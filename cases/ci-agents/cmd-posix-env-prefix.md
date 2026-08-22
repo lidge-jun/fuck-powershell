@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/0c20c014e4a9940f12a36d9e624e325e4d2fc2a8
+ontology:
+  affects: [runtime-node, shell-cmd, env-windows]
+  invokes: [command-npm]
+  manifests_as: [error-command-not-recognized]
+  caused_by: [mechanism-posix-inline-env]
+  mitigated_by: [workaround-node-env-wrapper]
 ---
 
 # VAR=value cmd is not cmd.exe syntax — npm scripts break on Windows

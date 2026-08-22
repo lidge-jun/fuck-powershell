@@ -9,6 +9,13 @@ source: third-party
 repro: verified
 refs:
   - https://github.com/parsaesmaili038/ticketing-v1/commit/d5a4d513e34d557f345b41d9e1b9fdd2806d4a04
+ontology:
+  affects: [shell-powershell-51, runtime-node, runtime-python, env-windows, env-actions-runner]
+  invokes: [command-out-file]
+  manifests_as: [error-mojibake]
+  caused_by: [mechanism-default-encoding]
+  mitigated_by: [workaround-set-content-utf8nobom, workaround-dotnet-writealltext]
+  unsafe_fix: [workaround-out-file-utf8]
 ---
 
 # Out-File writes UTF-16; your POSIX tools read garbage

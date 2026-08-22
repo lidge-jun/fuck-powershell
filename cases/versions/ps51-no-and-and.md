@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/commit/d44e5673529e25118f2dd4fef6f396b5612f140d
+ontology:
+  affects: [shell-powershell-51]
+  manifests_as: [error-parsererror]
+  caused_by: [mechanism-pipeline-chain-ops]
+  mitigated_by: [workaround-lastexitcode-gate]
 ---
 
 # PowerShell 5.1 has no && or || — agents loop on parser errors

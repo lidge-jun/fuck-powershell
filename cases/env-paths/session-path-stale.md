@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/ima2-gen/commit/1442bd1fa555ebda0db9b2a4a86f48ab504fd122
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-winget, command-node]
+  manifests_as: [error-command-not-recognized]
+  caused_by: [mechanism-registry-env-snapshot]
+  mitigated_by: [workaround-env-remerge, workaround-scope-read-path]
 ---
 
 # Installed a tool, still 'not found' — your session's PATH is a snapshot

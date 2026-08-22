@@ -10,6 +10,10 @@ repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/5
   - https://github.com/lidge-jun/cli-jaw/commit/80b3d4ab039b9fc9e6d7029734c7cdd573e335e8
+ontology:
+  affects: [runtime-node, env-windows, env-actions-runner]
+  caused_by: [mechanism-path-delimiter]
+  mitigated_by: [workaround-path-win32-delimiter]
 ---
 
 # node:path delimiter follows the HOST, so win32 PATH logic resolves nothing when tested from Linux

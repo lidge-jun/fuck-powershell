@@ -9,6 +9,13 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/3d198e2b80ddb13d02ce63b65e5c88a25b428009
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-match, command-set-strictmode]
+  manifests_as: [error-unset-variable]
+  caused_by: [mechanism-string-interpolation]
+  mitigated_by: [workaround-single-quote-regex]
+  unsafe_fix: [workaround-escape-more-quotes]
 ---
 
 # Double-quoted regex interpolates \$vars — and backslash won't save you

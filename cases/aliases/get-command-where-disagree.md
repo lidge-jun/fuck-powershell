@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/9
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, shell-cmd, env-windows, env-win32-api]
+  invokes: [command-get-command, command-where, command-npm]
+  manifests_as: [error-eftype, error-enoent]
+  caused_by: [mechanism-pathext-resolution, mechanism-cmd-reparse]
+  mitigated_by: [workaround-get-command, workaround-comspec-dispatch]
 ---
 
 # Get-Command and where.exe disagree about which npm exists, and both hand you an unrunnable path

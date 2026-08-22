@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/2
+ontology:
+  affects: [runtime-node, shell-cmd, env-windows, env-win32-api]
+  invokes: [command-node]
+  manifests_as: [error-eperm]
+  caused_by: [mechanism-appexeclink]
+  mitigated_by: [workaround-skip-windowsapps, workaround-comspec-dispatch]
 ---
 
 # a WindowsApps alias on PATH spawns EPERM while passing every readability and reparse-point probe

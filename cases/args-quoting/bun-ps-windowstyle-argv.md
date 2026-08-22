@@ -10,6 +10,11 @@ repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/commit/0a904776160ea2954fbad1276b112f2c06ddfbae
   - https://github.com/lidge-jun/opencodex/commit/393d72a779e92b3116b854d714916704756d8110
+ontology:
+  affects: [runtime-bun, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-powershell]
+  caused_by: [mechanism-bun-windowstyle-argv-reject]
+  mitigated_by: [workaround-create-no-window]
 ---
 
 # Bun rejects powershell.exe argv containing -WindowStyle Hidden

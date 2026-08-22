@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/0c20c014e4a9940f12a36d9e624e325e4d2fc2a8
+ontology:
+  affects: [runtime-node, env-windows]
+  invokes: [command-explorer]
+  manifests_as: [error-exit-code-leak]
+  caused_by: [mechanism-exit-code-propagation]
+  mitigated_by: [workaround-ignore-handoff-exit]
 ---
 
 # explorer.exe returns 1 on success — your spawn wrapper calls it failure

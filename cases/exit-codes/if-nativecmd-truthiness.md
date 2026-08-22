@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/11
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7]
+  invokes: [command-node]
+  caused_by: [mechanism-output-truthiness, mechanism-collection-unrolling]
+  mitigated_by: [workaround-lastexitcode-gate, workaround-array-force]
 ---
 
 # if (nativecmd) branches on whether it PRINTED, so a silent success is falsy and a noisy failure is truthy

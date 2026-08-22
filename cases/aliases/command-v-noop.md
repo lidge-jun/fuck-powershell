@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/ba1c157950b467719ad2d47ae9eda0c2514d67ad
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-command, command-get-command]
+  caused_by: [mechanism-absent-builtin-noop]
+  mitigated_by: [workaround-get-command, workaround-lastexitcode-gate]
 ---
 
 # command -v silently reports every tool as missing

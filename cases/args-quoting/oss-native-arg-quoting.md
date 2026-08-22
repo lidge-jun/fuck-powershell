@@ -11,6 +11,11 @@ refs:
   - https://github.com/PowerShell/PowerShell/pull/14692
   - https://github.com/lidge-jun/cli-jaw/commit/77153112420acaadd961defc6a2b9a170ee70d43
   - https://github.com/PowerShell/PowerShell/pull/15408
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-node]
+  caused_by: [mechanism-native-argv-rebuild]
+  mitigated_by: [workaround-ps-native-argument-passing, workaround-file-payload]
 ---
 
 # Embedded quotes and empty args vanish before native commands see them

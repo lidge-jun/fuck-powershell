@@ -2,3 +2,5 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+ontology/graph.json
+ontology/INDEX.md

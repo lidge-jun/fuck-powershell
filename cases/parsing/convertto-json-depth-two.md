@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/15
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7]
+  invokes: [command-convertto-json]
+  caused_by: [mechanism-json-depth-default]
+  mitigated_by: [workaround-explicit-json-depth]
 ---
 
 # ConvertTo-Json defaults to -Depth 2 and replaces your data with the string System.Collections.Hashtable

@@ -9,6 +9,13 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/ima2-gen/commit/1442bd1fa555ebda0db9b2a4a86f48ab504fd122
+ontology:
+  affects: [shell-powershell-51, env-windows]
+  invokes: [command-iex]
+  manifests_as: [error-pssecurityexception]
+  caused_by: [mechanism-execution-policy-gate]
+  mitigated_by: [workaround-irm-iex, workaround-process-executionpolicy-bypass, workaround-throw-not-exit]
+  unsafe_fix: [workaround-machine-execution-policy]
 ---
 
 # Execution policy blocks your downloaded installer

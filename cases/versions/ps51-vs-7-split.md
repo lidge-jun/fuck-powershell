@@ -12,6 +12,12 @@ refs:
   - https://github.com/lidge-jun/cli-jaw/commit/322ac1801a5f7422792e690c5f8dcec87425a50b
   - https://github.com/lidge-jun/cli-jaw/commit/dccabcd055a6a8d258487ae01512ad508161dd63
   - https://github.com/lidge-jun/cli-jaw/blob/main/scripts/install.ps1
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-actions-runner, env-windows, env-korean-codepage]
+  invokes: [command-set-content]
+  manifests_as: [error-parameterbinding, error-mojibake]
+  caused_by: [mechanism-default-encoding, mechanism-alias-shadowing]
+  mitigated_by: [workaround-set-content-utf8nobom, workaround-pin-ps-version]
 ---
 
 # powershell.exe and pwsh are different languages wearing one syntax

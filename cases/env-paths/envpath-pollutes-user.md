@@ -10,6 +10,11 @@ repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/f0020c663e8fe8e828053851a034377b8d0ff825
   - https://github.com/lidge-jun/cli-jaw/commit/514f9a9cd0f3d40e37578fa641c33dec9aadff37
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-setenvironmentvariable]
+  caused_by: [mechanism-registry-env-snapshot]
+  mitigated_by: [workaround-scope-read-path]
 ---
 
 # Appending to $env:Path and saving to User PATH copies Machine PATH in

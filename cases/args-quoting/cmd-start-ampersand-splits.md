@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/0c20c014e4a9940f12a36d9e624e325e4d2fc2a8
+ontology:
+  affects: [shell-cmd, env-windows]
+  invokes: [command-cmd, command-start]
+  caused_by: [mechanism-cmd-reparse]
+  mitigated_by: [workaround-caret-escape-cmd, workaround-runtime-opener]
 ---
 
 # cmd /c start truncates your URL at the first &

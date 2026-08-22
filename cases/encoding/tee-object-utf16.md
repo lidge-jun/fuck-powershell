@@ -9,6 +9,13 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/3
+ontology:
+  affects: [shell-powershell-51, runtime-node, env-windows, env-actions-runner]
+  invokes: [command-tee-object]
+  manifests_as: [error-mojibake]
+  caused_by: [mechanism-default-encoding]
+  mitigated_by: [workaround-set-content-utf8nobom, workaround-dotnet-writealltext]
+  unsafe_fix: [workaround-out-file-utf8]
 ---
 
 # Tee-Object writes UTF-16, so grepping your own log returns zero matches twice over

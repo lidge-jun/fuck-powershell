@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/14
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, runtime-node, env-windows]
+  invokes: [command-return, command-write-host, command-test-path, command-new-item]
+  caused_by: [mechanism-host-vs-pipeline, mechanism-collection-unrolling]
+  mitigated_by: [workaround-out-null, workaround-array-force]
+  unsafe_fix: [workaround-gt-null]
 ---
 
 # return does not mean return - a side-effect cmdlet silently makes your function hand back two values

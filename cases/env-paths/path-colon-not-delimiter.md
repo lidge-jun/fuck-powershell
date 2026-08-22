@@ -9,6 +9,10 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/codexclaw/commit/23e2fee29e735a06246846aa2a26605a0022514b
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  caused_by: [mechanism-path-delimiter]
+  mitigated_by: [workaround-path-win32-delimiter]
 ---
 
 # Joining PATH with ':' silently no-ops on Windows

@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/8
+ontology:
+  affects: [runtime-node, shell-powershell-51]
+  invokes: [command-out-string, command-node]
+  caused_by: [mechanism-stream-wrapping, mechanism-errorrecord-format]
+  mitigated_by: [workaround-stringify-errorrecord]
 ---
 
 # Out-String turns one stderr line into eight and injects your own script text into the log

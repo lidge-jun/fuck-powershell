@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/blob/main/src/lib/windows-secret-acl.ts
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-icacls]
+  manifests_as: [error-account-sid-mapping]
+  caused_by: [mechanism-env-derived-identity]
+  mitigated_by: [workaround-sid-principal]
 ---
 
 # $env:USERDOMAIN is not your identity

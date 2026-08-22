@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/13
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-ne]
+  caused_by: [mechanism-comparison-as-filter]
+  mitigated_by: [workaround-contains-membership, workaround-array-force]
 ---
 
 # -ne against a list is a FILTER, so a two-entry denylist silently allows the value it blocks

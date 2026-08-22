@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/17
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7]
+  invokes: [command-start-process, command-node]
+  caused_by: [mechanism-exit-code-propagation, mechanism-host-vs-pipeline]
+  mitigated_by: [workaround-passthru-exitcode]
 ---
 
 # Start-Process never sets LASTEXITCODE, so a failed process inherits the previous command's success

@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/16
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows, env-win32-api]
+  invokes: [command-test-path, command-node]
+  manifests_as: [error-enoent]
+  caused_by: [mechanism-win32-path-normalization]
+  mitigated_by: [workaround-trim-path]
 ---
 
 # Test-Path says True for a path with trailing whitespace that Node cannot open

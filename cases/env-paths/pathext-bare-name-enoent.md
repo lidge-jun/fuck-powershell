@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/codexclaw/commit/b4be8c171f14e1fdbeec006f0fe5496a7e2caeac
+ontology:
+  affects: [runtime-node, env-windows, env-win32-api]
+  manifests_as: [error-enoent]
+  caused_by: [mechanism-pathext-resolution]
+  mitigated_by: [workaround-pathext-extension-shim]
 ---
 
 # An extensionless shim on PATH is invisible to Windows spawn — ENOENT with the file right there

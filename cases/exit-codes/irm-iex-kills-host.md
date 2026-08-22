@@ -10,6 +10,12 @@ repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/514f9a9cd0f3d40e37578fa641c33dec9aadff37
   - https://github.com/lidge-jun/cli-jaw/commit/71dcfdd7a41f0b1d7b0bb489b883324d43eb6157
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7]
+  invokes: [command-irm, command-iex]
+  manifests_as: [error-terminal-killed]
+  caused_by: [mechanism-iex-session]
+  mitigated_by: [workaround-throw-not-exit]
 ---
 
 # exit 1 inside irm | iex kills the user's terminal

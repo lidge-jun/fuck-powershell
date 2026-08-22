@@ -9,6 +9,12 @@ source: third-party
 repro: verified
 refs:
   - https://github.com/adourish/robodog/commit/ecdc052ffbb3cede9526ae7001d21acf8f8f7f8b
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-out-file]
+  manifests_as: [error-enoent]
+  caused_by: [mechanism-posix-dev-null]
+  mitigated_by: [workaround-dollar-null-redirect]
 ---
 
 # > /dev/null creates a literal file (or kills CI) on Windows

@@ -9,6 +9,13 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/6
+ontology:
+  affects: [runtime-node, shell-powershell-51, env-windows]
+  invokes: [command-node, command-convertto-json]
+  manifests_as: [error-invalid-json]
+  caused_by: [mechanism-native-argv-rebuild]
+  mitigated_by: [workaround-file-payload]
+  unsafe_fix: [workaround-escape-more-quotes]
 ---
 
 # escaping a quote ENDS the quoted span, so one JSON argument silently becomes several

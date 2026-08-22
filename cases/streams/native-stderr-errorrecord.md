@@ -11,6 +11,12 @@ refs:
   - https://github.com/dqfront/NousResearch-hermes-agent/commit/ec1714e71f90691e1cf412796e9a4b4ba0d934f4
   - https://github.com/lidge-jun/cli-jaw/commit/8c72d7568d0facf692b8adfa1429aa083c703ee3
   - https://github.com/lidge-jun/cli-jaw/blob/main/scripts/install.ps1
+ontology:
+  affects: [shell-powershell-51, env-windows]
+  invokes: [command-uv, command-git, command-npm, command-curl]
+  manifests_as: [error-nativecommanderror]
+  caused_by: [mechanism-stream-wrapping]
+  mitigated_by: [workaround-continue-eap, workaround-lastexitcode-gate]
 ---
 
 # PS 5.1 turns native stderr into NativeCommandError

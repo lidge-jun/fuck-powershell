@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/12
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-get-content]
+  caused_by: [mechanism-collection-unrolling]
+  mitigated_by: [workaround-array-force]
 ---
 
 # a one-line file makes Get-Content return a String, so [0] gives a character and .Length counts characters

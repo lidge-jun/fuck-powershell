@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/10
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-node]
+  caused_by: [mechanism-string-interpolation]
+  mitigated_by: [workaround-single-quote-regex]
 ---
 
 # \ and \ are real variable names, so sed backreferences and price ranges are deleted en route to the child

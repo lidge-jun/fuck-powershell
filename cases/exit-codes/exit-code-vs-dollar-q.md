@@ -10,6 +10,11 @@ repro: verified
 refs:
   - https://github.com/PowerShell/PowerShell/pull/10461
   - https://github.com/lidge-jun/ima2-gen/commit/1442bd1fa555ebda0db9b2a4a86f48ab504fd122
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-actions-runner]
+  invokes: [command-git]
+  caused_by: [mechanism-exit-code-propagation]
+  mitigated_by: [workaround-lastexitcode-gate]
 ---
 
 # $? lies about native commands; check $LASTEXITCODE

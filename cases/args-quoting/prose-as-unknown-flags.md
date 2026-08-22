@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/4
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-gh, command-node]
+  manifests_as: [error-unknown-arguments]
+  caused_by: [mechanism-native-argv-rebuild, mechanism-string-interpolation]
+  mitigated_by: [workaround-file-payload, workaround-ps-native-argument-passing]
 ---
 
 # when a CLI reports your prose as unknown flags, PowerShell shredded the argument - not the CLI

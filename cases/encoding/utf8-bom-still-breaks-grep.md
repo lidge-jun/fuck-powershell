@@ -9,6 +9,13 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/7
+ontology:
+  affects: [shell-powershell-51, env-windows, env-actions-runner]
+  invokes: [command-out-file, command-set-content]
+  manifests_as: [error-parameterbinding]
+  caused_by: [mechanism-default-encoding]
+  mitigated_by: [workaround-dotnet-writealltext]
+  unsafe_fix: [workaround-out-file-utf8, workaround-set-content-utf8nobom]
 ---
 
 # the recommended fix still breaks anchored grep - Out-File -Encoding utf8 writes a BOM, and utf8NoBOM does not exist on 5.1

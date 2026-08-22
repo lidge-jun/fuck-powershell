@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/0851921ae0b3ab382c2546b24e5aa67b0d163b37
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-iex, command-irm]
+  manifests_as: [error-parameterbinding]
+  caused_by: [mechanism-iex-session]
+  mitigated_by: [workaround-download-then-file]
 ---
 
 # irm | iex cannot pass parameters — your -Switch goes to iex, not the script

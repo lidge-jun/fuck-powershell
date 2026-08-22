@@ -9,6 +9,11 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/b46261a96eda8f51d91aa4eebd8483c564b41b2c
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7]
+  invokes: [command-write-host, command-out-string]
+  caused_by: [mechanism-host-vs-pipeline]
+  mitigated_by: [workaround-write-output, workaround-transcript]
 ---
 
 # Write-Host output is invisible to 2>&1 | Out-String

@@ -10,6 +10,12 @@ repro: verified
 refs:
   - https://github.com/PowerShell/PowerShell/pull/1901
   - https://github.com/lidge-jun/opencodex/commit/760b287bc5287c8f631d6500b738fad53679e6e4
+ontology:
+  affects: [shell-powershell-51, env-windows]
+  invokes: [command-curl, command-invoke-webrequest]
+  manifests_as: [error-parameterbinding]
+  caused_by: [mechanism-alias-shadowing]
+  mitigated_by: [workaround-curl-exe]
 ---
 
 # curl silently becomes Invoke-WebRequest

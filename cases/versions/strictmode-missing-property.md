@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/5fe703a73b78eab4a0e0bff1b9c0368d0d6018ad
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7]
+  invokes: [command-set-strictmode, command-convertfrom-json]
+  manifests_as: [error-propertynotfound]
+  caused_by: [mechanism-strictmode-contract]
+  mitigated_by: [workaround-psobject-probe]
 ---
 
 # Set-StrictMode turns missing JSON fields into crashes

@@ -10,6 +10,11 @@ repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/commit/e8c9c53ca118cd6ef7eb43a8a672a9588581aa2d
   - https://github.com/lidge-jun/cli-jaw/commit/f363a71c043c5dc986081968e3f138a1c94203d0
+ontology:
+  affects: [runtime-node, shell-cmd, env-windows]
+  invokes: [command-cmd]
+  caused_by: [mechanism-cmd-reparse]
+  mitigated_by: [workaround-stdin-payload, workaround-strip-cmd-separators]
 ---
 
 # argv to a .cmd shim is re-parsed by cmd.exe — untrusted text becomes commands

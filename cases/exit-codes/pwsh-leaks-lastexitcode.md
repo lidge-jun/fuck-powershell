@@ -9,6 +9,12 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/commit/d0b5989b7986c22e8539bf82544cfeb9bfebbe8c
+ontology:
+  affects: [shell-pwsh-7, env-actions-runner]
+  invokes: [command-schtasks]
+  manifests_as: [error-exit-code-leak]
+  caused_by: [mechanism-exit-code-propagation]
+  mitigated_by: [workaround-explicit-exit-zero]
 ---
 
 # A handled $LASTEXITCODE still fails your CI step

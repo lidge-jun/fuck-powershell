@@ -10,6 +10,11 @@ repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/commit/ac8c0d2dfdae12904d6ed818763bc069cdb84764
   - https://github.com/lidge-jun/opencodex/commit/ebf947ec579a4750b261e3247aabd7a5675b3764
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-start-process]
+  caused_by: [mechanism-statement-terminator]
+  mitigated_by: [workaround-space-join-params]
 ---
 
 # Joining command fragments with '; ' splits Start-Process mid-call
