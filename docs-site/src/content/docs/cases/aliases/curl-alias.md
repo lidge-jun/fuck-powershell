@@ -3,7 +3,7 @@ title: "curl silently becomes Invoke-WebRequest"
 description: "aliases landmine — misleading-error (5.1)"
 ---
 
-<div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">agent</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span></div>
+<div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">agent</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#alias-shadowing">alias-shadowing</a></div>
 
 ## Symptom
 
@@ -42,3 +42,4 @@ them on all platforms, so the same command behaves differently across versions.
 ## Refs
 
 - <https://github.com/PowerShell/PowerShell/pull/1901>
+- <https://github.com/lidge-jun/opencodex/commit/760b287bc5287c8f631d6500b738fad53679e6e4>

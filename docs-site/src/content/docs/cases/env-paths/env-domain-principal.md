@@ -3,7 +3,7 @@ title: "$env:USERDOMAIN is not your identity"
 description: "env-paths landmine — hard-error (both)"
 ---
 
-<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span></div>
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#env-derived-identity">env-derived-identity</a></div>
 
 ## Symptom
 

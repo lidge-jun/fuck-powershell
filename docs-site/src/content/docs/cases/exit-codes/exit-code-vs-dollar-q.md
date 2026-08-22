@@ -3,7 +3,7 @@ title: "$? lies about native commands; check $LASTEXITCODE"
 description: "exit-codes landmine — silent (both)"
 ---
 
-<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#exit-code-propagation">exit-code-propagation</a></div>
 
 ## Symptom
 
@@ -38,3 +38,4 @@ fixed it.
 ## Refs
 
 - <https://github.com/PowerShell/PowerShell/pull/10461>
+- <https://github.com/lidge-jun/ima2-gen/commit/1442bd1fa555ebda0db9b2a4a86f48ab504fd122>

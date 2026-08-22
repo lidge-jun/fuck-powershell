@@ -1,0 +1,115 @@
+---
+title: Error signatures
+description: Symptom-first reverse index.
+---
+
+Saw an error? Find the landmine.
+
+## account-sid-mapping
+
+'No mapping between account names and security IDs' from icacls/ACL calls with unresolvable principals.
+
+[env-domain-principal](/fuck-powershell/cases/env-paths/env-domain-principal/)
+
+## command-not-recognized
+
+'X is not recognized as an internal or external command' — stale PATH snapshot or wrong-shell syntax.
+
+[actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [cmd-posix-env-prefix](/fuck-powershell/cases/ci-agents/cmd-posix-env-prefix/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/)
+
+## eftype
+
+Wrong file type for execution — e.g. attempting to CreateProcess a .ps1 script.
+
+[get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
+
+## einval
+
+Invalid argument from spawn — on Windows typically the .cmd/.bat hardening or malformed argv.
+
+[spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/)
+
+## enoent
+
+File or command not found — on Windows often a PATHEXT/extension resolution miss, not a missing file.
+
+[dev-null-redirect](/fuck-powershell/cases/streams/dev-null-redirect/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [pathext-bare-name-enoent](/fuck-powershell/cases/env-paths/pathext-bare-name-enoent/) · [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
+
+## eperm
+
+Operation not permitted — including WindowsApps appExecLink spawn denials.
+
+[windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/)
+
+## exit-code-leak
+
+A handled or meaningless exit code propagates into step/process failure.
+
+[pwsh-leaks-lastexitcode](/fuck-powershell/cases/exit-codes/pwsh-leaks-lastexitcode/) · [explorer-exits-one](/fuck-powershell/cases/exit-codes/explorer-exits-one/)
+
+## invalid-json
+
+Downstream JSON parse failure after the shell shredded quoted arguments.
+
+[backslash-quote-ends-span](/fuck-powershell/cases/args-quoting/backslash-quote-ends-span/)
+
+## mojibake
+
+Corrupted text output from encoding mismatches (UTF-16/BOM/ANSI vs UTF-8).
+
+[ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
+
+## nativecommanderror
+
+PS 5.1 wrapper around native stderr lines when redirected under strict error preference.
+
+[native-stderr-errorrecord](/fuck-powershell/cases/streams/native-stderr-errorrecord/)
+
+## not-a-powershell-script
+
+-File refused a file lacking the .ps1 extension.
+
+[ps-file-extension-dispatch](/fuck-powershell/cases/args-quoting/ps-file-extension-dispatch/)
+
+## parameterbinding
+
+Parameter binding failure — often an alias hijack or interpolated/mangled arguments.
+
+[english-and-not-separator](/fuck-powershell/cases/args-quoting/english-and-not-separator/) · [piped-iex-drops-params](/fuck-powershell/cases/args-quoting/piped-iex-drops-params/) · [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [utf8-bom-still-breaks-grep](/fuck-powershell/cases/encoding/utf8-bom-still-breaks-grep/) · [curl-alias](/fuck-powershell/cases/aliases/curl-alias/)
+
+## parsererror
+
+PowerShell parser rejection — e.g. && on 5.1.
+
+[actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [ps51-no-and-and](/fuck-powershell/cases/versions/ps51-no-and-and/)
+
+## propertynotfound
+
+StrictMode throw on missing property access.
+
+[strictmode-missing-property](/fuck-powershell/cases/versions/strictmode-missing-property/)
+
+## pssecurityexception
+
+Execution policy refused to run a script file.
+
+[execution-policy-file-block](/fuck-powershell/cases/ci-agents/execution-policy-file-block/) · [npm-ps1-not-comspec](/fuck-powershell/cases/aliases/npm-ps1-not-comspec/)
+
+## terminal-killed
+
+The user's interactive session terminates because script text ran in-session (iex + exit).
+
+[irm-iex-kills-host](/fuck-powershell/cases/exit-codes/irm-iex-kills-host/)
+
+## unknown-arguments
+
+A CLI reports prose words as unknown flags because the shell split one argument into many.
+
+[prose-as-unknown-flags](/fuck-powershell/cases/args-quoting/prose-as-unknown-flags/)
+
+## unset-variable
+
+StrictMode 'variable cannot be retrieved' from unintended string interpolation.
+
+[dq-regex-interpolates](/fuck-powershell/cases/args-quoting/dq-regex-interpolates/)
+

@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "sync": "bun ../scripts/sync-cases.mjs",
-    "dev": "bun run sync && astro dev",
-    "build": "bun run sync && astro build",
+    "graph": "bun ../scripts/build-graph.mjs && bun ../scripts/validate-graph.mjs && bun ../scripts/lint-cases.mjs",
+    "sync": "bun ../scripts/sync-cases.mjs && bun ../scripts/sync-ontology.mjs",
+    "dev": "bun run graph && bun run sync && astro dev",
+    "build": "bun run graph && bun run sync && astro build",
     "preview": "astro preview"
   },
   "dependencies": {

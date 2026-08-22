@@ -4,6 +4,7 @@
 // and rendering them as a badge table at the top of the body.
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { join, basename } from "node:path";
+import { parseFrontmatter } from "./lib/frontmatter.mjs";
 
 const ROOT = join(import.meta.dir, "..");
 const CASES = join(ROOT, "cases");
@@ -33,6 +34,11 @@ for (const f of readdirSync(CASES, { recursive: true }).map(String).filter((f) =
   const ctxChips = (fm.context ?? [])
     .map((c) => '<span class="badge badge-context">' + c + "</span>")
     .join("");
+  const ont = (parseFrontmatter(text) ?? {}).ontology ?? {};
+  const mechChips = (Array.isArray(ont.caused_by) ? ont.caused_by : [])
+    .map((m) => '<a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#' +
+      m.replace("mechanism-", "").replace(/[^a-z0-9-]/g, "") + '">' + m.replace("mechanism-", "") + "</a>")
+    .join("");
   const badge =
     '<div class="case-badges">' +
     '<span class="badge badge-version">' + fm.versions + "</span>" +
@@ -40,6 +46,7 @@ for (const f of readdirSync(CASES, { recursive: true }).map(String).filter((f) =
     ctxChips +
     '<span class="badge badge-meta">' + fm.source + "</span>" +
     '<span class="badge badge-meta">repro: ' + fm.repro + "</span>" +
+    mechChips +
     "</div>";
   const out = [
     "---",

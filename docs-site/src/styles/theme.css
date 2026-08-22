@@ -78,3 +78,8 @@ header.header {
   background: color-mix(in srgb, currentColor 8%, transparent);
   color: inherit; opacity: 0.85; font-weight: 500;
 }
+.badge-mech {
+  background: color-mix(in srgb, var(--fp-blue) 10%, transparent);
+  color: var(--sl-color-text-accent); text-decoration: none; font-weight: 500;
+}
+.badge-mech:hover { background: color-mix(in srgb, var(--fp-blue) 22%, transparent); }

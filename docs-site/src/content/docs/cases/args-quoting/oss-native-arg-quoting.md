@@ -3,7 +3,7 @@ title: "Embedded quotes and empty args vanish before native commands see them"
 description: "args-quoting landmine — silent (both)"
 ---
 
-<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#native-argv-rebuild">native-argv-rebuild</a></div>
 
 ## Symptom
 
@@ -39,4 +39,5 @@ depended on the broken behavior. The trap is version- and platform-dependent.
 ## Refs
 
 - <https://github.com/PowerShell/PowerShell/pull/14692>
+- <https://github.com/lidge-jun/cli-jaw/commit/77153112420acaadd961defc6a2b9a170ee70d43>
 - <https://github.com/PowerShell/PowerShell/pull/15408>

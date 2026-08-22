@@ -3,7 +3,7 @@ title: "GitHub Actions on Windows defaults to PowerShell — your bash-ism dies 
 description: "ci-agents landmine — hard-error (both)"
 ---
 
-<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">ci</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">ci</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#default-shell-selection">default-shell-selection</a></div>
 
 ## Symptom
 
@@ -46,4 +46,5 @@ redirects that agents kept emitting.
 ## Refs
 
 - <https://github.com/parsaesmaili038/ticketing-v1/commit/d5a4d513e34d557f345b41d9e1b9fdd2806d4a04>
+- <https://github.com/lidge-jun/ima2-gen/commit/43a935f9bc9b785dcde31390eaf27b6990e0d8cd>
 - <https://github.com/adourish/robodog/commit/ecdc052ffbb3cede9526ae7001d21acf8f8f7f8b>

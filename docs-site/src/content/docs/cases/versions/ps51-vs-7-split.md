@@ -3,7 +3,7 @@ title: "powershell.exe and pwsh are different languages wearing one syntax"
 description: "versions landmine — silent (both)"
 ---
 
-<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#default-encoding">default-encoding</a><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#alias-shadowing">alias-shadowing</a></div>
 
 ## Symptom
 
@@ -41,4 +41,6 @@ pinning a version target two runtimes at once.
 ## Refs
 
 - <https://github.com/parsaesmaili038/ticketing-v1/commit/d5a4d513e34d557f345b41d9e1b9fdd2806d4a04>
+- <https://github.com/lidge-jun/cli-jaw/commit/322ac1801a5f7422792e690c5f8dcec87425a50b>
+- <https://github.com/lidge-jun/cli-jaw/commit/dccabcd055a6a8d258487ae01512ad508161dd63>
 - <https://github.com/lidge-jun/cli-jaw/blob/main/scripts/install.ps1>

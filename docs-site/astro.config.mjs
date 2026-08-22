@@ -21,7 +21,12 @@ export default defineConfig({
           { label: "Case schema", slug: "schema" },
           { label: "Install the skill", slug: "skill" },
         ]},
-        { label: "Cases", items: [{ autogenerate: { directory: "cases" } }] },
+        { label: "Ontology", items: [
+          { label: "Overview", slug: "ontology" },
+          { label: "Mechanisms", slug: "ontology/mechanisms" },
+          { label: "Error signatures", slug: "ontology/errors" },
+        ]},
+        { label: "Cases", collapsed: true, items: [{ autogenerate: { directory: "cases", collapsed: true } }] },
       ],
     }),
   ],

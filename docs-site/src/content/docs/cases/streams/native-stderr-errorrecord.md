@@ -3,7 +3,7 @@ title: "PS 5.1 turns native stderr into NativeCommandError"
 description: "streams landmine — misleading-error (5.1)"
 ---
 
-<div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
+<div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#stream-wrapping">stream-wrapping</a></div>
 
 ## Symptom
 
@@ -40,4 +40,5 @@ PowerShell 7.2+ no longer wraps native stderr this way.
 ## Refs
 
 - <https://github.com/dqfront/NousResearch-hermes-agent/commit/ec1714e71f90691e1cf412796e9a4b4ba0d934f4>
+- <https://github.com/lidge-jun/cli-jaw/commit/8c72d7568d0facf692b8adfa1429aa083c703ee3>
 - <https://github.com/lidge-jun/cli-jaw/blob/main/scripts/install.ps1>
