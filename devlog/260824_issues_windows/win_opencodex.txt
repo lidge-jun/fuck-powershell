@@ -1,0 +1,62 @@
+060f51d9a6|2026-06-19|Fix Codex catalog injection on Windows
+08552da560|2026-08-07|fix(fabric): FAB-07 correction increment (Sections A-J)
+0a207207dc|2026-08-14|fix(windows): remove native service on fresh scheduler install
+0c461c6e3b|2026-07-24|test: make Windows root fixtures deterministic
+125156c3e1|2026-08-18|fix(windows): preserve short unknown catalog retries
+1330dd6a5a|2026-07-07|fix(wsl): honor wsl.conf automount root + systemd/localhost guidance
+159d2ab183|2026-08-17|fix(windows): keep catalog discovery off request event loop
+1b626e4f81|2026-06-21|fix: detect Windows Codex updates that bypass .cmd shim via PATHEXT
+1cfb2e7a40|2026-08-08|fix(models): save every edited context window, and stop stale drafts reverting concurrent changes
+1ed2d7048e|2026-08-01|fix(shells): ref the kill-grace timer so Windows shutdown drain can finish
+22e156e25a|2026-08-02|fix(doctor): report how the service actually got its Bun runtime
+26dc5aa2b7|2026-08-02|fix(codex): detect stale app-server catalogs and stop advertising them (#857)
+29849bb00a|2026-07-23|fix(codex): harden Windows Codex exec and isolate catalog resolve deps
+2b71f1df4f|2026-08-14|fix(windows): remove native service on fresh scheduler install
+2d82ddfc8f|2026-08-01|merge(dev): sync base for isolate hang fixes and Windows runner select
+371aa579d6|2026-07-31|fix(windows): resolve PATH whatever casing the child was handed
+40f4b3f650|2026-07-27|fix(cli): harden ocx opencode launcher review follow-ups
+48b985d079|2026-07-27|fix(desktop): resolve the Claude Desktop config library the way Desktop does
+4dfc2d69bc|2026-08-20|fix(log-guard): accept the OS's own canonical spelling on Windows
+4feb9ace47|2026-07-25|fix(update): reclaim configured port after stop instead of hopping
+5252744857|2026-08-20|Merge pull request #2143 from lidge-jun/fix/log-guard-windows-canonical-path
+52da777d96|2026-08-17|fix(windows): keep catalog discovery off request event loop
+535e3c256b|2026-08-17|fix(windows): stop serving an unreadable process list for a full 5s
+53ffc9eb9a|2026-08-18|fix(windows): preserve short unknown catalog retries
+5c6be04ef6|2026-08-17|fix(lab): finalize projection statements so a rebuild can replace its own file
+5d0c508966|2026-07-23|fix(windows): keep tray recovery controls actionable
+5e4a9d78ca|2026-07-23|fix(windows): keep tray recovery controls actionable
+61a1edace6|2026-08-19|fix(windows): degrade an invalidated in-flight catalog observation to unknown
+631a7fd404|2026-08-15|fix(windows): trust scheduled task module during elevation
+6a09cb7ab3|2026-08-01|Merge pull request #838 from Wibias/fix/update-proxy-recovery
+6c0bde453d|2026-08-18|fix: stabilize dev head after the 260818 merge train
+772fc666f9|2026-07-25|fix(update): harden port reclaim against foreign sockets and fake Windows signals.
+77f5ae9bdd|2026-08-02|fix(runtime): record which binary the provenance marker describes
+79f923dc5d|2026-07-30|fix(go/update): a bare npm must not resolve out of the working directory
+7ee22fca55|2026-08-07|fix(fabric): FAB-07 correction increment (Sections A-J)
+81ada7cd09|2026-08-15|fix(codex): restore an unprobeable launcher on shim rollback (#1625)
+856b37cfae|2026-08-02|fix(codex): procfs absence and owner-verification gaps are enumeration failures (#857)
+86d7ef4943|2026-08-17|fix(codex): recheck restart identity on Windows fallback
+88c4f1561a|2026-08-20|fix(ci): stop the Windows leg from truncating and mismeasuring its own shards
+8f499a45f7|2026-07-30|fix(kiro): make native-store resolution platform-correct off macOS (#718)
+929d756314|2026-06-27|fix(windows): stop proxy before service cleanup
+9eaff97974|2026-07-15|fix(windows): launch .cmd shims and platform shells correctly — win-exec launcher + 4 call sites
+9edeeaf4c1|2026-08-11|fix(lab): address fifth CodeRabbit round for CL-07 fabric producer
+a3f2fbcd16|2026-08-01|fix(cursor): keep background-shell term-grace timers ref'd under isolate
+a4686528e6|2026-08-03|test(windows): pin transient-vs-invalid fixtures and the zero-delay permanent path
+aa9df919a5|2026-08-17|Merge pull request #1925 from lidge-jun/codex/wave5-windows-failclosed
+b63f5c80fa|2026-06-25|fix: harden Windows Codex integration
+ba77eb8e9b|2026-07-31|fix(kiro): resolve the Windows kiro-cli executable without PATH
+bb4c4a4f29|2026-08-01|fix(ci): stop Windows suite hang and ACL-timeout start abort
+bc774699b1|2026-07-02|fix(platform): loop 2 — catalog .cmd probe, OAuth dual-bind, hostname-aware stop, ~ expansion, Git-Bash shim
+bf8b0157ab|2026-08-01|merge(dev): sync tip Windows drain/ACL fixes into update recovery
+c035ee0934|2026-08-19|Merge pull request #1876 from lidge-jun/ingw/fix-windows-v2-catalog-blocking-1852
+c7fe9e8081|2026-07-30|fix(kiro): discover the Windows kiro-cli token DB on login import (#710)
+ce4e526368|2026-07-02|fix(lifecycle): loop 4 — review findings: update transaction hardening, IPv6 probe URLs, ~ parity
+d19a2c9504|2026-08-20|fix(log-guard): make the Windows path widening link-aware
+d83a07c82a|2026-08-02|fix(windows): let post-create scheduler verification settle before rollback
+dc1df7d44d|2026-08-17|fix(windows): fail closed when the top-level process query fails
+e22ef94209|2026-07-31|fix(kiro): resolve Windows kiro-cli executable without PATH
+e43fce7fdd|2026-08-02|fix(gui): identify partial quota windows
+ebf947ec57|2026-07-27|Merge pull request #408 from Wibias/codex/fix-windows-service-install-elevation
+ef711801e9|2026-08-02|docs(plan): allocate 12 must-fix bugs across 5 bugfix worktrees
+fc82c92d00|2026-08-16|fix(windows): trust ScheduledTasks module during elevation

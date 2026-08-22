@@ -1,0 +1,19 @@
+0851921ae|2026-08-15|fix(windows): repair the bootstrap opt-in, dry-run, probe, and recovery paths (#369)
+0c20c014e|2026-08-18|fix(ux): Windows runtime UX - cross-platform env-prefixed scripts, non-throwing explorer reveal, cmd-escaped browser URLs, platform-correct EADDRINUSE guidance, working bunWhich and PI_NOTIFICATIONS (#383)
+0cca77bc3|2026-08-15|fix(test): do not assert PATH guidance the installer correctly did not print
+190b9668e|2026-08-15|fix(windows): resolve bare command names before treating them as direct (#367)
+23d77b93d|2026-08-18|fix(spawn): route Windows probes through the #367 primitives - shared probeExec, mergeEnvWindowsSafe, per-stream UTF-8 readers, graceful OwnedProcess kill, probe timeouts (#382)
+2f6321df1|2026-08-15|fix(test): repair three failures that only a real Windows runner exposes
+53aaed48c|2026-08-12|fix(security): drop case folding that over-authorized on case-sensitive NTFS
+58aa131b2|2026-08-12|fix(security): reject NTFS ADS paths and fold Windows path identity
+6b85f94de|2026-08-15|fix(test): stop tearing the drive letter off a Windows bun path
+6f07aafaa|2026-08-15|fix(runtime): decode child stdout/stderr across UTF-8 chunk boundaries (#372, #366)
+71dcfdd7a|2026-08-16|fix(windows): restore Stop-Install body and Add-UserPathEntry closing brace
+80b3d4ab0|2026-08-15|fix(windows): preserve PATH when spawning OpenCode
+911b74ad3|2026-08-11|fix(install): resolve npm.cmd on Windows so jaw init stops failing wholesale (#274)
+a760d7306|2026-08-15|fix(test): make the opencode PATH dedupe fixture host-independent
+b46261a96|2026-08-15|fix(test): capture Write-Host guidance via transcript, not the success stream
+d113c0ffd|2026-08-12|fix(process): unified OwnedProcess lifetime across 44 .kill() callsites
+e8c9c53ca|2026-08-15|fix(codex): send the resume prompt on stdin instead of argv (#367)
+f363a71c0|2026-08-15|fix(windows): include CR/LF in command separators and expand WSF-013 coverage (#367)
+f4d7cc30a|2026-08-12|fix(officecli): preflight Windows release assets

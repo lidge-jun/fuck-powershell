@@ -1,0 +1,14 @@
+01ae4f37|2026-07-19|fix(ci): cross-platform test hardening for green ubuntu+windows lanes
+098c6da0|2026-07-26|fix(scripts): repair the CLI entry-point guard on Windows
+13f68335|2026-08-15|feat(governance): enforce the release gates with tag and branch rulesets
+23e2fee2|2026-07-12|fix(cross-platform): resolve 5 P0 Windows blockers + 2 P2 items
+43a6febf|2026-08-15|ci(release-train): add macOS, a packed-install lifecycle, and a publishing workflow
+81b65457|2026-08-14|fix(test): skip hook-bench on Windows CI where spawn timeout is routine
+8584d2ad|2026-07-26|feat(cxc-ops): shared manifest-target validator for build and doctor (WP7/080)
+95c07c0d|2026-08-17|fix(test): compare planUnit on segments so Windows passes
+9d01b637|2026-07-12|feat(cross-platform): 3-way service dispatch + Windows CI + CRLF tolerance
+b4be8c17|2026-07-20|fix(ci): close final 3 windows test failures
+c2cf505f|2026-07-12|research(cross-platform): opencodex reference + codexclaw audit devlog
+dfd0f0cc|2026-08-15|feat(release): make the MLB release gate executable and fail-closed
+e52bbd4c|2026-07-10|feat(wp2): hook trust-drift doctor check + cxc hooks retrust; native-V2 skill affordance
+e78843b6|2026-07-26|test: stop two new tests from assuming a POSIX filesystem
