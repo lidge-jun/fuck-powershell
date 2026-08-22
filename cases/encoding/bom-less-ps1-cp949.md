@@ -9,6 +9,7 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/cli-jaw/blob/main/src/prompt/templates/a1-system.md
+  - https://github.com/lidge-jun/opencodex/commit/ff6916abcde01de60a1b1ac4ce7adb4c8efad6de
 ---
 
 # A BOM-less .ps1 is read as ANSI — non-ASCII corrupts before execution

@@ -9,6 +9,7 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/PowerShell/PowerShell/pull/1901
+  - https://github.com/lidge-jun/opencodex/commit/760b287bc5287c8f631d6500b738fad53679e6e4
 ---
 
 # curl silently becomes Invoke-WebRequest
