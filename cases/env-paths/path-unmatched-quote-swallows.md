@@ -11,7 +11,7 @@ refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/42
   - https://github.com/openai/codex/issues/38421
 ontology:
-  affects: [env-windows, runtime-node]
+  affects: [env-windows]
   manifests_as: [error-command-not-recognized]
   caused_by: [mechanism-quoted-path-entry]
   mitigated_by: [workaround-split-path-on-semicolon]
@@ -42,11 +42,16 @@ program, which is why this burns an afternoon.
 
 ## Repro
 
+```rust
+// PATH = C:\Program Files\PowerShell\7";C:\tools\git\cmd;C:\Windows\System32
+std::env::split_paths(&std::env::var_os("PATH").unwrap()).count();
+// the stray quote opens a span that never closes, so everything after it
+// collapses into ONE entry naming a directory that does not exist
+```
+
 ```powershell
-PS> $env:PATH = 'C:\Program Files\PowerShell\7";' + 'C:\tools\git\cmd' + ';C:\Windows\System32'
-PS> where.exe git          # found
-PS> node -e "console.log(require('child_process').spawnSync('git',['--version']).error?.code)"
-ENOENT
+PS> where.exe git
+C:\tools\git\cmd\git.exe        # the shell has no trouble
 ```
 
 The stray `"` after `7` is the whole bug. It is trivially easy to produce: a
@@ -64,13 +69,21 @@ quoted span at the stray `"` and never finds its closer, so every remaining
 semicolon is swallowed as part of one enormous, nonexistent directory name. Rust's
 `std::env::split_paths` behaves this way, and it is behaving correctly.
 
-Whether you are affected depends entirely on which splitter you use:
+Whether you are affected depends entirely on which splitter you use, and the
+differences are larger than "quote-aware or not":
 
-- Quote-aware splitters (`std::env::split_paths`, and anything modelling the
-  documented rules) lose every entry after the stray quote.
-- Naive `split(';')` — which most scripts and many runtimes use — is unaffected,
-  because it never opened a span.
-- `where.exe` and PowerShell's own command resolution are unaffected.
+- `std::env::split_paths` honors a quote ANYWHERE in an entry, so a stray one
+  mid-entry opens a span that swallows every later separator. This is the case
+  that bites.
+- libuv, which is what Node uses to resolve a command, treats an entry as quoted
+  only when it STARTS with a quote. A mid-entry quote does not open a span there,
+  so Node keeps finding the later entries.
+- Naive `split(';')` never opens a span at all.
+- `where.exe` and PowerShell's own resolution are unaffected.
+
+Three parsers, three behaviors, one PATH. That is the part worth carrying away:
+"is this PATH valid" has no single answer, so a diagnostic run through a
+different runtime than the failing program can confirm the wrong thing.
 
 So the failure is not "PATH is broken". It is "PATH is broken for the correct
 parsers only", which inverts the usual debugging instinct: the tools you trust to
@@ -97,8 +110,17 @@ If you must be tolerant, fall back to naive semicolon splitting when the
 quote-aware parse yields an entry containing `;` — that entry is fictional by
 construction.
 
+## Verification note
+
+The `std::env::split_paths` behavior is read from the Rust standard library
+source, and the failure was reported against a Rust binary on Windows
+(openai/codex#38421) with `where.exe` succeeding in the same shell. The
+contrasting libuv behavior is read from its process source. Neither was executed
+in this loop, hence `repro: historical`.
+
 ---
 
 `node-path-host-delimiter` is about the SEPARATOR being wrong (`:` versus `;`).
 This is one level deeper: the separator is right, the parse is right, and one
-character of user data makes the correct parser produce a fictional answer.
+character of user data makes the stricter parser produce a fictional answer while
+the looser ones carry on.

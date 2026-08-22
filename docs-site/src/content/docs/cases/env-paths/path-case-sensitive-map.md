@@ -41,12 +41,16 @@ const seen = new Map();
 seen.set("c:\\users\\me\\project", true);
 seen.has("C:\\Users\\me\\Project");   // false
 
-require("fs").statSync("c:\\users\\me\\project").ino ===
-require("fs").statSync("C:\\Users\\me\\Project").ino;   // same file
+const { realpathSync } = require("node:fs");
+realpathSync("c:\\users\\me\\project") ===
+realpathSync("C:\\Users\\me\\Project");   // true — one directory
 ```
 
-The two spellings name one file and are two distinct strings. On Linux they would
-name two different files, so the string comparison would be right.
+The two spellings name one directory and are two distinct strings. On Linux they
+would name two different directories, so the string comparison would be right.
+
+Do not reach for `stat().ino` to prove identity here: on Windows the inode is
+frequently reported as 0, so comparing it proves nothing at all.
 
 ## Cause
 
@@ -106,4 +110,6 @@ refer to one file while your data structure insists they are two.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/43>
 - <https://github.com/openai/codex/issues/40002>
+- <https://learn.microsoft.com/en-us/windows/wsl/case-sensitivity>

@@ -99,7 +99,7 @@ rejected two on evidence quality.
 
 | sha | disposition |
 |---|---|
-| 3685a61d | NEW cr-to-lf-doubles-crlf |
+| 3685a61d | REJECT no-windows-mechanism (naive CR-to-LF substitution is a string bug on any platform) |
 | 661339bb | REJECT docs-only |
 | 707bd3cc | REJECT test-only |
 | f142f1f7 | REJECT no-windows-mechanism |
@@ -153,7 +153,7 @@ rejected two on evidence quality.
 | #38683 | REJECT docs-only |
 | #39843 | REJECT repo-specific (CET fail-fast is a .NET/OS servicing issue, not a POSIX-assumption break) |
 | #39484 | REJECT repo-specific |
-| #36247 | NEW powershell-loads-profile |
+| #36247 | HELD powershell-loads-profile (uncovered; profile injection into -Command, needs a second source) |
 | #37306 | REJECT repo-specific |
 | #26803 | REJECT repo-specific |
 | #26613 | REF windowstyle-hidden-vs-windowshide |
@@ -234,7 +234,7 @@ rejected two on evidence quality.
 | #37740 | REF bomless-bat-oem-codepage |
 | #36844 | REF bom-less-ps1-cp949 |
 | #36375 | REJECT repo-specific |
-| #9767 | NEW constrained-language-forbids-setter |
+| #9767 | HELD constrained-language (uncovered; see 050 held list) |
 | #28079 | REF bom-less-ps1-cp949 |
 | #23903 | REF atomic-rename-loses-to-scanner |
 | #39276 | REJECT repo-specific |
@@ -257,7 +257,7 @@ rejected two on evidence quality.
 | #18466 | REJECT repo-specific |
 | #24576 | REJECT repo-specific |
 | #17208 | REF windowstyle-hidden-vs-windowshide |
-| #27117 | NEW pwsh-modulepath-pollutes-51 |
+| #27117 | HELD pwsh-modulepath (uncovered; see 050 held list) |
 | #36123 | REJECT no-windows-mechanism |
 | #34201 | REF bomless-bat-oem-codepage |
 | #27506 | REF bom-less-ps1-cp949 |
@@ -294,10 +294,10 @@ rejected two on evidence quality.
 | #38960 | REJECT repo-specific |
 | #38528 | REF lf-pure-transform-mixes-eol |
 | #32643 | REF lf-pure-transform-mixes-eol |
-| #35232 | REF cr-to-lf-doubles-crlf |
+| #35232 | REF split-n-leaves-cr |
 | #35789 | REF lf-pure-transform-mixes-eol |
 | #25048 | REF lf-pure-transform-mixes-eol |
-| #37302 | REF cr-to-lf-doubles-crlf |
+| #37302 | REF split-n-leaves-cr |
 | #26945 | REJECT repo-specific |
 | #23841 | REF lf-pure-transform-mixes-eol |
 | #9914 | REF lf-pure-transform-mixes-eol |

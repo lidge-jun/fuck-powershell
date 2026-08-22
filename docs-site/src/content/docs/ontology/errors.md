@@ -51,7 +51,7 @@ Win32 reports a path over the API ceiling as ERROR_FILENAME_EXCED_RANGE or ERROR
 
 File or command not found — on Windows often a PATHEXT/extension resolution miss, not a missing file.
 
-[dev-null-redirect](/fuck-powershell/cases/streams/dev-null-redirect/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [file-url-encodes-backslash](/fuck-powershell/cases/env-paths/file-url-encodes-backslash/) · [pathext-bare-name-enoent](/fuck-powershell/cases/env-paths/pathext-bare-name-enoent/) · [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
+[dev-null-redirect](/fuck-powershell/cases/streams/dev-null-redirect/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [file-url-encodes-backslash](/fuck-powershell/cases/env-paths/file-url-encodes-backslash/) · [pathext-bare-name-enoent](/fuck-powershell/cases/env-paths/pathext-bare-name-enoent/) · [cmd-unc-cwd-not-supported](/fuck-powershell/cases/env-paths/cmd-unc-cwd-not-supported/) · [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
 
 ## eperm
 

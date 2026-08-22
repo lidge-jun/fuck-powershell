@@ -30,36 +30,46 @@ anywhere in the output.
 
 ## Repro
 
-Write a `.cmd` with LF-only endings, which is the default for most editors and
-every AI coding agent:
+The failure needs `goto` or `call` — a straight-line script usually survives LF.
+Build one whose label sits far enough into the file to cross a 512-byte read
+boundary:
 
 ```powershell
-PS> [IO.File]::WriteAllText("t.cmd", "@echo off" + [char]10 + "npm --version" + [char]10)
-PS> Format-Hex t.cmd | Select-String "0D 0A"    # nothing: no CRLF pair
+PS> $pad  = ":: " + ("x" * 600)
+PS> $body = "@echo off", "goto :main", $pad, ":main", "npm --version"
+PS> [IO.File]::WriteAllText("t.cmd", ($body -join [char]10) + [char]10)
+PS> Format-Hex t.cmd | Select-String "0D 0A"    # nothing: the file is LF-only
 PS> cmd /c t.cmd
-'pm' is not recognized as an internal or external command
 ```
 
-Rewriting the identical text with CRLF fixes it:
+Rewriting the identical text with CRLF makes it behave:
 
 ```powershell
-PS> [IO.File]::WriteAllText("t.cmd", "@echo off" + [char]13 + [char]10 + "npm --version" + [char]13 + [char]10)
+PS> [IO.File]::WriteAllText("t.cmd", ($body -join "\r\n") + "\r\n")
 PS> cmd /c t.cmd     # runs
 ```
 
+What you get from the LF version varies with where the label lands: a label that
+is not found, a block that silently does not execute, or a truncated token
+reported as a missing command. `npm.cmd` itself uses `goto`, which is why the
+reported symptoms name npm.
+
 ## Cause
 
-cmd.exe's batch interpreter was built for CRLF and reads a script by seeking
-through the file as it executes rather than parsing it whole. Its line handling
-assumes a two-byte terminator, so on an LF-only file the seek arithmetic lands one
-byte off and the first character of a line is consumed as if it were the missing
-CR.
+cmd.exe reads a batch file in chunks as it executes rather than parsing it whole,
+and it re-seeks whenever control moves — which is exactly what `goto` and `call`
+do. The label scanner that performs that seek assumes a two-byte terminator, so on
+an LF-only file its arithmetic drifts by one byte per line, and a label that
+happens to sit near a chunk boundary is read at the wrong offset.
 
-That is why the failures look random: whether a given line loses its first byte
-depends on where the interpreter's file position happens to be, which depends on
-everything before it. Add a line at the top and a different line breaks. Block
-constructs — `if`, `for`, parenthesized groups — are hit hardest because the
-interpreter re-seeks to re-read them.
+Straight-line execution mostly tolerates LF, which is why "it worked when I tried
+it" is such a common and misleading data point. The failure lives in the seek
+path, so it needs a script that jumps — and it appears or disappears when you add
+a line anywhere above the label, because that moves where the boundary falls.
+
+That positional sensitivity is what produces the truncated-token symptoms:
+resuming at the wrong offset can start mid-word, so `call npm ...` is reported as
+`'pm'` and `powershell` as `'hell'`. Nothing announces a line-ending problem.
 
 The modern trigger is new. Batch files used to be written by Windows tools that
 emitted CRLF without being asked. Now they are written by editors defaulting to LF
@@ -92,7 +102,17 @@ Get-ChildItem -Filter *.cmd -Recurse | Where-Object {
 ```
 
 PowerShell scripts do not share this — `.ps1` files handle LF fine. It is
-specifically the batch interpreter.
+specifically the batch interpreter's chunked read and label seek.
+
+## Verification note
+
+The originating report (openclaw#119484) is a user account with the symptoms and
+a `Format-Hex` confirmation that the file was LF-only, not an executed
+reproduction of the mechanism. The chunk-boundary label-scanner explanation comes
+from published analyses of cmd.exe's batch reader rather than from a run in this
+loop; this corpus has no Windows host, hence `repro: historical`. What is solidly
+established is the remedy: batch files want CRLF, and the symptoms disappear when
+they get it.
 
 ---
 
@@ -103,4 +123,5 @@ worth knowing together.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/49>
 - <https://github.com/openclaw/openclaw/issues/119484>

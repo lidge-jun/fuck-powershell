@@ -35,17 +35,18 @@ neither does taking ownership, because there is nothing there to own.
 ## Repro
 
 ```
-C:\> icacls \\wsl.localhost\Ubuntu\home\me
-\\wsl.localhost\Ubuntu\home\me: Access is denied.
-
 C:\> dir \\wsl.localhost\Ubuntu\home\me
  Directory of \\wsl.localhost\Ubuntu\home\me
  ... lists normally ...
+
+C:\> icacls \\wsl.localhost\Ubuntu\home\me
+ ... the security operation does not apply to this provider ...
 ```
 
-The same command against any NTFS path succeeds. All four spellings behave the
-same way: `\\wsl.localhost\`, the older `\\wsl$\`, and both under the
-extended-length `\\?\UNC\` prefix.
+The path reads and lists like any other, and the security call is the one that
+refuses. Four spellings reach the same store — `\\wsl.localhost\`, the older
+`\\wsl$\`, and both under the extended-length `\\?\UNC\` prefix — which is why
+a skip list has to cover all four.
 
 ## Cause
 
@@ -65,6 +66,17 @@ POSIX has no equivalent trap because a mount either supports an operation or
 returns a clear `ENOTSUP`, and permission bits exist everywhere. Here the error
 is `Access is denied`, which reads as a permissions problem and sends you toward
 elevation — the one thing that cannot possibly help.
+
+## Verification note
+
+The originating commit (openai/codex `8a2bc6d9`) unit-tests the prefix matching;
+it does not contain a captured `icacls` transcript, and none was produced in this
+loop. What is documented independently is the architecture: WSL2 serves
+`\\wsl.localhost` and `\\wsl$` through a 9P redirector backed by a Linux
+filesystem, which has POSIX mode bits and no Windows security descriptors. The
+exact error text a given ACL call returns, and whether WSL1's VolFs behaves
+identically, are NOT established here — WSL1 uses a different provider. Hence
+`repro: historical`.
 
 ## Workaround
 

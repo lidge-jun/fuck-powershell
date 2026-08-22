@@ -99,4 +99,5 @@ modifier convention that is safe on POSIX terminals is not safe on Windows.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/46>
 - <https://github.com/openai/codex/commit/702238f0>

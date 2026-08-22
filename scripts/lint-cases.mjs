@@ -78,10 +78,21 @@ for (const f of files) {
   //     reach demonstrates it (MAX_PATH, reserved device names)
   // Citing an unrelated commit to satisfy this rule is worse than citing any of
   // the three, which is why the rule lists them explicitly.
-  if (fm.source === "third-party" &&
-      !refs.some(r => /github\.com\/[^/]+\/[^/]+\/(commit|pull|issues)\//.test(r)
-                   || /^https:\/\/(learn|docs)\.microsoft\.com\//.test(r)))
+  const hasCommitOrPr = refs.some(r => /github\.com\/[^/]+\/[^/]+\/(commit|pull)\//.test(r));
+  const hasIssue = refs.some(r => /github\.com\/[^/]+\/[^/]+\/issues\//.test(r)
+                              && !/lidge-jun\/fuck-powershell/.test(r));
+  const hasVendorDoc = refs.some(r => /^https:\/\/(learn|docs)\.microsoft\.com\//.test(r)
+                                   || /^https:\/\/docs\.python\.org\//.test(r)
+                                   || /^https:\/\/nodejs\.org\//.test(r));
+  if (fm.source === "third-party" && !hasCommitOrPr && !hasIssue && !hasVendorDoc)
     err("third-party case requires a commit, PR, issue, or authoritative vendor doc URL");
+  // An OPEN ISSUE is a report, not a verified mechanism. When it is the only
+  // evidence, the case needs a second primary source — vendor docs, runtime
+  // source, or a captured transcript — because an audit found a case whose Cause
+  // was inherited wholesale from an unverified issue body.
+  if (fm.source === "third-party" && hasIssue && !hasCommitOrPr && !hasVendorDoc
+      && !text.includes("## Verification note"))
+    err("issue-only third-party case needs a second primary source or a '## Verification note'");
   for (const s of SECTIONS) if (!text.includes(s)) err("missing section " + s);
 }
 

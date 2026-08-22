@@ -9,15 +9,15 @@ safe or tempting-but-unsafe. The graph powers the [fp lookup engine](/fuck-power
 
 | type | count |
 |---|---|
-| Workaround | 87 |
-| Mechanism | 55 |
+| Workaround | 88 |
+| Mechanism | 56 |
 | Command | 39 |
 | Runtime | 3 |
 | ErrorSignature | 23 |
 | Shell | 3 |
 | Environment | 4 |
-| Case | 86 |
+| Case | 87 |
 
-Total: 300 nodes, 613 edges. Generated from case
+Total: 303 nodes, 618 edges. Generated from case
 frontmatter — see [Mechanisms](/fuck-powershell/ontology/mechanisms/) and
 [Error signatures](/fuck-powershell/ontology/errors/).

@@ -46,20 +46,59 @@ if (docs.length === 0) {
 }
 const text = docs.map(f => readFileSync(join(unitDir, f), "utf8")).join("\n");
 
-const hexTokens = new Set(text.match(/\b[0-9a-f]{7,40}\b/g) ?? []);
-const issueTokens = new Set((text.match(/#(\d+)\b/g) ?? []).map(t => t.slice(1)));
+// Parse DISPOSITION ROWS, not tokens. An earlier version matched any hex token
+// anywhere in the doc, which meant a table row could name a SHA while carrying
+// no verb at all — and that is exactly how rows claiming NEW for cases nobody
+// wrote passed the gate. A row counts only when column 1 is the identifier and
+// column 2 opens with a disposition verb.
+// HELD is a fourth verb, added after an audit found rows claiming NEW for cases
+// nobody wrote. A held mechanism is real, uncovered, and deliberately not
+// written yet — recording that is honest, whereas leaving NEW on it is a ledger
+// that disagrees with the corpus. Held ids are exempt from the exists-on-disk
+// check for exactly that reason.
+const ROW = /^\|\s*#?([0-9a-f]{7,40}|\d+)\s*\|\s*(NEW|REF|REJECT|HELD)\b\s*([^|]*)\|/gim;
+const commitRows = new Map();
+const issueRows = new Map();
+// An all-digit token is ambiguous: 19030713 is a valid abbreviated SHA and a
+// plausible issue number. Disambiguate on the source marker — an issue row is
+// written "#123" — rather than on the character class, or every numeric SHA
+// silently lands in the wrong bucket and reads as an uncovered commit.
+for (const m of text.matchAll(ROW)) {
+  const [full, id, verb, rest] = m;
+  const isIssue = full.includes("#");
+  (isIssue ? issueRows : commitRows).set(id.toLowerCase(), { verb, rest: rest.trim() });
+}
 
 const missingCommits = commits.filter(sha => {
-  for (const t of hexTokens) if (sha.startsWith(t)) return false;
+  for (const t of commitRows.keys()) if (sha.startsWith(t)) return false;
   return true;
 });
-const missingIssues = issues.filter(n => !issueTokens.has(n));
+const missingIssues = issues.filter(n => !issueRows.has(n) && !commitRows.has(n));
+
+// A NEW disposition must name a case that exists on disk. A dangling NEW is a
+// ledger that disagrees with the corpus, which is worse than an unwritten case
+// because it reads as done.
+const caseIds = new Set(
+  readdirSync(join(ROOT, "cases"), { recursive: true })
+    .map(String)
+    .filter(f => f.endsWith(".md"))
+    .map(f => f.split("/").pop().replace(/\.md$/, "")),
+);
+const dangling = [];
+for (const [id, { verb, rest }] of [...commitRows, ...issueRows]) {
+  if (verb !== "NEW" && verb !== "REF") continue;
+  // Case ids are kebab-case but not always lowercase (env-path-vs-PATH-casing),
+  // so match the whole hyphenated run before any space or punctuation.
+  const named = (rest.match(/^([A-Za-z0-9]+(?:-[A-Za-z0-9]+)*)/) ?? [])[1];
+  if (named && !caseIds.has(named)) dangling.push(`${id} ${verb} ${named}`);
+}
 
 const label = `${repo} (${docs.join(", ")})`;
-if (missingCommits.length || missingIssues.length) {
-  console.error(`COVERAGE FAIL ${label}: ${missingCommits.length}/${commits.length} commits and ${missingIssues.length}/${issues.length} issues have no disposition row`);
+if (missingCommits.length || missingIssues.length || dangling.length) {
+  console.error(`COVERAGE FAIL ${label}: ${missingCommits.length}/${commits.length} commits and ${missingIssues.length}/${issues.length} issues have no disposition row; ${dangling.length} row(s) name a case that does not exist`);
   for (const sha of missingCommits.slice(0, 20)) console.error("  commit " + sha);
   for (const n of missingIssues.slice(0, 20)) console.error("  issue #" + n);
+  for (const d of dangling.slice(0, 20)) console.error("  dangling " + d);
   process.exit(1);
 }
-console.log(`COVERAGE OK ${label}: ${commits.length}/${commits.length} commits, ${issues.length}/${issues.length} issues`);
+console.log(`COVERAGE OK ${label}: ${commits.length}/${commits.length} commits, ${issues.length}/${issues.length} issues, all NEW/REF ids exist`);

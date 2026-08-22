@@ -1,5 +1,5 @@
 ---
-title: "subprocess text=True decodes the child with the console codepage, so one CJK byte raises UnicodeDecodeError and stdout comes back empty"
+title: "subprocess text=True decodes the child with the ANSI codepage under strict errors, so one unmappable byte raises UnicodeDecodeError instead of returning output"
 description: "encoding landmine — hard-error (both)"
 sidebar:
   label: "python subprocess locale encoding"
@@ -13,30 +13,39 @@ sidebar:
 
 ## Symptom
 
-A command runs fine in the terminal and returns nothing through Python. Either
-the output is empty with no error, or you get a decode failure naming a codec you
-never chose:
+A command runs fine in the terminal and blows up through Python, with a decode
+failure naming a codec you never chose:
 
 ```
 UnicodeDecodeError: 'gbk' codec can't decode byte 0x86 in position 12
 ```
 
 You did not ask for GBK. On a Korean machine it says `cp949`, on a Japanese one
-`cp932`, and in a US console it never happens at all — which is why it reaches
-users rather than CI.
+`cp932`, on a Western one `cp1252` — and in a US-English CI job with ASCII output
+it never happens at all, which is why it reaches users rather than tests.
 
-The empty-stdout variant is worse: the reader thread dies on the decode, the
-parent sees `None` or `""`, and your code concludes the command produced no
-output.
+If your code reads the child through a wrapper thread rather than
+`subprocess.run`, the same decode failure can surface as EMPTY output instead of
+an exception: the reader dies, the parent sees `None`, and the command looks like
+it produced nothing. That variant is worse, because there is no traceback to
+follow.
 
 ## Repro
 
+The failure needs a byte the ANSI codepage cannot map, so pick output the child
+emits as UTF-8 while the parent decodes as something else:
+
 ```python
 import subprocess
-r = subprocess.run(["cmd", "/c", "echo 한글"], capture_output=True, text=True)
-# on a cp949 console this decodes as cp949; a byte the codepage cannot map
-# raises UnicodeDecodeError under the default errors="strict"
+# a UTF-8-emitting child (an emoji or a check mark) read on a cp1252 or cp949 box
+subprocess.run([sys.executable, "-c", "import sys;sys.stdout.buffer.write('✓'.encode())"],
+               capture_output=True, text=True)
+# UnicodeDecodeError: 'cp1252' codec can't decode byte 0x9c in position 1
 ```
+
+Note what does NOT fail: `echo 한글` on a Korean machine is valid cp949, so it
+decodes cleanly. The trap needs a MISMATCH between what the child emits and what
+the parent's locale says, not merely non-ASCII text.
 
 And the fix that looks right and is also wrong:
 
@@ -48,10 +57,12 @@ subprocess.run(cmd, capture_output=True, text=True,
 
 ## Cause
 
-`text=True` without an explicit `encoding=` decodes the child's bytes with
-`locale.getpreferredencoding(False)`, which on Windows is the ANSI codepage —
-cp949, cp932, cp936, cp1252 — not UTF-8. The default error handler is
-`strict`, so a single unmappable byte raises rather than substituting.
+`text=True` without an explicit `encoding=` decodes the child's bytes with the
+interpreter's locale encoding, which on Windows is the ANSI codepage from
+`GetACP` — cp949, cp932, cp936, cp1252 — not UTF-8, and notably not the CONSOLE
+codepage either, which is a different value (cp437 or cp850 on a Western box).
+The default error handler is `strict`, so one unmappable byte raises rather than
+substituting.
 
 Two things make this harder than it looks.
 
@@ -62,10 +73,9 @@ fixes one and breaks the other, and `errors="replace"` makes the breakage
 unrecoverable because the original bytes are gone.
 
 Second, `PYTHONUTF8=1` and PEP 540 UTF-8 mode change YOUR interpreter's default,
-not what the child produces. Worse, they make
-`locale.getpreferredencoding(False)` report `utf-8` while native tools keep
-emitting the ANSI codepage — so the function you would use to detect the problem
-starts lying about it.
+not what the child produces. They make the locale-encoding lookup report
+`utf-8` while native tools keep emitting the ANSI or OEM codepage — so the
+function you would reach for to detect the mismatch stops reporting it.
 
 ## Workaround
 
@@ -100,6 +110,7 @@ Popen versus base64 framing in the child — and a different reader.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/47>
 - <https://github.com/NousResearch/hermes-agent/commit/5b5b5e8d>
 - <https://github.com/NousResearch/hermes-agent/issues/83767>
 - <https://github.com/NousResearch/hermes-agent/issues/89442>

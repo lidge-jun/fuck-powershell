@@ -26,7 +26,7 @@ environment back and go hunting through your parser for a bug that is not there.
 const { execFileSync } = require("node:child_process");
 
 execFileSync("cmd.exe", ["/c", "echo first\r\necho second"], { encoding: "utf8" });
-// "first" only — "echo second" is consumed as arguments to the first echo
+// "first" only — the newline ends the command and the remainder is discarded
 
 execFileSync("cmd.exe", ["/c", "echo first & echo second"], { encoding: "utf8" });
 // "first" and "second"
@@ -41,10 +41,11 @@ echo second'          # both run
 
 ## Cause
 
-`cmd.exe /c` takes ONE command line, not a script. Everything after `/c` is a
-single line to parse, and a newline in the middle of it is just a character — it
-is not a statement terminator, so the text after it becomes more arguments to
-whatever the line already started.
+`cmd.exe /c` takes ONE command, not a script. A newline in the middle of that
+string TERMINATES the command rather than separating two of them, and everything
+after it is dropped — not run, and not passed along as arguments either. The
+first command's output is all you get, which is why the loss is so easy to miss:
+the visible result is exactly what a successful single command looks like.
 
 That is a real asymmetry inside cmd.exe itself, not a general rule about Windows:
 a `.bat` or `.cmd` FILE is a script, and newlines separate statements there
@@ -81,4 +82,5 @@ split one silently does not.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/45>
 - <https://github.com/openai/codex/commit/1f0fe5b8>

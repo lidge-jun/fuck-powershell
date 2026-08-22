@@ -11,6 +11,8 @@ refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/50
   - https://github.com/openclaw/openclaw/issues/111900
   - https://github.com/openclaw/openclaw/issues/120134
+  - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/taskkill
+  - https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information
 ontology:
   affects: [env-windows, runtime-node]
   invokes: [command-taskkill]

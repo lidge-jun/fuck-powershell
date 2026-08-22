@@ -28,18 +28,19 @@ two strings shows nothing, because the difference has no glyph.
 ## Repro
 
 ```python
-import subprocess
-p = subprocess.Popen(["cat"], stdin=subprocess.PIPE, text=True)
-p.stdin.write("a\nb\n")     # what you sent
-p.stdin.close()
-# what the child receives on Windows: b"a\r\nb\r\n"
-```
-
-And the same on a plain file:
-
-```python
 open("t.txt", "w").write("a\nb\n")
 len(open("t.txt", "rb").read())   # 6 on Windows, 4 on POSIX
+```
+
+The same wrapper sits in a text-mode pipe, so the child receives bytes the parent
+never wrote:
+
+```python
+import subprocess, sys
+child = [sys.executable, "-c",
+         "import sys;sys.stdout.buffer.write(repr(sys.stdin.buffer.read()).encode())"]
+p = subprocess.run(child, input="a\nb\n", text=True, capture_output=True)
+p.stdout   # b'a\r\nb\r\n' on Windows, b'a\nb\n' on POSIX
 ```
 
 ## Cause
@@ -93,4 +94,5 @@ transit.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/48>
 - <https://github.com/NousResearch/hermes-agent/commit/8f91d7bf>

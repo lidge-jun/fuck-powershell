@@ -315,6 +315,12 @@ Windows retains the transmission control block for a closed socket so the endpoi
 
 Cases: [tcp-tcb-survives-listener](/fuck-powershell/cases/env-paths/tcp-tcb-survives-listener/)
 
+## cmd.exe cannot hold a UNC current directory
+
+The current directory is drive-relative in cmd.exe's model, so a UNC path cannot be one; started in a UNC directory it warns and silently relocates to the Windows directory, and every batch shim that hops through it inherits the wrong working directory.
+
+Cases: [cmd-unc-cwd-not-supported](/fuck-powershell/cases/env-paths/cmd-unc-cwd-not-supported/)
+
 ## a UNC path may be served by a non-NTFS provider
 
 A UNC root can be backed by a provider with entirely different semantics from NTFS, such as the WSL 9P filesystem, so operations that assume a Windows security descriptor fail with access-denied on a path that reads and lists normally.

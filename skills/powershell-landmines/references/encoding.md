@@ -148,36 +148,46 @@ anywhere in the output.
 
 ## Repro
 
-Write a `.cmd` with LF-only endings, which is the default for most editors and
-every AI coding agent:
+The failure needs `goto` or `call` — a straight-line script usually survives LF.
+Build one whose label sits far enough into the file to cross a 512-byte read
+boundary:
 
 ```powershell
-PS> [IO.File]::WriteAllText("t.cmd", "@echo off" + [char]10 + "npm --version" + [char]10)
-PS> Format-Hex t.cmd | Select-String "0D 0A"    # nothing: no CRLF pair
+PS> $pad  = ":: " + ("x" * 600)
+PS> $body = "@echo off", "goto :main", $pad, ":main", "npm --version"
+PS> [IO.File]::WriteAllText("t.cmd", ($body -join [char]10) + [char]10)
+PS> Format-Hex t.cmd | Select-String "0D 0A"    # nothing: the file is LF-only
 PS> cmd /c t.cmd
-'pm' is not recognized as an internal or external command
 ```
 
-Rewriting the identical text with CRLF fixes it:
+Rewriting the identical text with CRLF makes it behave:
 
 ```powershell
-PS> [IO.File]::WriteAllText("t.cmd", "@echo off" + [char]13 + [char]10 + "npm --version" + [char]13 + [char]10)
+PS> [IO.File]::WriteAllText("t.cmd", ($body -join "\r\n") + "\r\n")
 PS> cmd /c t.cmd     # runs
 ```
 
+What you get from the LF version varies with where the label lands: a label that
+is not found, a block that silently does not execute, or a truncated token
+reported as a missing command. `npm.cmd` itself uses `goto`, which is why the
+reported symptoms name npm.
+
 ## Cause
 
-cmd.exe's batch interpreter was built for CRLF and reads a script by seeking
-through the file as it executes rather than parsing it whole. Its line handling
-assumes a two-byte terminator, so on an LF-only file the seek arithmetic lands one
-byte off and the first character of a line is consumed as if it were the missing
-CR.
+cmd.exe reads a batch file in chunks as it executes rather than parsing it whole,
+and it re-seeks whenever control moves — which is exactly what `goto` and `call`
+do. The label scanner that performs that seek assumes a two-byte terminator, so on
+an LF-only file its arithmetic drifts by one byte per line, and a label that
+happens to sit near a chunk boundary is read at the wrong offset.
 
-That is why the failures look random: whether a given line loses its first byte
-depends on where the interpreter's file position happens to be, which depends on
-everything before it. Add a line at the top and a different line breaks. Block
-constructs — `if`, `for`, parenthesized groups — are hit hardest because the
-interpreter re-seeks to re-read them.
+Straight-line execution mostly tolerates LF, which is why "it worked when I tried
+it" is such a common and misleading data point. The failure lives in the seek
+path, so it needs a script that jumps — and it appears or disappears when you add
+a line anywhere above the label, because that moves where the boundary falls.
+
+That positional sensitivity is what produces the truncated-token symptoms:
+resuming at the wrong offset can start mid-word, so `call npm ...` is reported as
+`'pm'` and `powershell` as `'hell'`. Nothing announces a line-ending problem.
 
 The modern trigger is new. Batch files used to be written by Windows tools that
 emitted CRLF without being asked. Now they are written by editors defaulting to LF
@@ -210,7 +220,17 @@ Get-ChildItem -Filter *.cmd -Recurse | Where-Object {
 ```
 
 PowerShell scripts do not share this — `.ps1` files handle LF fine. It is
-specifically the batch interpreter.
+specifically the batch interpreter's chunked read and label seek.
+
+## Verification note
+
+The originating report (openclaw#119484) is a user account with the symptoms and
+a `Format-Hex` confirmation that the file was LF-only, not an executed
+reproduction of the mechanism. The chunk-boundary label-scanner explanation comes
+from published analyses of cmd.exe's batch reader rather than from a run in this
+loop; this corpus has no Windows host, hence `repro: historical`. What is solidly
+established is the remedy: batch files want CRLF, and the symptoms disappear when
+they get it.
 
 ---
 
@@ -360,34 +380,43 @@ default to BOM-less UTF-8, so the same script writes different bytes per runtime
 ---
 
 
-# subprocess text=True decodes the child with the console codepage, so one CJK byte raises UnicodeDecodeError and stdout comes back empty
+# subprocess text=True decodes the child with the ANSI codepage under strict errors, so one unmappable byte raises UnicodeDecodeError instead of returning output
 
 ## Symptom
 
-A command runs fine in the terminal and returns nothing through Python. Either
-the output is empty with no error, or you get a decode failure naming a codec you
-never chose:
+A command runs fine in the terminal and blows up through Python, with a decode
+failure naming a codec you never chose:
 
 ```
 UnicodeDecodeError: 'gbk' codec can't decode byte 0x86 in position 12
 ```
 
 You did not ask for GBK. On a Korean machine it says `cp949`, on a Japanese one
-`cp932`, and in a US console it never happens at all — which is why it reaches
-users rather than CI.
+`cp932`, on a Western one `cp1252` — and in a US-English CI job with ASCII output
+it never happens at all, which is why it reaches users rather than tests.
 
-The empty-stdout variant is worse: the reader thread dies on the decode, the
-parent sees `None` or `""`, and your code concludes the command produced no
-output.
+If your code reads the child through a wrapper thread rather than
+`subprocess.run`, the same decode failure can surface as EMPTY output instead of
+an exception: the reader dies, the parent sees `None`, and the command looks like
+it produced nothing. That variant is worse, because there is no traceback to
+follow.
 
 ## Repro
 
+The failure needs a byte the ANSI codepage cannot map, so pick output the child
+emits as UTF-8 while the parent decodes as something else:
+
 ```python
 import subprocess
-r = subprocess.run(["cmd", "/c", "echo 한글"], capture_output=True, text=True)
-# on a cp949 console this decodes as cp949; a byte the codepage cannot map
-# raises UnicodeDecodeError under the default errors="strict"
+# a UTF-8-emitting child (an emoji or a check mark) read on a cp1252 or cp949 box
+subprocess.run([sys.executable, "-c", "import sys;sys.stdout.buffer.write('✓'.encode())"],
+               capture_output=True, text=True)
+# UnicodeDecodeError: 'cp1252' codec can't decode byte 0x9c in position 1
 ```
+
+Note what does NOT fail: `echo 한글` on a Korean machine is valid cp949, so it
+decodes cleanly. The trap needs a MISMATCH between what the child emits and what
+the parent's locale says, not merely non-ASCII text.
 
 And the fix that looks right and is also wrong:
 
@@ -399,10 +428,12 @@ subprocess.run(cmd, capture_output=True, text=True,
 
 ## Cause
 
-`text=True` without an explicit `encoding=` decodes the child's bytes with
-`locale.getpreferredencoding(False)`, which on Windows is the ANSI codepage —
-cp949, cp932, cp936, cp1252 — not UTF-8. The default error handler is
-`strict`, so a single unmappable byte raises rather than substituting.
+`text=True` without an explicit `encoding=` decodes the child's bytes with the
+interpreter's locale encoding, which on Windows is the ANSI codepage from
+`GetACP` — cp949, cp932, cp936, cp1252 — not UTF-8, and notably not the CONSOLE
+codepage either, which is a different value (cp437 or cp850 on a Western box).
+The default error handler is `strict`, so one unmappable byte raises rather than
+substituting.
 
 Two things make this harder than it looks.
 
@@ -413,10 +444,9 @@ fixes one and breaks the other, and `errors="replace"` makes the breakage
 unrecoverable because the original bytes are gone.
 
 Second, `PYTHONUTF8=1` and PEP 540 UTF-8 mode change YOUR interpreter's default,
-not what the child produces. Worse, they make
-`locale.getpreferredencoding(False)` report `utf-8` while native tools keep
-emitting the ANSI codepage — so the function you would use to detect the problem
-starts lying about it.
+not what the child produces. They make the locale-encoding lookup report
+`utf-8` while native tools keep emitting the ANSI or OEM codepage — so the
+function you would reach for to detect the mismatch stops reporting it.
 
 ## Workaround
 
@@ -472,18 +502,19 @@ two strings shows nothing, because the difference has no glyph.
 ## Repro
 
 ```python
-import subprocess
-p = subprocess.Popen(["cat"], stdin=subprocess.PIPE, text=True)
-p.stdin.write("a\nb\n")     # what you sent
-p.stdin.close()
-# what the child receives on Windows: b"a\r\nb\r\n"
-```
-
-And the same on a plain file:
-
-```python
 open("t.txt", "w").write("a\nb\n")
 len(open("t.txt", "rb").read())   # 6 on Windows, 4 on POSIX
+```
+
+The same wrapper sits in a text-mode pipe, so the child receives bytes the parent
+never wrote:
+
+```python
+import subprocess, sys
+child = [sys.executable, "-c",
+         "import sys;sys.stdout.buffer.write(repr(sys.stdin.buffer.read()).encode())"]
+p = subprocess.run(child, input="a\nb\n", text=True, capture_output=True)
+p.stdout   # b'a\r\nb\r\n' on Windows, b'a\nb\n' on POSIX
 ```
 
 ## Cause

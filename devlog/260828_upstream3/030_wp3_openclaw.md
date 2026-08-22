@@ -88,9 +88,11 @@ did not exist as a failure source when batch files were written by Windows tools
   the parsing side rather than the quoting side.
 - `drive-colon-not-field-separator` (three commits) REFs
   `path-colon-not-delimiter`: same character, same confusion, different consumer.
-- `wsl-unc-cwd-rejected` REFs `wsl-unc-rejects-nt-acl`, which this round wrote
-  from codex evidence — cmd refusing a UNC current directory is the same provider
-  boundary.
+- `wsl-unc-cwd-rejected` was initially REFed to `wsl-unc-rejects-nt-acl`. The
+  A-gate reviewer rejected that and was right: cmd.exe refusing a UNC CURRENT
+  DIRECTORY is a shell limitation applying to every UNC path, network shares
+  included, with nothing to do with whether the provider carries a security
+  descriptor. It is now `cmd-unc-cwd-not-supported`.
 
 ## Held for a later round
 
@@ -117,6 +119,13 @@ under the evidence bar for a case whose whole value is being true.
 | 29497b4e | REJECT no-windows-mechanism |
 | 859fd0b1 | REJECT no-windows-mechanism |
 | ed17774f | REF utf8-bom-still-breaks-grep |
+| 19030713 | REF utf8-bom-still-breaks-grep |
+| 42578754 | REJECT no-windows-mechanism |
+| 20646156 | REJECT no-windows-mechanism |
+| 54976624 | REJECT no-windows-mechanism |
+| 08663917 | REJECT no-windows-mechanism |
+| 24048717 | REJECT no-windows-mechanism |
+| 41097555 | REJECT no-windows-mechanism |
 | 38d1a727 | REJECT no-windows-mechanism |
 | 8347a52f | REJECT no-windows-mechanism |
 | cc8e593c | REJECT no-windows-mechanism |
@@ -307,7 +316,7 @@ under the evidence bar for a case whose whole value is being true.
 | 6567f996 | REF utf8-bom-still-breaks-grep |
 | a1170646 | REF bom-less-ps1-cp949 |
 | 2990c00c | REF utf8-bom-still-breaks-grep |
-| 684a9b2e | REF wsl-unc-rejects-nt-acl (UNC as cwd refused by cmd shims) |
+| 684a9b2e | NEW cmd-unc-cwd-not-supported |
 | 4182fbaa | REF native-stderr-errorrecord |
 | d06f0a0e | REF native-stderr-errorrecord |
 | 8847d390 | REJECT repo-specific |

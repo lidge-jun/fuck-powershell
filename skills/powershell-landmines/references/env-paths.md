@@ -94,6 +94,90 @@ than cleanup.
 ---
 
 
+# cmd.exe refuses a UNC working directory, so every .cmd shim breaks when your terminal is opened inside a WSL or network path
+
+## Symptom
+
+An install or a build fails before it does anything, with a warning about the
+current directory rather than about your command:
+
+```
+'\\wsl.localhost\Ubuntu\home\me\project'
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+```
+
+Then whatever followed runs in `C:\Windows` and cannot find your project. The
+realistic trigger is not a network share — it is opening a terminal inside a WSL
+directory, or launching a task from an editor whose workspace lives there.
+
+What makes it confusing is that the command itself is fine. `npm`, `yarn`, and
+`corepack` are all `.cmd` shims, so any of them hops through cmd.exe and inherits
+the refusal, while the same command run from `C:\` works perfectly.
+
+## Repro
+
+```
+C:\> pushd \\wsl.localhost\Ubuntu\home\me
+C:\> cmd /c npm --version
+'\\wsl.localhost\Ubuntu\home\me'
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+```
+
+PowerShell has no such limitation and will happily sit in that directory, which is
+why the failure appears only for the subset of tools that shell out through
+cmd.exe.
+
+## Cause
+
+cmd.exe cannot hold a UNC path as its current directory. The limitation is
+historical — the current directory is a drive-relative concept in its model, and a
+UNC path has no drive — and it has never been lifted. When cmd.exe starts in one,
+it prints the warning and silently relocates to the Windows directory rather than
+failing outright.
+
+That silent relocation is the whole problem. The process keeps going with a
+working directory nobody chose, so downstream failures are about missing files
+rather than about the directory, and the warning that explains it scrolls past
+above the real error.
+
+POSIX has no equivalent: a network mount is an ordinary path, and a shell can
+chdir into it like anywhere else. So code that shells out through a `.cmd` shim
+picks this up on Windows only, and only for users whose project lives on a UNC
+path — which increasingly means anyone working in WSL from a Windows terminal.
+
+## Workaround
+
+Run the shim from a local directory and pass absolute paths:
+
+```powershell
+Push-Location -LiteralPath $env:TEMP     # any drive-backed directory
+try   { & $CommandPath @Arguments }      # shim now starts on a real drive
+finally { Pop-Location }
+```
+
+The arguments still name the UNC location, which is fine — cmd.exe objects to
+being IN one, not to being handed one.
+
+The other durable answer is to map the UNC path to a drive letter with
+`net use` or `pushd` (which does it automatically and cleans up on `popd`), so
+the working directory is drive-backed for everything downstream.
+
+Do not silence the warning without fixing the directory. The relocation happens
+either way, and the message is the only clue about why your build cannot see its
+own files.
+
+---
+
+`wsl-unc-rejects-nt-acl` is the other half of the WSL UNC story: there a security
+operation has nothing to act on. Here the path is refused as a working directory
+by one specific shell, and everything that hops through that shell inherits it.
+
+
+---
+
+
 # dynamic import of an absolute path works on POSIX and throws ERR_UNSUPPORTED_ESM_URL_SCHEME on Windows, because C: reads as a protocol
 
 ## Symptom
@@ -954,12 +1038,16 @@ const seen = new Map();
 seen.set("c:\\users\\me\\project", true);
 seen.has("C:\\Users\\me\\Project");   // false
 
-require("fs").statSync("c:\\users\\me\\project").ino ===
-require("fs").statSync("C:\\Users\\me\\Project").ino;   // same file
+const { realpathSync } = require("node:fs");
+realpathSync("c:\\users\\me\\project") ===
+realpathSync("C:\\Users\\me\\Project");   // true — one directory
 ```
 
-The two spellings name one file and are two distinct strings. On Linux they would
-name two different files, so the string comparison would be right.
+The two spellings name one directory and are two distinct strings. On Linux they
+would name two different directories, so the string comparison would be right.
+
+Do not reach for `stat().ino` to prove identity here: on Windows the inode is
+frequently reported as 0, so comparing it proves nothing at all.
 
 ## Cause
 
@@ -1115,11 +1203,16 @@ program, which is why this burns an afternoon.
 
 ## Repro
 
+```rust
+// PATH = C:\Program Files\PowerShell\7";C:\tools\git\cmd;C:\Windows\System32
+std::env::split_paths(&std::env::var_os("PATH").unwrap()).count();
+// the stray quote opens a span that never closes, so everything after it
+// collapses into ONE entry naming a directory that does not exist
+```
+
 ```powershell
-PS> $env:PATH = 'C:\Program Files\PowerShell\7";' + 'C:\tools\git\cmd' + ';C:\Windows\System32'
-PS> where.exe git          # found
-PS> node -e "console.log(require('child_process').spawnSync('git',['--version']).error?.code)"
-ENOENT
+PS> where.exe git
+C:\tools\git\cmd\git.exe        # the shell has no trouble
 ```
 
 The stray `"` after `7` is the whole bug. It is trivially easy to produce: a
@@ -1137,13 +1230,21 @@ quoted span at the stray `"` and never finds its closer, so every remaining
 semicolon is swallowed as part of one enormous, nonexistent directory name. Rust's
 `std::env::split_paths` behaves this way, and it is behaving correctly.
 
-Whether you are affected depends entirely on which splitter you use:
+Whether you are affected depends entirely on which splitter you use, and the
+differences are larger than "quote-aware or not":
 
-- Quote-aware splitters (`std::env::split_paths`, and anything modelling the
-  documented rules) lose every entry after the stray quote.
-- Naive `split(';')` — which most scripts and many runtimes use — is unaffected,
-  because it never opened a span.
-- `where.exe` and PowerShell's own command resolution are unaffected.
+- `std::env::split_paths` honors a quote ANYWHERE in an entry, so a stray one
+  mid-entry opens a span that swallows every later separator. This is the case
+  that bites.
+- libuv, which is what Node uses to resolve a command, treats an entry as quoted
+  only when it STARTS with a quote. A mid-entry quote does not open a span there,
+  so Node keeps finding the later entries.
+- Naive `split(';')` never opens a span at all.
+- `where.exe` and PowerShell's own resolution are unaffected.
+
+Three parsers, three behaviors, one PATH. That is the part worth carrying away:
+"is this PATH valid" has no single answer, so a diagnostic run through a
+different runtime than the failing program can confirm the wrong thing.
 
 So the failure is not "PATH is broken". It is "PATH is broken for the correct
 parsers only", which inverts the usual debugging instinct: the tools you trust to
@@ -1170,11 +1271,20 @@ If you must be tolerant, fall back to naive semicolon splitting when the
 quote-aware parse yields an entry containing `;` — that entry is fictional by
 construction.
 
+## Verification note
+
+The `std::env::split_paths` behavior is read from the Rust standard library
+source, and the failure was reported against a Rust binary on Windows
+(openai/codex#38421) with `where.exe` succeeding in the same shell. The
+contrasting libuv behavior is read from its process source. Neither was executed
+in this loop, hence `repro: historical`.
+
 ---
 
 `node-path-host-delimiter` is about the SEPARATOR being wrong (`:` versus `;`).
 This is one level deeper: the separator is right, the parse is right, and one
-character of user data makes the correct parser produce a fictional answer.
+character of user data makes the stricter parser produce a fictional answer while
+the looser ones carry on.
 
 
 ---
@@ -1786,17 +1896,18 @@ neither does taking ownership, because there is nothing there to own.
 ## Repro
 
 ```
-C:\> icacls \\wsl.localhost\Ubuntu\home\me
-\\wsl.localhost\Ubuntu\home\me: Access is denied.
-
 C:\> dir \\wsl.localhost\Ubuntu\home\me
  Directory of \\wsl.localhost\Ubuntu\home\me
  ... lists normally ...
+
+C:\> icacls \\wsl.localhost\Ubuntu\home\me
+ ... the security operation does not apply to this provider ...
 ```
 
-The same command against any NTFS path succeeds. All four spellings behave the
-same way: `\\wsl.localhost\`, the older `\\wsl$\`, and both under the
-extended-length `\\?\UNC\` prefix.
+The path reads and lists like any other, and the security call is the one that
+refuses. Four spellings reach the same store — `\\wsl.localhost\`, the older
+`\\wsl$\`, and both under the extended-length `\\?\UNC\` prefix — which is why
+a skip list has to cover all four.
 
 ## Cause
 
@@ -1816,6 +1927,17 @@ POSIX has no equivalent trap because a mount either supports an operation or
 returns a clear `ENOTSUP`, and permission bits exist everywhere. Here the error
 is `Access is denied`, which reads as a permissions problem and sends you toward
 elevation — the one thing that cannot possibly help.
+
+## Verification note
+
+The originating commit (openai/codex `8a2bc6d9`) unit-tests the prefix matching;
+it does not contain a captured `icacls` transcript, and none was produced in this
+loop. What is documented independently is the architecture: WSL2 serves
+`\\wsl.localhost` and `\\wsl$` through a 9P redirector backed by a Linux
+filesystem, which has POSIX mode bits and no Windows security descriptors. The
+exact error text a given ACL call returns, and whether WSL1's VolFs behaves
+identically, are NOT established here — WSL1 uses a different provider. Hence
+`repro: historical`.
 
 ## Workaround
 
