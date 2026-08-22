@@ -12,6 +12,8 @@ const categories = [
   { id: "versions",     label: "Versions",    tint: "#bf5af2", first: "ps51-vs-7-split",         glyph: "M12 4v8m0 0l-4 8m4-8l4 8M6 8h12" },
   { id: "env-paths",    label: "Env & paths", tint: "#ffd60a", first: "env-domain-principal",    glyph: "M4 18V8a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" },
   { id: "ci-agents",    label: "CI & agents", tint: "#ff453a", first: "actions-default-shell",   glyph: "M8 9l-4 3 4 3m8-6l4 3-4 3m-6 3l4-12" },
+  { id: "collections",  label: "Collections", tint: "#ac8e68", first: "get-content-scalar-collapse", glyph: "M4 6h16M4 12h16M4 18h10" },
+  { id: "parsing",      label: "Parsing",     tint: "#6ac4dc", first: "convertto-json-depth-two", glyph: "M8 4l-4 8 4 8m8-16l4 8-4 8" },
 ];
 ---
 <!doctype html>
@@ -66,7 +68,7 @@ $ node build.js 2&gt;/dev/null
       </section>
 
       <section class="dock-section" id="categories" aria-label="Case categories">
-        <h2 class="dock-title">Eight ways it explodes</h2>
+        <h2 class="dock-title">Ten ways it explodes</h2>
         <ul class="dock" role="list">
           {categories.map((c) => (
             <li>
@@ -84,9 +86,13 @@ $ node build.js 2&gt;/dev/null
       <section class="about">
         <p>
           Every case documents a real failure — <strong>Symptom, Repro, Cause, Workaround</strong> —
-          and cites a public commit or source file. Five come from mined open-source fixes,
-          the rest from production incidents. Your coding agent can
-          <a href={link("skill/")}>load the distilled skill</a> and stop stepping on them.
+          and cites a public commit or source file, from production incidents, mined
+          open-source fixes, and community submissions. Your coding agent
+          can{" "}<a href={link("skill/")}>query the corpus before patching</a>{" "}and
+          stop stepping on them.
+        </p>
+        <p>
+          Browse everything on the <a href={link("cases/")}>All cases</a> index.
         </p>
       </section>
 
@@ -101,6 +107,13 @@ $ node build.js 2&gt;/dev/null
       const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
       addEventListener("scroll", onScroll, { passive: true });
       onScroll();
+      // Safari fails to honor initial-load hash scroll when html has
+      // scroll-behavior: smooth — force it after layout settles.
+      if (location.hash) {
+        requestAnimationFrame(() => {
+          document.querySelector(location.hash)?.scrollIntoView({ behavior: "auto", block: "start" });
+        });
+      }
     </script>
   </body>
 </html>
