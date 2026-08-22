@@ -11,6 +11,7 @@ refs:
   - https://github.com/lidge-jun/cli-jaw/blob/main/src/prompt/templates/a1-system.md
   - https://github.com/lidge-jun/cli-jaw/commit/7f0c655beb9eb3b3a426a3a155c88af232f12ff7
   - https://github.com/lidge-jun/opencodex/commit/ff6916abcde01de60a1b1ac4ce7adb4c8efad6de
+  - https://github.com/lidge-jun/opencodex/commit/22e156e25aed5bc06fc73a6e9c1fa00eb38049b3
 ---
 
 # A BOM-less .ps1 is read as ANSI — non-ASCII corrupts before execution

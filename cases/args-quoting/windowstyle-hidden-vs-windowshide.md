@@ -9,6 +9,7 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/commit/93a083d1fc0a28853dc3eb385bf55e16af9e5b7f
+  - https://github.com/lidge-jun/opencodex/commit/26dc5aa2b78bf902b8b27a122d6ada1bd2184906
 ---
 
 # -WindowStyle Hidden still flashes a console window

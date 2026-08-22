@@ -9,6 +9,8 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/1
+  - https://github.com/lidge-jun/opencodex/commit/9eaff979748d5b85b03d7529131472515a87a7e8
+  - https://github.com/lidge-jun/cli-jaw/commit/911b74ad31e6c23cb03c80f1c456c36da05eef3b
 ---
 
 # bare npm is ENOENT and npm.cmd is EINVAL - the same tool, two different lies
