@@ -1,0 +1,3 @@
+{"ts":"2026-08-22T14:30:31.228Z","slug":"extend-the-fuck-powershell-corpus-with-non-dupli","event":"created","detail":"init objective=\"Extend the fuck-powershell corpus with non-duplicate Windows/PowerShell failure cases mined from codexclaw, cli-jaw, ima2-gen, agbrowse, opencodex — one repo per PABCD work-phase in that order, docs-first, with 100% SHA disposition coverage, ontology+skill+site+README+issues kept consistent, and pushed public.\" criteria=0"}
+{"ts":"2026-08-22T15:19:15.842Z","slug":"extend-the-fuck-powershell-corpus-with-non-dupli","event":"workphase_done","detail":"closed wp1"}
+{"ts":"2026-08-22T15:19:15.843Z","slug":"extend-the-fuck-powershell-corpus-with-non-dupli","event":"workphase_started","detail":"started wp2"}

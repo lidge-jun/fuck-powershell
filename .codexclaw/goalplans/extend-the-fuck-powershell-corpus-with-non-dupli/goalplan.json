@@ -1,0 +1,260 @@
+{
+  "objective": "Extend the fuck-powershell corpus with non-duplicate Windows/PowerShell failure cases mined from codexclaw, cli-jaw, ima2-gen, agbrowse, opencodex — one repo per PABCD work-phase in that order, docs-first, with 100% SHA disposition coverage, ontology+skill+site+README+issues kept consistent, and pushed public.",
+  "slug": "extend-the-fuck-powershell-corpus-with-non-dupli",
+  "createdAt": "2026-08-22T14:30:31.226Z",
+  "updatedAt": "2026-08-22T15:19:15.842Z",
+  "activeWorkPhaseId": "wp2",
+  "workPhases": [
+    {
+      "id": "wp0",
+      "title": "Docs-only roadmap cycle: inventory, dedupe method, six decade docs",
+      "status": "done",
+      "tasks": [
+        {
+          "id": "t0-inv",
+          "title": "Freeze per-repo Windows commit inventories (5 files, dispositioned-SHA exclusion applied)",
+          "status": "done"
+        },
+        {
+          "id": "t0-analyst",
+          "title": "Dispatch 5 parallel xai/grok-4.6 analyst lanes (one per repo) with strict dedupe bar",
+          "status": "done"
+        },
+        {
+          "id": "t0-docs",
+          "title": "Write 000_plan.md, 001_method.md and diff-level decade docs 010-060",
+          "status": "done"
+        }
+      ],
+      "criteriaIds": [
+        "c-roadmap",
+        "c-inventory"
+      ]
+    },
+    {
+      "id": "wp1",
+      "title": "codexclaw: disposition inventory, write non-duplicate cases",
+      "status": "done",
+      "tasks": [
+        {
+          "id": "t1-disp",
+          "title": "Ledger table covering every codexclaw inventory SHA",
+          "status": "done"
+        },
+        {
+          "id": "t1-cases",
+          "title": "Write NEW cases + ref appends for codexclaw mechanisms",
+          "status": "done"
+        },
+        {
+          "id": "t1-gates",
+          "title": "lint-cases + build-graph + validate-graph + build-skill + site build",
+          "status": "done"
+        }
+      ],
+      "criteriaIds": [
+        "c-cov-codexclaw",
+        "c-gates"
+      ]
+    },
+    {
+      "id": "wp2",
+      "title": "cli-jaw: disposition inventory, write non-duplicate cases",
+      "status": "in_progress",
+      "tasks": [
+        {
+          "id": "t2-disp",
+          "title": "Ledger table covering every cli-jaw inventory SHA",
+          "status": "pending"
+        },
+        {
+          "id": "t2-cases",
+          "title": "Write NEW cases + ref appends for cli-jaw mechanisms",
+          "status": "pending"
+        },
+        {
+          "id": "t2-gates",
+          "title": "Run the full generation + validation chain",
+          "status": "pending"
+        }
+      ],
+      "criteriaIds": [
+        "c-cov-clijaw",
+        "c-gates"
+      ]
+    },
+    {
+      "id": "wp3",
+      "title": "ima2-gen: disposition inventory, write non-duplicate cases",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "t3-disp",
+          "title": "Ledger table covering every ima2-gen inventory SHA",
+          "status": "pending"
+        },
+        {
+          "id": "t3-cases",
+          "title": "Write NEW cases + ref appends for ima2-gen mechanisms",
+          "status": "pending"
+        },
+        {
+          "id": "t3-gates",
+          "title": "Run the full generation + validation chain",
+          "status": "pending"
+        }
+      ],
+      "criteriaIds": [
+        "c-cov-ima2",
+        "c-gates"
+      ]
+    },
+    {
+      "id": "wp4",
+      "title": "agbrowse: disposition inventory, write non-duplicate cases",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "t4-disp",
+          "title": "Ledger table covering every agbrowse inventory SHA",
+          "status": "pending"
+        },
+        {
+          "id": "t4-cases",
+          "title": "Write NEW cases + ref appends for agbrowse mechanisms",
+          "status": "pending"
+        },
+        {
+          "id": "t4-gates",
+          "title": "Run the full generation + validation chain",
+          "status": "pending"
+        }
+      ],
+      "criteriaIds": [
+        "c-cov-agbrowse",
+        "c-gates"
+      ]
+    },
+    {
+      "id": "wp5",
+      "title": "opencodex: disposition inventory, write non-duplicate cases",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "t5-disp",
+          "title": "Ledger table covering every opencodex inventory SHA",
+          "status": "pending"
+        },
+        {
+          "id": "t5-cases",
+          "title": "Write NEW cases + ref appends for opencodex mechanisms",
+          "status": "pending"
+        },
+        {
+          "id": "t5-gates",
+          "title": "Run the full generation + validation chain",
+          "status": "pending"
+        }
+      ],
+      "criteriaIds": [
+        "c-cov-opencodex",
+        "c-gates"
+      ]
+    },
+    {
+      "id": "wp6",
+      "title": "Ship: issues, README/site counts, push public",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "t6-issues",
+          "title": "Register every new case as a GitHub issue on lidge-jun/fuck-powershell",
+          "status": "pending"
+        },
+        {
+          "id": "t6-counts",
+          "title": "Sync README + docs-site counts to the new corpus size",
+          "status": "pending"
+        },
+        {
+          "id": "t6-push",
+          "title": "Push to origin and verify the live Pages deploy",
+          "status": "pending"
+        }
+      ],
+      "criteriaIds": [
+        "c-ship"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "c-roadmap",
+      "scenario": "wp0 closes with 000_plan.md, 001_method.md and decade docs 010-060 written to diff-level precision (exact case ids, categories, ontology triples, target paths)",
+      "expectedEvidence": "ls + head of devlog/260827_win5repo/*.md showing non-outline content per decade doc",
+      "capturedEvidence": "devlog/260827_win5repo/ holds 000_plan.md, 001_method.md, 010_wp1_codexclaw.md, 020_wp2_clijaw.md, 030_wp3_ima2gen.md, 040_wp4_agbrowse.md, 050_wp5_opencodex.md, 060_wp6_ship.md, all committed in a2ebb46. Independent grok-4.6 reviewer audited them and returned GO-WITH-FIXES (blockers=7); all 7 High + 2 Medium folded in, including two verifier defects fixed in code as f2d54d1.",
+      "status": "met"
+    },
+    {
+      "id": "c-inventory",
+      "scenario": "Each of the five repos has a frozen inventory file whose SHAs exclude the 199 already-dispositioned SHAs from prior mining rounds",
+      "expectedEvidence": "wc -l of devlog/260827_win5repo/inv/win_*.txt plus the exclusion command",
+      "capturedEvidence": "wc -l: agbrowse 18, cli-jaw 63, codexclaw 28, ima2-gen 72, opencodex 341 = 522 rows. Exclusion via awk against inv/_dis8.txt (199 prior-round 8-char prefixes), command pasted into 000_plan.md. Collision check run per reviewer blocker 8: git rev-list --all | cut -c1-8 | sort | uniq -d empty in all five repos; coverage checking uses full SHAs via scripts/check-coverage.mjs.",
+      "status": "met"
+    },
+    {
+      "id": "c-cov-codexclaw",
+      "scenario": "Every SHA in inv/win_codexclaw.txt appears in the codexclaw ledger table with NEW / REF-APPEND / REJECT",
+      "expectedEvidence": "coverage count script output: ledger rows == inventory lines",
+      "capturedEvidence": "bun scripts/check-coverage.mjs codexclaw -> COVERAGE OK codexclaw (010_wp1_codexclaw.md): 28/28 dispositioned, exit 0. Table in 010 records 26 REJECT + 2 NEW (esm-is-main-file-url, split-n-leaves-cr), with the 098c6da0 prior-REJECT overturn recorded explicitly.",
+      "status": "met"
+    },
+    {
+      "id": "c-cov-clijaw",
+      "scenario": "Every SHA in inv/win_cli-jaw.txt appears in the cli-jaw ledger table",
+      "expectedEvidence": "coverage count script output",
+      "capturedEvidence": "",
+      "status": "open"
+    },
+    {
+      "id": "c-cov-ima2",
+      "scenario": "Every SHA in inv/win_ima2-gen.txt appears in the ima2-gen ledger table",
+      "expectedEvidence": "coverage count script output",
+      "capturedEvidence": "",
+      "status": "open"
+    },
+    {
+      "id": "c-cov-agbrowse",
+      "scenario": "Every SHA in inv/win_agbrowse.txt appears in the agbrowse ledger table",
+      "expectedEvidence": "coverage count script output",
+      "capturedEvidence": "",
+      "status": "open"
+    },
+    {
+      "id": "c-cov-opencodex",
+      "scenario": "Every SHA in inv/win_opencodex.txt appears in the opencodex ledger table",
+      "expectedEvidence": "coverage count script output",
+      "capturedEvidence": "",
+      "status": "open"
+    },
+    {
+      "id": "c-gates",
+      "scenario": "After every case-writing work-phase, lint-cases, build-graph, validate-graph, build-skill and the docs-site build all succeed with zero violations",
+      "expectedEvidence": "fresh command output with exit codes for each script in that work-phase's C",
+      "capturedEvidence": "wp1 C: lint 56 cases OK exit 0; build-graph 216 nodes 439 edges; validate-graph 0 warns; check-coverage codexclaw 28/28; build-skill diff limited to encoding.md +83 and env-paths.md +103 (the two new cases only, drift gate green after the f2d54d1 sort fix); docs-site bun run build 64 pages Complete. Receipt: .codexclaw/evidence/01a028de-6d96-7493-9cb8-0a6539543ef4/test-receipt.json. Re-run per later work-phase.",
+      "status": "open"
+    },
+    {
+      "id": "c-ship",
+      "scenario": "New cases are registered as GitHub issues, README and site counts match the corpus, and origin main carries the work with a green Pages deploy",
+      "expectedEvidence": "gh issue list count, README count grep, git push output, deployment status",
+      "capturedEvidence": "",
+      "status": "open"
+    }
+  ],
+  "host": {
+    "armed": false,
+    "armedAt": null,
+    "source": "none"
+  }
+}
