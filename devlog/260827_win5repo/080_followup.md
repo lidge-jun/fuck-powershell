@@ -67,9 +67,47 @@ This is a deliberate widening of how the corpus grows: mined cases remain the
 backbone, and documented mechanisms are admissible when they are load-bearing,
 cited, and honest about what was executed.
 
+## The audit found three factual errors
+
+The A gate on these six cases returned FAIL, and the useful part is that three
+findings were wrong FACTS rather than wrong wording. All three came from writing
+confidently about behavior nobody in this loop had executed.
+
+**Node does not percent-encode backslashes.** The file-URL case asserted it did.
+The WHATWG URL standard treats `file:` as a special scheme and maps backslash to
+forward slash, which a local run on Node v24.17.0 confirms. The real defect lives
+in Go's `net/url`, which follows the RFC. The case now leads with Go and names
+the asymmetry itself as the hazard: identical logic is correct in one language
+and broken in another, so a port acquires the bug silently.
+
+**SO_REUSEADDR was backwards.** The TCP case said Windows `SO_REUSEADDR` fails to
+waive `TIME_WAIT`. It waives it — and also permits hijacking a live listener,
+which is exactly why libuv refuses to set it. "The POSIX fix does not work here"
+became "the POSIX fix works and is a security hole, so your runtime already
+refused it for you", which is a different and more useful sentence.
+
+**The wrong known-folder flag.** `KF_FLAG_DEFAULT_PATH` sounds like "just answer",
+but it asks for the default rather than redirected path and still verifies
+existence. `KF_FLAG_DONT_VERIFY` is the one that returns a path for a folder that
+does not exist. The case had also asserted the lookup resolves through
+`USERPROFILE`, which no Microsoft page states, so the repro was re-anchored on
+the folder being absent.
+
+Two more were overclaims. The icacls title said the owner could not repair the
+file, while the body's own `/grant` line worked — ownership implies `WRITE_DAC`.
+And the MAX_PATH repro built a 240-character directory under `%TEMP%`, which is
+already 30 to 50 characters, so the first create exceeded the limit and the
+demonstration never ran.
+
+One structural fix came out of it. Lint required a commit or PR URL for every
+`third-party` case, so the two documentation-sourced cases had been given an
+unrelated chore commit to satisfy it. That is worse than citing the spec, so the
+rule now accepts an authoritative vendor documentation URL — which is what a
+documented-mechanism case actually rests on.
+
 ## Result
 
-70 -> 76 cases. Ontology 251 nodes / 526 edges -> 268 / 563. All five mining
+70 -> 76 cases. Ontology 251 nodes / 526 edges -> 271 / 563. All five mining
 coverage checks still at 100 percent, since the three promoted Go-port rows were
 re-dispositioned in place rather than added.
 
