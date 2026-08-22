@@ -8,6 +8,7 @@ context: [script, agent, ci]
 source: third-party
 repro: historical
 refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/43
   - https://github.com/openai/codex/issues/40002
 ontology:
   affects: [env-windows, runtime-node]

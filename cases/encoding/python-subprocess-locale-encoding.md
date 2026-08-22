@@ -8,6 +8,7 @@ context: [script, agent, ci]
 source: third-party
 repro: historical
 refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/47
   - https://github.com/NousResearch/hermes-agent/commit/5b5b5e8d
   - https://github.com/NousResearch/hermes-agent/issues/83767
   - https://github.com/NousResearch/hermes-agent/issues/89442

@@ -8,6 +8,7 @@ context: [agent, script, ci]
 source: third-party
 repro: historical
 refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/50
   - https://github.com/openclaw/openclaw/issues/111900
   - https://github.com/openclaw/openclaw/issues/120134
 ontology:

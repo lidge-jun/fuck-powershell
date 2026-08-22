@@ -8,6 +8,7 @@ context: [script, agent, ci]
 source: third-party
 repro: historical
 refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/48
   - https://github.com/NousResearch/hermes-agent/commit/8f91d7bf
 ontology:
   affects: [runtime-python, env-windows]
