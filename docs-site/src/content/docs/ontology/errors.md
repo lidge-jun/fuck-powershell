@@ -35,17 +35,23 @@ Invalid argument from spawn — on Windows typically the .cmd/.bat hardening or 
 
 [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/)
 
+## enametoolong
+
+Win32 reports a path over the API ceiling as ERROR_FILENAME_EXCED_RANGE or ERROR_BUFFER_OVERFLOW; Node surfaces both as ENAMETOOLONG while Python maps the same code to ENOENT, so one wall is reported as two different problems.
+
+[max-path-260](/fuck-powershell/cases/env-paths/max-path-260/)
+
 ## enoent
 
 File or command not found — on Windows often a PATHEXT/extension resolution miss, not a missing file.
 
-[dev-null-redirect](/fuck-powershell/cases/streams/dev-null-redirect/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [pathext-bare-name-enoent](/fuck-powershell/cases/env-paths/pathext-bare-name-enoent/) · [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
+[dev-null-redirect](/fuck-powershell/cases/streams/dev-null-redirect/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [file-url-encodes-backslash](/fuck-powershell/cases/env-paths/file-url-encodes-backslash/) · [pathext-bare-name-enoent](/fuck-powershell/cases/env-paths/pathext-bare-name-enoent/) · [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
 
 ## eperm
 
 Operation not permitted — including WindowsApps appExecLink spawn denials.
 
-[windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+[tcp-tcb-survives-listener](/fuck-powershell/cases/env-paths/tcp-tcb-survives-listener/) · [windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [icacls-inheritance-r-empty-dacl](/fuck-powershell/cases/env-paths/icacls-inheritance-r-empty-dacl/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
 
 ## exit-code-leak
 

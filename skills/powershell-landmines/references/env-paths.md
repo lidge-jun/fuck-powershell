@@ -394,6 +394,407 @@ separator, `pathext-bare-name-enoent` is extension resolution. This one is about
 ---
 
 
+# building a file URL with a URL library percent-encodes the backslashes, so the database that exists cannot be opened
+
+## Symptom
+
+A connection string built from a real path fails on Windows and only on Windows.
+SQLite says the file is missing; the file is right there.
+
+```
+unable to open database file
+```
+
+Printing the DSN shows why, once you look closely:
+
+```
+file:C%3A%5CUsers%5Cme%5Cstate.sqlite?mode=ro
+```
+
+Every separator is `%5C` and the drive colon is `%3A`. The URL is well-formed and
+points nowhere.
+
+## Repro
+
+```js
+const u = new URL("file:");
+u.pathname = "C:\\Users\\me\\state.sqlite";
+u.href;                       // "file:///C%3A%5CUsers%5Cme%5Cstate.sqlite"
+```
+
+Same shape in Go and Python, because they are all doing the correct thing:
+
+```go
+u := url.URL{Scheme: "file", Path: `C:\Users\me\state.sqlite`}
+u.String()   // file:C:%5CUsers%5Cme%5Cstate.sqlite
+```
+
+And the POSIX case that hides it:
+
+```js
+u.pathname = "/home/me/state.sqlite";
+u.href;      // "file:///home/me/state.sqlite"  — correct by coincidence
+```
+
+## Cause
+
+A backslash is an ordinary character in a URL path, not a separator, so any
+conforming URL builder percent-encodes it. The library is right; the input was
+never a URL path.
+
+Two things have to happen for a Windows path to become a valid file URL, and a
+generic builder does neither:
+
+1. Separators must be converted to forward slashes BEFORE the value is handed to
+   the URL type, otherwise they get encoded as data.
+2. A drive-absolute path needs a leading slash, because `file:` plus `C:/...`
+   yields two slashes where the spec wants three. `file:///C:/...` is the correct
+   form.
+
+A POSIX absolute path already starts with `/` and contains no backslashes, so it
+passes through untouched and the bug never appears in development.
+
+## Workaround
+
+Use the runtime's dedicated conversion when there is one:
+
+```js
+const { pathToFileURL } = require("node:url");
+pathToFileURL("C:\\Users\\me\\state.sqlite").href;
+// "file:///C:/Users/me/state.sqlite"
+```
+
+When the target is a DSN rather than a plain URL — a SQLite connection string with
+query parameters, say — normalize first and build second:
+
+```go
+normalized := strings.ReplaceAll(path, `\\`, "/")
+if len(normalized) >= 2 && normalized[1] == ':' {
+    normalized = "/" + normalized          // file:///C:/...
+}
+u := url.URL{Scheme: "file", Path: normalized}
+```
+
+Then assert on the result in a test: a DSN containing `%5C` is always wrong, and
+that one check catches every future call site.
+
+---
+
+`dynamic-import-needs-file-url` is the loud version of the same confusion, where
+a loader refuses the path outright. This is the quiet version: the conversion
+succeeds, produces a syntactically valid URL, and the failure surfaces as a
+missing file somewhere else entirely.
+
+
+---
+
+
+# icacls /inheritance:r before the grant leaves a file with no ACEs at all, and you cannot repair it because repairing needs access you just removed
+
+## Symptom
+
+A hardening routine that locks down a secrets file half-runs — a timeout, a
+transient failure, a killed CI job — and afterwards nobody can touch the file:
+
+```
+Access is denied.
+```
+
+You own it. `dir` shows it. You cannot read it, cannot delete it, and cannot
+re-run the hardening script, because that script's first act is another
+`icacls` call and `icacls` needs access too. The state is not recoverable by
+retrying, which is what makes it worse than a plain failure.
+
+## Repro
+
+The dangerous order, interrupted after the first step:
+
+```
+C:\> icacls secret.txt /inheritance:r
+processed file: secret.txt
+
+C:\> type secret.txt
+Access is denied.
+
+C:\> del secret.txt
+Access is denied.
+```
+
+The file now has an owner and an empty DACL. On POSIX, `chmod 000` looks similar
+and is not: the owner can always `chmod` it back, because ownership carries the
+right to change the mode.
+
+Recovery on Windows needs an ownership-based repair, which is a different command
+than the one that broke it:
+
+```
+C:\> icacls secret.txt /grant "%USERNAME%":(F)
+```
+
+That works only because `WRITE_DAC` is implied by ownership — but any script that
+assumed it could just re-run its hardening sequence is stuck.
+
+## Cause
+
+`/inheritance:r` removes inherited ACEs IMMEDIATELY, and it does not care that
+the explicit ACEs meant to replace them do not exist yet. Between that call and
+the grant that follows, the file's DACL is empty — and an empty DACL is not
+"default permissions", it is "deny everyone".
+
+POSIX intuition breaks in two places here. First, ownership does not imply read
+access on Windows the way it effectively does under a POSIX mode. Second, there is
+no single atomic operation that says "these are the permissions now"; `icacls` is
+a sequence of mutations, and every gap between them is a state a crash can leave
+you in.
+
+So the ordering is not a style preference. Restrict-then-grant has a window where
+failure is unrecoverable by the same tool; grant-then-restrict does not.
+
+## Workaround
+
+Grant first, restrict second, and treat the sequence as one that can be
+interrupted at any point:
+
+```
+icacls "%TARGET%" /grant "%USERNAME%":(F)          rem 1. keep a way back in
+icacls "%TARGET%" /inheritance:r                   rem 2. now safe to strip
+icacls "%TARGET%" /remove:g "BUILTIN\Users"        rem 3. drop the rest
+```
+
+For a directory, the grant needs the inheritance flags — `(OI)(CI)(F)` — or
+children created later inherit nothing.
+
+Design the routine so that failure at any step leaves the target USABLE rather
+than merely leaving it unhardened. Unhardened is a security finding you can fix on
+the next run; locked-out is a support ticket.
+
+Verify at the end rather than trusting exit codes: `icacls` reports per-file
+success lines, and a partially applied ACL can still exit zero on the step that
+did run.
+
+---
+
+`env-domain-principal` covers who to name in the grant — the token SID rather
+than `USERDOMAIN\USERNAME`. This case is about when to name them: the identity can
+be perfectly correct and the order still locks you out.
+
+
+---
+
+
+# the folder API you use to find AppData returns an empty string instead of failing, so a redirected profile silently gives you the filesystem root
+
+## Symptom
+
+Code that asks Windows where the user's data directory is gets `""` back. Not an
+exception, not a null — an empty string that flows straight into the next
+`path.join`, so the path you build points at the drive root or at your process's
+working directory.
+
+Downstream, everything reports the wrong thing at once: a lock file in the wrong
+namespace, a cache that never hits, a coordinator that refuses every lookup. The
+symptoms are so scattered that they read as unrelated failures across several
+modules, and none of them mentions AppData.
+
+It only happens to some users, which is what makes it expensive: anyone whose
+profile is redirected, and any service account whose profile has never been
+materialized on that machine.
+
+## Repro
+
+```powershell
+PS> $env:USERPROFILE = "C:\nonexistent-profile"
+PS> [Environment]::GetFolderPath('LocalApplicationData')
+
+PS> ([Environment]::GetFolderPath('LocalApplicationData')).Length
+0
+```
+
+And the shape that reaches production:
+
+```js
+const base = getLocalAppData();          // "" for a redirected profile
+const dir = path.join(base, "myapp");    // "myapp" — relative to cwd, not AppData
+```
+
+The POSIX habit that fails here is assuming a lookup either succeeds or throws.
+This one has a third outcome.
+
+## Cause
+
+`GetFolderPath(SpecialFolder.LocalApplicationData)` — and the convenience
+wrappers layered on it — resolve through the environment, chiefly `USERPROFILE`.
+When the profile named there has no AppData directory on disk, the call does not
+treat that as an error. It returns an empty string, because "the folder does not
+exist" is not the same question as "where would it be".
+
+That is a defensible API contract and a terrible default for callers, since the
+empty string is a perfectly valid argument to every path function you will hand
+it to. Nothing downstream can tell the difference between "AppData is here" and
+"nobody knows".
+
+The environment dependence is the deeper problem: `USERPROFILE`,
+`LOCALAPPDATA`, `HOMEDRIVE`, and `HOMEPATH` are all writable by anything in the
+process tree, so a value your code treats as an identity is actually inherited
+state.
+
+## Workaround
+
+Ask the known-folder registration for the effective token instead of asking the
+environment:
+
+```powershell
+# SHGetKnownFolderPath, FOLDERID_LocalAppData, KF_FLAG_DEFAULT_PATH (0x400)
+$sig = '[DllImport("shell32.dll", CharSet = CharSet.Unicode)] public static extern int ' +
+       'SHGetKnownFolderPath(ref System.Guid id, uint flags, System.IntPtr token, out System.IntPtr path);'
+Add-Type -MemberDefinition $sig -Name Shell32 -Namespace Win32 | Out-Null
+$id = [Guid]'F1B32785-6FBA-4FCF-9D55-7B8E7F157091'
+$out = [IntPtr]::Zero
+[void][Win32.Shell32]::SHGetKnownFolderPath([ref]$id, 0x400, [IntPtr]::Zero, [ref]$out)
+[Runtime.InteropServices.Marshal]::PtrToStringUni($out)
+```
+
+`KF_FLAG_DEFAULT_PATH` is what makes it answer whether or not the directory
+exists on disk, and a NULL token is what makes it answer for the effective
+account. Passing `(HANDLE)-1` is not equivalent — that resolves the built-in
+Default profile, a namespace no real account writes to, which turns a wrong
+answer into a wrong answer that looks plausible.
+
+Whatever API you settle on, treat an empty result as a hard failure at the
+boundary. A path helper that can return `""` should refuse instead, because every
+consumer downstream will silently accept it.
+
+---
+
+`env-domain-principal` is the identity version of the same environment
+dependence: trusting `USERDOMAIN` and `USERNAME` instead of resolving the token
+SID. This is the location version, and it carries an extra hazard — the wrong
+answer is empty rather than wrong, so it fails a null check you did not write.
+
+
+---
+
+
+# the 260-character path limit is still there, the registry switch alone does not lift it, and the tree you created may be one nothing can delete
+
+## Symptom
+
+An install or a checkout dies partway down a nested directory:
+
+```
+ENAMETOOLONG: name too long, mkdir 'C:\Users\...\node_modules\...'
+```
+
+Or, worse, the create SUCCEEDS and the cleanup does not. You are left with a
+directory Explorer cannot open and `rm -rf` equivalents cannot remove, on a
+machine where the same repository clones fine two folders higher.
+
+Python users see a third face of it: `FileNotFoundError`. The path is not
+missing; it is too long.
+
+## Repro
+
+```powershell
+PS> cd $env:TEMP
+PS> $a = 'a' * 240
+PS> New-Item -ItemType Directory -Force $a | Out-Null
+PS> New-Item -ItemType Directory -Path (Join-Path $a ('b'*240))
+# .NET Framework: PathTooLongException (HRESULT 0x800700CE)
+# PowerShell 7: IOException wrapping ERROR_FILENAME_EXCED_RANGE (206)
+```
+
+The prefixed form works where the plain one does not:
+
+```powershell
+PS> $long = "\\?\$PWD\" + (('d'*200 + '\') * 3)
+PS> [IO.Directory]::CreateDirectory($long)      # succeeds
+PS> Remove-Item -LiteralPath $long.Substring(4) -Recurse   # may fail
+PS> [IO.Directory]::Delete($long)               # prefixed delete works
+```
+
+That asymmetry is the trap: the thing that created the tree and the thing asked
+to delete it are rarely the same program.
+
+## Cause
+
+`MAX_PATH` is 260 characters, and the count includes the drive letter, the colon,
+the backslash, every component, and the terminating NUL. On `D:` that leaves 256
+usable characters. Directory creation is tighter still — the path must leave room
+for an 8.3 name, so the effective ceiling is 248 — which is why you can have a
+directory that exists and refuses to hold a file.
+
+The `\\?\` prefix tells Win32 to skip path parsing and hand the rest to the
+filesystem, lifting the limit to roughly 32,767 characters with each component
+capped by the volume (usually 255). It comes with conditions people miss: it
+requires a fully-qualified path, it does not work on relative paths, it does not
+expand `.` or `..`, it does not convert forward slashes, and it does nothing for
+the ANSI `*A` APIs.
+
+Windows 10 1607 added a second door, and BOTH halves are required:
+
+1. `HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled` set to 1
+   (or the equivalent Group Policy), and
+2. the process manifest declaring `<longPathAware>true</longPathAware>`.
+
+Microsoft states the consequence plainly: enabling the registry value "will only
+affect applications that have been modified to take advantage of the new
+feature". The registry alone is a no-op for an unaware binary — which is exactly
+why the switch has a reputation for not working.
+
+Runtimes differ, and the difference is not obvious from the outside. CPython
+ships the manifest, so its documentation can honestly say the registry setting
+plus a reboot is enough. Go does not wait for the opt-in: `os.fixLongPath`
+prepends `\\?\` itself when the OS setting is off. Node's source manifest does
+not declare long-path awareness, and libuv passes the caller's path to
+`CreateFileW` as-is.
+
+The error codes are `ERROR_FILENAME_EXCED_RANGE` (206) and
+`ERROR_BUFFER_OVERFLOW` (111), sometimes `ERROR_PATH_NOT_FOUND` (3) when an
+intermediate component cannot be opened. Node maps 206 and 111 to
+`ENAMETOOLONG`; Python maps 206 to `ENOENT`, which is how the same wall becomes
+"file not found" in one language and "name too long" in another.
+
+The POSIX contrast is not "Linux has a bigger number". `PATH_MAX` is 4096 and is a
+per-call limit on the pathname argument, not a property of the filesystem — you
+can build a deeper tree with successive relative operations. `MAX_PATH` is an API
+ceiling that applies even when NTFS would happily store the file.
+
+## Workaround
+
+Pick one and be explicit about it:
+
+- **Opt in properly**: set `LongPathsEnabled` AND ship a `longPathAware`
+  manifest. Half of that is not a fix.
+- **Prefix at the call site**: pass fully-qualified `\\?\C:\...` (or
+  `\\?\UNC\server\share\...`) to Unicode APIs that document support for it.
+- **Keep roots short** when you do not control every consumer. Explorer, cmd.exe,
+  CI helpers, and package managers are all consumers you probably do not control.
+
+What does not work: the registry without the manifest, the manifest without the
+registry, the prefix on a relative path or with forward slashes, the prefix on
+ANSI APIs, and assuming a tree created through a prefixed API can be removed by
+one that is not. Do not assume 1607 ended this — unaware applications, relative
+paths, and the shell all still meet 260.
+
+## Verification note
+
+Every load-bearing claim here is from Microsoft's own documentation, and the
+runtime opt-in table is read from each project's source manifest rather than from
+a shipped binary. The exception types in the repro are what the documented error
+codes map to per runtime; this corpus has no Windows host, so the case is marked
+`repro: historical`.
+
+---
+
+`reserved-dos-device-names` is the other Win32 path-parsing rule that a POSIX
+filename can violate without anyone noticing until Windows. That one fails
+silently; this one usually fails loudly, and its cruelty is in the cleanup rather
+than the create.
+
+
+---
+
+
 # node:path delimiter follows the HOST, so win32 PATH logic resolves nothing when tested from Linux
 
 ## Symptom
@@ -591,6 +992,117 @@ only owns the `.cmd` name is one updater run away from being invisible.
 ---
 
 
+# writing to nul.txt succeeds and creates nothing, because a handful of MS-DOS device names are still reserved in every directory
+
+## Symptom
+
+A file write reports success and the file is not there. No exception, no error
+code, nothing in the directory listing:
+
+```
+C:\> echo hello > nul.txt
+C:\> dir nul.txt
+File Not Found
+```
+
+The realistic version is not someone typing `nul.txt`. It is an extractor
+unpacking an archive that contains `aux`, a generator naming a file from a data
+field that happens to be `con`, or a test fixture named after a case id. Those
+work on Linux and macOS, so they reach Windows already committed.
+
+## Repro
+
+```
+C:\> echo hello > NUL.txt
+C:\> echo hello > NUL.tar.gz
+C:\> mkdir sub && echo hello > sub\NUL.txt
+C:\> dir /b
+sub
+```
+
+Microsoft's own documented example, with the superscript form:
+
+```
+C:\> echo test > COM¹
+```
+
+That "fails to create a file" — the docs say so in those words, and the
+superscript digits are the sentence that makes the reservation explicitly apply
+in every directory rather than only at the root.
+
+On Linux and macOS all of these are ordinary filenames.
+
+## Cause
+
+`CON`, `PRN`, `AUX`, `NUL`, `COM1`-`COM9`, `LPT1`-`LPT9` and the ISO-8859-1
+superscript forms (`COM¹`, `COM²`, `COM³`, and the `LPT` equivalents) are MS-DOS
+device aliases that Win32 still honors. Path parsing recognizes a legacy device
+name as its own path type and rewrites it into the NT device namespace before any
+directory is applied, so `C:\anywhere\NUL.txt` resolves to the Null device rather
+than to a file in that folder.
+
+Three details do most of the damage:
+
+- **An extension does not help.** Microsoft documents `NUL.txt` and
+  `NUL.tar.gz` as both equivalent to `NUL`.
+- **`CreateFile` opens devices as well as files**, so the call SUCCEEDS. That is
+  why there is no error to catch: your bytes went to the Null device, and a
+  write to `CON` goes to the console instead.
+- **The list is exact and short.** `COM10`, `COM0`, `CON1`, and `console.txt` are
+  not reserved. `CON.txt` is. Serial ports past 9 need the `\\.\COM56` form
+  precisely because they are not in the legacy set.
+
+When a reserved-name call does fail rather than succeed, the runtime error is a
+second layer of confusion: Win32 `ERROR_INVALID_NAME` (123) surfaces as
+`ENOENT` in Node and `EINVAL` in Python, so the same wall has two different
+names depending on your language.
+
+Windows 11 did not repeal this. What changed there is narrower: .NET's
+`Path.GetFullPath` no longer rewrites a path that BEGINS with a legacy device
+name. The reserved-name list itself is current documentation.
+
+## Workaround
+
+Reject or mangle the closed set at the Windows boundary, matching on the stem
+rather than the whole filename:
+
+```js
+const RESERVED = /^(con|prn|aux|nul|com[1-9¹²³]|lpt[1-9¹²³])(\.|$)/i;
+if (RESERVED.test(basename)) throw new Error(`reserved device name: ${basename}`);
+```
+
+Put that check in generators, archive extractors, and fixture naming — the three
+places that produce filenames nobody typed.
+
+What does not work: adding an extension, moving it into a subdirectory, or
+trusting an existence check afterwards. `Test-Path` and `fs.existsSync` can be
+answering for the device rather than for a file.
+
+The `\\?\` extended-length prefix disables the path parsing that performs the
+device rewrite, which is the documented mechanism — but it applies only to
+fully-qualified Unicode paths on APIs that accept it, and Explorer is not
+guaranteed to understand what you create that way. Treat it as a targeted escape
+hatch, not an application-wide setting.
+
+## Verification note
+
+The `COM¹` behavior and the `NUL.txt` equivalence are quoted from Microsoft's
+file-naming documentation. The exact errno each runtime reports on a FAILED
+reserved-name open, and whether a `\\?\`-prefixed `nul.txt` create produces a
+real file, are documented-behavior inferences rather than observed runs — this
+corpus has no Windows host, and this case is marked `repro: historical`
+accordingly.
+
+---
+
+`test-path-trailing-whitespace` is the other case where Win32 path parsing
+silently rewrites what you asked for. There a trailing space is stripped; here a
+whole name is redirected to a device.
+
+
+---
+
+
 # Installed a tool, still 'not found' — your session's PATH is a snapshot
 
 ## Symptom
@@ -624,6 +1136,89 @@ $env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' +
 Re-merge from the registry after any install step (the referenced installer does
 exactly this between winget and the first node call). Scope-read before writing,
 per envpath-pollutes-user — the two traps are mirror images.
+
+
+---
+
+
+# the port is still busy after your server exited, because Windows keeps TCP state the dead socket left behind and SO_REUSEADDR does not clear it
+
+## Symptom
+
+Your server exits cleanly and the next start cannot bind:
+
+```
+Error: listen EADDRINUSE: address already in use 127.0.0.1:8080
+```
+
+No process holds the port. `tasklist` shows nothing, you killed the tree, the
+handles are closed. Waiting a minute or two fixes it, which is the tell — and so
+is the fact that a restart loop in CI fails while a human retrying by hand
+succeeds.
+
+You already set `SO_REUSEADDR` because that is what fixes this on Linux. It does
+not fix it here.
+
+## Repro
+
+Stop a server that had a live client connection, then immediately look at what is
+left:
+
+```
+C:\> netstat -ano -p tcp | findstr :8080
+  TCP    127.0.0.1:8080     127.0.0.1:52144    TIME_WAIT       0
+```
+
+PID `0`: no process owns it. The row is kernel-side connection state, and a new
+bind on the same local endpoint is refused while it exists.
+
+## Cause
+
+A closed socket does not immediately free its endpoint. The kernel keeps a
+Transmission Control Block for it — `TIME_WAIT` after an active close, plus other
+lingering states — so late packets from the old connection cannot be delivered to
+a new one. That part is standard TCP and happens on every platform.
+
+What differs is the escape hatch. On Linux, `SO_REUSEADDR` means "let me bind
+even though a `TIME_WAIT` exists here", which is exactly the permission you want.
+On Windows, `SO_REUSEADDR` means something else — roughly "let two sockets share
+this endpoint" — and it does not grant the thing you were reaching for. The
+POSIX-shaped fix is a no-op for the POSIX-shaped problem.
+
+So the port stays unbindable until the state ages out, and there is no socket
+option that shortens the wait.
+
+## Workaround
+
+Delete the leftover state explicitly. Win32 exposes it through `SetTcpEntry` with
+the row's state set to `MIB_TCP_STATE_DELETE_TCB` (12), which tears down the TCB
+for a specific four-tuple:
+
+```go
+// iphlpapi.dll SetTcpEntry, MIB_TCPROW{State: 12, LocalAddr, LocalPort, RemoteAddr, RemotePort}
+row := mibTCPRow{State: 12, LocalAddr: local, LocalPort: lp, RemoteAddr: remote, RemotePort: rp}
+setTCPEntryProc.Call(uintptr(unsafe.Pointer(&row)))
+```
+
+Two limits worth knowing before you build on it. It needs administrator rights,
+and the structure is IPv4-only — there is no IPv6 equivalent that safely
+represents the row, so a dual-stack listener can only ever have half its leftovers
+cleared this way.
+
+Because of those limits, the durable answer is usually to stop needing the exact
+port on the next start: bind port 0 and publish the assigned port, or use a small
+candidate range with fallback. That turns a hard failure into a startup detail.
+
+If you do enumerate rows to find what to delete, read them structurally rather
+than by scraping `netstat` text — that output is localized, and matching English
+state words is its own trap.
+
+---
+
+`unlink-while-open-ebusy` is the file-handle version of "the resource outlives
+the process". This is the socket version, and it is worse in one specific way:
+there is no handle to close and no process to kill, so every technique that fixes
+the file case does nothing here.
 
 
 ---

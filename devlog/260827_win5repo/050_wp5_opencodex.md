@@ -146,7 +146,7 @@ describe the machine) but is a testing lesson, not a Windows mechanism.
 | c3882214f | b2 | REJECT repo-specific |
 | dad534889 | b2 | REJECT repo-specific |
 | 5a4d968e6 | b2 | REJECT repo-specific |
-| 9122d5ebe | b2 | REF redirected-ps-output-mojibake (LocalAppData resolved independently of USERPROFILE) |
+| 9122d5ebe | b2 | NEW known-folder-empty-not-error (split from the mojibake ref during the follow-up round) |
 | 1828cb150 | b2 | REJECT repo-specific |
 | 01b212579 | b3 | REJECT refactor (merge commit) |
 | d09c75299 | b2 | REF startup-artifact-is-not-a-process (stop the service loop on a missing install) |
@@ -294,12 +294,12 @@ describe the machine) but is a testing lesson, not a Windows mechanism.
 | cdc16e5a7 | b2 | REF localized-cli-output-parsing (classifying a localized scheduler denial) |
 | b7c678c0d | b2 | REJECT repo-specific |
 | 341d4863a | b2 | REJECT repo-specific |
-| 0e78e4d59 | b2 | REJECT repo-specific (Go port of an existing Windows surface; no new mechanism) |
+| 0e78e4d59 | b2 | NEW icacls-inheritance-r-empty-dacl (re-audit: was REJECT repo-specific) |
 | ddc597f4e | b2 | REJECT repo-specific (Go port of an existing Windows surface; no new mechanism) |
-| b1713b574 | b2 | REJECT repo-specific (Go port of an existing Windows surface; no new mechanism) |
+| b1713b574 | b2 | NEW tcp-tcb-survives-listener (re-audit: was REJECT repo-specific) |
 | c266124de | b2 | REJECT repo-specific (Go port of an existing Windows surface; no new mechanism) |
 | 3ab6c6314 | b2 | REF localized-cli-output-parsing (task XML validation hardening) |
-| 753c3231a | b2 | REJECT repo-specific (Go port of an existing Windows surface; no new mechanism) |
+| 753c3231a | b2 | NEW file-url-encodes-backslash (re-audit: was REJECT repo-specific) |
 | 3c904f9fc | b2 | REJECT repo-specific (Go port of an existing Windows surface; no new mechanism) |
 | 93685c11d | b2 | REJECT repo-specific (Go port of an existing Windows surface; no new mechanism) |
 | 31e065f98 | b2 | REJECT repo-specific (Go port of an existing Windows surface; no new mechanism) |
@@ -446,20 +446,38 @@ describe the machine) but is a testing lesson, not a Windows mechanism.
 
 ## Judgment calls
 
-- The Go port block (roughly 40 rows, many duplicated across branches) was
-  rejected wholesale as repo-specific. Each commit ports a Windows surface that
-  already existed in TypeScript, so the mechanisms are either already in the
-  corpus or already rejected. Reading ten of them confirmed the pattern before
-  applying it to the rest; that is a band judgment, and it is recorded here so a
-  future round can disagree with a cheap re-read.
+- The Go port block was rejected wholesale as repo-specific after reading ten of
+  them. **The follow-up round re-audited it in full and the judgment was wrong.**
+  A dispatched explorer ran `git patch-id --stable` across all 50 Go-port rows
+  and found they collapse to SEVEN unique patches, each repeated up to eight
+  times across branches — so the original call had only seven diffs to be right
+  or wrong about, and a sample of ten was mostly re-reading duplicates.
+
+  Three of the seven carry mechanisms the corpus did not own, and all three are
+  now cases: `icacls-inheritance-r-empty-dacl` (0e78e4d59),
+  `tcp-tcb-survives-listener` (b1713b574), and `file-url-encodes-backslash`
+  (753c3231a). The other four hold: WinSW-versus-scheduler selection is product
+  surface with a USERDOMAIN anti-pattern `env-domain-principal` already owns;
+  task-XML validation is the workaround `localized-cli-output-parsing` teaches;
+  the tray's HideWindow and DETACHED_PROCESS flags are
+  `windowstyle-hidden-vs-windowshide`; and the WinSW status greps are the same
+  localized-output trap.
+
+  The lesson is about the sampling method rather than about Go: when an
+  inventory contains cherry-picked or re-landed commits, "read a sample of the
+  block" samples the branches, not the patches. Deduplicating by patch-id first
+  costs one command and makes the sample meaningful.
 - The ACL and SID work (a dozen rows) all REFs `env-domain-principal` rather
   than producing a new case. Resolving the effective token SID instead of
   trusting USERDOMAIN and USERNAME is exactly that case's sentence, and the
   variations — ARM64 lookup, owner ACE ordering, fail-closed classification —
   are the same mechanism met at different call sites.
-- `9122d5ebe` was the closest call. SHGetKnownFolderPath returning an EMPTY
-  STRING rather than an error when the computed profile has no AppData directory
-  is arguably its own mechanism. It is REFed to
-  `redirected-ps-output-mojibake` because both are the same underlying problem —
-  asking Windows for an identity-derived path through a channel that degrades
-  silently — but a future round could reasonably split it out with its own repro.
+- `9122d5ebe` was the closest call, and the follow-up round SPLIT it. It is now
+  `known-folder-empty-not-error` rather than a ref on
+  `redirected-ps-output-mojibake`. Re-reading the diff settled it: the mojibake
+  case is a value destroyed in transit by a console codepage, and this one is an
+  API answering an empty string instead of failing when it resolves through
+  USERPROFILE to a profile with no AppData directory. Different sentence,
+  different fix (base64 framing versus the known-folder registration), different
+  reader — one is debugging garbled characters, the other a path that silently
+  became relative.

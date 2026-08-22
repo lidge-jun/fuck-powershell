@@ -9,6 +9,12 @@ POSIX builtins absent in PowerShell (command -v) parse as argument noise and fai
 
 Cases: [command-v-noop](/fuck-powershell/cases/aliases/command-v-noop/)
 
+## non-atomic ACL mutation order
+
+Windows permissions are changed by a sequence of separate mutations with no atomic replace, and removing inheritance takes effect immediately, so an interrupted restrict-then-grant order leaves an empty DACL that denies everyone including the owner.
+
+Cases: [icacls-inheritance-r-empty-dacl](/fuck-powershell/cases/env-paths/icacls-inheritance-r-empty-dacl/)
+
 ## alias shadowing
 
 Built-in aliases (curl, wget) and PATH shims shadow the binaries users intend to run.
@@ -87,11 +93,17 @@ CI runners pick a default shell per OS (pwsh on windows-latest); unmarked run: s
 
 Cases: [npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/)
 
+## MS-DOS device names reserved in every directory
+
+Win32 path parsing recognizes legacy device names such as CON, NUL, and COM1 as their own path type and rewrites them into the NT device namespace before any directory applies, with or without an extension, so opening one succeeds as a device rather than creating a file.
+
+Cases: [reserved-dos-device-names](/fuck-powershell/cases/env-paths/reserved-dos-device-names/)
+
 ## drive letter parses as a URL scheme
 
 A Windows absolute path begins with a drive letter and colon, so any API that parses its input as a URL reads that letter as the protocol, while an absolute POSIX path coincidentally parses as root-relative and works.
 
-Cases: [dynamic-import-needs-file-url](/fuck-powershell/cases/env-paths/dynamic-import-needs-file-url/)
+Cases: [file-url-encodes-backslash](/fuck-powershell/cases/env-paths/file-url-encodes-backslash/) · [dynamic-import-needs-file-url](/fuck-powershell/cases/env-paths/dynamic-import-needs-file-url/)
 
 ## env casing
 
@@ -103,7 +115,7 @@ Cases: [env-path-vs-PATH-casing](/fuck-powershell/cases/env-paths/env-path-vs-PA
 
 USERDOMAIN/USERNAME env vars are writable, unreliable identity sources; workgroup machines put the computer name in USERDOMAIN.
 
-Cases: [wslenv-shared-with-host](/fuck-powershell/cases/env-paths/wslenv-shared-with-host/) · [env-domain-principal](/fuck-powershell/cases/env-paths/env-domain-principal/)
+Cases: [known-folder-empty-not-error](/fuck-powershell/cases/env-paths/known-folder-empty-not-error/) · [wslenv-shared-with-host](/fuck-powershell/cases/env-paths/wslenv-shared-with-host/) · [env-domain-principal](/fuck-powershell/cases/env-paths/env-domain-principal/)
 
 ## errorrecord format
 
@@ -164,6 +176,12 @@ Cases: [localized-cli-output-parsing](/fuck-powershell/cases/parsing/localized-c
 Windows enforces file locks at the OS level: a handle opened without FILE_SHARE_DELETE blocks deletes and renames until it closes, where POSIX unlink only removes a name and lets the data outlive its last reference.
 
 Cases: [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+
+## MAX_PATH is an API ceiling, not a filesystem limit
+
+Win32 caps a pathname at 260 characters including drive, separators, and the terminating NUL, and directory creation reserves twelve more, so a path NTFS would store is refused by the API unless the caller uses the extended-length prefix or opts in with both the registry value and a long-path-aware manifest.
+
+Cases: [max-path-260](/fuck-powershell/cases/env-paths/max-path-260/)
 
 ## native argv rebuild
 
@@ -242,6 +260,12 @@ Cases: [strictmode-missing-property](/fuck-powershell/cases/versions/strictmode-
 Double-quoted PowerShell strings interpolate $tokens; backslash is not an escape — backtick is.
 
 Cases: [dollar-backslash-vars](/fuck-powershell/cases/args-quoting/dollar-backslash-vars/) · [prose-as-unknown-flags](/fuck-powershell/cases/args-quoting/prose-as-unknown-flags/) · [dq-regex-interpolates](/fuck-powershell/cases/args-quoting/dq-regex-interpolates/)
+
+## TCP control block outlives the socket
+
+Windows retains the transmission control block for a closed socket so the endpoint stays unbindable, and SO_REUSEADDR carries different semantics there than on POSIX, so the option that waives TIME_WAIT on Linux does not waive it here.
+
+Cases: [tcp-tcb-survives-listener](/fuck-powershell/cases/env-paths/tcp-tcb-survives-listener/)
 
 ## win32 path normalization
 
