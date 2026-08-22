@@ -60,22 +60,22 @@
     {
       "id": "wp2",
       "title": "cli-jaw: disposition inventory, write non-duplicate cases",
-      "status": "in_progress",
+      "status": "done",
       "tasks": [
         {
           "id": "t2-disp",
           "title": "Ledger table covering every cli-jaw inventory SHA",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t2-cases",
           "title": "Write NEW cases + ref appends for cli-jaw mechanisms",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t2-gates",
           "title": "Run the full generation + validation chain",
-          "status": "pending"
+          "status": "done"
         }
       ],
       "criteriaIds": [
@@ -86,22 +86,22 @@
     {
       "id": "wp3",
       "title": "ima2-gen: disposition inventory, write non-duplicate cases",
-      "status": "pending",
+      "status": "done",
       "tasks": [
         {
           "id": "t3-disp",
           "title": "Ledger table covering every ima2-gen inventory SHA",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t3-cases",
           "title": "Write NEW cases + ref appends for ima2-gen mechanisms",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t3-gates",
           "title": "Run the full generation + validation chain",
-          "status": "pending"
+          "status": "done"
         }
       ],
       "criteriaIds": [
@@ -112,22 +112,22 @@
     {
       "id": "wp4",
       "title": "agbrowse: disposition inventory, write non-duplicate cases",
-      "status": "pending",
+      "status": "done",
       "tasks": [
         {
           "id": "t4-disp",
           "title": "Ledger table covering every agbrowse inventory SHA",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t4-cases",
           "title": "Write NEW cases + ref appends for agbrowse mechanisms",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t4-gates",
           "title": "Run the full generation + validation chain",
-          "status": "pending"
+          "status": "done"
         }
       ],
       "criteriaIds": [
@@ -138,22 +138,22 @@
     {
       "id": "wp5",
       "title": "opencodex: disposition inventory, write non-duplicate cases",
-      "status": "pending",
+      "status": "done",
       "tasks": [
         {
           "id": "t5-disp",
           "title": "Ledger table covering every opencodex inventory SHA",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t5-cases",
           "title": "Write NEW cases + ref appends for opencodex mechanisms",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t5-gates",
           "title": "Run the full generation + validation chain",
-          "status": "pending"
+          "status": "done"
         }
       ],
       "criteriaIds": [
@@ -164,22 +164,22 @@
     {
       "id": "wp6",
       "title": "Ship: issues, README/site counts, push public",
-      "status": "pending",
+      "status": "done",
       "tasks": [
         {
           "id": "t6-issues",
           "title": "Register every new case as a GitHub issue on lidge-jun/fuck-powershell",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t6-counts",
           "title": "Sync README + docs-site counts to the new corpus size",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "t6-push",
           "title": "Push to origin and verify the live Pages deploy",
-          "status": "pending"
+          "status": "done"
         }
       ],
       "criteriaIds": [
@@ -213,43 +213,43 @@
       "id": "c-cov-clijaw",
       "scenario": "Every SHA in inv/win_cli-jaw.txt appears in the cli-jaw ledger table",
       "expectedEvidence": "coverage count script output",
-      "capturedEvidence": "",
-      "status": "open"
+      "capturedEvidence": "bun scripts/check-coverage.mjs cli-jaw -> COVERAGE OK cli-jaw (020_wp2_clijaw.md): 63/63 dispositioned, exit 0. The 020 table records 5 NEW, 18 REF, 40 REJECT, including four rows that matched the grep on the English word windows and are rejected explicitly. Commit 01ca412.",
+      "status": "met"
     },
     {
       "id": "c-cov-ima2",
       "scenario": "Every SHA in inv/win_ima2-gen.txt appears in the ima2-gen ledger table",
       "expectedEvidence": "coverage count script output",
-      "capturedEvidence": "",
-      "status": "open"
+      "capturedEvidence": "bun scripts/check-coverage.mjs ima2-gen -> COVERAGE OK ima2-gen (030_wp3_ima2gen.md): 72/72 dispositioned. 4 NEW, 16 REF, 52 REJECT. The gate caught a transposed SHA on its first run.",
+      "status": "met"
     },
     {
       "id": "c-cov-agbrowse",
       "scenario": "Every SHA in inv/win_agbrowse.txt appears in the agbrowse ledger table",
       "expectedEvidence": "coverage count script output",
-      "capturedEvidence": "",
-      "status": "open"
+      "capturedEvidence": "bun scripts/check-coverage.mjs agbrowse -> COVERAGE OK agbrowse (040_wp4_agbrowse.md): 18/18 dispositioned. 1 NEW, 1 REF, 16 REJECT. Never mined before this round.",
+      "status": "met"
     },
     {
       "id": "c-cov-opencodex",
       "scenario": "Every SHA in inv/win_opencodex.txt appears in the opencodex ledger table",
       "expectedEvidence": "coverage count script output",
-      "capturedEvidence": "",
-      "status": "open"
+      "capturedEvidence": "bun scripts/check-coverage.mjs opencodex -> COVERAGE OK opencodex (050_wp5_opencodex.md): 341/341 dispositioned across three bands (b1 12, b2 210, b3 119). 5 NEW, 61 REF, 275 REJECT, with ten band-3 rejects spot-read in full.",
+      "status": "met"
     },
     {
       "id": "c-gates",
       "scenario": "After every case-writing work-phase, lint-cases, build-graph, validate-graph, build-skill and the docs-site build all succeed with zero violations",
       "expectedEvidence": "fresh command output with exit codes for each script in that work-phase's C",
-      "capturedEvidence": "wp1 C: lint 56 cases OK exit 0; build-graph 216 nodes 439 edges; validate-graph 0 warns; check-coverage codexclaw 28/28; build-skill diff limited to encoding.md +83 and env-paths.md +103 (the two new cases only, drift gate green after the f2d54d1 sort fix); docs-site bun run build 64 pages Complete. Receipt: .codexclaw/evidence/01a028de-6d96-7493-9cb8-0a6539543ef4/test-receipt.json. Re-run per later work-phase.",
-      "status": "open"
+      "capturedEvidence": "Re-run at every case-writing work-phase. wp1: lint 56 OK, graph 216/439, validate 0 warns, skill drift limited to the two new cases after the f2d54d1 sort fix, site 64 pages. Final state: lint 70 cases OK, build-graph 251 nodes 526 edges, validate-graph 0 warns, all five coverage checks OK, build-skill drift limited to new cases, docs-site 78 pages built. Receipt: .codexclaw/evidence/01a028de-6d96-7493-9cb8-0a6539543ef4/test-receipt.json. Live Pages deploy for 3b4b3ac completed success.",
+      "status": "met"
     },
     {
       "id": "c-ship",
       "scenario": "New cases are registered as GitHub issues, README and site counts match the corpus, and origin main carries the work with a green Pages deploy",
       "expectedEvidence": "gh issue list count, README count grep, git push output, deployment status",
-      "capturedEvidence": "",
-      "status": "open"
+      "capturedEvidence": "Issues 19-34 created for all 16 new cases and cross-linked into each case refs (b440e18). README synced to 70 cases and 251 nodes / 526 edges, matching find cases -name '*.md' | wc -l = 70. Pushed 228ccc3..3b4b3ac to origin main. Pages deploy for 3b4b3ac completed success; the live case page returns 200 and the new ids appear in the live index.",
+      "status": "met"
     }
   ],
   "host": {
