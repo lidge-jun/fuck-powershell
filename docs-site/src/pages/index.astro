@@ -1,0 +1,106 @@
+---
+// Dark-only splash (design decision, DESIGN.md 260822). Outside Starlight layout.
+import "../styles/landing.css";
+const BASE = import.meta.env.BASE_URL; // "/fuck-powershell/"
+const link = (p) => BASE + p;
+const categories = [
+  { id: "aliases",      label: "Aliases",     tint: "#5e5ce6", first: "curl-alias",              glyph: "M7 8h6a4 4 0 0 1 0 8H9m-2-4h8" },
+  { id: "args-quoting", label: "Quoting",     tint: "#0a84ff", first: "oss-native-arg-quoting",  glyph: "M8 7v4a2 2 0 0 1-2 2m8-6v4a2 2 0 0 1-2 2m6-6v4a2 2 0 0 1-2 2" },
+  { id: "streams",      label: "Streams",     tint: "#64d2ff", first: "dev-null-redirect",       glyph: "M4 9c2-2 4-2 6 0s4 2 6 0m-12 6c2-2 4-2 6 0s4 2 6 0" },
+  { id: "encoding",     label: "Encoding",    tint: "#30d158", first: "oss-outfile-bom",         glyph: "M6 6l-3 6 3 6m12-12l3 6-3 6M13 5l-2 14" },
+  { id: "exit-codes",   label: "Exit codes",  tint: "#ff9f0a", first: "exit-code-vs-dollar-q",   glyph: "M5 12h8m0 0l-3-3m3 3l-3 3m5-9v12" },
+  { id: "versions",     label: "Versions",    tint: "#bf5af2", first: "ps51-vs-7-split",         glyph: "M12 4v8m0 0l-4 8m4-8l4 8M6 8h12" },
+  { id: "env-paths",    label: "Env & paths", tint: "#ffd60a", first: "env-domain-principal",    glyph: "M4 18V8a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" },
+  { id: "ci-agents",    label: "CI & agents", tint: "#ff453a", first: "actions-default-shell",   glyph: "M8 9l-4 3 4 3m8-6l4 3-4 3m-6 3l4-12" },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>fuck-powershell — PowerShell landmines, documented</title>
+    <meta name="description" content="A reproducible-case archive of PowerShell landmines: where POSIX assumptions explode. Real failures, real commits, an installable agent skill." />
+    <link rel="canonical" href="https://lidge-jun.github.io/fuck-powershell/" />
+    <meta property="og:title" content="fuck-powershell" />
+    <meta property="og:description" content="Where POSIX assumptions explode. A reproducible-case archive of PowerShell landmines." />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <nav class="pill-nav" id="pillNav" aria-label="Primary">
+      <a class="brand" href={link("")}>
+        <span class="brand-glyph" aria-hidden="true">&gt;_</span>
+        <span class="brand-name">fuck-powershell</span>
+      </a>
+      <div class="nav-links">
+        <a href="#categories">Cases</a>
+        <a href={link("schema/")}>Schema</a>
+        <a href={link("skill/")}>Skill</a>
+        <a href="https://github.com/lidge-jun/fuck-powershell" rel="noopener">GitHub</a>
+      </div>
+    </nav>
+
+    <main id="main">
+      <section class="hero">
+        <div class="aurora" aria-hidden="true"></div>
+        <h1 class="headline">Where POSIX assumptions explode.</h1>
+        <p class="sub">A reproducible-case archive of PowerShell landmines — real failures, real commits, no folklore.</p>
+        <div class="cta-row">
+          <a class="cta-primary" href="#categories">Browse the cases</a>
+          <a class="cta-ghost" href={link("skill/")}>Install the agent skill</a>
+        </div>
+
+        <figure class="terminal" aria-label="PowerShell error example">
+          <figcaption class="term-bar">
+            <span class="dot red" aria-hidden="true"></span><span class="dot amber" aria-hidden="true"></span><span class="dot green" aria-hidden="true"></span>
+            <span class="term-tab"><span aria-hidden="true">&gt;_</span> pwsh</span>
+          </figcaption>
+          <pre class="term-body"><code>$ curl -s https://api.example.com/health
+<span class="err">Invoke-WebRequest : A parameter cannot be found that matches parameter name 's'.</span>
+<span class="err">At line:1 char:6</span>
+<span class="err">+ curl -s https://api.example.com/health</span>
+<span class="err">+      ~~</span>
+$ node build.js 2&gt;/dev/null
+<span class="err">out-file : Could not find a part of the path 'C:\dev\null'.</span></code></pre>
+        </figure>
+      </section>
+
+      <section class="dock-section" id="categories" aria-label="Case categories">
+        <h2 class="dock-title">Eight ways it explodes</h2>
+        <ul class="dock" role="list">
+          {categories.map((c) => (
+            <li>
+              <a class="tile" href={link("cases/" + c.id + "/" + c.first + "/")} aria-label={c.label + " cases"}>
+                <span class="tile-icon" style={"background:" + c.tint} aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={c.glyph} /></svg>
+                </span>
+                <span class="tile-label">{c.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="about">
+        <p>
+          Every case documents a real failure — <strong>Symptom, Repro, Cause, Workaround</strong> —
+          and cites a public commit or source file. Five come from mined open-source fixes,
+          the rest from production incidents. Your coding agent can
+          <a href={link("skill/")}>load the distilled skill</a> and stop stepping on them.
+        </p>
+      </section>
+
+      <footer class="foot">
+        <span>MIT · <a href="https://github.com/lidge-jun/fuck-powershell" rel="noopener">lidge-jun/fuck-powershell</a></span>
+        <a href={link("schema/")}>Case schema</a>
+      </footer>
+    </main>
+
+    <script>
+      const nav = document.getElementById("pillNav");
+      const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
+      addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    </script>
+  </body>
+</html>
