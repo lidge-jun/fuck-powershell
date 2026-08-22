@@ -1,16 +1,42 @@
 ---
 name: powershell-landmines
-description: "Avoid PowerShell landmines when writing or running Windows shell commands: alias traps (curl/wget), POSIX redirects (/dev/null), native stderr ErrorRecord wrapping, exit-code blindness, encoding/BOM corruption, 5.1-vs-7 divergence, quoting loss, env-var identity traps. Use BEFORE generating any powershell/pwsh command, .ps1 script, or Windows CI step. Triggers: PowerShell, pwsh, powershell.exe, .ps1, Windows shell, Windows CI, icacls, Invoke-WebRequest, 파워쉘, 윈도우 스크립트."
+description: "Query-first Windows failure intelligence: preflight the fuck-powershell landmine corpus before patches, and avoid PowerShell landmines when writing or running Windows shell commands: alias traps (curl/wget), POSIX redirects (/dev/null), native stderr ErrorRecord wrapping, exit-code blindness, encoding/BOM corruption, 5.1-vs-7 divergence, quoting loss, env-var identity traps. Use BEFORE generating any powershell/pwsh command, .ps1 script, or Windows CI step. Triggers: PowerShell, pwsh, powershell.exe, .ps1, Windows shell, Windows CI, icacls, Invoke-WebRequest, 파워쉘, 윈도우 스크립트."
 metadata:
   short-description: "PowerShell landmine avoidance rules + case references"
 ---
 
 # powershell-landmines
 
-Reproducible-case-backed rules for not stepping on PowerShell mines. Full archive:
-https://github.com/lidge-jun/fuck-powershell (live: https://lidge-jun.github.io/fuck-powershell/)
+Windows shell & process interoperability hazards for coding agents — backed by the
+fuck-powershell failure corpus (https://github.com/lidge-jun/fuck-powershell,
+live: https://lidge-jun.github.io/fuck-powershell/). PowerShell is the brand;
+the corpus covers cmd.exe, Node/Bun spawn, PATH/PATHEXT, encodings, Win32 paths,
+and CI runner behavior.
 
-## Before you run anything (10 rules)
+## Dynamic lookup (preferred)
+
+Pull the corpus once, then QUERY BEFORE PATCHING:
+
+```
+git clone https://github.com/lidge-jun/fuck-powershell ~/.fuck-powershell
+```
+
+Before modifying code that touches Windows process execution, PowerShell/cmd
+scripts, PATH/env, encodings, exit codes, or Windows CI steps, run a preflight:
+
+```
+bun ~/.fuck-powershell/scripts/fp.mjs preflight --runtime node --operation spawn --target npm --json
+bun ~/.fuck-powershell/scripts/fp.mjs preflight --runtime powershell --operation encoding
+```
+
+operations: spawn | env-path | encoding | redirect | exit-code | quoting | install | ci.
+Read the top cases it returns (`fp case <id>`) and apply their constraints.
+After generating a diff, postflight risky tokens: `fp search "<tokens from diff>"`
+and `fp errors <enoent|einval|eperm|...>` when an error signature appears.
+risk: high means read the top case BEFORE writing code; medium means scan titles.
+The graph is rebuilt automatically on first query; `git -C ~/.fuck-powershell pull` to update.
+
+## Core rules (fallback when the corpus is not installed)
 
 1. Never use bare `curl` or `wget` — on Windows PowerShell 5.1 they are aliases of
    `Invoke-WebRequest`. Use `curl.exe` or `Invoke-RestMethod`. Never probe with
