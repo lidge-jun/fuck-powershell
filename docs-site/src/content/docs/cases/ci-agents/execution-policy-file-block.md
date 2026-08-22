@@ -1,9 +1,15 @@
 ---
 title: "Execution policy blocks your downloaded installer — irm | iex is the workaround, not a style choice"
 description: "ci-agents landmine — hard-error (5.1)"
+sidebar:
+  label: "execution policy file block"
 ---
 
+<p class="case-eyebrow">ci agents · case</p>
+
 <div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">interactive</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#execution-policy-gate">execution-policy-gate</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">PSSECURITYEXCEPTION</span></div><div class="row"><span class="k">Mechanism</span><span class="v">execution policy gate</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">irm iex</span></span></div></div>
 
 ## Symptom
 

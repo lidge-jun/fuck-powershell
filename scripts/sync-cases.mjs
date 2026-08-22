@@ -30,11 +30,30 @@ for (const f of readdirSync(CASES, { recursive: true }).map(String).filter((f) =
   }
   // body: drop the duplicated H1 (Starlight renders title from frontmatter)
   const body = m[2].replace(/^\s*# .*\n/, "");
+  const NAV_OVERRIDES = {
+    "spawn-npm-enoent-einval": "npm spawn: ENOENT & EINVAL",
+    "windowstyle-hidden-vs-windowshide": "-WindowStyle vs windowsHide",
+    "join-semicolon-splits-startprocess": "Semicolon splits Start-Process",
+    "ne-filters-instead-of-compares": "-ne filters collections",
+    "get-command-where-disagree": "Get-Command vs where.exe",
+    "if-nativecmd-truthiness": "if(native) truthiness",
+    "utf8-bom-still-breaks-grep": "utf8 BOM still breaks grep",
+    "start-process-no-lastexitcode": "Start-Process exit codes",
+    "english-and-not-separator": "'and' is not a separator",
+    "backslash-quote-ends-span": "Backslash ends quoted span",
+  };
+  const id = fm.id;
+  const navLabel = NAV_OVERRIDES[id] ?? id.split("-").map(w =>
+    /^(enoent|einval|eperm|eftype|bom|utf8|utf16|ps1|ps51|cp949|iex|irm|npm|cmd|ci|json|path|pathext)$/.test(w)
+      ? w.toUpperCase().replace("PS51","PS 5.1").replace("UTF8","UTF-8").replace("UTF16","UTF-16")
+      : w
+  ).join(" ");
   const refs = (fm.refs ?? []).map((r) => "- <" + r + ">").join("\n");
   const ctxChips = (fm.context ?? [])
     .map((c) => '<span class="badge badge-context">' + c + "</span>")
     .join("");
-  const ont = (parseFrontmatter(text) ?? {}).ontology ?? {};
+  const fullFm = parseFrontmatter(text) ?? {};
+  const ont = fullFm.ontology ?? {};
   const mechChips = (Array.isArray(ont.caused_by) ? ont.caused_by : [])
     .map((m) => '<a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#' +
       m.replace("mechanism-", "").replace(/[^a-z0-9-]/g, "") + '">' + m.replace("mechanism-", "") + "</a>")
@@ -48,13 +67,31 @@ for (const f of readdirSync(CASES, { recursive: true }).map(String).filter((f) =
     '<span class="badge badge-meta">repro: ' + fm.repro + "</span>" +
     mechChips +
     "</div>";
+  // At-a-glance card (concept ledger 001)
+  const label = (cid) => cid.replace(/^(runtime|shell|command|mechanism|error|workaround|env)-/, "").replace(/-/g, " ");
+  const arr = (x) => Array.isArray(x) ? x : [];
+  const glanceRows = [];
+  if (arr(ont.affects).length) glanceRows.push(["Affects", arr(ont.affects).map(label).join(", ")]);
+  const fails = arr(ont.manifests_as).length ? arr(ont.manifests_as).map(l=>label(l).toUpperCase()).join(", ") : fm.failure;
+  glanceRows.push(["Fails as", fails]);
+  if (arr(ont.caused_by).length) glanceRows.push(["Mechanism", arr(ont.caused_by).map(label).join(", ")]);
+  if (arr(ont.mitigated_by).length) glanceRows.push(["Safe fix", '<span class="fix">' + label(ont.mitigated_by[0]) + "</span>"]);
+  const glance = '<div class="case-glance">' + glanceRows.map(([k,v]) =>
+    '<div class="row"><span class="k">' + k + '</span><span class="v">' + v + "</span></div>").join("") + "</div>";
+  const eyebrow = '<p class="case-eyebrow">' + fm.category.replace(/-/g, " ") + " · case</p>";
   const out = [
     "---",
     `title: "${String(fm.title).replace(/"/g, '\\"')}"`,
     `description: "${fm.category} landmine — ${fm.failure} (${fm.versions})"`,
+    "sidebar:",
+    `  label: "${navLabel.replace(/"/g, "'")}"`,
     "---",
     "",
+    eyebrow,
+    "",
     badge,
+    "",
+    glance,
     "",
     body.trim(),
     "",

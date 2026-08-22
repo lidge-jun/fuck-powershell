@@ -1,9 +1,15 @@
 ---
 title: "A BOM-less .ps1 is read as ANSI — non-ASCII corrupts before execution"
 description: "encoding landmine — silent (5.1)"
+sidebar:
+  label: "BOM less PS1 CP949"
 ---
 
+<p class="case-eyebrow">encoding · case</p>
+
 <div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#bom-sniffing">bom-sniffing</a><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#default-encoding">default-encoding</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, windows, korean codepage</span></div><div class="row"><span class="k">Fails as</span><span class="v">MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">bom sniffing, default encoding</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">utf8 bom</span></span></div></div>
 
 ## Symptom
 

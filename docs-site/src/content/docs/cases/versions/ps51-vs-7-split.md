@@ -1,9 +1,15 @@
 ---
 title: "powershell.exe and pwsh are different languages wearing one syntax"
 description: "versions landmine — silent (both)"
+sidebar:
+  label: "PS 5.1 vs 7 split"
 ---
 
+<p class="case-eyebrow">versions · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#default-encoding">default-encoding</a><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#alias-shadowing">alias-shadowing</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7, actions runner, windows, korean codepage</span></div><div class="row"><span class="k">Fails as</span><span class="v">PARAMETERBINDING, MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default encoding, alias shadowing</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">set content utf8nobom</span></span></div></div>
 
 ## Symptom
 

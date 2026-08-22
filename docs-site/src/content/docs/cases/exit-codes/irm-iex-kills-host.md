@@ -1,9 +1,15 @@
 ---
 title: "exit 1 inside irm | iex kills the user's terminal"
 description: "exit-codes landmine — hard-error (both)"
+sidebar:
+  label: "IRM IEX kills host"
 ---
 
+<p class="case-eyebrow">exit codes · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">interactive</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#iex-session">iex-session</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7</span></div><div class="row"><span class="k">Fails as</span><span class="v">TERMINAL KILLED</span></div><div class="row"><span class="k">Mechanism</span><span class="v">iex session</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">throw not exit</span></span></div></div>
 
 ## Symptom
 

@@ -1,9 +1,15 @@
 ---
 title: "npm's .ps1 shim wins the PATH race and nothing can run it"
 description: "aliases landmine — hard-error (both)"
+sidebar:
+  label: "NPM PS1 not comspec"
 ---
 
+<p class="case-eyebrow">aliases · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#pathext-resolution">pathext-resolution</a><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#execution-policy-gate">execution-policy-gate</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, cmd, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">PSSECURITYEXCEPTION</span></div><div class="row"><span class="k">Mechanism</span><span class="v">pathext resolution, execution policy gate</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">get command</span></span></div></div>
 
 ## Symptom
 

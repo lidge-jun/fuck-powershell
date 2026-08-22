@@ -1,9 +1,15 @@
 ---
 title: "GitHub Actions on Windows defaults to PowerShell — your bash-ism dies quietly"
 description: "ci-agents landmine — hard-error (both)"
+sidebar:
+  label: "actions default shell"
 ---
 
+<p class="case-eyebrow">ci agents · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">ci</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#default-shell-selection">default-shell-selection</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">pwsh 7, powershell 51, actions runner, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">COMMAND NOT RECOGNIZED, PARSERERROR</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default shell selection</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">explicit shell</span></span></div></div>
 
 ## Symptom
 

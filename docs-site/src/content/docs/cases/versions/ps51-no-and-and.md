@@ -1,9 +1,15 @@
 ---
 title: "PowerShell 5.1 has no && or || — agents loop on parser errors"
 description: "versions landmine — hard-error (5.1)"
+sidebar:
+  label: "PS 5.1 no and and"
 ---
 
+<p class="case-eyebrow">versions · case</p>
+
 <div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">agent</span><span class="badge badge-context">interactive</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#pipeline-chain-ops">pipeline-chain-ops</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51</span></div><div class="row"><span class="k">Fails as</span><span class="v">PARSERERROR</span></div><div class="row"><span class="k">Mechanism</span><span class="v">pipeline chain ops</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">lastexitcode gate</span></span></div></div>
 
 ## Symptom
 

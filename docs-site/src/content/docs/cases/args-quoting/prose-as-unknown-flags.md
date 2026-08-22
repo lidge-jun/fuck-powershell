@@ -1,9 +1,15 @@
 ---
 title: "when a CLI reports your prose as unknown flags, PowerShell shredded the argument - not the CLI"
 description: "args-quoting landmine — misleading-error (both)"
+sidebar:
+  label: "prose as unknown flags"
 ---
 
+<p class="case-eyebrow">args quoting · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">agent</span><span class="badge badge-context">ci</span><span class="badge badge-context">interactive</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#native-argv-rebuild">native-argv-rebuild</a><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#string-interpolation">string-interpolation</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">UNKNOWN ARGUMENTS</span></div><div class="row"><span class="k">Mechanism</span><span class="v">native argv rebuild, string interpolation</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">file payload</span></span></div></div>
 
 ## Symptom
 

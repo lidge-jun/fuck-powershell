@@ -1,9 +1,15 @@
 ---
 title: "a WindowsApps alias on PATH spawns EPERM while passing every readability and reparse-point probe"
 description: "env-paths landmine — misleading-error (both)"
+sidebar:
+  label: "windowsapps alias EPERM"
 ---
 
+<p class="case-eyebrow">env paths · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">agent</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#appexeclink">appexeclink</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, cmd, windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EPERM</span></div><div class="row"><span class="k">Mechanism</span><span class="v">appexeclink</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">skip windowsapps</span></span></div></div>
 
 ## Symptom
 

@@ -1,9 +1,15 @@
 ---
 title: "Test-Path says True for a path with trailing whitespace that Node cannot open"
 description: "env-paths landmine — misleading-error (both)"
+sidebar:
+  label: "test PATH trailing whitespace"
 ---
 
+<p class="case-eyebrow">env paths · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-context">agent</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#win32-path-normalization">win32-path-normalization</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENOENT</span></div><div class="row"><span class="k">Mechanism</span><span class="v">win32 path normalization</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">trim path</span></span></div></div>
 
 ## Symptom
 

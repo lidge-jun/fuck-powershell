@@ -1,9 +1,15 @@
 ---
 title: "\ and \ are real variable names, so sed backreferences and price ranges are deleted en route to the child"
 description: "args-quoting landmine — silent (both)"
+sidebar:
+  label: "dollar backslash vars"
 ---
 
+<p class="case-eyebrow">args quoting · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">agent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#string-interpolation">string-interpolation</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">string interpolation</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">single quote regex</span></span></div></div>
 
 ## Symptom
 

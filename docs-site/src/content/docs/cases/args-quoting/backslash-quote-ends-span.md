@@ -1,9 +1,15 @@
 ---
 title: "escaping a quote ENDS the quoted span, so one JSON argument silently becomes several"
 description: "args-quoting landmine — misleading-error (5.1)"
+sidebar:
+  label: "Backslash ends quoted span"
 ---
 
+<p class="case-eyebrow">args quoting · case</p>
+
 <div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">agent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#native-argv-rebuild">native-argv-rebuild</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">INVALID JSON</span></div><div class="row"><span class="k">Mechanism</span><span class="v">native argv rebuild</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">file payload</span></span></div></div>
 
 ## Symptom
 

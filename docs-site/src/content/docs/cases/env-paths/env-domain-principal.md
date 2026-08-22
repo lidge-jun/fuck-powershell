@@ -1,9 +1,15 @@
 ---
 title: "$env:USERDOMAIN is not your identity"
 description: "env-paths landmine — hard-error (both)"
+sidebar:
+  label: "env domain principal"
 ---
 
+<p class="case-eyebrow">env paths · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#env-derived-identity">env-derived-identity</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">ACCOUNT SID MAPPING</span></div><div class="row"><span class="k">Mechanism</span><span class="v">env derived identity</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">sid principal</span></span></div></div>
 
 ## Symptom
 

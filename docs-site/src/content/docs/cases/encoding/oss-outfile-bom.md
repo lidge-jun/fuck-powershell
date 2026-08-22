@@ -1,9 +1,15 @@
 ---
 title: "Out-File writes UTF-16; your POSIX tools read garbage"
 description: "encoding landmine — silent (5.1)"
+sidebar:
+  label: "oss outfile BOM"
 ---
 
+<p class="case-eyebrow">encoding · case</p>
+
 <div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#default-encoding">default-encoding</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, node, python, windows, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default encoding</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">set content utf8nobom</span></span></div></div>
 
 ## Symptom
 

@@ -1,9 +1,15 @@
 ---
 title: "PS 5.1 turns native stderr into NativeCommandError"
 description: "streams landmine — misleading-error (5.1)"
+sidebar:
+  label: "native stderr errorrecord"
 ---
 
+<p class="case-eyebrow">streams · case</p>
+
 <div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#stream-wrapping">stream-wrapping</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">NATIVECOMMANDERROR</span></div><div class="row"><span class="k">Mechanism</span><span class="v">stream wrapping</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">continue eap</span></span></div></div>
 
 ## Symptom
 

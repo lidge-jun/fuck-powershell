@@ -1,9 +1,15 @@
 ---
 title: "Out-String turns one stderr line into eight and injects your own script text into the log"
 description: "streams landmine — silent (5.1)"
+sidebar:
+  label: "out string multiplies stderr"
 ---
 
+<p class="case-eyebrow">streams · case</p>
+
 <div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">ci</span><span class="badge badge-context">agent</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#stream-wrapping">stream-wrapping</a><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#errorrecord-format">errorrecord-format</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">stream wrapping, errorrecord format</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">stringify errorrecord</span></span></div></div>
 
 ## Symptom
 

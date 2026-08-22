@@ -1,9 +1,15 @@
 ---
 title: "Write-Host output is invisible to 2>&1 | Out-String"
 description: "streams landmine — silent (both)"
+sidebar:
+  label: "write host not success stream"
 ---
 
+<p class="case-eyebrow">streams · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#host-vs-pipeline">host-vs-pipeline</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">host vs pipeline</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">write output</span></span></div></div>
 
 ## Symptom
 

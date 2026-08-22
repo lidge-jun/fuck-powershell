@@ -1,9 +1,15 @@
 ---
 title: "Get-Command and where.exe disagree about which npm exists, and both hand you an unrunnable path"
 description: "aliases landmine — misleading-error (both)"
+sidebar:
+  label: "Get-Command vs where.exe"
 ---
 
+<p class="case-eyebrow">aliases · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">agent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#pathext-resolution">pathext-resolution</a><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#cmd-reparse">cmd-reparse</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, cmd, windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EFTYPE, ENOENT</span></div><div class="row"><span class="k">Mechanism</span><span class="v">pathext resolution, cmd reparse</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">get command</span></span></div></div>
 
 ## Symptom
 

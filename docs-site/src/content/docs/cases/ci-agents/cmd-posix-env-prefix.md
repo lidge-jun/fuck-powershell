@@ -1,9 +1,15 @@
 ---
 title: "VAR=value cmd is not cmd.exe syntax — npm scripts break on Windows"
 description: "ci-agents landmine — hard-error (both)"
+sidebar:
+  label: "CMD posix env prefix"
 ---
 
+<p class="case-eyebrow">ci agents · case</p>
+
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#posix-inline-env">posix-inline-env</a></div>
+
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, cmd, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">COMMAND NOT RECOGNIZED</span></div><div class="row"><span class="k">Mechanism</span><span class="v">posix inline env</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">node env wrapper</span></span></div></div>
 
 ## Symptom
 
