@@ -1,0 +1,1574 @@
+41ab01a2eaff4d4c0fc88d56a0027d1244c33e82	2026-08-21	Fix elevated Windows sandbox setup activation (#39971)
+3cde5d4ccdc8daf06d3f9e83105d8649e07b715b	2026-08-20	Preserve WINDIR in core Windows shell environments (#39809)
+ab82cddd049a4c72d3e23a1ebeb0c63c0d9c530b	2026-08-20	Resolve bundled Windows helpers through bin junctions (#39649)
+da6e68951b985f9c45a472d8ced4b1d3935cc145	2026-08-20	Preserve inline TUI scrollback in Windows Terminal (#39619)
+8e7f64697456d69809334652d86498c78d934dab	2026-08-20	Use in-process parsing for PowerShell command classification (#39602)
+633bd4abf7b223f826032f6f13e6c7f67c9d9185	2026-08-18	Add Windows sandbox diagnostics to `codex doctor` (#39290)
+88c39c457891565b6f792e92d1af77d4f22768fe	2026-08-18	Propagate Windows sandbox ACL update failures (#39279)
+bb701f1e8c8db884fa0cdafff4b8dcb1604f2fdd	2026-08-18	Add a fail-closed Tree-sitter PowerShell lowerer (#39213)
+e70822a6b1e3ea50cd3ac2fc87c00867e85e0737	2026-08-17	Propagate proxy policy into elevated Windows telemetry
+a4f37a5b7f4753d8e22c26ac28825e8ebf2bf91b	2026-08-17	Harden Windows sandbox provisioning against reparse points (#39083)
+09bc28f348774aa180ac58f667ac244aa0c94774	2026-08-17	Restrict Windows IDE pipe client impersonation (#39020)
+c6058ccaa91ab17159cf805bf4d6d4edd87fe5fc	2026-08-17	Stop loading legacy managed config on Windows (#38947)
+3685a61dadefebb66690f8c0f945df044fc11b25	2026-08-15	Normalize CRLF line endings in pasted text (#38704)
+848cbad7f458a442a3a84099650f13c5c68bd48f	2026-08-14	Enforce managed deny-read rules in the Windows sandbox (#38660)
+d8d7ca73f80e992cade867970ceb264431cea33c	2026-08-14	Enable unified exec by default on Windows (#38625)
+813dc5f08d771d351e1da7f00eace464ffe43263	2026-08-13	Embed the Windows sandbox setup manifest in Bazel builds (#38450)
+2aba3219e605051bbeca4eb6b1a1f3dce404cfd3	2026-08-13	Recognize PowerShell `Get-Content` file reads (#38415)
+631bbb33cc0b92da7a7eb232c874462caa8f1e44	2026-08-12	Use bounded fallback ports for Windows managed proxies (#38265)
+9df9ff6ad9ec7d15cdae440a810c9b806711153f	2026-08-12	Detect implicit skill invocations from PowerShell reads (#38228)
+c4b287cf5791d7f4336b925f7dfdb55ee4c3b668	2026-08-12	Run search tool integration tests on Windows (#38184)
+7c47952f7c2c27f7d45cb7f9d4a42671814ef71e	2026-08-11	Allow nested Git repositories in the Windows sandbox (#38080)
+104e25ac5aec760d8804d10729e65f6728eb0331	2026-08-11	Grant Windows sandbox access to the Codex app root (#38064)
+853d98b6b078399deda9e4d413f5225af7938963	2026-08-11	Preserve proxy settings for Windows sandbox debug sessions (#38061)
+92912d6d84e567f8fc921c0b7c429abff182b004	2026-08-10	Add hermetic Windows SDK and MSVC runtime repositories (#37896)
+9742cc8ed5def37a4575263733f70a01ca22047b	2026-08-10	Ignore Unix socket proxy settings on Windows (#37889)
+a603d7ca5c0fc5f965abfba09366ae5fb091350e	2026-08-10	Honor the configured Windows sandbox level for managed networking (#37875)
+3b67b03a3f6b0590589fb85d2be26d0eb58ac159	2026-08-10	Run plugin and skill tests on Windows (#37836)
+69b6152c17943e681941484ad3de31e0c212e814	2026-08-07	Track context windows per agent (#37347)
+4cb8676d3a41dceb0934015dffe08bb21717734c	2026-08-05	Make Windows path URI comparisons ASCII-case-insensitive (#37129)
+845497f483bfd88e9d3471827d67bd67ebcc98d8	2026-07-31	Run native Windows Bazel tests with MSVC (#36372)
+413492cd6c3a4d4f8dff6f406247ccda5a9d88aa	2026-07-30	Ignore symbolic slash-tmp permissions on Windows (#36237)
+8707a35113501a9988f06162ca5c2b27d4f90a58	2026-07-29	Normalize Windows namespace paths in path URIs (#35851)
+03748ad5e18a3c9c1f0828561dcf1f3f0d7b2f77	2026-07-28	Scale skill metadata budgets with context windows (#35773)
+fd41e813cb5939029acab29cb5f2fb8ac8d8286d	2026-07-27	Raise the Windows exec yield floor to 10 seconds (#35670)
+c21c8a5e215bc7b9215fc727cfe17f60ab170333	2026-07-27	Fix the async watcher test harness on Windows (#35665)
+6b23635a7e8d92862940702a2ec65c1226402cdb	2026-07-27	Terminate Windows non-TTY processes on interrupt (#35655)
+b115de97d710ebb6984a0d91080c6d19d9b7017a	2026-07-23	Preserve Windows sandbox proxy settings in guardian sessions (#35036)
+b5748e6e3cbc3c9831f84aa016486721b4923d1c	2026-07-22	Remove Windows Bazel lint toolchain overrides (#34827)
+7fd7a2f9a26d2d745b102ecf6754f599043c260e	2026-07-22	Run code-mode tests in non-Windows Bazel CI (#34823)
+661339bb0941c055602688a83bcc8f72be21b54d	2026-07-22	Document `PathUri` drive letter canonicalization (#34667)
+3f29c6799a692a7cee57f5af18cd027cfd8a0fbf	2026-07-21	Ignore inherited ACEs when refreshing Windows write roots (#34392)
+bdd3118c71a29f26b9df3a47f91efea38a0d58bd	2026-07-21	Update Windows process-tree tests for inherited FDs (#34640)
+a26f219f6788c951dcb3bf435fab4c6d0f4d2f40	2026-07-21	Harden Windows elevated sandbox startup (#34629)
+37eef7baccebaeb00e42a88b323054cdbfe418c5	2026-07-21	Scale skill metadata budgets with model context windows (#34626)
+bbad09a83b1fd9d7e507d688fcd266a7889d7df6	2026-07-21	Fix Windows TUI navigation key handling (#34625)
+9b33613db62526359686349bf717f93532807849	2026-07-21	Terminate Windows process trees with job objects (#34624)
+999a715089a697e8d205e7d7d725ea532664dd95	2026-07-21	Route Windows sandbox proxy traffic by restricting SID (#34613)
+35c2278dd5c49daf8a4e44468038aed9be9e866e	2026-07-20	Support Windows sandboxing in the exec server (#34423)
+bd92b056ddd91bd7c2ecfea3d8773f7eb5a879a6	2026-07-20	Ignore inherited ACEs when refreshing Windows write roots (#34392)
+3ac476bed22a7b7322a710a6ca79a0dbe917d604	2026-07-17	Fix quoted hook commands on Windows (#33926)
+4bc2c723efc6445ea833e2ffd1b11e48298fb8f4	2026-07-15	Select the elevated Windows sandbox for network proxies (#33445)
+cb79b3cdf9c5922bc32ce9dc55582a04a55989ee	2026-07-15	Avoid creating metadata paths in the Windows sandbox (#33430)
+a2fb3f048d07cdb44a2de833a1757c21a24893bf	2026-07-14	Document the Windows exec yield time range (#33167)
+4da39dbea7a829435ea0e8b614ed0c9f3311abeb	2026-07-14	Clarify exec yield timing on Windows (#33150)
+3370181ec6e3227a922257497bdd28f3e8e76144	2026-07-13	Coalesce concurrent Windows sandbox setup requests (#32864)
+abbb8c569cbda65fd75f1a51fcc8dd99ced199fa	2026-07-13	Require the elevated Windows sandbox for network proxies (#32857)
+87f3e39fdf7e676d0ba25b0587f78e5b85e695e2	2026-07-13	Hide Windows filesystem helper console windows (#32849)
+707bd3cc1879dfd0ea5b11fd470e2839316080cc	2026-07-10	Test stdio JSON-RPC size limits with LF and CRLF (#32134)
+54abd9e90dd4209015a216ee64258977296ce270	2026-07-09	Address Windows network review feedback
+d680a6a58c1004e43e8435eb24de011155953444	2026-07-08	test: fix Windows conversation summary fixture
+0ce1aa49cd7b6754f0cb93d64a95ac9a5c24961d	2026-07-08	test: make Windows CI fixtures drive-independent
+c6b124bb31b5bc5db0142f3152e4a2ecd2dd2637	2026-07-08	[codex] Grant Windows sandbox access to primary runtime (#31574)
+166534fc2278ca951a88cd3841557026edfeddf3	2026-07-08	fix(windows-sandbox): allow deletion in writable roots (#31138)
+ad2c4aa5cfcc2bd0dce3076c26e428a5141af451	2026-07-08	ci: add one-off Windows IO trace extraction
+aaa30f79c23e1c11a58394ff6edf1617d470c030	2026-07-07	ci: run V8 source builds on Windows 2025 (#31356)
+26adde1b8c513ae337f46345bc47e885ac52f464	2026-07-08	ci: trace Windows build IO one-off
+1e945dae41e1866678f53b84e952f0a63496de72	2026-07-08	ci: run V8 source builds on Windows 2025
+8e8fd94c602a1c6c59171fe1f16982710bc476c3	2026-07-07	Use reloaded Windows sandbox for command exec
+df7905769613509193aaa4b551217f749b525955	2026-07-07	Consolidate Windows network validation tests
+b93937fd78e2c99b19c5111d7e4e8d03057ee594	2026-07-07	Defer Windows network validation during cloud bootstrap
+9deb4f9c86426c40ba1e189831d7bc3634dd7b94	2026-07-07	Handle mixed-case URLs in Windows command safety (#30879)
+fadc6996fb087696b620ac88d44fecae8ee08e12	2026-07-07	Cover Windows proxy execution edge cases
+c20a892b5382a2452202316de8d05b7d3253f1f1	2026-07-07	Allow disabled proxy with any Windows sandbox
+c32b50beb7e44cc0787001cccbb2afb9b68f4290	2026-07-07	Reject Windows proxies without elevated sandbox
+aab8d9b365f840398ece416efd5dea586a0a8e58	2026-07-07	Keep Windows proxy policy platform-specific
+d1e181047f9943759a3e3950ae093ed7cd6c8be9	2026-07-07	Require elevated policy for all Windows proxies
+36e65799179f12ae8d0647d6ead50ebc59abd69f	2026-07-07	Require elevated Windows policy for managed network
+8841f506c07ccdb773ca012f2271b852c43fbf52	2026-07-07	ci: increase Windows Bazel local test jobs (#31352)
+b5bd08b83d0b8b09c3a250efabd797bfc83a1573	2026-07-07	test(git-utils): unset Windows symlink default
+9e81fc5e60f01c5f9e966e18d115af9ac97344cb	2026-07-07	ci: measure eight Windows Bazel test shards
+7ac6d5cf1554f196db3e8466393d6566fef0146b	2026-07-07	ci: increase Windows Bazel local test jobs
+bba3a2e56f7a340c8e946a1e5507c7572a3ac005	2026-07-07	ci: measure Windows Bazel test bottlenecks
+1e16a18b1675ccd15b2f1c803258ada16aeb08fa	2026-07-07	ci: measure twelve local Windows Bazel test jobs
+af53ac79c9784516abc4ba073d18a31dee273140	2026-07-07	ci: apply eight Windows Bazel test jobs in config
+518bf06cf3038b652f8f339028a01bcd94386d9d	2026-07-07	ci: measure eight local Windows Bazel test jobs
+55662592e0b894cb37951c74551ac4697fcbf6a6	2026-07-07	ci: measure two-thread Windows Bazel test harnesses
+ae95d8b0d99d2d3ddb02c5e9fc13965385c69f63	2026-07-07	ci: measure Windows Bazel test bottlenecks
+233c30f58b2c6127fe28ddb0fe4a747fd9af0048	2026-07-07	ci(v8): leave Windows artifacts on binding source
+26ce6873cd02fd381bdce026046c262a9fd79eba	2026-07-06	test(git): assert Windows sharing violation
+e007b1cb322c3a19f66bceec881ec2720978192c	2026-07-06	chore: merge main into Windows proxy ports
+645b752bc0a9df993d86ecc27c7c25eced261004	2026-07-06	refactor(windows-sandbox): inline provisioning payload
+b4da9f3690066f8ff78c6a702b6e6061bfee6534	2026-07-06	fix(windows-sandbox): stabilize managed proxy ports
+21c25ab9596993b3937e226e7fec7a75f8717464	2026-07-06	Avoid warning for unset Windows sandbox mode
+d774b2671b607a0fe4e0713edda46af1cbc8101d	2026-07-04	ci(windows): build delete-acl candidate
+0119f3bfc0942d2565a034cc43fdfca95a006e85	2026-07-04	fix(windows-sandbox): grant delete rights to writable roots
+380d6ebd62bda95a3d9edda512fb62bfc81ed32c	2026-07-03	test(git): respect Windows repository handle pinning
+409f1f78e7bdb39a5b3c09b06bbe5e435136a4df	2026-07-03	test(git): allow staged Windows helper
+25100c0c7c154085dfdd435de199178326d4ed64	2026-07-03	test(core): require absolute PowerShell wrapper authority
+13a5b13880195b1b43906b4577b5b1fa656fda9c	2026-07-03	Fix Windows compaction shell fixtures
+b4317f4cc7f8e7bf1fb924974a0aa80993ab3f90	2026-07-03	Fix native Windows policy fixtures
+2d13f93d859dd76cb08d4fa546376b24557ad24d	2026-07-03	test: follow PowerShell approval abort lifecycle
+485ecf740fbbcd59c729dab7b9812139905af9dd	2026-07-03	test: assert requested PowerShell argv
+8f03e96cf77efb9769a3679f31b8b27d811b7cc6	2026-07-03	Fix Windows policy test redundant clones
+42a055cc3b4b1a924415d6aa02db51e19342fa1e	2026-07-03	Restore one-shot policy for inspected PowerShell wrappers
+20be6f275ee88225a4974687e07e4d5210e5de4d	2026-07-02	fix(shell-command): satisfy Windows and argument lint
+769720828240a6bdc8ead94ffd1f9b12cdef0bc1	2026-07-02	fix(shell-command): harden PowerShell policy parsing
+d62080c197cedd4002d493b0b4985acdd98d1426	2026-07-02	Fix Windows PowerShell test macro resolution
+c1ff6221c1eb5842636ea0fc85e1c9542c550080	2026-07-02	Harden PowerShell exec-policy classification
+97dee6c2b85d741e8006f60ee7e0cd5142e7da86	2026-07-02	git-utils: fix Windows test import guards
+fab7d5a1e6aeebabdca0cea4dd09b5f9ad1a2d4e	2026-07-02	git-utils: fix Windows authority and test fixtures
+4430c510395ead741fdfb46587f4e319b7373345	2026-07-01	git-utils: fix Windows repository authority tests
+9c0e48eba6dc437436830d4059d437774c121c0d	2026-07-01	git-utils: fix Windows repository authority checks
+daca14580c72b5b3efc5eb704c32599862609359	2026-07-01	git-utils: fix Windows authority build
+e327b172581cd8cfbeed4ae4f22127723dcee140	2026-07-01	Add regression tests for Windows :root dot warning
+f9ec96a1a84af8d0eb7bfa8e12942dbf51940a2f	2026-07-01	Warn when Windows :root dot targets drive root
+edda59a703ba52a7ccb4834e95eae3f9cc0792a6	2026-07-01	git-utils: fix Windows traversal regression test
+f062f6916ee2118fe060cf376b98f6225b875163	2026-07-01	git-utils: reject raw Windows PATH traversal
+06fe61c26b6f113f6d9c209220cd0a047d239a11	2026-07-01	Fix Windows workspace-write delete ACLs on ReFS
+c41f7dec0ca400b42b9da31b80654223112978ad	2026-07-01	Add setup regression coverage for Windows helper lookup
+a577d230da30a054dcf43c906c6d2231cc66a51a	2026-07-01	Fix Windows sandbox helper lookup for standalone installs
+c21e78bbd6cc15d6776b3f0bf857ba41b3329ad8	2026-07-01	git-utils: normalize Windows junction test paths
+3fae2503b3b622b4aa3fc7483852a80914d72bbd	2026-07-01	Expose trusted PowerShell parser selection by flavor
+3befc940ee95e3b12b09de01071a1af02938bda5	2026-07-01	[sandboxing] restore proxy flag for Windows wrapper
+d6f18a476c8211778d42422aa84f872a36eabc7f	2026-06-30	Normalize Windows scratch index paths
+58dfb5fb541db6a5a06b75c05a30b7c4976feb4b	2026-06-30	Avoid expect in Windows PowerShell tests
+ec69e784c20c9376b1480dc0f670319f58e1292a	2026-06-30	Handle Windows environment overrides safely
+8f7f517bb4d977f7ab0fb1d8d01947e1421190ab	2026-06-30	Derive trusted PowerShell paths from Windows
+f3d58636abc150653bf41689c544fa4fe14b10dc	2026-06-29	Recover from corrupted Windows deny-read ACL state
+56b9acfcea4761eac82cf49eaae99f050045b797	2026-06-29	Recover from corrupted Windows deny-read ACL state
+f55a48ac88bfeabc2f9543f66be030e24d40f16c	2026-06-29	fix windows fs-helper proxy env propagation
+cd3fcde27a1d792de45aa75e23535a827d11a03f	2026-06-29	windows sandbox: use local helper cwd
+0e5b3d4265074fe124707b642038f180929083c4	2026-06-29	fix(windows-sandbox): recover from corrupt deny-read state
+7bde17b75c8e5511bda6420cc2311622f77ac488	2026-06-29	preserve proxy env for windows fs helper
+3f4aee0f797d5878960925a11ee8a5a86c896a58	2026-06-29	Recover corrupted Windows deny-read ACL state
+b7f59d9203d466ceb234ee684d8f60c736049ec6	2026-06-29	Fix Windows sandbox real-user qualification
+1d5f0dde3c7b3fc6cbeb531dad03fb1acce2e307	2026-06-29	Preserve Windows sandbox proxy settings for process sandbox
+f8ff2858c528a909991e87e96a6c4e46485a3a35	2026-06-29	Preserve Windows sandbox proxy settings for process sandbox
+3ef083a1237bc4a2d316ca7d5f801f6e1a68ff49	2026-06-29	fix windows sandbox real user qualification
+b06d4c0bec6005bb6c5a05d165a2e0bbff6bafb5	2026-06-29	Improve Windows sandbox refresh error reporting
+02e5820e5a64a4442496d6c9baf6748b5f8ab682	2026-06-29	Qualify Windows sandbox setup marker user
+ac3084ee8df9b01d93270d931fbe1fd7f8c73b5b	2026-06-29	Recover from corrupted Windows deny-read ACL state
+2387ffe5239829ebd41ea1b718722a41a935842f	2026-06-29	Fix Windows sandbox fs-helper proxy refresh
+5d8c39972e3c8cf52bec88b36bc9d93326c3952b	2026-06-29	Recover from corrupted Windows deny-read ACL state
+aa130a775fa107ff94756db38f863973a7770e4a	2026-06-29	windows-sandbox: qualify setup marker real user
+55c1bea00b26693bb6fd727bf989b4de6cd6b4ef	2026-06-29	Improve windows sandbox refresh errors
+1b688bbdcf9fd34a02c340315a4425bd7e567dcf	2026-06-29	Recover from corrupted Windows deny-read ACL state
+7fc4cf8f23bf1e69b4a4f8e82a4d6b6b61b230b6	2026-06-29	Preserve Windows sandbox proxy settings for process sandbox
+5178560d3c82f1e95ce5a9060467300b53365d66	2026-06-29	fix windows sandbox real user qualification
+6a3d6664d45201f2eb9f8c2047576f6b361aa391	2026-06-29	Recover from corrupted Windows deny-read ACL state
+f607c95a453c6ad20ffc739e5583e38f380387a9	2026-06-29	Update Windows PowerShell policy fixtures
+35d3ee68e61b20348e8d70c2743d51d6adec2756	2026-06-29	Fix Windows Clippy for neutral Git fixture
+58579a1aee0523e400ecd973ef9d4bb327ab0cf0	2026-06-29	Harden Windows PowerShell parser trust
+ad2da8c52233423cf18eff0de8a8f62b49ba93a6	2026-06-29	Fix Windows Clippy for transport test
+088c6de358681079c8269a75df65945d1180462f	2026-06-28	Recover from corrupted Windows deny-read ACL state
+0a88b0ceaa076aba5f1f91d689784f5f3b2a329e	2026-06-26	Restore Windows PATH preparation import
+4ea13a7c817e391c544b2d2a358a846b4f7d253d	2026-06-26	Tighten Windows launch resolution boundary
+7424930928576b4f2a1435ad2fe3be84de27763d	2026-06-26	Respect the Windows current-directory limit
+75cf6d01ac7f864389b14a9253f4bffaec6becdb	2026-06-26	Fix long Windows working-directory launches
+31d61b29857fb63242d81176f0ace23957cac2f3	2026-06-26	Make Windows executable resolution deterministic
+afb8a1fe44c5526b5eae40f7aad32ad064efc500	2026-06-26	Remove unused Windows startup info
+d7f40f14651b9728b1e54c814a5d6f055f402e95	2026-06-26	Simplify Windows launch plumbing
+c675a6cede0a1ac2f4c09c40f6548ef0e31da8a8	2026-06-25	[codex] fix windows ingress clippy
+5044062704af7667e460cc401221a081054ef3ab	2026-06-25	ci: narrow Windows test skips (#30134)
+6538612aa5d88c1abcb6f34af63981bf503acbba	2026-06-25	Fix Windows WSL sandbox path URI conversion
+f56b2ae731aff7c3e319353129a3150eae0d8c12	2026-06-25	fix(windows): preserve deny-read during escalation
+55c9389b75f81cb9fcce2961f5f2a1d456aa945b	2026-06-25	windows-sandbox: materialize runtime during setup
+7a52e551dbb3c71f81bef48a8e382182e8f2a259	2026-06-25	Plumb explicit application paths through Windows launchers
+440352e405efd2165c1d1882a957decb2f13c30c	2026-06-25	windows: contain local ConPTY sessions
+ebc2180e882ceca4227ea994cab9f1f355ff6be2	2026-06-25	windows: contain restricted-token unified exec sessions
+27d1e6a6937bdbfb7545f84b5618dfea5ae84a16	2026-06-25	windows: contain elevated unified exec sessions
+d05047214d663dfe06b7f3032fc60d308642b54e	2026-06-25	windows: add raw process command preparation
+d891bf2c136af387ad230824f72f3bcd2859131a	2026-06-25	windows: replace local pipe spawning
+5b56447d82822ffe7d7b6fd093b70fb06b0a6aea	2026-06-25	windows: verify raw pipe command parity
+b55b6a83f23c8e736d1356b7a5064c760cb5461f	2026-06-24	windows-sandbox: materialize setup helper before launch
+cbe40fdfc8cbb3a4469c7e644e4712b4d0617cdf	2026-06-25	windows: add kill-on-close job process primitives
+3ccef20ef4e01875762ccfe4fbe0ee34f86a4a9e	2026-06-24	Skip credential refresh for WindowsApps launch failures (#29637)
+4907f0c2c33bb6b4e543960eb12962f7073ce697	2026-06-24	Preserve Windows sandbox identity during credential retry (#29624)
+41d491c9dee93f86d827347dd527d9a2d4de75a8	2026-06-24	fix: preserve unelevated Windows sandbox selection
+a781761eda225ba85c2b3b64ba2b74c0c54fbecf	2026-06-24	[codex] fix Windows ConPTY input handling (#29734)
+3af0365323bc906e82ef1143e45987ca7125fa74	2026-06-24	codex: fix Windows parsed read path tests (#29801)
+176af2b5105edafffc752241698050b119d7839c	2026-06-23	[codex] Reuse compacted history replacement for new context windows (#29762)
+4a38e74c773ddea96f6804939fd33deb856609bd	2026-06-23	windows-sandbox: stop forcing npm offline mode
+27f22b54aef4d7e5eb6c564e969c961c74605461	2026-06-23	[codex] Reject unlowered PowerShell AST regions (#24092)
+5f129a4703ceaf843e1cb6996bbf4a4f21225198	2026-06-22	PAC 3 - Add Windows system proxy resolver (#26708)
+595f09d6e254fba52ff7c1ec88958fb06d310711	2026-06-22	bazel: document Windows test tag exceptions (#28598)
+461e188cd207e8f5c50a4042b8f0594643a54491	2026-06-22	bazel: measure unstable Windows tests directly (#28598)
+86fdb9cdc72d2d0a53a89b5f874c4dc9e75f8bb6	2026-06-22	bazel: promote cold Windows outliers (#28598)
+a42dfc04a4f581cf89dcc79932fae1c89074e6dd	2026-06-22	bazel: serialize contention-prone Windows tests (#28598)
+7298ce8576c18537276da46245d9898ad33f46de	2026-06-22	ci: preserve generic Windows hybrid execution
+23d3e288ea5d4d8c6b920b099b6820e03ec0b699	2026-06-22	ci: freeze the Windows Bazel shell path
+c1af3a2c5b3c69d8d98dabfd95377fd2c1b0cf60	2026-06-22	ci: enforce the hermetic Windows Bazel toolchain
+95b1a940d1738c50cf30420c119f0650d6a2e456	2026-06-22	bazel: restore fresh Windows test budgets (#28598)
+7835d1dc10b435bf94201586b68f6eeef0dae480	2026-06-22	build: expose fixed Python alias to Windows tests
+60ed308bf26e091353686667395c8342cc6e7380	2026-06-22	build: use fixed execpath for Windows test Python
+3e4edd748666b635d950a0e1d5014f753e5c4071	2026-06-22	build: wrap hermetic Windows test Python
+71b8ed97203dd61c2b38cb2dfb06b039240ef2b2	2026-06-22	build: preserve resolved Windows runfile paths
+d475589f6cb2c717127acf697651cab9b70f3521	2026-06-22	build: resolve self-mapped Windows runfiles
+723775d69a81ed1ea1b99d1a675fe34e81c00d5b	2026-06-22	build: provide hermetic Python to Windows Bazel tests
+a38819d81f11a12b92220c698ba6d7e4f969ac25	2026-06-22	ci: restore Windows PowerShell for Bazel tests
+fbecab78a817e97ae9262a65532dad3ac49fdbc7	2026-06-22	build: remove MSVC from Windows Bazel build actions
+df81e569e1a1a77055a911fc6238f5c547f8a8ca	2026-06-22	ci: generalize Windows hybrid execution
+871d8689fd3205b7fb19d30eb699ab1df0303ca3	2026-06-22	lint: annotate Windows sandbox timeouts
+9c4ef08581388a3828c84aca162de590985b4ba8	2026-06-22	ci: run Windows V8 snapshots locally
+7aa66f2d029ec23b23e01f47a0bae9e76a2afc6d	2026-06-22	test: use Git Bash for the Windows wrapper fixture
+ab901bed50f2e7be7bce014bbf1edc4ecf92de38	2026-06-22	ci: isolate Windows lint execution environments
+d93ad019500b504eb58650ebc0b6706894b5f3d9	2026-06-22	ci: remote Windows lint C++ actions
+6a71ade68313a20dea9532c3fcc806274c954182	2026-06-22	codex: fix Windows lint incompatible targets on PR #29149
+b9a349658113fedf4cf20ce85334d17dce482bfc	2026-06-22	build: use gnullvm for Windows Rust exec tools
+bf12add007a14a7639105477ffcfdc71b34b3b7d	2026-06-22	path-uri: accept WSL mount URIs on Windows
+e4519a5da2b49fbed062503e2ba7f6baee0e9f8c	2026-06-22	arg0: materialize Windows apply_patch launcher
+a84398000cdf4dd01b33350622ec33cfd2a95e28	2026-06-22	windows-sandbox: materialize setup helper before launch
+386452d99673261863ff757a7a72b000cbf03cd3	2026-06-22	codex: right-size remaining Windows tests (#28598)
+2913a360bfa224c75901bcc15f2b9dd9e8775c0d	2026-06-22	codex: size remaining Windows tests for CI (#28598)
+e0823bf91fbb14eafd9714cca043ab497e34d8fc	2026-06-22	codex: fix Windows shard contention (#28598)
+c1f8b280b5cfc280c75682cab1b5be4a4dc58709	2026-06-22	ci: restore custom Windows runner with hermetic LLVM 0.7.9 (#29143)
+f142f1f78557384442dd4d92b57037ccd54ed2cf	2026-06-22	code-mode: make execution policy independent of observation
+edb82645e27e6ae187384cc0016b7168bc128ff3	2026-06-19	windows-sandbox: materialize setup helper before launch
+ffabed15f27fe7ab96812dfbb47d1375b41ef4bd	2026-06-19	windows-sandbox: preserve file attributes during ACL refresh
+558f90902ce2d8cdec860520de1595e65e454d8f	2026-06-19	windows sandbox: retry default desktop after private desktop denial
+aec578687ebedf54be1ca430d2286478f9d6867f	2026-06-19	windows-sandbox: materialize setup helper before launch
+2ae69dc6bf9b8ec1c5669eb08959661bec241654	2026-06-19	windows sandbox: retry default desktop after private desktop denial
+b6ac52d0569b07f3a95b98563a2d98d0756ddf31	2026-06-19	windows-sandbox: materialize setup helper before launch
+d6ca2efdd415b9a3f87c560c3fd84a7cb83639b7	2026-06-19	windows-sandbox: materialize setup helper before launch
+2bbca0c98eba5db163e54d877c65f7f544fbb95c	2026-06-19	windows-sandbox: materialize setup helper before launch
+502a93545f24a3bf36e134dcbcd6b2789d4ad581	2026-06-19	windows-sandbox: materialize setup helper before launch
+dba99720a9c351c1d5cf6680a1b933b64c457a25	2026-06-19	windows-sandbox: materialize setup helper before launch
+8941487815995b6f72845d6783a894e7be7e77c6	2026-06-19	windows sandbox: retry default desktop after private desktop denial
+2ec8006ec6fe9d95664de07131847833bd3f7395	2026-06-19	windows-sandbox: materialize setup helper before launch
+38b2580322035ccd1ad74660cae3fd44d5525576	2026-06-19	windows-sandbox: materialize setup helper before launch
+c9aba3cd9f082102a6d51108087645de572ae0de	2026-06-18	Fix Windows sandboxing test import
+4049435d4aceac59252d63dc7c81e991da100ae3	2026-06-18	Fix Windows MITM sandbox test state
+afbb69a2fb52d7cb9b2f4fa1c50948dcb6d5a029	2026-06-18	[codex] Fix Windows sandbox runtime ACL refresh (#28943)
+434d0d2180bf5126804d673f1fc24321812e135e	2026-06-18	Retry Windows sandbox spawn with elevated backend
+9e34990ffcc97d339362d6dee8dc2d37b0f2ae7f	2026-06-18	fix(windows): revalidate elevated sandbox before skipping setup
+fb8e07ea72da49d31e7b2b07b4f855879a9c4dc0	2026-06-18	windows-sandbox: retry 1312 launches on default desktop
+0303defe7177589945011ba157344e73aa30af09	2026-06-18	windows-sandbox: retry elevated child spawn without user SID
+26d9b7b2fdcbb9455305dc2711deec50699d4221	2026-06-18	windows-sandbox: retry elevated runner launch on 1312
+b37a1763a161e250e7914df8a88325e2bc9ed307	2026-06-18	fix(windows): avoid loading sandbox runner profiles
+47ab51470b5051f4eba1694000416be43e880cda	2026-06-18	Pin Windows argument lint to Windows 2022 (#28940)
+cbb36acfe3ec1ee19a53962adbfe947f3f848985	2026-06-18	chore(tui): instrument Windows palette probing
+527c444832b79cd5d23359caf4aec7565140c895	2026-06-17	fix(app-server): allow capped windows sandbox command exec
+67ab68fc4c173e62f13ed50b64d524a4ddd93f03	2026-06-17	[codex] make WIF env test portable on Windows [ci changed_files]
+751bc7894810d1bdc92ff9f9f9de0c8c56aa0de2	2026-06-17	Fix Windows Clippy for branch test
+ef75171f18fc5e57cc1a22d17efb274561e7de5b	2026-06-17	Run fs helper through Windows sandbox wrapper (#28359)
+d174e9dfc61c89068be69de3f81c6a7b7d56b717	2026-06-16	Reject network proxy with unelevated Windows sandbox
+662eb6356dc1dcb64ec3da02a61ecbd96b3288f1	2026-06-16	shell-command: parse literal PowerShell reads
+4c21b3dccc9bbe5f43d9d03cd540cc9d071dcc4a	2026-06-16	remote-env-windows: exercise implicit permission profile
+53681fd9a9f9d31319a79bb580dd1a71f0fcdc84	2026-06-16	tests: seed remote Windows workspace instructions
+358e06eaebac8d41f0d363aa9fbb873b255d90e0	2026-06-16	tests: type remote Windows turn start
+ce4645b73bbbeb637d24447104d9609a5b6e8f88	2026-06-16	Fix Windows computer use requirement test clippy
+96602d7990cb35d94ec34fd23c3f82377cd1c2b1	2026-06-16	Fix managed shell policy test on Windows
+6427c0c6b7b8c1521fccaafb3d4b5501ea33968d	2026-06-16	Fix Windows requirements test fixture
+758a2a7052838bd02b017e1d4cc14204d02ad97e	2026-06-15	Map Windows computer use requirement to runtime feature
+1fe89de576e2ee6dc341e6f97beca6160ef85a7f	2026-06-16	Run core integration tests against a Wine-backed Windows executor (#28401)
+fbbe7706d65df02d6d1b7db5ae6f9e50de216da7	2026-06-15	Add hidden Windows sandbox wrapper entrypoint (#28358)
+e7a9988d1abfedf67ecf5ae03ce15ecd0b9d82a1	2026-06-15	Add Windows unified exec yield floor (#27086)
+c0b36d234a8cdbd9aa0790f5a8cbf73b7456d915	2026-06-15	recover stale Windows sandbox credentials (#27944)
+c3415f76c91065e3180892afe1c99e8b4f47ac57	2026-06-15	Extract shared Windows sandbox session runner (#28357)
+9d1109cc095cbd0943da3ef3a62cb5fcf0ba561b	2026-06-15	windows-sandbox: retry runner launch without user SID
+ca13147e74b5cf5455699e409ec3b922fdf26a32	2026-06-15	windows sandbox: materialize setup helper before launch
+0618ba0d69ef4359ff190844278ad15e9e3460db	2026-06-15	Fix Windows sandbox process application resolution
+75001b98ac464bb0ba855b8f4d36215ece7b225d	2026-06-15	windows sandbox: materialize setup helper for launch
+142cfa2aa3eef686eb6338b33add69581ce79e2d	2026-06-15	Fix Windows sandbox setup helper resolution
+25533ee9b2e73b506cda3d785150017a1dc7c1aa	2026-06-15	windows-sandbox: resolve PATH commands before spawn
+8a00afbc455aab00cb135d59646bc4282a492d1d	2026-06-15	Fix Windows sandbox process application resolution
+086d21dc637f190392f54ba3477b2ba26470200d	2026-06-15	windows sandbox: hint when PATH binary is blocked
+589efdef0665612cba1491563cf172c5b2538552	2026-06-15	Improve Windows sandbox PATH failure diagnostics
+ee3f14b2cbb4b0fce98972e557e248a5691bbbb4	2026-06-15	Remove unused PathExt import
+5e58b6d77f91d4f50197680b1afb21a0ce2eee34	2026-06-15	[codex] remove stale PathExt import (#28344)
+c11e2f3d1d8019d786e3b6bade20a477fc2a17e7	2026-06-15	Fix non-Windows direct-spawn clippy
+dc060322c766a41c269a79022ad557a53e52a04b	2026-06-15	Fix Windows fs helper sandbox launch
+590599ff76f6b8817fc12cd8c8f5f8b5d139fe5b	2026-06-14	Improve Windows sandbox PATH denial hints
+8482198014ce885ee3eeddd4ab88ab21ecf3a837	2026-06-14	fix: clarify windows sandbox path denials
+f8219e0d9a0fa1247d542fe21707693191e323a8	2026-06-14	Fix Windows sandbox process application resolution
+e9cc763050127555330e528006d5d90ccdabd287	2026-06-14	windows sandbox: avoid WindowsApps default cwd
+a014d046ef4f8ff487a8714176c5986a9035eeca	2026-06-14	Improve Windows sandbox PATH denial diagnostics
+5ae4188bf7b9777912fea398162bf13f08235d60	2026-06-14	windows sandbox: include PATH read roots
+42dec90bc448bfd0e398878583799a6c9afc5234	2026-06-14	bazel: add PowerShell to Wine test harness (#28120)
+daa90ac5cc1f5f03789977ec2cbdd29efbbe787b	2026-06-13	[codex] pipeline Windows targets separately
+80623581502c4f322dd1906b2e600b25e642ce88	2026-06-14	exec-server: add hermetic Windows shell smoke coverage
+aab1f0f4878c077420cd7a196001502239459f05	2026-06-13	exec-server: add hermetic Windows shell smoke coverage
+4a2ce548051018b7a3b1c59017b6b24d68bd02a3	2026-06-13	bazel: materialize PowerShell in Wine prefixes
+e30f2d4bd1d3bc7c1a3014ead8134d032905d1e3	2026-06-13	bazel: add opt-in PowerShell runtime for Wine tests
+17586d80ee6e3096f205cb36cc2968ba1a9adc8d	2026-06-13	[codex] package Windows ARM64 on x64 (#28001)
+9fc26ff8353a02c7b5b32a2009c1fecbe1795894	2026-06-13	path-uri: cover invalid Windows workdir forms
+4aad497e57c99c6de91b8d0406de186bc6c62237	2026-06-13	exec-server: test Windows state across app-server resume
+7e93c916da582d9ffbaed2cac624732d30faf2b6	2026-06-13	exec-server: add hermetic Windows shell smoke coverage
+cb801e51990d8402ff7fb56df3c1bbb8cb89fe11	2026-06-13	path-uri: reject reserved Windows device names
+4e39c1cd2053deaa2514ca1cfea375e5fb454162	2026-06-13	bazel: materialize PowerShell in Wine prefixes
+fc3d68468d6661102a8534bf3d42190474890700	2026-06-13	bazel: add opt-in PowerShell runtime for Wine tests
+51483bb583a90cf36ac5da793a5a4af0ecd54c0b	2026-06-13	[codex] parallelize Windows package archives (#27854)
+eb46984aaaae0b7bbe8351c864cfe09855ee705a	2026-06-12	[codex] package Windows symbols in parallel (#27856)
+5c48e319543f9e567611d95cf4c56284220bd7f5	2026-06-12	[codex] parallelize Windows compression (#27855)
+ac39e7f5d15bddce5c1586312b1e596f55969d11	2026-06-12	windows sandbox: skip WindowsApps read ACL roots
+beae1b4dc756e67681f1c0eedb7ac08dc0857fdf	2026-06-12	fix(tui): normalize workspace status tests on windows
+2e48f92fbed64922e8952988071bc5813f74815a	2026-06-12	refactor(core): unify tool execution policy
+32ed022240ca04ee1e420982fd9934d32e5b900a	2026-06-12	codex: annotate Windows sandbox timeout arguments
+2662873a608ce38c59a34095dc8476edd6f8c74f	2026-06-11	fix(apply-patch) Handle CRLF gracefully
+16c7c79540c26e648b1d0ee09b7c6f4f916258a0	2026-06-11	ci(v8): gate Windows source builds on relevant changes (#27715)
+f535741e47db00c86e3cbe0c061b23270610feed	2026-06-11	Clean up Windows fs helper tests
+a489ddd4902a073370256aead0593243882bec8e	2026-06-11	Tighten Windows fs helper launch flow
+1c7b557ea6257f1138222932058a924c921f5589	2026-06-11	Support Windows sandbox wrapper fs helper env
+e64bf640ec81b9bd538116633507f02e4120a34d	2026-06-11	Address Windows fs helper review feedback
+f799d91a827fc486a916358c2ff6ac60c926f5e3	2026-06-11	Grant cleanup rights for Windows wrapper requests
+85e99b5090a866b439f7ffdadf31b2be2316abc1	2026-06-11	Store Windows wrapper requests under sandbox secrets
+803880c354f9aea6f0fd4a7e360c4a033d8eb8b5	2026-06-11	Preserve Windows wrapper setup environment
+0869a7f8c1900d8438c67796a049fddf7b4c10fb	2026-06-11	Launch Windows fs helper wrapper from configured exe
+cb508310460046a651888796b41f6055c12e3398	2026-06-11	Run fs helper through Windows sandbox wrapper
+831e6e66c52ef12c8cd437560458d3cdb36e6d7c	2026-06-11	codex: preserve Windows Bazel test launcher path
+8a2b6461a5fbf2182fbf6847a76cc731657fd036	2026-06-11	Handle Windows proxy configuration edge cases
+0522d24833d1715866c16c86e938ae967f8631be	2026-06-11	Add Windows system proxy resolver
+b295c376ddd243ff5fcd7580edb61fcae27094b6	2026-06-11	Add Windows sandbox wrapper entrypoint
+132590db699cda7085dbcbd7094f70b38cbea7d4	2026-06-11	Move Windows sandbox filesystem override resolution
+748f916a828f5277f2b289a97cc769de4036ad8d	2026-06-11	Extract Windows sandbox stdio forwarding
+0b08bbb9d93c2e9ae1ad79fe156084dcebb855b7	2026-06-11	[codex] Provide ARM64 MinGW powl compatibility support (#27323)
+1e5b87b4d77e5de112d1a15562ffb6fd68c1e0f9	2026-06-11	Remove TUI legacy Windows sandbox dependency (#27490)
+c180a79a68974292868e628133b00cf273bcc567	2026-06-11	Map Windows attachment paths for WSL view_image
+1188296509db0c87b710601068565715d1c93cbf	2026-06-10	Qualify Windows sandbox real user names
+24aee3eb5ee90dd211ef183d65fec774dc7049c9	2026-06-10	[codex] link Windows releases with LLD (#27315)
+f584790b14021f93504262f978c5f853de6c7654	2026-06-10	codex: fix goal snapshot path on Windows
+54bc2d15930a0700f2071cef972fdefa6f41e488	2026-06-09	fix(windows-sandbox): allow PATH read roots
+e13e9964429c99a56ce037246dc363c884b2979e	2026-06-09	Fix Windows sandbox setup helper launch
+1b73f6171d722af46d00850b513b1e99b39bace2	2026-06-09	Allow Windows sandbox to read PATH tool directories
+a63f446ce900cfdb6e83db75ff16b92a80c37694	2026-06-09	Fix Windows sandbox setup helper launch path
+708d93f60c423b09fe99c8dbee4be8b6157dd752	2026-06-09	Allow Windows sandbox to read PATH tool dirs
+1ec95939ec4edfdab7fcab8828db3e1d11eb2e25	2026-06-09	fix: use BLAKE3 intrinsics for Windows Bazel
+07dc3523b0dd783b622fc488b559ca4827deb0e5	2026-06-09	ci: inherit Windows Bazel environment
+301a7e727748af2debb9d305666fd8bb01afe1d9	2026-06-09	ci: preserve Bazel arguments on Windows
+cc628d090f9fb88dc98373c6f4b8e81db68d0258	2026-06-09	bazel: restore native Windows C++ toolchain resolution
+8a3c97fd92126b154fa381a2970954f2ccd52fec	2026-06-09	context windows
+1384a101b58dad287e4d96be5d9c8b949a848f4f	2026-06-09	bazel: link Windows ARM64 V8 with powl
+7b4fe41767b2c93a6d27b8a7f399e630d38e493a	2026-06-09	bazel: fix local Windows V8 cross snapshots
+1411346ade8720cb50079ec7e36d8f5bb58c38da	2026-06-09	bazel: distinguish Windows MSVC and gnullvm toolchains
+d3138cb94d717ea7c3b5211d7235eb8276724021	2026-06-08	Use PowerShell directly in Windows sandbox test
+e834cca093e7d8eb047100d86269175e32b866ae	2026-06-08	Fix Windows sandbox test path lookup
+73e932f3529f8eafc52dabc30033509a8911c281	2026-06-08	Bind Windows sandbox test workspace root
+4a20700cb67f937c58e6ea44b78e49403f47e111	2026-06-08	Fix Windows sandbox regression test output assertion
+cdd5fb86069e6fab0c1fca4b82755e2d98fd236e	2026-06-08	Simplify Windows sandbox regression test
+826c7122e02c656bb59eb3858a210dc75decd9d9	2026-06-08	Handle proxy-elevated PowerShell sessions
+642497bbe23922eb93b330abf6cc3a6d6995c77e	2026-06-08	Document Windows fs helper launch details
+a4d8cff21052ced3619121a84c9bc1e28cf256b9	2026-06-08	Fix Windows sandbox lint comments
+7818148816ff8ffd9742cba712b6f897a9e9b1ff	2026-06-08	Fix Windows fs helper sandbox launch
+49b1987014a011e266e2ae97712ea6945cab0a46	2026-06-08	Fix Windows async hook test lint
+6d48b936581a3ca478258cd9d42e389098add1f2	2026-06-08	fix Windows unified exec sandbox backend selection
+372e42bb205e1835145061511af1a38d3d71236c	2026-06-08	Retry Windows sandbox SID resolution after provisioning
+d4fa4853be4564716d8e81a76510e74e38eaa9da	2026-06-08	fix Windows deny-read for shell runtimes
+7e2778acadd498673b347e560773bb95fd02fd63	2026-06-08	codex: fix Windows compaction parity path (#26830)
+d3a5b98f3ded5b962605817ec7413aa2d92db20a	2026-06-07	Revert "Use Windows setup marker as completion signal (#26074)"
+31fc07f811915bba47cb722bf2aa2a730a9b67bd	2026-06-07	Focus Windows regression on denied read
+3694ff376afeb91dd464a03f750f9f3f73162064	2026-06-07	Focus Windows regression on denied read
+be5b2d9e630645d8e94ec187a769044f1317f2d7	2026-06-07	Add Windows managed deny-read regression
+7bae48926fe1696d37995cb0813e5932c5ac1199	2026-06-07	Revert "Use stable Windows sandbox test harness"
+26bb806eedeeb1cf08150cccbde413e099cfd6ec	2026-06-07	Revert "Materialize Windows sandbox test workspace"
+cf7cb65446366a15058a9a53203ec0ced73e7d3e	2026-06-07	Revert "Use stable Windows sandbox test harness"
+e211c2b57fde0572395e58990a753ea6770bda60	2026-06-07	Revert "Materialize Windows sandbox test workspace"
+8604ba252593f42c9e2ea3714fe30a910d4287bb	2026-06-07	Materialize Windows sandbox test workspace
+3222be0a96904f3d8f2bafe6733ada05b747d2da	2026-06-07	Use stable Windows sandbox test harness
+8af7cb05a469e9a3b85511e21a1d5c9978773a10	2026-06-07	Add Windows managed deny-read regression
+bd3b85eb3d5dcbc8c555333a83402cb71979feed	2026-06-07	Materialize Windows sandbox test workspace
+5b19b0857180d95194ab414f71c846e81c328b44	2026-06-07	Use stable Windows sandbox test harness
+b61c7acb17b25328bce73ab491a251a4773820e1	2026-06-07	Add Windows managed deny-read regression
+1e1b8ed914d7b4aec4d987ffaf3d1c3e97f3fa4d	2026-06-05	ci(v8): publish Windows artifacts from release tags
+82b15b65e2303255e3e1a740d994c7e00250344a	2026-06-05	[codex] Respect Windows sandbox backend in exec policy (#26307)
+713192381b74f09f4b92f3ed410da067461d5cd0	2026-06-05	fix(tui): Windows composer background (#26181)
+ca34323c4655d46aab7f41a29544ec0b012fd4af	2026-06-05	Fix Windows sandbox helper launch path
+9e7aafe139825c155fa957263784e5288185cc58	2026-06-05	Avoid launching setup helper as setup.exe on Windows
+f7685c6c1c86dd6ef284c1e5437f6b95fb624cbd	2026-06-05	Avoid Windows installer detection for sandbox helper
+cd2e03d5404bffe57fc66faae87737c833b1b3df	2026-06-05	Mitigate Windows sandbox helper elevation heuristic
+e781816eadf1986c6ccb382b34a8d5bb4c23fb70	2026-06-05	Open Windows app workspaces via deep link (#26500)
+e410df00c9dfac58c9cedba7f55e393157d3c6ed	2026-06-05	fix(rmcp-client): make OAuth lock root Windows-safe
+4be1a168fc7ed3313ddc62031da036f0c50209b7	2026-06-04	ci: test windows cross build (#25000)
+0b2e7b5eb1cfa74e5807a84b291e6c900eeb197d	2026-06-04	Improve Windows sandbox setup refresh diagnostics (#26471)
+37c8aefa14e1a8bb817ee63ddc4561da04741082	2026-06-04	Use Winget release environment secret (#26466)
+1b3b6da296c51b2bf3e3db929c7b9a86e625dbf1	2026-06-04	Use Winget release environment secret
+46b2ef91f495069afa255e09ad1492d96899aacf	2026-06-04	windows-sandbox: cap token default dacl growth
+555f8caeff42073fcdc52755491d785adcc81e4a	2026-06-04	[codex] Fix Windows sandbox build script lint (#26445)
+b0620be474fe6e0aa8b06ee56f31e81b9a7037c8	2026-06-04	Fix Windows sandbox build script lint
+f11902ca83d243d54eca95d5112a88ee11d5fa46	2026-06-04	Disable deployment records for Windows signing env
+e94b0476dd0842fe39ba7af6e80a314a43aef6f7	2026-06-04	windows-sandbox: materialize setup helper before launch
+908de632b30a225ed519b4c9c670a3f7b519c346	2026-06-04	Restore Windows PowerShell parser API
+6abda0049b320ba097447b1914649dcb59cf9660	2026-06-04	windows-sandbox: materialize setup helper before launch
+7718cb754401acc3be6543c906bd8fc8b0c77490	2026-06-04	windows-sandbox: materialize setup helper before launch
+0d6f4047c516a057b32a6048fa7b2b0ca0c42e0e	2026-06-03	Fix Windows CA handle metadata init
+f5bfe7959485629c406fe930c0020eb4324b9cc3	2026-06-03	Remove Windows signing smoke test scaffolding
+71956050daffb302396f35d8b87d62ec810a71b9	2026-06-03	Exercise Windows release signing
+e3e28555ffdfaff85d4031836a048498d7386ff6	2026-06-03	Add Windows signing secret smoke test
+a24ebc21cc743afe81234623b085e60cbad42775	2026-06-03	Trigger Windows signing smoke run
+fd719cfbf05c3eb306816b70b46b98f28be04ec9	2026-06-03	Enable Windows signing PR smoke run
+fb644de6e962887dae4ae073fc5c62032dc0bc82	2026-06-03	Allow Windows signing environment deployment
+882d25ced4aa44d5fd052320d77c59d181359552	2026-06-03	windows-sandbox: materialize setup helper before launch
+0dcceeab7da070552768990f0909e75337505994	2026-06-03	windows-sandbox: materialize setup helper before launch
+37f9c6d53a8295ba13df73222ec2ae8955b9b6be	2026-06-03	app-server: reload config for Windows thread forks
+14d16d2dd4041d9658e217d11242efcc1f10e1f8	2026-06-03	Fix Windows MITM CA bundle identity check
+d0a0ad6f2f3b3acaab997b77595ad3da5ba71233	2026-06-03	windows-sandbox: materialize setup helper before launch
+0ed2735d195d149766b242d972f95f3173ebc984	2026-06-03	Use Windows setup marker as completion signal (#26074)
+0eb7e6d79b44b95d4aa6b22759322efcccde3521	2026-06-03	Restore Windows coverage for code-mode image generation exposure (#25960)
+06395a9adc387fabad1cdf4fac2da5782d48bba4	2026-06-03	windows-sandbox: materialize setup helper before launch
+1e73e0a1ceda019988d9450e507329aa39156f86	2026-06-03	windows-sandbox: materialize setup helper before launch
+05485c61495257a8d9b3a12f54b4308c63ad9ac1	2026-06-03	windows-sandbox: preserve bundled setup helper path
+d7022c2e7b4c076a3da222badbbd12b34ef5fe3a	2026-06-03	windows-sandbox: materialize setup helper before launch
+553b3461fb04a832f28bbeedc50bcccb4ad730dd	2026-06-02	fix: annotate windows sandbox timeout args
+52330b755912d825bf44a7745dec1d3ed5a82613	2026-06-02	Require Windows sandbox setup completion
+719589949667d838183143541324aeb3822e0631	2026-06-02	Revert "Fix Windows release PDB staging (#25916)"
+6471f8b31aba50c87d5616cc0a203160a80b5322	2026-06-02	[codex] Fix Windows BuildBuddy Bazel wrapper execution (#25915)
+c9ff87229cacb0039e2eb2f1720e4d990aeebdf8	2026-06-02	skip imagegen code mode app-server test on windows
+ad355d4c9641953bb85c242c92f72f924edd4687	2026-06-02	Fix Windows running thread resume path normalization (#25509)
+de124c32be47b01e2204269f26bd1f00ab15bb56	2026-06-02	Fix Windows release PDB staging (#25916)
+b2694eaa3006faf6d1ef2759daba1470c90f0064	2026-06-02	Prefer packaged Windows sandbox helpers for nested runtimes
+3dcfa7731efa20761fdccaeebd7ab023414743b4	2026-06-02	windows-sandbox: resolve helpers via canonicalized entrypoints
+c5f58f6057c727271b8606fb06833755b187d4cb	2026-06-02	windows-sandbox: dedupe env vars case-insensitively
+8a2bc6d9d6776b019cd6536c638733e3ed05bca5	2026-06-02	windows sandbox: skip WSL UNC ACL refresh roots
+a0432ed336d3bc27648b6ea206543de92904e8d7	2026-06-02	Fix Windows sandbox setup helper resolution
+ff62bdb81e204ddaa0c379393cfb35f4f6b6b47e	2026-06-02	Fix Windows sandbox setup helper resolution
+e9b8645baf491d590d06fd10a2744f714f970788	2026-06-02	redact Windows proxy cache keys
+9f579888cce7e5e23d447de477534a6220aabc52	2026-06-02	fix remaining Windows auth proxy regressions
+4e1e3ceb6816d054d6b3189e0ff606ceffb05221	2026-06-02	fix Windows auth proxy blocker paths
+f7d5ed0d62f64f42aabeb919880026acf4b31d21	2026-06-02	windows-sandbox: materialize setup helper before launch
+623963c0e84393ad49a03752aa81304d7feab809	2026-06-01	test: enable windows sandbox for git metadata write check
+88c7a4ff074df9e2161c947ca6d91bf824b9d6e6	2026-06-01	[codex] Make justfile recipes Windows-aware (#24983)
+8b759b9c18f10b3842b8be4d371ce1c8414959eb	2026-06-01	Disable SQLite intrinsics for Windows x64 releases (#25490)
+b78d153d5bc7e82dfcc2d8c185341e15d0824252	2026-05-31	Disable SQLite intrinsics for Windows x64 releases
+54e09521f0a7dd080720c67cff4ccd0ca8b869dd	2026-05-30	ci: try 12 local Windows test jobs
+939b57d26170c09f42eefeadd1b425f89a450d08	2026-05-29	ci: confirm serialized Rust threads with 16 Windows jobs
+c7e79557e8a9e6869ce150ca376eb22d994d3c5a	2026-05-29	ci: try two Rust test threads on Windows
+e23a81f1c1580d9de68befa454b29e8a675e8f55	2026-05-29	ci: try 16 local Windows test jobs
+8e89edf74bf57804b2e75f06a91c7bdbaa603b95	2026-05-29	ci: try 8 local Windows test jobs
+f6fff80f0d51b1c4c7965898f19e5a5a2f8df9a9	2026-05-29	ci: baseline Windows Bazel test concurrency
+a5a94ee5a7447d2c0a846dbc97c2a469c115a598	2026-05-29	Constrain Windows sandbox requirements (#23766)
+1f0fe5b8d981a9b1c2ea63c69edc6151809685e2	2026-05-29	Fix cmd.exe session env capture
+663100723beab3107ed225e354349003ec6d4aba	2026-05-29	Retry Windows ARM full CI archive
+cb9178e8b30293d695d0bebea09c62b21116e9de	2026-05-29	Add Windows sandbox provisioning setup command (#24831)
+f3596f713c647ca4bc88b3ed7d1aa6369b2a0d22	2026-05-29	Support cmd.exe session env files
+4956cc2f2a41b05795d150f5f1c8e08b789e7de7	2026-05-29	Fix Windows sandbox setup helper materialization
+5435fd3998538fe75727bf31c1e6079bb44d3ae2	2026-05-29	Fix Windows sandbox setup helper materialization
+ff23e373f2c932c538d2517f4cf47337da2ee14f	2026-05-29	codex: fix windows session skill path expectation
+d4bc8274aff42da19bce8d1c4900c4c16b784edb	2026-05-29	codex: fix windows alias render expectation
+017466574b7728379ab53e9c279433388c089ff1	2026-05-29	Fix hook command runner encoded windows tests
+a1c86fcdad95cd50e08a623a97c641afeea008e7	2026-05-29	Harden Windows PowerShell output tests
+edd9d1efc83c41b3d38dc8a0f5b35ab4dc6f173f	2026-05-29	Fix hook command runner windows shell tests
+62154c0f05314c21533dbfe63bf4f5c5ebf2138f	2026-05-29	Fix hook command runner windows output tests
+d9aad0245ed4d43f16d13edee2f51246a8f6e152	2026-05-29	Fix hook command runner windows tests
+01026b5f241080a7d5ca26e1e255e0ff1a18544d	2026-05-28	Simplify PowerShell env parsing
+6c7d437e3753c37ec3407731c64eb03862e52c24	2026-05-28	Support PowerShell session env files
+42c80385cd6e2c8efc8b85c39bb9bde5edf01fc3	2026-05-29	[codex] Avoid PowerShell safety parsing off Windows (#24946)
+b291c2096f8e632b2346b48d3ffea96ff7ebcc71	2026-05-28	Fix Windows sandbox setup helper materialization
+bcf2b559577285ea0fda54b142f30d1d718b9254	2026-05-28	windows-sandbox: fix capture cancellation test roots (#24974)
+b06217e4d7ca952dcc80b2a7357d95b780a0b60f	2026-05-28	windows-sandbox: fix capture cancellation test roots
+986c60467b96ca13850217f6e5adadef6ba70ab3	2026-05-28	windows-sandbox: pass workspace roots to runner (#24108)
+3cf737e4e377b0eaa3bda88a0aac8589cf3ae45a	2026-05-28	fix: cancel Windows sandbox on network denial (#19880)
+d9f53128b7ab0a0d9b0b079a6ce0268b87263039	2026-05-28	[codex] Handle PowerShell UTF-8 setup failures (#24949)
+9dd39f334e8f9f2953f2314f6cb02e6307d26949	2026-05-28	Move Bazel Windows jobs onto codex-runners (#24952)
+6e2420bb338085cc679fd52089be70ba55f37067	2026-05-28	fix(windows-sandbox): materialize setup helper before launch
+7430c5693221dcb09c5ddc33dfcebe2d45e72bc7	2026-05-28	fix(windows-sandbox): skip setup refresh for full-access execs
+e8d5ae2cbe54ddffd31cf399db076002033002f3	2026-05-28	Fallback to helper launcher for setup refresh on Windows
+8a370744f69586fcfed34ab059fe6dc57c2a3357	2026-05-28	Retry sandbox refresh with elevation on Windows
+808997a6d7bf910281aa122e633cde5700524ccb	2026-05-28	Fix Windows setup helper resolution
+e4a958b6ebe0445a8eece6a51d3ddf547688c69d	2026-05-28	Prefer packaged Windows sandbox helper hints
+6e6c5b4cba710355dc3a3e365a1ab10d7b818eca	2026-05-28	windows-sandbox: pass workspace roots to runner
+ae4840bf246ebfa390fdf68c0fd87c796bb313f4	2026-05-27	refactor(permissions): lower Windows enforcement from effective filesystem permissions
+b4167134811ca7d602d28cf2832bd9f29b2ec81c	2026-05-27	windows-sandbox: pass workspace roots to runner
+bc6a9d2910e306e4bd95fc0200479ca0e2a76cc4	2026-05-27	windows-sandbox: pass workspace roots to runner
+651792176acef0c5cc9c4908f0bd67bad28427af	2026-05-27	Fix Windows clippy for shell env file
+5d2f0d9e0921dc6742a9cab32993984600c138da	2026-05-27	Prefer packaged CLI path for Windows sandbox helpers
+f00a87deaacb3bdb282890fb0222454ee165716a	2026-05-27	windows-sandbox: pass workspace roots to runner
+d589a13692ffe0dba473a5f7ab69a4c9e898e488	2026-05-27	fix(windows): materialize sandbox setup helper for refresh
+fd8c8791e1050b5a731f1dca55a9ac47c2ad8840	2026-05-26	test: cover standalone Windows update prompt
+9e7e1119e4d3b771d254ca0252dd438603e86919	2026-05-26	fix: keep Windows standalone update command pasteable
+592acb4f895ed0a5e50be3c93c87e04413fd5e27	2026-05-26	fix: preserve PowerShell latest release casing
+9826581e7b2c130bc389f4490cd746851eb79af0	2026-05-26	Attach Windows sandbox log to feedback reports (#24623)
+d3ed08ce7d12cd8d9a4901b703d69546d1f8089e	2026-05-26	windows-sandbox: pass workspace roots to runner
+7e648d73630714c830e2178b9915573a5e27befa	2026-05-26	windows-sandbox: pass workspace roots to runner
+0a6bc4e68759f0086434fd5b4d87c7f5a597d6d1	2026-05-26	windows-sandbox: remove SandboxPolicy runner plumbing (#23813)
+54ace1676033f91731ed02a951106d45ad8b88bd	2026-05-26	fix windows elevated sandbox payload handoff
+1923261ad12476bdbcec0c8bcc09cec25e07c01e	2026-05-26	ci: remove test carve-out for windows code mode
+02cea8b6cd5d6e76956fc58eb0c6b7d7b02ce9a8	2026-05-22	windows-sandbox: pass workspace roots to runner
+8825aa4714128d902105af8710bdfbd7d7c3e83b	2026-05-22	windows-sandbox: remove SandboxPolicy runner plumbing
+2de7224229e56214ad7bf557629a79eb906a183d	2026-05-22	windows-sandbox: pass workspace roots to runner
+7d9b80b4df03c5520af58a9b4028a9a4010ca947	2026-05-22	windows-sandbox: remove SandboxPolicy runner plumbing
+049385750872e79d395528a1d49044a9436a94ad	2026-05-22	windows-sandbox: pass workspace roots to runner
+acd851e89f31a74c2140f167dcb922dc08becc44	2026-05-22	fix(tui): restore Windows VT before TUI renders (#24082)
+5b1b6a20ddb39e3179fa6da930b9eeec5bee892b	2026-05-22	[codex] Use rolling files for Windows sandbox logs (#24117)
+88514764af1e5590e6fbc287994bbd44023a8029	2026-05-22	windows-sandbox: pass workspace roots to runner
+a1441890a41ebd24e147e84056594b5910294e75	2026-05-22	fix: skip WSL UNC ACL roots in windows sandbox refresh
+6a92ac586bf9dbb4e85fa13f1b2924acb059d886	2026-05-22	fix(windows): materialize sandbox setup helper
+2e8b00b4e18dd690dd556f46af1d32aaa858df2e	2026-05-22	Fail Windows helper build when manifest embedding breaks
+a639feb0a0ab0f881f10f719dbd0b945aa3ab620	2026-05-22	Restore Windows sandbox setup manifest embedding
+7dbf1d7c6c0c15ee726038fc6a771a30d518006a	2026-05-22	Skip Windows ACL refresh for WSL UNC roots
+9414c6e407670778c87a17f1ace82ef5a026ce34	2026-05-22	windows-sandbox: surface refresh helper diagnostics
+4c767df87007679233e0450eaea732d7a8d94bd5	2026-05-22	windows-sandbox: materialize setup helper launches
+1baea40acba33d8b7884f5b80dcfc2d1086b0a1f	2026-05-22	windows-sandbox: surface refresh helper failures
+8625e533dd5acb5734b8f71ace479c08603a687b	2026-05-22	Harden Windows sandbox USERPROFILE write expansion
+9984a5dc790d8f2ba58d8e24a72e15f9125819e5	2026-05-22	Fix Windows sandbox helper launch cwd
+a6cfdbf74888be8f9c23b939b331bd72660a8f71	2026-05-22	Skip WSL UNC ACL refresh roots
+fb2928bd2107b9a03f3deb1f22b7f3dba92ff061	2026-05-22	Avoid Windows installer detection for sandbox helper
+6cd506eea63d21ec2b283e689ec42b9f1c60d977	2026-05-22	Fail Windows sandbox build when manifest embedding breaks
+0fdea96008d57527c65330af75d8d2e8f6c3e7b4	2026-05-22	windows-sandbox: remove SandboxPolicy runner plumbing
+e7d9a523c79d85234742208647afdd3355ecd243	2026-05-21	ci: tighten Windows v8 artifact caching
+86216821ba46fe0a2ef493f0f34c513a300367c5	2026-05-21	ci: Add caching for windows v8 builds
+db747cfca0f26c6aeecba2b76856efe5c30c6017	2026-05-21	Harden Windows sandbox profile roots
+1dfa0b9ad34941f85e4e961feee0634ba9ae5362	2026-05-21	windows-sandbox: remove SandboxPolicy runner plumbing
+9af2a53d0333e2338f0dc9221269be09037aacc5	2026-05-21	windows-sandbox: pin setup refresh helper cwd
+9274005ba7094f394a025cae69206d2cd75b49c3	2026-05-21	Add WSL escape hatch for Windows sandbox NUX
+dd1d88ff261b073d6219dbdc28db83e69bd656e1	2026-05-21	Respect explicit Windows sandbox mode config
+5055449872b9ea4b0e23cd0454393109cae600ec	2026-05-21	windows-sandbox: remove SandboxPolicy runner plumbing
+9474e5cfc4494b0ba319352aa86ce436c59e65c8	2026-05-21	## New Features - Goals are now enabled by default, backed by dedicated storage, and track progress across active turns. (#23300, #23685, #23696, #23732) - `codex remote-control` now runs like a foreground command, waits for readiness, reports machine status, and keeps explicit daemon-style `start`/`stop` commands. (#22878) - Permission profiles gained list APIs, inheritance, managed `requirements.toml` support, runtime refresh behavior, and stronger Windows sandbox integration. (#22928, #23412, #22270, #23433, #22931, #23715) - Plugin discovery is easier to inspect, with marketplace-aware list output, installed versions, visible marketplace roots, and remote collection support. (#23372, #23584, #23727, #23730) - Extensions can observe more lifecycle events, including subagent start/stop, tool execution, turn metadata, and async approval/turn processing. (#22782, #22873, #23309, #23688, #23690, #23692)
+4ddcfd49e7f7d0089601f44cb701cf16bfb3340c	2026-05-20	windows-sandbox: remove SandboxPolicy runner plumbing
+8445ecef31508b28dafa3e7aae3f6a10fbe7fc81	2026-05-20	windows-sandbox: remove SandboxPolicy runner plumbing
+d41c5da3005b2bb4abaaa40b3d4ffa9a59ea7223	2026-05-20	windows-sandbox: remove SandboxPolicy runner plumbing
+63a72e6b78476f146020b754779005d632dfb3f7	2026-05-20	core: pass permission profiles to Windows runner (#23715)
+f9ac5af5350d42b27a8f1d11ae70308847584e31	2026-05-20	core: pass permission profiles to Windows runner
+c9ff067e31496caf563e0cd7ab7adee62cdd868c	2026-05-21	windows-sandbox: add profile-native elevated APIs (#23714)
+009c4156222ff3b5b05da189912682762724ff0f	2026-05-20	core: pass permission profiles to Windows runner
+9574d37f2be7b76fb243e9076dcc3f4c5f08d17e	2026-05-20	windows-sandbox: add profile-native elevated APIs
+72e7bbd5d5b0feb6bcefe68417b170c4f58de4aa	2026-05-20	core: pass permission profiles to Windows runner
+53b4266d3c7b0cb82802c9322ba46741ebe11875	2026-05-20	windows-sandbox: add profile-native elevated APIs
+2918f174dfa231547251f92bba94bc4099210ab6	2026-05-20	app-server: reload fork config on Windows
+8253ae4e5c2f21aa904fd3d4c5759f3c020458de	2026-05-20	Remove Windows sandbox resource stamping (#23764)
+6c53bf67db4c0963903458b25bae08c61c588894	2026-05-20	core: pass permission profiles to Windows runner
+ee5e06e21fb181c0b9a805afee59e980e27f71c7	2026-05-20	windows-sandbox: add profile-native elevated APIs
+a698096c0aa85a318ed7d991ee78d6d499684eef	2026-05-20	core: pass permission profiles to Windows runner
+1c896b262ca24e83f018ac0e8882e575ad2b3886	2026-05-20	windows-sandbox: add profile-native elevated APIs
+896ee672cc323f5a1e761f72a09cf0d809580c4a	2026-05-20	windows-sandbox: feed setup from resolved permissions (#23167)
+59449252d7653294be268b458609348a12f0be5f	2026-05-20	core: pass permission profiles to Windows runner
+124bb6e011cecbadf037ca0a5ae3aed9f05874e5	2026-05-20	windows-sandbox: add profile-native elevated APIs
+f82053c034b7ac979d6802d71fb3254e92a2719e	2026-05-20	windows-sandbox: feed setup from resolved permissions
+e1ec0eee5f54c61a9a9a9d448a443f1248d2dba0	2026-05-20	windows-sandbox: drive write roots from resolved permissions (#22923)
+4ca3e9eaa6b568bba66bb160950b499180bd61d5	2026-05-20	core: pass permission profiles to Windows runner
+e7578efcdaf3078cf707ead926f0509885aed7ad	2026-05-20	windows-sandbox: add profile-native elevated APIs
+4bab69b553f6edd659fd74c8f9e09872879b5b39	2026-05-20	windows-sandbox: feed setup from resolved permissions
+f800277a1a14f835cc56849ae92834279c53be8e	2026-05-20	windows-sandbox: drive write roots from resolved permissions
+8600d7b0d9326dfa39bc88344cb752c4c1f3dbd7	2026-05-20	core: pass permission profiles to Windows runner
+a5ba7c9b123bb1d9bbe19d09bacc42f30502faf9	2026-05-20	windows-sandbox: add profile-native elevated APIs
+5d17344bd7748b4e76e5beda30016a3834931ab6	2026-05-20	windows-sandbox: feed setup from resolved permissions
+2bd530da8a52712b2add4696968d17754e98508c	2026-05-20	windows-sandbox: drive write roots from resolved permissions
+61aae565710e0937de6cc9fb110eaf3e40035239	2026-05-20	windows-sandbox: share bundled helper lookup (#23735)
+a337a8f3bd8d05c2bc55e07cead825cd2452dab9	2026-05-20	core: pass permission profiles to Windows runner
+fcfb007f259884c066fb5ba054b24f6aae9fb4cf	2026-05-20	windows-sandbox: add profile-native elevated APIs
+83a0cc132cbda473d9f89dfb3e49b497bfa2dcd5	2026-05-20	windows-sandbox: feed setup from resolved permissions
+412eabaf3d15ad551a946d11d00119f5947220ae	2026-05-20	windows-sandbox: drive write roots from resolved permissions
+729bdf3c8d4995c10491debba476a9a3068ac183	2026-05-20	windows-sandbox: send permission profiles to elevated runner (#22918)
+92a0893e4f106080e03e3d3643f70b68391f7cb3	2026-05-20	windows-sandbox: share bundled helper lookup
+deec7b5b1ef82ace56d3b1ddd5d4764dae8f37fd	2026-05-20	Statically link Windows app-server CRT
+364c3fbe219b60ffb6dbd888edc2db7f14448e79	2026-05-20	fix(tui): harden windows vt output
+dbdaa4578258292e89b33fe2dd881d20064c6d4b	2026-05-20	core: pass permission profiles to Windows runner
+14c55f664ebcd285ebd52fe49a33dbf1bb03f642	2026-05-20	windows-sandbox: add profile-native elevated APIs
+3acf07fa13401a179c4e05f7a459790303a52ed7	2026-05-20	windows-sandbox: feed setup from resolved permissions
+820f4b59a5d7fdc25ed87bb38d589bd8e610512c	2026-05-20	windows-sandbox: drive write roots from resolved permissions
+81d78711e77db39619512a8ff8b69538993764bd	2026-05-20	windows-sandbox: send permission profiles to elevated runner
+8ec51266a232057c97153009147d954a5b0890b1	2026-05-20	core: pass permission profiles to Windows runner
+ba9dd2215a490e7ff2134ecad0ead2daad5e0278	2026-05-20	windows-sandbox: add profile-native elevated APIs
+acc03ddfa2d86a5f8d8cafb105b4252643bdefe7	2026-05-20	windows-sandbox: feed setup from resolved permissions
+e2458eaaaf21997bc76baf566c91089248ccec46	2026-05-20	windows-sandbox: drive write roots from resolved permissions
+dce3ac8c97bf901f83388dc223e6df9be2e6d63c	2026-05-20	windows-sandbox: send permission profiles to elevated runner
+2b4898cc47fe1e991f1818ed9973d83993aa08a1	2026-05-20	windows-sandbox: add resolved permissions helper (#22896)
+c260e33c693084636de947a63d723fef0cb77b74	2026-05-20	windows-sandbox: suppress repeated setup prompts after cancel
+f1987f519cbb696a3524285afdff5758281ae3a6	2026-05-20	core: pass permission profiles to Windows runner
+7d0a05b01e60bffb0847d08e0b4425976d540f13	2026-05-20	windows-sandbox: add profile-native elevated APIs
+26dc133ae85ec533aee6a5ee011c758b634affb2	2026-05-20	windows-sandbox: feed setup from resolved permissions
+11b6688a138df6d737b05816c0f763861f390092	2026-05-20	windows-sandbox: drive write roots from resolved permissions
+e6f6b93dca972d4a5e43731c0220015dcc390055	2026-05-20	Avoid repeated Windows sandbox setup prompts after cancel
+e421970d0a1a06dfb0731baca56b7fa50075916b	2026-05-20	Honor unelevated Windows sandbox mode
+6dcb3ba00e229b6f59c329b7ca9ae8c77df97326	2026-05-20	windows-sandbox: send permission profiles to elevated runner
+242d886cfe6845a3d77527b0161d2da4727f1c3e	2026-05-20	windows-sandbox: add resolved permissions helper
+290ab17642850a69e93ffa97fdae6fd8a40e4823	2026-05-20	windows sandbox: pin setup refresh helper cwd
+4112bd3b00ddb27551bbd35f14408d62d5fbb6a8	2026-05-20	Honor unelevated Windows sandbox for command exec
+7a735a85c83e119a7e7a49a96c3ecbcf36ff923d	2026-05-20	Avoid UAC bootstrap for unelevated Windows sandbox
+c13b4f898adc991d832dc098a73ce61d71d1edfe	2026-05-20	core: pass permission profiles to Windows runner
+f9201b18f54c43332774b957efbb4e39f59bef96	2026-05-20	windows-sandbox: add profile-native elevated APIs
+9376d0b7ed698856f5c0d10609079be79e0c9986	2026-05-20	chore(tui): add windows vt debug knob
+b244c10fb72e8e83f23d6d94b22d83534f267857	2026-05-19	Fix USERPROFILE traversal in Windows sandbox
+e7eb7ae0b860f377f2c7f6af950ec467e1b258cd	2026-05-19	powershell: normalize literal comma-array args
+285cc3049cb890109311ee0507207d955f52f817	2026-05-19	Fix Windows sandbox USERPROFILE realpath access
+f31a2a22fa3e4dc54731c839d41715a5f5ddc0d8	2026-05-19	windows-sandbox: anchor USERPROFILE for child roots
+d11e344df5776a163179da56d620cc001c79adab	2026-05-19	Fix Windows sandbox USERPROFILE read root
+732b12b1ef57f8db60db6cf8f1f343f088f08a3a	2026-05-18	Reduce rust-ci-full Windows nextest timeout flakes (#23253)
+b1c13b6fe535aeda00ed95b52c80f02e7d6ec745	2026-05-18	Simplify legacy Windows sandbox ACL persistence (#22569)
+d335b002127fa849c09beb005e73057c81b80182	2026-05-18	windows: link MSVC release binaries with static CRT (#22905)
+74a50313a482dc115139fbca559d760b7eb9d9d5	2026-05-18	Skip Windows sandbox ACL grants on non-ACL volumes
+ec92703f8a2f74502681413d7f71599297a06f54	2026-05-17	windows-sandbox: feed setup from resolved permissions
+87d2951cf2c1a13e860b5e99d160cf3a1fd98024	2026-05-17	windows-sandbox: feed setup from resolved permissions
+de9c5c0226f8f31b9ce7dfef8b9ad401126ca3b5	2026-05-16	Fix Windows doctor npm root probe (#22967)
+49a90622539627d4c11cb2a05d65f1e0fb286ec5	2026-05-15	windows-sandbox: drive write roots from resolved permissions
+c42e3703b3bff1fe69bee4db55cd5c67b39183cf	2026-05-15	windows-sandbox: drive write roots from resolved permissions
+de5a796e9a9f9bb8396c41d9dcc8874b1e7948ad	2026-05-15	windows-sandbox: drive write roots from resolved permissions
+21f3ede0824c4bc039f1331083a4ed65c51602b2	2026-05-15	windows-sandbox: drive write roots from resolved permissions
+5e076c4a3a23b923cc25afb8942e3c9d25ef5b68	2026-05-15	windows-sandbox: drive write roots from resolved permissions
+a4be788173b28c08022f84e2ef69af254118aa65	2026-05-15	windows-sandbox: drive write roots from resolved permissions
+56238d2fa249669ae681b42aae90313083a64b10	2026-05-15	windows-sandbox: send permission profiles to elevated runner
+86e11d769760be998ef525340435bce55720df11	2026-05-15	windows-sandbox: add resolved permissions helper
+7fbefbb0e1db6f2cc7950991e273c43f820cbf09	2026-05-15	windows-sandbox: send permission profiles to elevated runner
+e0c614b2da85368bddbfd76f59366e84ffed103f	2026-05-15	windows-sandbox: add resolved permissions helper
+b17302eda832eec17217e8c3e9680bbcbb5e3d72	2026-05-15	windows-sandbox: add resolved permissions helper
+c0ed87b84a18cda759e19ee7fa5fc4f957462d3a	2026-05-15	windows-sandbox: add resolved permissions helper
+85915a2a2119d1da143dea6a236c5dee8fe9af04	2026-05-14	chore(config) rm windows_wsl_setup_acknowledged (#22717)
+7c11c14efc693c19f59dadfccc7abcdc35bbaf89	2026-05-14	Fix Windows sandbox clippy clones (#22687)
+b00fdc84843a299e78e0a6f9ef687fe61ac8ff12	2026-05-14	windows sandbox: tolerate refresh write acl warnings
+b80309e4c52cd6173abe0b183a1bdab19d5d8142	2026-05-14	windows-sandbox: retry elevated runner launch without user SID on 1312
+9ea38136b00937a87c94cbcaab872342b2adb6d9	2026-05-14	[codex] treat PowerShell stop-parsing forms as unsupported (#22643)
+8ae0c837f0fbc090bef94c6323d0fa3803e55258	2026-05-13	Avoid PowerShell profiles in elevated Windows sandbox (#21400)
+d666238b4058e5f77c5b8925c25929e3ceae55a6	2026-05-13	Shard Bazel Windows tests across jobs (#22408)
+c9edb26755427bd01f82fd7b4e8677f32ad221a4	2026-05-13	windows-sandbox: fail elevated setup when firewall policy is ineffective (#22353)
+3d2a0b5517fada3b368165605a1b098f96d92b6c	2026-05-13	[codex] Scope Windows sandbox write-root capability SIDs (#21479)
+23a9834342613bd87aca055867e57f03ff875464	2026-05-12	reproduce error on windows
+c033b46eaadab7ae139928fbb5e5db03321c4cf1	2026-05-12	Fix Windows elevated unified-exec filesystem overrides
+d1de09c6e3a68f6ab47708584d7bc39c8b31ec8d	2026-05-12	fix(windows-sandbox): repair existing descendant ACLs
+54ef7f11cbdadf18086e02f8a0064ccf2432104f	2026-05-12	fix(windows): materialize sandbox helpers during setup
+bc39c578ad46514d15d1b56758500590dc8112f1	2026-05-12	fix(windows): align restricted-token ACL stamping
+c2651026ca3058f20343cc3236714e93e6f161bb	2026-05-12	windows-sandbox: stop regranting profile read ACLs
+46f30d02828bd4c52827e5f0482a6f2a982cce5b	2026-05-11	feat(sandbox): add Windows deny-read parity (#18202)
+2f79c7ad9d6eec1b79245e9c3fea05f2913f0cdd	2026-05-12	fix(v8): align windows gnullvm with 147
+7369abcf8cf66d644600c8821e864d673e8e1567	2026-05-12	ci(v8): add Windows source-build canary
+9ab7f4e6acb90e9a98cc753322af823f11e5ba58	2026-05-11	Add Windows hook command overrides (#22159)
+4a5013386b8a71f614971614c152b6abe3341f80	2026-05-11	[codex] Stop Windows sandbox setup after filter installation failure
+90bd445e7f0a2b760c30fe0b25cb7ceee897c224	2026-05-11	fix(exec-server): suppress Windows taskkill output (#22058)
+b0b2e20b5328282e9ae8212fd3bbc2342bd330d8	2026-05-11	windows sandbox: stamp workspace SID on extra roots
+10259dfe59fb9f5fe0ed81f79ac6672460a6cd9c	2026-05-11	fix(windows): preserve delete rights in legacy sandbox ACLs
+dcb959cd852c594bcce23d0891d2187a19517b91	2026-05-11	windows-sandbox: refresh direct child ACLs
+eb784b92d46ad1ab545a76960fcb448bfa271db6	2026-05-11	fix(windows-sandbox): stop denying extra writable root .git
+852737be63533e882f088f7f0027529eaaec07f4	2026-05-11	windows sandbox: preserve delete rights in legacy ACL grants
+5b8379932824b541ef00711d9179a3ca7d97dafb	2026-05-11	windows-sandbox: grant full write mask for allow ACEs
+9d2bb63450bf985be30a9c2e2c028ae547bcb919	2026-05-11	fix(windows): materialize sandbox helpers during setup
+0f7b62f282d88866a073656e42101307a080d0bb	2026-05-11	Avoid loading PowerShell profiles for tool commands
+ac601f7f364c5535300a443cb4b704e22288b689	2026-05-11	fix: grant delete-capable ACLs in Windows sandbox
+b1d63f666dde2781a847b09e14b534a8fac1b8fb	2026-05-11	Fix Windows sandbox ACL write mask
+a48adb53fbaf9d90029900dd8eddbb3d00c0129b	2026-05-11	windows sandbox: preserve delete rights on stamped paths
+7b1966867982fb30fc21b45babe4a864a218786c	2026-05-11	windows-sandbox: grant delete-capable legacy ACLs
+3050c3fc0a672772fd69d3a9fce346c6eff68fea	2026-05-11	Suppress Windows sandbox NUX in yolo mode
+217ba5bcf801454c50a3a487721712fd47c5c4f1	2026-05-11	Fix Windows sandbox rename ACL mask
+6241fcf230759854985179705d8732cb06332709	2026-05-11	Fix Windows sandbox rename ACLs
+face2410599b40fee5682c2214d0623433048147	2026-05-11	Harden PowerShell parser trust
+5d6066b2ba1f7b2ed45753d8f5a875ab977167ce	2026-05-10	Fix Windows danger-full-access exec dispatch
+1cf09e4acf611c35c68aabee1657c3c9b73f7ace	2026-05-10	fix(v8): align windows gnullvm with 147
+45caed95509d5706484f054eac91cf7f08ecc137	2026-05-10	ci(v8): add Windows source-build canary
+e5d022297d8b085ba68cf54a6a1c5e7f4c049642	2026-05-10	fix(tui): suppress taskkill output for MCP teardown on Windows (#21759)
+11090c752666576e4c986196c2faf41598ce56ba	2026-05-08	ci(v8): add Windows source-build canary
+4f0e8c98ac61d1dc3e0dbbe01e0eb3d2ebf6addc	2026-05-08	Run old main Windows core repro
+a5c8892beb467987b8b127daf70514119dad1124	2026-05-08	Add old main Windows sideband repro
+971045b88c95e6cfc6c8aaeac842f56843d14f77	2026-05-08	Repro main Windows sideband test
+4a59ca9393b0a4e05a984e846b77ac01c2870dd0	2026-05-08	Explain Windows runtime wheel helper packaging
+ab7eea0ecc7b38f71cdec3cf8e2ca6ef0711b7c1	2026-05-08	Resolve Windows sandbox command paths before spawn
+2811530a969d518b6efe0989db16f3dc084a05fb	2026-05-08	fix(windows-sandbox): decouple runner launch cwd from workspace
+0008d1fe043634734c0cdb2bd2fda7469429598f	2026-05-08	Fix Windows elevated runner launch cwd
+2f95f41bda15e2ca3db71d69a48fbf79084e6d5b	2026-05-08	Fix Windows sandbox bash token DACL
+0b90caa393c99cef05562e94b80e81cd54b2c2fb	2026-05-08	Avoid loading Windows sandbox runner profiles
+b2f3484b3c41fcd16f143f62d4f3c347d916d730	2026-05-08	Allow Windows sandbox Git signal pipes
+003b0aca618566ef834fd3de821e1ad6d15a3b02	2026-05-08	windows-sandbox: preserve user SID for bash workspace-write tokens
+14b7cd639bbe9e2409c4a8b7cb659d81fdc0df47	2026-05-08	Use constrained PowerShell-safe test output
+977e1474e850b293260e298e82939533fd250dca	2026-05-08	Relax Windows PowerShell sandbox test timeouts
+26a4222e6e3beb95cfe6d8f46ff5d5ba7f8f901a	2026-05-08	Limit Windows repro to sandbox PowerShell shard
+8a5ba1a15209bc3b8714047ef9cb58549c9c697a	2026-05-08	Stabilize Windows PowerShell sandbox tests
+3008426992d364dd474b44538de86be344e1cb66	2026-05-08	Fix Windows stdio test command quoting
+a8a14442aea206f62955700c10ae2c6005b64f0b	2026-05-08	Add global flags Windows repro shard
+38a68d27f48cd59228321d1f0d053f7e03eb7373	2026-05-08	Add Windows exact timeout repro shards
+420cd739e266d34f2ae639e68c1a3aa9539b3062	2026-05-08	Serialize subprocess-heavy Windows tests
+c21e31f5a4d62cee627e33003d5e5b17827149c4	2026-05-08	Split focused Windows repro shards
+b9a439da80c362596c2b4c086c6112e7f4626f8e	2026-05-08	Refresh focused Windows timeout repro
+0916fe9ab09a52e885f4a4c2a886cc88aa61c7e8	2026-05-08	Speed up app-server Windows timeout tests
+e07b1d181906c29508ac3d066575953920152f96	2026-05-08	Add main exec-server Windows repro
+93ff1f63b2ad8d1a56b308a6640f87c7e8034d4f	2026-05-08	Add focused Windows timeout repro
+29a1dbf8f764aa68c6dd3d83ee09580e290e14f9	2026-05-08	Add account Windows repro
+267e6d4547065cf14c3b3b1e80a7af6448ca0d83	2026-05-08	Relax account test timeout on Windows
+4a82dc524f9d44482da9a6fa810a01e75293ab59	2026-05-08	Silence Windows taskkill during MCP cleanup
+9bc56b618460ee72fed20d1b66153c83c0a98514	2026-05-07	Wait longer for realtime sideband failure on Windows
+1b2b4cec22307b1ed8cd967f8098e782657fbc76	2026-05-07	Add main Windows CI repro workflow
+72f64141e6dc5a8da5292ca36aa356430fc46cd6	2026-05-07	Add Windows CI repro workflow
+71ccb7bb9fa6ac5365120e1b0d7657307942aaff	2026-05-07	refactor: reuse ripgrep safety helper on windows
+8679dff2ee5b9cfab0c7ca2f54c8316eed595768	2026-05-07	Fix Windows sandbox junction cwd root
+9f90992bb9d68550fc86d74c759cfede298548bf	2026-05-07	fix(windows-sandbox): tolerate preflight ACL probe failures during refresh
+590d7e3d77ad586a64c48d241be213275127db42	2026-05-07	fix(windows): avoid temp profile leak for sandbox runner
+1a9057e172628fa90e32b7feabdfa11e456b7e26	2026-05-07	fix(windows): avoid temp profile leak for sandbox runner
+44c855e29bab818035afa9419d501065ed7c2c9f	2026-05-06	windows sandbox: keep real user able to refresh write-root ACLs
+52c582668235b824f469e78cd7deef533ac81563	2026-05-06	Avoid loading Windows profiles for sandbox runner
+826ea82dc79c1f1580923352c7ae04113d093741	2026-05-06	Terminate Windows sandbox on metadata monitor violation
+c595c596f8236de44b2facd140c54b452ffdb697	2026-05-06	Use Windows metadata creation monitor
+0cebb6116cf745cca4f849142f7496942eee20d9	2026-05-06	Use direct deny ACLs for Windows metadata sentinels
+4c24c5ec585d09e18788a62161df39bdad8ed576	2026-05-06	Add Windows missing metadata deny sentinel
+8177cafbbb5acf847c24c202759338ff60f48dad	2026-05-06	Wire missing Windows metadata to deny sentinel
+0dddc354d8a84d50104f2470f414130f9679630a	2026-05-06	Wire Windows metadata monitor through sandbox exits
+a15efd5e4258be1fd49363c30b55e8975d23620d	2026-05-06	Add Windows missing metadata monitor runtime
+8c452556d7dd38c5b695605c43abc4c9f546be40	2026-05-06	Document Windows metadata request boundary
+d62b36600cd02e71676cb1405c3d58e4e9ac0e7f	2026-05-06	Inject Git safe directory for Windows legacy sandbox
+21f6fff40f12542e47119aec281886926e559083	2026-05-06	Test Windows runtime metadata target preparation
+34d7de873f70bc05dc2052701e4beab0be394da7	2026-05-06	Grant Windows legacy Git read roots
+348538648e2e395c1de84a6417ebc6ecc54fa370	2026-05-06	Add Windows legacy Git read root helpers
+769e5d7b139daf1f98ec62e3e9bbecda88fec0d0	2026-05-06	Use Windows metadata targets in debug sandbox
+dd3e4e59253062c02482cff4d1077072b4c3c842	2026-05-06	Deny Windows protected metadata symlink targets
+06a9ce0354c1436c44aeb007f55b916c435d5ea2	2026-05-06	Allow Windows sandbox Git signal pipes
+88534ef1e4f09d604f10a164b5db185200e4adad	2026-05-06	Enforce Windows protected metadata targets
+461f186a34ab8fe3ea60bff847058d8a1611e604	2026-05-06	Pass Windows metadata targets to direct exec
+68d2d403b4263b8ba9b5c2b765f8a8e343633cf6	2026-05-06	Thread Windows metadata targets through sessions
+230dcf45c2c846c6399c9d5d2e80027839737a9c	2026-05-06	Thread Windows metadata targets through setup request
+88b5880b1f957e00557619c238d65bc3d7cd5062	2026-05-06	Add Windows metadata enforcement guard
+b4cb7cf451730f7a543e8b2a548272391259c6a9	2026-05-06	Plan Windows metadata targets from filesystem policy
+efa734dac241b106fe4e720f5ca64fd8246a3a64	2026-05-06	Add Windows metadata setup target type
+4ddc4c47ad067420dc5118d634738f9cf4fe630f	2026-05-06	Add Windows metadata adapter target type
+123e78b97b74d7288be553973361c34dac6830a6	2026-05-06	[codex] Fix Windows sandbox git safe.directory for worktrees (#21409)
+9050947a37e2dd31df01cdb7c17a924f2d6d27e6	2026-05-06	Accept WSL aliases for windows sandbox mode
+2a840d40772d61978f74a415e125be8ff5e1b9cc	2026-05-06	Accept legacy wsl2 Windows sandbox alias
+41219571b01d56c646c32d422036fc113f9a9dee	2026-05-06	Improve Windows sandbox config errors
+ae07dce57d05959e847d10ab4a615134a9b7d085	2026-05-06	Accept WSL aliases for windows sandbox mode
+a538c0785b4f0b3e4c926cba969080b4f15da226	2026-05-06	Accept wsl2 alias for Windows sandbox config
+ebd9ec05b404bf9fbf339f6185f52e435dc5c982	2026-05-06	[codex] fix builtin MCP Windows path test (#21350)
+db22c91e61cc80defa5bbafc22bd8a8c7672e5e1	2026-05-05	Share Git safe-command logic on Windows (#21275)
+f5aeae95970234183ec384b8b54c8513792932b9	2026-05-05	fix(windows): launch sandbox setup helpers from local cwd
+aa5cfa9a2563af2f4a47b06d999c8932245ffbf0	2026-05-05	fix(windows-sandbox): normalize mapped drive workspaces
+c5cb6e7250dc7ed537211efca9775f05781fc5dc	2026-05-05	Harden Windows sandbox refresh helper launches
+e0babe179b7dfe277e27cd3dcb36c8cc8e864e12	2026-05-05	windows sandbox: materialize setup helper for launch
+f6aac9105f7d10940aa2705a7fffea3398df1847	2026-05-05	fix(windows-sandbox): stabilize setup helper launch cwd
+f35285dc7839bbd2c258e8dfae2aa5b2cbf54ae9	2026-05-05	Add Windows sandbox readiness RPC (#20708)
+9d863e8e6380f504c5aa7b181786da155144834d	2026-05-05	Retry transient Windows setup refresh failures
+7a3fa55d2eb4ee1df3567213b318ca7353014493	2026-05-05	Fix Windows sandbox helper launch cwd
+3b59ead38ca719bfd52f016be9eb27897c3d33ae	2026-05-05	fix(windows): avoid WindowsApps shell aliases in sandbox
+f35fad1f56e396972efe83d9e2a6a54719e21b9b	2026-05-05	fix(windows): launch sandbox refresh from stable cwd
+979f260d2c9ea3d474925113b986c172b130af40	2026-05-05	Retry transient Windows sandbox refresh spawns
+6fbabc5258436571e8ac1f07d9e853fb336897c2	2026-05-05	Release Windows legacy session exit before output drain
+8f93be5b9e21e89802d601fb67596023c858d076	2026-05-05	Wire missing Windows metadata to deny sentinel
+6e60556d73a9df88266e5fe17e2add1e5f9d51f2	2026-05-05	Add Windows missing metadata deny sentinel
+0e9394dbd8265f17f4c78d8641009c08bcbad857	2026-05-05	Wire Windows metadata monitor through sandbox exits
+6df1455723e4254ce7b7ac59a79d60f5daa0a24e	2026-05-05	Add Windows missing metadata monitor runtime
+c3bfbc07026484f1c5865a4334c96691bbf4c894	2026-05-05	Document Windows metadata request boundary
+e7e0f112fc3c4353259719d0cba891927e22c315	2026-05-05	Test Windows runtime metadata target preparation
+fa5d45227fbc56b8fdddfcb2bbdcd9666ea48d79	2026-05-05	Inject Git safe directory for Windows legacy sandbox
+86c1ad7b84acb6c21a2b0129659d0c688c85525a	2026-05-05	Grant Windows legacy Git read roots
+29723ac37c8126099329f1e5d9a74771b2ca468a	2026-05-05	Add Windows legacy Git read root helpers
+7404a3c8ecfa3e2fb569e3bccc1d5bc95f6d11ce	2026-05-05	Allow Windows sandbox Git signal pipes
+7e80ea4e25009e7ae3e14b83dfa4e304740c82a3	2026-05-05	Use Windows metadata targets in debug sandbox
+f0c7ff21551f20506ed8ad460b6028eaa07fe42c	2026-05-05	Deny Windows protected metadata symlink targets
+9719de72bf028029e1f69303460961a6735deb18	2026-05-05	Enforce Windows protected metadata targets
+e62c735e1ac522487fce65fa11d5b279383b8d87	2026-05-05	Thread Windows metadata targets through sessions
+16cc0e9c053f080ee7d6db63e857c599a2f00bdc	2026-05-05	Pass Windows metadata targets to direct exec
+f29e31e27f87b46637e6d3a18ffe90857cdc19af	2026-05-05	Thread Windows metadata targets through setup request
+df461fd9eb59bbe28ed32f9f6079dfe71b3f20a5	2026-05-05	Plan Windows metadata targets from filesystem policy
+a6dfb7d038679d0b26b247679feae45bb0c20e4f	2026-05-05	Add Windows metadata enforcement guard
+801c0f5221e06339c790b1b9d01155f62beee569	2026-05-05	Add Windows metadata setup target type
+b508d9ad80acd7fea3c58dcbf6d976b748657294	2026-05-05	Add Windows metadata adapter target type
+96302cab440de87ab8169055fc37df15c06da573	2026-05-04	Fix Windows danger-full-access automation exec routing
+6eed270256857722315808c100ceb26e0bc07bca	2026-05-04	Fix Windows danger-full-access exec dispatch
+b65f9366eeacf4f1b56e9daf54735b449e404814	2026-05-04	Avoid whole plugin cache replacement on Windows
+36912ce3de1c039f7faaddd509d0465ff644e6c1	2026-05-04	fix(tui): use shared paste burst interval on Windows (#18914)
+30a6ad983c1db760f5ea49795f63700f2ae978c2	2026-05-04	fix(network-proxy): widen Windows LAN no-proxy compat
+2aed7cadbd7aa3f3f2486cbb4aa4d2ad6b16be86	2026-05-04	windows sandbox: replay powershell shell snapshots
+5d5500650b3ff375b3a5b5ea5caafea0f81a4cce	2026-05-04	Fix Windows PTY teardown by preserving ConPTY ownership (#20685)
+ad3dce9ecd0c20c3ae8b1a02d906bbf9923a1bac	2026-05-04	fix(windows-sandbox): decouple runner launch cwd from workspace
+22b6d55af7aebbe7a3209d79e5f7664c30fc8cec	2026-05-04	fix(windows-sandbox): retry default desktop on spawn failure
+04a10182ab984c9715bc9df73c3906b3648dbd8e	2026-05-04	fix windows shell resolution for PowerShell
+bdd8845e277c71b5513b4b62476679448dd20c0e	2026-05-04	fix(windows-sandbox): normalize mapped drive workspaces
+4dc4c421143826ee0bbef35e00aba7827b5244d5	2026-05-04	Handle Windows packaged helper fallbacks
+349bb9f1021ae91facf6b7ef96bbf724fcef046e	2026-05-04	Prefer bundled Windows helpers on PATH
+d5f0ee37ba7cb91bc0cf43370245f4f3ef0ff987	2026-05-04	windows-sandbox: sanitize sandbox profile env
+8a3f640950850d2561a49cd47a9b99ea33f04975	2026-05-04	Clarify Windows sandbox helper cancellation
+8f2c306a10662d703d558ce8b031841a324ca907	2026-05-04	fix(windows): repair descendant write ACLs in sandbox setup
+77096c82bea283b5bbc4f085c951f23adf2cc2ca	2026-05-04	fix(windows): tighten sandbox restricted SIDs
+a10e7ba9985ffb0d7ce7f7c771bc213a67d9119b	2026-05-04	Skip Windows sandbox for danger-full-access
+139003d2a1085be8ff6e8f2ac57df236e8d4b346	2026-05-04	Fix Windows danger-full-access exec dispatch
+8a97ef3850510ca27d8ef7048ea6cde8afba1aa2	2026-05-04	Fail closed for elevated workspace-write on Windows
+9eb5cecc9c6cc1c71fe0a6d167280611330ddbad	2026-05-04	Fix Windows danger-full-access exec dispatch
+104ff7c99d97a682906da9e5957816c5e5390267	2026-05-04	fix: reprovision stale Windows sandbox users
+65c6a7f129b08c1359c04bb2a7dcdb79f188b843	2026-05-04	Bound Windows sandbox setup helper hangs
+15a4b08d9e311c3a3ac3e8c9dd142a7565c555c5	2026-05-04	Fix elevated Windows sandbox write boundary regression
+402a53ed332cdb4cc88c5b39891efe7724cc7e83	2026-05-04	Fix Windows automation DangerFullAccess dispatch
+e2dff7b76341e9b3d2d001085aebfe6e78b3fbf0	2026-05-04	Fix Windows danger-full-access exec dispatch
+9ec377128158d566a7dad312f313a31ab29d03ee	2026-05-04	Fix Windows sandbox runner launch cwd
+bc30d8f0e7c05aa7641e048ad2b92514057e7364	2026-05-04	Repair Windows sandbox write ACLs recursively
+82b22ee434bd5a12f99d165a6c6cd3dabc2ccc77	2026-05-04	windows sandbox: keep real user able to refresh write-root ACLs
+5ed24ddd87ddfb5cab827ffc2cac6d03ee3ebd40	2026-05-03	Improve Windows sandbox spawn failure guidance
+1fdfdcd580e6c15081d912cb1f2109b73403a00b	2026-05-03	Improve Windows sandbox helper cancel error
+24b1153f16d6fca1ada1d90a5e03691152b76fc2	2026-05-03	Bootstrap Windows sandbox user profiles
+9f2df6a0d335b389ae85166f709515bfa861caba	2026-05-03	Fix Windows sandbox restricting SID isolation
+c636f89fc534b90d6be46578fbdbe2bd3d10b8db	2026-05-03	Fix elevated Windows sandbox write restriction scope
+cd2760fc084058cbb637114d16460a83c3af00d2	2026-05-01	ci: cross-compile Windows Bazel clippy (#20701)
+b6057de94b75103a4e061debc355808c24649938	2026-05-01	ci: cross-compile Windows Bazel clippy
+5a1d1782b3d856d4aa5b57dd7801d44f78b97345	2026-05-01	ci: cross-compile Windows Bazel clippy
+f80b7b4e6ed130434c85b9f72094e06bd1b08abf	2026-05-01	ci: cross-compile Windows Bazel clippy
+466798aa831effb130bac3a801180b5b56483931	2026-05-01	ci: cross-compile Windows Bazel tests (#20585)
+b3ce7557e206a20f038c32a18e8e961e374fb6e5	2026-05-01	ci: cross-compile Windows Bazel tests
+70f78dddbe7ea18dea10dea3a56b43883c85072a	2026-05-01	ci: cross-compile Windows Bazel tests
+424b1838761fde420427b0e1b2d623590b31afbb	2026-05-01	ci: cross-compile Windows Bazel tests
+b5683ea8083364a133accfd194b5ed22c2f45e29	2026-05-01	ci: cross-compile Windows Bazel tests
+79a259e4769cc9b73ee358bb03397e767c88a145	2026-05-01	ci: cross-compile Windows Bazel tests
+79ad051875ff9cd9af9f2c17d31e3992a6866d2e	2026-05-01	ci: cross-compile Windows Bazel tests
+849c3aaa410c3fd888a84a7c21982bf0763ac60f	2026-05-01	ci: cross-compile Windows Bazel tests
+cbbc2016ef582e21ee505a11fe1b393582a2d08c	2026-05-01	ci: cross-compile Windows Bazel tests
+6b51c774b0cfde7b8da5960cb6c4451b3c0e11ec	2026-05-01	ci: cross-compile Windows Bazel tests
+97731fcb7bdf902e0c80e030894006c84036e8d5	2026-05-01	ci: cross-compile Windows Bazel tests
+bdbe9b64a42a1ebd7eb8aad2408219f2a963cdea	2026-05-01	ci: cross-compile Windows Bazel tests
+53e648595898f94ef3afdba828e76bacb5b9ae05	2026-05-01	Fix elevated Windows PTY session teardown
+392863f7d61faeb87033b75ce31d6d9d8b5440a0	2026-05-01	ci: cross-compile Windows Bazel tests
+90650003d9c34c8aedbdfdb273dfa7afbfe3f48f	2026-05-01	Resolve Windows sandbox command paths before spawn
+91de5d5863db809a8f9454ee64dcd9af3761d061	2026-05-01	fix(windows-sandbox): retry default desktop on spawn failure
+b6b5ce9e538a0195c3cbbe7bd7876618d73bc441	2026-05-01	fix(windows): avoid WindowsApps shell aliases in sandbox
+feb315a7aac20e457f813ed5d801a5b45c11131d	2026-05-01	windows-sandbox: sanitize elevated runner profile env
+a87de10b25250f191ebe56d6f537ec1a5961f4ec	2026-05-01	fix(windows-sandbox): preserve bootstrap env for sandbox spawns
+d4468d68df34358ce3b2b9a81d231e936d6197fc	2026-05-01	ci: cross-compile Windows Bazel tests
+167a3c19e12dacff79cdd9204f89b83972c2f8f1	2026-05-01	ci: cross-compile Windows Bazel tests
+be4bf005fcd085a91587b6e14eac1e83b159fc5b	2026-05-01	ci: cross-compile Windows Bazel tests
+5f05165906eb5f992cc69ab23e87b0d492c5d2f3	2026-05-01	ci: cross-compile Windows Bazel tests
+bc4071064ad5b90b57e321f17ee19be8b19bb825	2026-05-01	ci: cross-compile Windows Bazel tests
+d58ad839b46a546b458db2bc24fbade8fb62c5d4	2026-05-01	ci: add Windows cargo-xwin release PoC
+f9dd4e40751f21493b1dfb437480843766ae3657	2026-05-01	ci: cross-compile Windows Bazel tests
+46dd95205846a9baa24fc0be763eb28b66022243	2026-05-01	ci: add Windows cargo-xwin release PoC
+4e16a08e2867d45ccf983b1e37edab70b85db1ff	2026-05-01	ci: add Windows cargo-xwin release PoC
+6e1ebc785507ac8fe24a2c5d42a2e2338b64e370	2026-05-01	ci: add Windows cargo-xwin release PoC
+71f3181861a681854c93f4f111d838b19d3fb1fb	2026-05-01	ci: add Windows cargo-xwin release PoC
+04ebd01415cfa07727da73af13047109314cf60d	2026-05-01	ci: add Windows cargo-xwin release PoC
+0be290558d0ae2d84b77b4b2b5dd6f947766365e	2026-05-01	ci: add Windows cargo-xwin release PoC
+33ef0d238048330c872b626bc3e4cbbb5566d422	2026-05-01	ci: add Windows cargo-xwin release PoC
+35fc67e3ce0e060349f9a3ecf37c79aaf1c114d4	2026-05-01	ci: add Windows cargo-xwin release PoC
+caddc985d8986448d57bdd797471be3a8031be0e	2026-05-01	ci: add Windows cargo-xwin release PoC
+db324ac7519dfa8655f9aa25f6cc7b5468e46733	2026-05-01	ci: add Windows cargo-xwin release PoC
+57451d6bd7fd09ba6ea669ad476f78ea182c8f46	2026-05-01	ci: add Windows cargo-xwin release PoC
+bdf0406f7fac648b514eba6258d492243ba230a1	2026-04-30	ci: add Windows cargo-xwin release PoC
+9f59fbe0f17de5b1f1dd3d92a124d97d87f7a057	2026-04-30	ci: add Windows cargo-xwin release PoC
+64b6cafeff36c45a110d34bcdf831dfdd69f691e	2026-04-30	ci: add Windows cargo-xwin release PoC
+c88d7171515b7dad355d8a8438d5b1ad31d75ae2	2026-04-30	ci: add Windows cargo-xwin release PoC
+933f3a875ad8a7d12233bb449f91309550e6385c	2026-04-30	ci: add Windows cargo-xwin release PoC
+01a9cfc9918cdc86e6e4cb95d89e23925f4ab17b	2026-04-30	ci: add Windows cargo-xwin release PoC
+0490f7fdc6312751308797d8b80ced5f546d032a	2026-04-30	ci: add Windows cargo-xwin release PoC
+9c3731f95536dd0306635615c80209dc4a917b1b	2026-04-30	ci: add Windows cargo-xwin release PoC
+d70dd9ee57a86f9d055ba247e92fbfb44a890a5f	2026-04-30	ci: add Windows cargo-xwin release PoC
+39110a52e1cde242a1e688dfb9924b5bf02fcf06	2026-04-30	ci: add Windows cargo-xwin release PoC
+4d1cec036a0e84f2531c928fd7941aff0e8041b9	2026-04-30	ci: add Windows cargo-xwin release PoC
+9fe33148e1611d331571d1ace6e67b6377f9c6fc	2026-04-30	ci: add Windows cargo-xwin release PoC
+4f96001fa795670412ce82808c9c877050f9d281	2026-05-01	execpolicy: unwrap PowerShell -Command wrappers on Windows (#20336)
+c8f1a47997cba0357725cb68b0b0c835d0267140	2026-04-30	ci: add Windows cargo-xwin release PoC
+f785af20f8c0138c456825b6b31737c4ffcc7ca0	2026-04-30	ci: add Windows cargo-xwin release PoC
+8121710ffe20d586e32dd3d4e957e5a242c5831e	2026-04-30	install WFP filters for Windows sandbox setup (#20101)
+79ace487a34bc2024ac7bded9183b47eb8ecab75	2026-04-30	ci: add Windows cargo-xwin release PoC
+06f3b4836ac6e4fecc1d75a09b8a9fa369b16635	2026-04-30	[codex] Fix elevated Windows sandbox named-pipe access (#20270)
+b40263be77e6e46071362a6e095e6d7c2b335a56	2026-04-30	ci: add Windows cargo-xwin release PoC
+75573b2c256d55a765a376ad00e3a6f17053a5ae	2026-04-30	Repair existing Windows sandbox ACL descendants
+f6c34628bd6a57548a3c2fa8fc5729ba9eb47b18	2026-04-30	windows-sandbox: isolate allow path computation from legacy policy
+3e0931e07973b782736bb90dd8f918b6c3d8cf47	2026-04-30	fix(windows-sandbox): disable private desktop in headless sessions
+12a30ff3da1f1817b8c39ae22c58a98042cf1fae	2026-04-30	fix(windows-sandbox): decouple runner launch cwd from workspace
+080a390eb1edbd11d33077dbb05dee84c4eba456	2026-04-30	fix(windows-sandbox): launch legacy sandbox via junction cwd
+13c2a252d892ec7fc4e95fe72bc3dee5f75df521	2026-04-30	fix(windows): preserve bootstrap env in sandboxed sessions
+3cd638f359b73745cc781272e57bb92410670459	2026-04-30	fix(windows): default sandbox shell to cmd
+59239f9c0870a1ecf5e4c138842a86f675dc8af3	2026-04-30	fix(windows-sandbox): normalize mapped drive workspaces
+c92ca4d0c7351d0841647477cc343ea1eb17d6ff	2026-04-30	fix(windows-sandbox): normalize mapped drive workspaces
+2ba1feddeda0fbbfd556c37d46f8090284b75202	2026-04-30	fix(windows): normalize sandbox cwd for mapped drives
+f63f05f8a6895f34a9938e8ea25789780cc24f4e	2026-04-30	windows-sandbox: accept permission profiles from callers
+bb346d31195662a083f703130a9b14945e13f8f3	2026-04-30	windows-sandbox: accept permission profiles from callers
+6a9db12adbe46eeb6348d55bb2393698ec921e74	2026-04-30	exec: localize legacy windows sandbox projection
+0d0d3d8d1219ad0cecc1b11af542ec3ca6f26bf6	2026-04-30	windows setup: derive sandbox from permission profile
+df12b83033361c14a914feea9d39333f2bf67cef	2026-04-30	windows read grants: accept permission profiles
+7f32e20da8bac8ae09da71f93148d3e68ce8d5a7	2026-04-30	windows read grants: accept permission profiles
+ae863e72a27a283c08023dcf039871c917209120	2026-04-29	ci: increase Windows release workflow timeouts (#20343)
+206eed77161c22800b010f57209522ec4e2704c0	2026-04-29	ci: increase Windows release workflow timeouts
+0c61c48eece509b169da647abab38608415bfd3f	2026-04-29	only use inner powershell command for rule matching
+c23edf28386833f8980b446922e63e1912a26a07	2026-04-29	only use inner powershell command for rule matching
+0c30ead917d6403bbd3eec117a8a0b8795195618	2026-04-29	only use inner powershell command for rule matching
+f52d02b8d302b9af987853aca798146587540103	2026-04-29	Fix Windows sandbox owner-only temp dirs
+57a1d792afbd3de6a6e18b4c9cc1efa70c3affc4	2026-04-29	Fix non-Windows exec policy compile
+7d47a62fc8e393c0e387c44a81a831a7e8be1235	2026-04-29	Fix Windows execpolicy matching for PowerShell wrappers
+4a93d01fa372691312b8dbc3f47b9f6879b5ee91	2026-04-29	Match Windows execpolicy rules inside PowerShell wrappers
+13dbcda28fba739ea7aeafca9251c2162df53cf5	2026-04-29	stop blocking unified_exec on Windows (#19435)
+9d1e5df4b2c2b4431983094b693d47f1318fcafa	2026-04-29	expand the set of core shell env vars for Windows. (#20089)
+29f1b6299a8b7d65969e3a4a09f57992bfde5888	2026-04-29	Prefer real PowerShell executables on Windows
+343b81ad77550faf84bee532e04f916bf27ac1a0	2026-04-29	fix(windows): tighten restricted token write scope
+e1d99d4298f70913baea81b58dcbb35983a2750f	2026-04-29	fix(windows): prefer native PowerShell executables
+de53754b43d1c9b7fe6a1d3bba54ea790e312e6c	2026-04-29	fix windows shell resolution for PowerShell
+aeb1c6f72d0c5dd07d237fb0de71ceaf89d76fba	2026-04-29	Prefer pwsh when auto-selecting Windows shell
+305e997faf6385026e308c2196d9443d3406f4ea	2026-04-29	Prefer real pwsh executable on Windows
+a02dea3b29bf4ca9fdb686077fc00eaf029bf587	2026-04-29	fix(windows): prefer runnable powershell executables
+cecca5ae067a02aa9a9238854eac599da8c993b8	2026-04-29	Improve Windows process management edge cases (#19211)
+5cac3f896d74c5738e252bb3672e03565a30c815	2026-04-29	Fix Windows pseudoconsole attribute handling for sandboxed PTY sessions (#20042)
+433b30ca7a14cb4d09024f12bb4c5a89d6921d1d	2026-04-29	codex: fix Windows CI failure on PR #20154
+45cd4ae0ec5682e12f5c0aefbc9cb8ff47f10a7a	2026-04-28	fix(cli): gate windows-only legacy policy helper
+e405191a28bed64f61679c1f6ee2ce17b04743be	2026-04-28	Avoid redundant Windows sandbox ACL rewrites
+8a17a1381f058449b0d008db09193f5dfa44fc16	2026-04-28	Fix elevated Windows sandbox write restriction scope
+e3c3ee4eca6a2b581af606e5f359eb793dbe526f	2026-04-28	fix Windows pseudoconsole attribute handle
+e1f9bda343c0d14463db6571e1a75c249fdeb0b2	2026-04-28	Allow manual unified_exec opt-in on Windows
+9c17640994aa3f572223b07b06b6e04070e4577a	2026-04-28	fix(windows): prefer runnable powershell executables
+0f697bc4c4bc190d248e35344cba56073150b532	2026-04-27	Ignore legacy Windows cmd sandbox test in CI
+a37adea0db55681b873443b340fb68c4f88b3b77	2026-04-27	Promote Codex App on Windows in tooltips
+96eb0a8aa561bbc1c2320bb41dd64011bc1d3da0	2026-04-25	fix(windows-sandbox): normalize mapped drive workspaces
+e4ff78d28dc81f993cfbbf29e4fa73ecba030e4f	2026-04-25	fix(windows-sandbox): normalize mapped-drive workdirs
+d9e93c7fa517984629f4ba981152d2d3b344b400	2026-04-25	Handle Windows packaged helper fallbacks
+c637d10e835e30fbefb791acc338d5cee6798702	2026-04-25	fix(windows): normalize sandbox cwd for mapped drives
+6d4c2ae7535dae79ed97e44e3376e12e1b860da2	2026-04-25	Handle Windows sandbox mapped-drive workspaces
+15f467b0a81d7eb1bad796ebd5d805902e87c641	2026-04-25	Handle remote Windows sandbox workspaces
+d215ef9de9cda22547c63b60136a738020b9a80d	2026-04-25	Fix Windows sandbox mapped-drive cwd
+e1205c0b8650c9619e193fcfabd85ef62d57791a	2026-04-25	fix(windows): launch sandbox runner from local cwd
+deb7dc224187b507f89b461539e9bbfd5d135215	2026-04-25	Handle remote Windows sandbox workspaces
+395084ec67d1d5f19e870f2b822a50b216b38a78	2026-04-25	Handle remote Windows sandbox workspaces early
+f54ba811cd8a647867f43d1387ab3deea0b62525	2026-04-25	Handle unsupported remote Windows sandbox workspaces
+ec116a6a8ebf20e7cc50b90cc7198debed28789b	2026-04-25	Fix Windows sandbox runner launch cwd
+7af113903a126b68af7d80bf0b2668a15dd2f1d8	2026-04-25	Fix mapped-drive runner launch cwd on Windows
+d54493ba1caee573118b3871390768c34689ca51	2026-04-25	test: stabilize app-server path assertions on Windows (#19604)
+82613053f33f71e83a21ae85bdedc5934ac88a2c	2026-04-25	test: stabilize app-server path assertions on Windows
+708b6b7338a77cd68e5d10a38114749235223295	2026-04-25	test: stabilize app-server path assertions on Windows
+ad9b945d5d5495d8d70b26011bb0e9b0d5a1a237	2026-04-25	Fix Windows PowerShell clippy lint
+041f6abb2b7d1fff4a7bc9e757b107bd6b98d7a5	2026-04-25	codex: test powershell exec-policy rejection
+a699c879063d48321679954a4605d5f47ac14df7	2026-04-25	Unwrap PowerShell commands for exec policy
+861f47db33af8296d6a30d528f2a48def60043f0	2026-04-24	Use serial_test for Windows sandbox tests
+32aad7bd13e63baf7af96bf3d0c960a566da993e	2026-04-24	Serialize legacy Windows PowerShell sandbox tests (#19453)
+f4976eeac19b4ae46978b0bb5588d4c02d2fc724	2026-04-24	Allow manual unified_exec opt-in on Windows
+edfbf7dfaac4d3859b446b4ce44982d7ac212bfa	2026-04-24	windows-sandbox: stop denying git in elevated setup
+b8617627a000a6ceadd6aac5ad226d013838f88a	2026-04-24	Relax Windows git metadata sandboxing
+7763e16c226bfe9f66703b6c36d890095585a4f1	2026-04-24	Allow limited .git metadata writes in Windows sandbox
+1b893420b5a1b42c61cedb0d96a7f8710e2bcb47	2026-04-24	Scope no-workspace Windows sandbox setup to codex home
+a9f75e5cda2d6ff469a859baf8d2f50b9b04944a	2026-04-23	ci: derive cache-stable Windows Bazel PATH (#19161)
+89616178a64a2b8d7463ff161bf7774b2c68e354	2026-04-23	fix(windows): clear stale protected ACLs in full access
+2e228969be104daf2066dc7167e0674d47e8855c	2026-04-23	guide Windows to use -WindowStyle Hidden for Start-Process calls (#19044)
+d7cebf01207d2dce3071855120e85da9703bb177	2026-04-23	fix(windows-sandbox): retry default desktop on access denied
+dc8661acff2b37a32fdf8a6af7f41a4cd334740e	2026-04-23	ci: compute Windows Bazel PATH in setup action
+ead134ec0c1cc22270e4bc8e210fb50586b4a84d	2026-04-23	ci: compute Windows Bazel PATH in setup action
+64a018b986ad13ae43047fa5d7c441c6c897d7b1	2026-04-23	ci: stabilize Windows Bazel PATH inputs
+0ab2e1a3c026c87e11a2207bde81bc7dcd68fe16	2026-04-23	windows sandbox read PATH roots
+273d708e05e964f19d6eb7b18f98d72ad6d6c255	2026-04-23	Avoid WindowsApps helper read roots
+1df6367278847e9b9f8937ed3ac49a9a330f52f3	2026-04-23	Fix Windows sandbox profile bootstrap
+50430b3f5f54a43faf8ec8d67d0724ebad4afeb9	2026-04-23	Fix Windows sandbox restricting SID isolation
+c192200d8693fc73af79c58f09a07d96625bda9f	2026-04-23	Prefer bundled Windows helpers on PATH
+193bc6e0f1596ac6148561d23fa25027bc6f2a75	2026-04-23	windows-sandbox: allow user alias tool roots
+bfe9333e081a362662b5a276fec31af184b935e8	2026-04-23	Skip WindowsApps ACL grants during setup refresh
+d3b35082753cde44b3ae495b891f3911d196b95f	2026-04-23	Improve Windows sandbox helper cancel error
+48948ea9e8a67a54eb1f87633b2697490e38cd5e	2026-04-23	ci: stabilize Windows Bazel PATH inputs
+c6d76510cad785c7cc0fa2c491f81526ad3a68cf	2026-04-22	Repair existing Windows sandbox workspace ACLs
+182d43e1f3ee9634e0b354a97798237a4d57f0cb	2026-04-22	fix: skip WindowsApps helper read roots
+3a451b6321bf1686383cd83a1a40ade6ec12a145	2026-04-22	use long-lived sessions for codex sandbox windows (#18953)
+faed6d5c070f7b77db3c8f55b86cc2e9ca6f1be1	2026-04-21	tests: serialize process-heavy Windows CI suites (#18943)
+e004f241f429a340a882f5005be3e39301cf8827	2026-04-21	tests: serialize process-heavy Windows CI suites
+731b54d08fb93aec31fb020999a62447886f3ab3	2026-04-21	tests: serialize process-heavy Windows CI suites
+6368f506b70fe43b92208ab796c7207c7a1dfb26	2026-04-22	fix: windows snapshot for external_agent_config_migration::tests::prompt_snapshot did not match windows output (#18915)
+4fa281f2a75f735eb1ace754c8889c2fe66fafe1	2026-04-21	fix: windows snapshot for external_agent_config_migration::tests::prompt_snapshot did not match windows output
+49a49b89b86d46db44a61f6c7245076ea66661ee	2026-04-21	windows-sandbox: sanitize inherited profile env
+85ead43f795de10557e671f473cbdbcc28fb9cf0	2026-04-21	windows-sandbox: sanitize sandbox profile env
+8612714aa65c60755dec1983ca9836bf39ef7208	2026-04-21	Add Windows sandbox unified exec runtime support (#15578)
+f7e1126d4630019d5873faa62a32fc6fd7e8661f	2026-04-21	Clarify Windows sandbox helper cancellation
+848e94ed60137f059ec48b5226caf845e97325f0	2026-04-21	app-server: add Windows device key provider
+7633a3ee90d672c14a373f7ae98ccdf0117238f2	2026-04-21	Improve Windows sandbox UAC cancel error
+8b1545902e2536fe0207177bd1900d4f891db79a	2026-04-21	windows: skip WindowsApps read ACL grants
+f6ad2793670ebbf41179d5169cc9a53f9d340787	2026-04-20	Recover from Windows sandbox logon drift
+3981bbfbb9bfca3bdda40285a4d17a075443afb9	2026-04-20	fix(windows): materialize bundled rg into helper path
+af7edbcb952735966f256d200df0b6e0a7c39050	2026-04-20	Fix stale Windows test expectations
+84aabe58e64fcee57984be4647017443730b0cfa	2026-04-20	test: make hook precedence tests portable on Windows
+230dcadee609fa99d6162fe1107457030e5270a7	2026-04-20	## New Features - Standalone installs are more self-contained, and `codex app` now opens or installs Desktop correctly on Windows and Intel Macs (#17022, #18500). - The TUI can open `/side` conversations for quick side questions, and queued input now supports slash commands and `!` shell prompts while work is running (#18190, #18542). - Plan Mode can start implementation in a fresh context, with context-usage shown before deciding whether to carry the planning thread forward (#17499, #18573). - Plugin workflows now include tabbed browsing, inline enable/disable toggles, marketplace removal, and remote, cross-repo, or local marketplace sources (#18222, #18395, #17752, #17751, #17277, #18017, #18246). - Filesystem permissions now support deny-read glob policies, managed deny-read requirements, platform sandbox enforcement, and isolated `codex exec` runs that ignore user config or rules (#15979, #17740, #18096, #18646). - Tool discovery and image generation are now enabled by default, with higher-detail image handling and original-detail metadata support for MCP and `js_repl` image outputs (#17854, #17153, #17714, #18386).
+0fdb9f9cf394f86f41996c555767c00c17ff0392	2026-04-20	Retry Windows sandbox runner logon failures
+484a15853fe4d6539fb3910ef894009dc387bfd6	2026-04-20	Fix Windows sandbox restricting SIDs
+d3203f11ff6dbc0d76e77eb37f4238955463deec	2026-04-19	fix: reprovision stale Windows sandbox users
+a0f7f43e03da9e1e2bcd5e8b6d86e99b811d8b46	2026-04-19	Skip WindowsApps package dirs in sandbox read roots
+b885c3f8b1dc66cf1f89b55f06f8f55c293a846a	2026-04-19	Filter Windows sandbox roots from SSH config dependencies (#18493)
+715fafa23c73c07f934f73c047db4ac7bf313db0	2026-04-19	Do not grant Windows sandbox ACLs on USERPROFILE (#18443)
+252706cec12cb67f9e5adff9025329f591e13c4e	2026-04-19	Skip WindowsApps helper read roots
+116317021de867f12ea61bd02c118c91d3c3de42	2026-04-19	Support `codex app` on macOS (Intel) and Windows (#18500)
+f1d6258eaa049b4653f04d7008240110c2fd9325	2026-04-19	Tighten Windows sandbox restricted SIDs
+b9026e1fab51bfbcfe11fa4424da0e10f5af3bfc	2026-04-19	fix(windows-sandbox): surface refresh helper failures
+7aeae2632e816eed3311e07ab928a1d86861c42a	2026-04-19	Repair existing Windows sandbox write ACLs
+ed31cadb3a14959417c00a3c61cb3cc759c0af26	2026-04-18	fix: retry windows restricted token without LUA flag
+f1e5dc15f2e88e2cfc29b24a9c8f9539d48670f4	2026-04-18	Retry Windows restricted token creation without LUA token
+561439c66f7d6d434323ac82e253bdc2a841ffa6	2026-04-18	fix(windows): repair descendant write ACLs in sandbox setup
+43e5c6931dfa5aab3564b0edaf610eeff630ce28	2026-04-18	Fix Windows restricted token creation for unelevated sessions
+4260b61d14ad048fbb022eb5c93eb0fc3943e745	2026-04-17	Fix Windows sandbox docs links
+6ee20c040689c279b89a9731ecb8b6736e3cf704	2026-04-17	Skip WindowsApps package dirs in sandbox read roots
+5983bd41ec150e11f7a79a56400e11cf360c7dbf	2026-04-17	test: make hook precedence tests portable on Windows
+75f07e90ed399b5f62343f68b502e09402fd9418	2026-04-17	fix(windows): keep core runtime env vars
+292ce9580ca4a16dba18eda6a68f097560880b33	2026-04-17	fix(windows-sandbox): skip remote ports on protocol any
+f553efd09ed81e95b4519d7426890b08e267f18d	2026-04-17	Fix Windows sandbox restricting SID isolation
+11bd91e876c87381d95d33a12513cdcbc3964e5f	2026-04-17	fix: skip SSH config dependency roots in Windows sandbox
+b04590fc1ffd17a225c5ef2583bc7d377a4b4ea2	2026-04-17	fix: skip .tsh in Windows sandbox profile read roots
+bb4ea552bdf4f72085c94fa53674cbeb7c8efde7	2026-04-17	Repair inherited ACLs for existing Windows sandbox files
+98e51c7e731e001bf2db1988536caad3aa65a0bf	2026-04-17	fix(tui): clarify windows image paste shortcut
+2c2ed51876044dd4646aec912d1b4b248836c5bd	2026-04-17	ci: make Windows Bazel clippy catch core test imports (#18350)
+899374d06394778f0880ac4a66ca11dbb262c0ee	2026-04-17	fix(windows-sandbox): repair existing descendant ACLs
+d0d088666f43a25bd8d309a398dac2ee09cdc491	2026-04-17	Improve windows sandbox refresh errors
+7a638047101ce60ac749c59fde40b32b121def27	2026-04-17	Fix Windows sandbox deny ACL mask
+b9b04b92d286025f25b88413448c1f82add64725	2026-04-17	Fix missing Windows core env vars
+f4a1938069f111f9b39f8d51ae80c2d807cf9bb3	2026-04-17	Fix Windows sandbox firewall remote port setup
+fdd56dddc31330a578d1220cdedffefd678148f1	2026-04-17	fix: recursively repair windows sandbox write ACLs
+2e038e6d383c6a8e06ea8a89d5021d129228690d	2026-04-17	Fix Windows exec policy test flake (#18304)
+f03110d5acec2c2c16fb22de12393fdcdd88a9ba	2026-04-17	core: align exec policy test with Windows sandbox behavior
+2d9b9edd71a07248f2e32984847cb6c3d9dc3f5a	2026-04-16	Fix Windows core shell environment
+fcf6cfb3114d04e8ffeb281a88edd9a256aacf5e	2026-04-16	Preserve core Windows shell environment vars
+e9b9db4f1d25bfaaf043d241c8b999f6f6013324	2026-04-16	Preserve core Windows shell environment vars
+eb8f9d070cb9a1015af79b7228b764542d43c12d	2026-04-16	Fix Windows marketplace paths and shell command strings
+3905f728918abd6ebaa63a4368f52754c7a3e26c	2026-04-16	Throttle Windows Bazel test concurrency (#18192)
+e568008295d53ee98d3a2c7485f26009abc31aee	2026-04-16	Fix Windows git subdir marketplace test
+2ffc7d8d368708e2a40a3483c6f2f13211aba73b	2026-04-16	Suppress Windows sandbox NUX in yolo mode
+de127510070fe61871f96d2f52e63c34a9b47bf5	2026-04-16	Add no-sandbox option to Windows sandbox prompt
+de98b1d3e8b9f36a63e4b872d138d8401b4f50a3	2026-04-16	debug: windows flake (#18135)
+d4223091d07a7647535b46795aa87cf78550e3f4	2026-04-16	fix: windows flake (#18127)
+d942d15800742fe3396b64b0bf7bd1c7cb5eeab2	2026-04-16	fix: recursively repair windows sandbox write ACLs
+8e6452722d6b195ff613291cf8977d0b304ce888	2026-04-16	Restore Windows shell snapshots in sandboxed PowerShell
+2d4ae5a7925bc6b17ad4e8576ebdb1f7079fea9f	2026-04-16	Fix Windows git subdir marketplace test
+25d933e2539f3c11a94a244949f9c8b71c387655	2026-04-15	fix(windows-sandbox): skip packaged helper read roots
+04a4ab0ec141029d8e1e0688c880d2eb4ea20635	2026-04-15	Skip Windows nudge email integration tests
+51b64319de1b0c8199f737e677a6094d7e6eb06a	2026-04-15	Bootstrap Windows sandbox user profiles
+a2d62cf4183fb35a3aad12437bf32e2843b543cd	2026-04-15	fix: skip WindowsApps read-root grants
+a3719d9052daf3307a6b329898b250396b8777d2	2026-04-15	Use NoProfile in PowerShell exec tests
+d61d3136a63e4b5b84acdd85d59ff1d844b05d03	2026-04-15	Stabilize Windows thread unsubscribe sleep test
+6703333d2a7a35d44b7378cfecf2ca3f534146b3	2026-04-15	Fix Windows marketplace local source parsing
+058916a2a976d40a794e5dead4c8a2136a568cb3	2026-04-15	Avoid WindowsApps ACL refresh roots
+d2317ff8069272d43923c2dd76e304a26834abc5	2026-04-15	fix(windows-sandbox): skip WindowsApps helper roots
+2a3b2d1b6501e2850559c9e0b6cab152e3dbef6f	2026-04-15	fix(windows-sandbox): disable private desktop by default in headless sessions
+fb4d89df8beb16918102d4c15270b160c683a4b2	2026-04-15	Split Windows keyring auth token fields
+b78c32febeaa25c89fd64b92f9323d197ccdc911	2026-04-15	Avoid WindowsApps ACL refresh for helper roots
+df367b605828615f3b609c8da4c007e857f5c413	2026-04-15	Skip Windows desktop binding in SSH sandbox sessions
+f998122f9499bc64103bd731c28671fe1a808a41	2026-04-14	Harden Windows sandbox bootstrap env
+05a9d7af9994b831ca3db3f1b95ef498d421b0f2	2026-04-14	fix: recognize windows local marketplace sources
+72b16f67406ac8c5fdc80ed65aaebd131616c96e	2026-04-14	fix(windows-sandbox): skip remote ports for any-protocol firewall rules
+7fd7ae959fc72f1d7a4fd683e095941fad7170f5	2026-04-14	fix: skip WindowsApps helper roots in sandbox refresh
+b359449f8f4872499925d7f57566636cdfcf51fc	2026-04-13	fix(windows-sandbox): skip remote ports for protocol-any rule
+0131f99fd5d166cdeb35219474f4e2e65480afd2	2026-04-13	Include legacy deny paths in elevated Windows sandbox setup (#17365)
+1ac85e43b88a2738734ef2bee878bb80d6d9f27b	2026-04-13	Bound Windows sandbox setup helper hangs
+ef94e870c9ec706b6c1bea461af12d6aa1b79a91	2026-04-13	Skip WindowsApps read-root ACL grants
+857be1f905fd3b1cce11479ab1893178ea953651	2026-04-13	fix(windows-sandbox): restrict workspace tokens with sandbox user sid
+fbd599d1a395144b8f64ffffedd8f7f74a6dcf38	2026-04-13	fix(windows-sandbox): bootstrap sandbox user profiles
+60eed433efd9195cba6b041fc70ee5f150435fd0	2026-04-13	Avoid WindowsApps read-root ACLs
+0d464fc30e35428319e9cb94a0a819bcd1e96370	2026-04-13	Initialize Windows sandbox user profiles during setup
+b51285ed88907100947ee2ff252be4693c25d400	2026-04-13	Skip WindowsApps install dir in sandbox read roots
+89fccff10fdab591384ffd1def3802dd1b2cd82c	2026-04-13	windows sandbox: initialize sandbox user profiles
+5aeafb5d2ffc1ee19cc5fb62d6c116db58cb46c6	2026-04-13	Fix Windows sandbox profile bootstrap
+a85ad7bdc84ae5f7f4a47daa16d97de47ad4ca95	2026-04-13	Fix Windows sandbox workspace SID restriction
+30038d43389520069ec14edb70249fb577927442	2026-04-13	Initialize Windows sandbox user profiles during setup
+ff0039b7aec2658f6b402e091349550211da63b9	2026-04-13	split Windows auth keyring storage
+f7cb13fe84657d7d1bfd35017548d3099c87aa59	2026-04-12	Fix shell timeout race on Windows
+517cfb769e912758f4b04071e8c8c8a8707808af	2026-04-12	codex: use literal windows timer ignore reason (#17380)
+b6ab1b1e5f2a0840783dc1ffcd41e50bc42d381c	2026-04-12	codex: avoid windows timer integration timeout (#17380)
+e9e7ef3d366fdb95c24d24fea734b0fa47d79fc4	2026-04-10	Fix thread/list cwd filtering for Windows verbatim paths (#17414)
+27b3a900a2ebadfcb60bcd3c311135a96e33b12c	2026-04-10	Fix Windows marketplace add CI failure
+962e6dfac6f7c4214b2c630cad9d1f802a919019	2026-04-10	Fix permission profile tests on Windows
+824ec94eab098375dcbb9cf2da1d666fb68ad40f	2026-04-10	Fix Windows exec-server output test flake (#17409)
+740feed203aee13cef00d5ea806b3f7d283bc412	2026-04-10	Skip Windows sandbox setup NUX in yolo mode
+a80238d34f63dbdf00a883eed1b6d0e4f1733eb1	2026-04-10	Fix Windows exec-server output test
+b88d8bf5d29f4df9a7ae4fc36cd9a8fde2a7452e	2026-04-10	Repair Windows sandbox write ACL descendants
+12ee4d7acafe9e7ddb733535263baff23bcd7372	2026-04-10	Avoid Windows apply_patch command-line limit
+9d38d1241a5a666a417a6cdf0fbadea21df12a6a	2026-04-10	fix: fall back when Windows PowerShell shell startup fails
+347a057d658f534b15ccd86cff520fed9d042c54	2026-04-10	Clarify Windows sandbox long command failures
+12f7e21a9f0df8a7e40bcbe07656a4acb9ae9b47	2026-04-10	fix: stabilize app-server windows ci diagnostics
+b976e701a85eb6a7432ab5200a242fc2e00cc514	2026-04-09	fix: support split carveouts in windows elevated sandbox (#14568)
+a44645129a379a4325a16226ee7d233a1f57f897	2026-04-09	remove windows gate that disables hooks (#17268)
+0207e7d5a444c70cd6ec439406ef36835c87c618	2026-04-09	windows sandbox: keep real user able to refresh write-root ACLs
+ec019930672f9b03b0b4608199b1e3e5827a18a6	2026-04-09	Avoid huge apply_patch argv on Windows sandbox
+e8bc56253bcf5cbe733627ff0b5445edbeab0685	2026-04-09	Preserve real-user ACL control on Windows write roots
+12f17964199fbd93493fe5de14a0e0a1be3cc427	2026-04-09	Repair Windows sandbox write ACLs recursively
+3a3e2c53cd808a82b1b1066fdb7313a684b95370	2026-04-09	Fix Windows sandbox real-user ACL import
+beb74f9a13b8331692603d7c614a5a9fd488163a	2026-04-09	Grant real user access to Windows sandbox write roots
+7abf2fb2eb2af132b5dc8e2883069773f560e848	2026-04-09	Preserve real-user ACL on Windows sandbox write roots
+03e5039d34d614286e993e55ef0a288e82c7e597	2026-04-09	Keep real user in control of Windows sandbox write roots
+bc85b62ac0c18728216f1629bb03b3b4b726c281	2026-04-09	Diagnose sandbox-owned paths during Windows ACL refresh
+0d1e6bf00a1d3634209991a60e13458bb906ae3d	2026-04-09	Preserve real-user write ACLs in Windows sandbox
+404967fe250c6a4eefb864253e694fa818738ba4	2026-04-09	Keep real user on Windows sandbox-created objects
+13132ebc5e41ecdd3b80c0ec0c3f7714f367383b	2026-04-09	Diagnose sandbox-owned paths on Windows ACL grant failure
+439499281d2fc2a41b8a4263bc4fe898c616d67d	2026-04-09	Recover Windows sandbox setup after refresh ACL failure
+8862516db290d6e067934dcdfe30caeff55c1d75	2026-04-08	Avoid PowerShell profiles in Windows sandbox
+b9619a5c29676b93141d9d75187fbf31644c642b	2026-04-08	Report structured Windows sandbox refresh errors
+56a7f3c5b75aab70bc0a477ccafd94b5512be922	2026-04-08	fix: avoid large apply_patch argv on Windows
+3f9a16e45d939dfd4b9794d3e64322d18c66bebc	2026-04-08	Fix Windows sandbox apply_patch and proxy setup
+83aa9cd9cb64bc263c8e228f8047f39bc97aaf22	2026-04-08	Avoid Windows apply_patch command line limit
+4d4777ed5e6019357b26bc12dc5ca0ddefc9ad15	2026-04-08	Force no-profile PowerShell in Windows sandbox
+b2b0364f6357bb5462ec6a14160e34d7a33e09a7	2026-04-08	Add PATH dirs to Windows sandbox read roots
+c7cfa10ca29ad8b16732adff30ad53ea5a7ed9a7	2026-04-08	Stabilize Windows sandbox proxy firewall refresh
+d548c5eff109c83f44c511631ed8f728323c848d	2026-04-08	Avoid CIDR loopback firewall literal on Windows
+fb304a2d7f72fd333ebf75bc09ec89a70cd4853b	2026-04-08	Fix Windows sandbox Path env casing
+08797193aa875d17bb398e440de266be6b39138a	2026-04-07	Fix remote address format to work with Windows Firewall rules. (#17053)
+fa5270abefb1028fea62d86b8638a0f328f2929a	2026-04-07	test(hooks): preserve JSON quotes in windows stop fixtures
+ccea133400f177756ef455b3eb8e4e390d93fb57	2026-04-07	test(hooks): use cmd for windows observer hook stop fixtures
+cd99200610729c77de10365594b284cecb785b90	2026-04-07	codex: normalize remaining windows test paths
+77fec98a2eee781488b5837b16af0a6998256c8f	2026-04-07	codex: fix windows absolute path fixtures
+ab489907281871213bf0d8073387eb2fc7bb0ac5	2026-04-07	test: ignore windows-only unsupported hook coverage
+fe460cdfaedae5b6d8fbb7ea0e40bf4ad4746db1	2026-04-07	test: skip unsupported windows hook trust checks
+76a7aa8cc163125d982f6514a3ed038ed10186d0	2026-04-07	Avoid PowerShell profiles in Windows sandbox
+44d70994e72a09e3358aef5c7fec0e5f7f32bb30	2026-04-07	Force no-profile PowerShell in Windows sandbox
+cbeff282a16d951d20c11dd1517991f35e49a4dc	2026-04-07	Include PATH dirs in Windows sandbox read roots
+cc50bc77ab7dca78a8677ba91eb23b73fc0f2616	2026-04-07	fix: apply PowerShell shell snapshots without profiles
+aabeb33f76040c062407c2bcc93d846c23d80838	2026-04-07	Fix Windows startup sync test helper
+d7e444524d7c55e812adfc791cdce671d1b796fa	2026-04-06	codex: stabilize cwd tests on windows
+2ad9c94ad6947c0972c45ed762de97cff5e1a6c9	2026-04-06	fix: recursively repair windows sandbox write ACLs
+5a9ee2fa07a59b28953a5629506c57753d849637	2026-04-06	Improve approval prefixes for Windows executables
+2c4ee13fac26c48e96a59e184c673c69dd84932b	2026-04-06	fix(windows): repair descendant ACLs during setup refresh
+793fc719266d00d6a65109d00d78b99c914049ce	2026-04-06	fix: skip Windows sandbox NUX in yolo mode
+bd8dbac27d00e4fde71c91705fe5f6f6fb79cc82	2026-04-06	fix(windows-sandbox): materialize setup helper
+945b543eef5744b49b29d6636e81220a8e380cdf	2026-04-06	Fix Windows sandbox helper materialization fallbacks
+7e4a56966e77a25ad4160a1d191cf1bb62d78879	2026-04-06	fix(windows-sandbox): materialize setup helper from sandbox bin
+569299f90a3ff1b2b1c83f337bddaeafec6df120	2026-04-06	fix windows sandbox helper materialization
+d188fec99ff7ea3a4715411987a9f4cef3dc5c54	2026-04-06	fix: materialize windows sandbox setup helper
+9ac07a9301efbee1deb74b1ace8de875616b6a90	2026-04-06	fix: materialize windows sandbox setup helper
+8ae10687958e7704dd6c25a7a0ac21f68caef8f5	2026-04-06	Harden Windows sandbox helper materialization
+38eaebeff0988bbcea8be8f0cbe4dfb8bfc96948	2026-04-06	fix windows sandbox helper materialization fallback
+3fd8f073b7d5cdfff9e567407f54df5526b463f2	2026-04-06	fix: materialize windows sandbox setup helper
+3e155d8a6d1a4d9684b8794c4d8eed9aab7b78d1	2026-04-06	fix(windows-sandbox): materialize setup helper off WindowsApps
+cd9154a5ffe101717cf48945c9f3b4fe2b864442	2026-04-06	fix: materialize Windows sandbox helpers outside WindowsApps
+052007b4210a4cbee3be73cc36423f1bd3fb6585	2026-04-06	fix(windows-sandbox): materialize setup helper
+69e2cb419a851291b5492f800f4deacbb7c7798d	2026-04-06	fix(windows-sandbox): materialize setup helper
+3f400b76e53467654bc1aebb25eb7164a75f3190	2026-04-06	fix(windows-sandbox): materialize setup helper outside WindowsApps
+b5edeb98a0f3a7a0f43243f6ae06bc7de6cfacc0	2026-04-05	Fix flaky permissions escalation test on Windows (#16825)
+1f9567d121d0caf397b84ce01ec91642e91a7bcd	2026-04-04	Disable Opus stack probes under Windows gnullvm Bazel builds
+e678ab75132722cba15af7fd620de55549ee4755	2026-04-03	Fix Windows CI follow-ups
+39097ab65dceda9327a81852b19a8c0e449af0a1	2026-04-03	ci: align Bazel repo cache and Windows clippy target handling (#16740)
+3a22e101722db9d8e9ade26f0b4260c2291d5f32	2026-04-03	test: avoid PowerShell startup in Windows auth fixture (#16737)
+9c0244e8b8a71e4e468fc03971fee9164ea28b7e	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+76bf2e0be50fa4e33d5fd6e7691ae56b6363bc3d	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+23ef179820eff89369cdf31616c485e63bc0679e	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+aa17de6774f5481b955f5aee6ea1616f76710757	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+518f70b961f02cebdf427d2c4a7e6e9cd71762b8	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+677223fde422d96e813003f191c8c9cae35e3f80	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+7deb99eb916f45dc0b536206ee219ad02b358674	2026-04-03	Revert "ci: skip Windows clippy test bins"
+60f730a26d4cf244d664ac3a37c7fab2deac1e31	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+f9e8dcac098e1156fa8426fc042b00dfd19657da	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+2334770425a5bd5a83eec6475c5aed1149c3f30a	2026-04-03	ci: skip Windows clippy test bins
+b8247f28792bf1e2825ef6d0e25c6ed2be70ed1e	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+3f13b3df118e3b01057464a9c11355ef001d84f3	2026-04-03	fix: increase timeout to reduce flakiness on Windows Arm
+b65181ff3156e9f201a0236a2a7076d138168a9e	2026-04-03	deliberate cfg(test) windows clippy violation to verify Bazel catches it
+eaf12beacf748a8275ebaa9752ab537075382bc7	2026-04-03	Codex/windows bazel rust test coverage no rs (#16528)
+42631847612e82db8d2639a3ce70ec50d22bbd97	2026-04-03	Enable Windows Bazel Rust test coverage
+a70aee1a1e778a534df85ae3f3257530249aa86c	2026-04-03	Fix Windows Bazel app-server trust tests (#16711)
+2cfa640c19d903158d90e009ca93f10e26bbd187	2026-04-03	Fix Windows Bazel app-server trust tests
+1d4b5f130c772ad04bc0ee6c25403f74e56e98fc	2026-04-03	fix windows-only clippy lint violation (#16722)
+c3a3b324db6301be3b8da697c30685760c976ec5	2026-04-03	fix windows-only clippy lint violation
+8ff98554ce124375609aa991cb7c4011d5a0e8af	2026-04-03	Fix Windows Bazel app-server trust tests
+5c76b5d9e40890da3a43d55fc8bbcd6338519e00	2026-04-03	Fix Windows Bazel app-server trust tests
+b15c918836ae114f9706e24532465e864f5506c4	2026-04-03	fix: use cmd.exe in Windows unicode shell test (#16668)
+c1a29a13bebc1b514cf8fa58ae902e498be59f58	2026-04-03	fix: use cmd.exe in Windows unicode shell test
+14f95db57b269a06c8b56b62a280ae54c7bf819b	2026-04-02	fix: use COMSPEC in Windows unicode shell test (#16665)
+96a855374ce9a8541872fee0b2bf71d32f257f65	2026-04-02	fix: use COMSPEC in Windows unicode shell test
+b4787bf4c00fa0c3253f5979330b37d41e740da7	2026-04-02	fix: changes to test that should help them pass on Windows under Bazel (#16662)
+61e7e365c4e50c8f0eae0095d9b0c3b3892fae84	2026-04-02	fix: changes to test that should help them pass on Windows under Bazel
+450cf38abb416fc3427fea789819be4591a72d17	2026-04-02	fix: changes to test that should help them pass on Windows under Bazel
+1965ff03cb1c30fc876f7077ae460bb9ed1ec6e5	2026-04-02	fix: changes to test that should help them pass on Windows under Bazel
+beb3978a3ba15c631d6844a967b05e0b68a3a196	2026-04-02	test: use cmd.exe for ProviderAuthScript on Windows (#16629)
+cb9fb562a46c2217ff0386bb487932db828b3cda	2026-04-02	fix: address unused variable on windows (#16633)
+fa49cae7194f20a6c8f24e79a009e7d77cd6180d	2026-04-02	test: use cmd.exe for provider auth scripts on Windows
+deba695a71c3e1f7f25dce60a4d43b40c5f01f91	2026-04-02	test: use cmd.exe for provider auth scripts on Windows
+93380a6fac0e97e5f653d3bf591c503d8bfd05d6	2026-04-02	fix: add shell fallback paths for pwsh/powershell that work on GitHub Actions Windows runners (#16617)
+c623a321744c0a65ade691c302cc72d6c533f2c9	2026-04-02	fix: add shell fallback paths for pwsh/powershell that work on GitHub Actions Windows runners
+20ff4d10377830d044c5013a104b4ed5efcd503c	2026-04-02	fix: add shell fallback paths for pwsh/powershell that work on GitHub Actions Windows runners
+30ee9e769e8f32eb0f57399fec5c18a981438d53	2026-04-02	fix: increase another startup timeout for PowerShell (#16613)
+a271f357a5f7da0577b058754999d7b637c20977	2026-04-02	fix: increase another startup timeout for PowerShell
+5d64e58a380382f1020a1443f3d8a12d07cb966a	2026-04-02	fix: increase timeout to account for slow PowerShell startup (#16608)
+7d23c6668a5f191b5085f3bef48916f818610942	2026-04-02	fix: increase timeout to account for slow PowerShell startup
+ab6ead97905cf56b749bf4a5c72b395193367443	2026-04-02	fix: increase timeout to account for slow PowerShell startup
+2146e1b82d18e536911bd8bfa93087381a38c17a	2026-04-02	test: deflake external bearer auth token tests on Windows (#16604)
+024b08b411fea4988bb403089c505ec447b0a123	2026-04-02	test: deflake external bearer auth token tests on Windows
+84493b7c7140aa44c0b9bbde0555a573f3cac3e7	2026-04-01	docs: refresh Windows sandbox guidance
+905433d923dac8a9a770e754817a3755cfe5c595	2026-04-01	Protect first-time project .codex creation in Windows sandbox
+04ec9ef8af6f3e8d112b073deb8b5f25c056e6ac	2026-03-31	Fix Windows external bearer refresh test (#16366)
+b6cf81a9f7b7bacff67a332bcb0e904e872db605	2026-03-31	Fix Windows provider auth test helpers
+29ca9b142341ffef24170806e83d299d99b718e9	2026-03-31	Fix Windows external bearer refresh test
+b630ce9a4e754d35a1f33e4366ba638d18626142	2026-03-31	## New Features - Windows sandbox runs can now enforce proxy-only networking with OS-level egress rules, instead of relying on environment variables alone. (#12220) - App-server clients can now start ChatGPT sign-in with a device code flow, which helps when browser callback login is unreliable or unavailable. (#15525) - `codex exec` now supports the prompt-plus-stdin workflow, so you can pipe input and still pass a separate prompt on the command line. (#15917) - Custom model providers can now fetch and refresh short-lived bearer tokens dynamically, instead of being limited to static credentials from config or environment variables. (#16286, #16287, #16288)
+2e23ca8650392fc5e1f1c2db72be38c162c0aa32	2026-03-30	fix: tolerate windows trust path aliases
+19f0d196d11dcf31e02a4d022d099e6d3bcfad6e	2026-03-30	ci: run Windows argument-comment-lint via native Bazel (#16120)
+bb95ec3ec602dfc7762fd92e2746606df9dfea21	2026-03-29	[codex] Normalize Windows path in MCP startup snapshot test (#16204)
+65db8195a5d022305d934a8f6b4fbb0a795f3a2d	2026-03-28	test(nextest): extend schema fixture timeout on windows
+e922224c58fd9b1b81b0175e1bfe6dc8461ce46f	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+3997146eaa41f5a035adcf56e8fef340fb990a4d	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+6ccd6f357bb3ff063c03277230802e2ccc72b867	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+1bb20d365820ff45ca92fdb1965f03058e9f8432	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+a16a9109d7c464be03c463074fbe2daaa465b727	2026-03-28	ci: use BuildBuddy for rust-ci-full non-Windows argument-comment-lint (#16136)
+b803333093f8aaeb4f55710e84bd3ce1deb4c30b	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+166cd5fb44f128e7c013e7bc4d47af1dc1638d46	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+8e869a58dbf756c57630593048f29e240ef79fa3	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+313fb959896b257ab1df2aa32adb8efc789806aa	2026-03-28	ci: keep rust-ci-full Windows argument-comment-lint on packaged wrapper (#16130)
+0f9982b769080ff9458d7e07afd7103195d4cd16	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+fe087ad8e38afaa6280cc3375e3d2ac4c6f2d86c	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+5fd0d21616f2addebe82b391e2093dd42654bcf0	2026-03-28	ci: keep rust-ci-full Windows argument-comment-lint on wrapper
+3565dc32e6e7524a263c166370c7a73b4c1f1c80	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+a7ee675f22e130a00c0aec0a851da05039ca6e03	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+1e5e0e22bca704ac3bb5ba7fbc3a97a95c3c1a1e	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+2adf6814a3d390122f5c0d03c21a7611beca825f	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+1cbddbed23c12431e22c2378080937ed0c9da13c	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+79fb52ec2bba7d9c3272e37c5cec3c50d11a75d9	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+5b53e90410065d8bdb00cb3946f84e14dc9d1df7	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+ad1e74c39a8671299e3b1f907f485c45d77b699f	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+86fd5612123cacde2315e4e731baab81f377f8c2	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+c93bf9a0067b798e1a516bce26e8cf3c20dc4f59	2026-03-28	tests: pin Windows apply_patch harness shell
+9badeef2ca7dbd728795c07e920d4c76251d4a68	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+c5832974802143ae2a741650ebc4516e9079031b	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+ac60b5ba8f0311c070b5ef87f35fcb9a400e650c	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+da925f17706b2f1089a05a2657ba30a9a4477c5c	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+5495a3f27ecce67032defa2ec23bd2fe21714d1f	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+6e69a6cac5e7609fb5f6c942d0203df62dd57758	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+0bcb13b0327fa40a905e6d95ca85c2c91d0c6c7e	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+b8972c1c39d4b34cb5f93a9a5f644302172f8213	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+d301137cfb36e9d14fb1382d45f99ef246ea526f	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+a5fb96dc40cca0e358e07c264a6ec93262e1fa48	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+c67cf0b9c4df4186c9d6cf797e5e390924ab5bd5	2026-03-28	ci: run Windows argument-comment-lint via native Bazel
+e39ddc61b14a8c645124f5d45ab912989a02e5fb	2026-03-27	bazel: add Windows gnullvm stack flags to unit test binaries (#16074)
+7cd1c93e3c1cddaebf3f760b2e951706785353c7	2026-03-27	bazel: add Windows gnullvm stack flags to unit test binaries
+e02fd6e1d3d0ee7a47780ab3efc1c769cd373337	2026-03-27	fix: clean up remaining Windows argument-comment-lint violations (#16071)
+f4d0cbfda61ad81559cb8d7b800b67fef2034748	2026-03-27	ci: run Bazel clippy on Windows gnullvm (#16067)
+a667068f8d22e0453847652dfa129e24338a5591	2026-03-27	ci: add Windows Bazel clippy lane
+343d1af3da64fcfd52260149855159048e9c5178	2026-03-27	bazel: enable the full Windows gnullvm CI path (#15952)
+cff12b01353ca3518e1d99ecc6f366d33a899737	2026-03-27	ci: add Windows Bazel clippy lane
+bebe223453011c70940177bb4a0f0f80fbdf1be2	2026-03-27	ci: enable the Windows Bazel workflow path
+d6f44bfef0432eae5717e857fe786c4d313bfb14	2026-03-27	ci: enable the Windows Bazel workflow path
+a55041425f1d500e8b9ab1cd63760bd36d6904d4	2026-03-27	ci: enable the Windows Bazel workflow path
+77137c412dfb98ee9c9ef6a35ce39153bba94e88	2026-03-27	wip: experiment with windows bazel v8 build
+ada573c8c12043dd98b5753d417bddb58d1433be	2026-03-27	ci: enable the Windows Bazel workflow path
+142681ef932eab1da27c2a501c60bc857e755a0e	2026-03-27	shell-command: reuse a PowerShell parser process on Windows (#16057)
+6759b7b6597966ef6c7ac487ca8df93471aa4429	2026-03-27	shell-command: reuse a PowerShell parser process on Windows
+a547507e4850577006f03ba3b075106416cda9ad	2026-03-27	fix: speed up test that uses PowerShell
+c42afa14dd58e8b87e2bf1e7e215ebaa5b3cb32f	2026-03-27	wip: experiment with windows bazel v8 build
+f0b75c25600e27e4b8040f207db42c56521a57d1	2026-03-27	wip: experiment with windows bazel v8 build
+895404b2fb783ef42c2151ee3f08ec3723f2aa30	2026-03-27	wip: experiment with windows bazel v8 build
+71a590591493b8aa7d5a0ea6d0ba5f57d5be4eaf	2026-03-27	wip: experiment with windows bazel v8 build
+aaffe47501612c463a4b012c9920955465e1bac6	2026-03-27	wip: experiment with windows bazel v8 build
+97878b2fc453d90d28982d29b52a5821ffad79f1	2026-03-27	ci: enable the Windows Bazel workflow path
+15fbf9d4f5fcc224c4c97e015253aeef52939ed4	2026-03-27	fix: fix Windows CI regression introduced in #15999 (#16027)
+1094b771d649ed2d18f8a723bb1418d55c66b510	2026-03-27	fix: fix Windows CI regression introduced in #15999
+deace4d5db233a7902e3cd25c693273b85f43332	2026-03-27	wip: windows bazel build with v8
+2ef91b71406da6c88cad959d647915b4e7909f1f	2026-03-27	chore: move pty and windows sandbox to Rust 2024 (#15954)
+df257bafda0fc127447745538b0e75bd4f0ce8dd	2026-03-27	ci: enable the Windows Bazel workflow path
+c516e41b402c37626b2cf5069a5048c30aa8d60f	2026-03-27	ci: enable the Windows Bazel workflow path
+092c2d3809a79fddd8fe2a779b7e54ec4f5f7417	2026-03-27	ci: enable the Windows Bazel workflow path
+ff33e9b67fea069a3ea69a8c665ced77a4898476	2026-03-27	ci: enable the Windows Bazel workflow path
+e69fcac8c0d021ca26e153ef3097c853bb04b663	2026-03-27	ci: enable the Windows Bazel workflow path
+5cde018c586587dcdf8e6425cac5da176023fd10	2026-03-27	ci: enable the Windows Bazel workflow path
+c15f6c6bc33b3276e174cb9c798954deff7b01bf	2026-03-27	ci: enable the Windows Bazel workflow path
+4234212a5f0bcb91b7f7e69b932eaec0008e2b56	2026-03-27	ci: enable the Windows Bazel workflow path
+1ae9d14612a93d98842990e66c90970d2c02f41e	2026-03-27	ci: enable the Windows Bazel workflow path
+29cb89690de10295e21a7345cd8fa2d75960f043	2026-03-27	ci: enable the Windows Bazel workflow path
+4be744172fe6efdd5cfd2e1a212f87720e2e2a11	2026-03-27	ci: enable the Windows Bazel workflow path
+732227c5e68c71162beadf137c67591f84fb7069	2026-03-27	ci: enable the Windows Bazel workflow path
+980d3224c39c011d109d0cbd00c00f82a430fafe	2026-03-26	ci: enable the Windows Bazel workflow path
+343fd483111012f0fb8f9f73f45afc214299e83d	2026-03-26	chore: move pty and windows sandbox to Rust 2024
+66dfd10d45f100a05f02e55fdb22eb6d32bb6109	2026-03-26	ci: enable the Windows Bazel workflow path
+835436c50fde0df95d1d2abb7b010535e43e2a21	2026-03-26	ci: enable the Windows Bazel workflow path
+1dfa6e0a59c916a6e3517f1c6b1b447a31662e76	2026-03-26	chore: move pty and windows sandbox to Rust 2024
+1664d0a7e636e27a5b366fa968ac3abb49fcdf20	2026-03-26	chore: move pty and windows sandbox to Rust 2024
+9ae14c4390cb032e290048d9a10a67ee479db2d7	2026-03-26	ci: enable the Windows Bazel workflow path
+987742a6db8fef027c69a73074afd76c65f1c0de	2026-03-26	chore: move pty and windows sandbox to Rust 2024
+0add39b43d1418809259d60e4df7e5bf53d4326f	2026-03-26	ci: enable the Windows Bazel workflow path
+68af048a5f12d4f97e152693d95141f43ddea6fe	2026-03-26	chore: move pty and windows sandbox to Rust 2024
+4d84919f26e80f270290205cc287671e1636e60d	2026-03-26	ci: enable the Windows Bazel workflow path
+4086ec990f532db569485632d23f7bf8b74c7155	2026-03-26	ci: enable windows bazel workflow
+81fa04783a551d7e2fc5cfdfc91921aaec3e64bb	2026-03-26	feat(windows-sandbox): add network proxy support (#12220)
+f7a0a9e96adef52feb92fa602900fe97b995e8c4	2026-03-26	Relax Windows plugin-read init test timeout
+0f449d6afe632e7fda21a3a0a9e92d55d09de059	2026-03-26	Protect first-time project .codex creation in Windows sandbox
+e58d6c9c9cc0e7d68b43effa1b0d5d92a6b1d02d	2026-03-26	fix(windows): kill timed-out shell command descendants
+6d0525ae7015cb9239cc907fe78e88cf2fea5ce5	2026-03-25	Expand home-relative paths on Windows (#15817)
+4fe67a69750b828d26b001747b69304fb62c5b9d	2026-03-25	windows-sandbox: don't fail refresh on ACL probe errors
+3e8e9262b87c82c071ffae107f103f82ecad028f	2026-03-25	fix: support split carveouts in windows restricted-token sandbox (#14172)
+f49d5924a9a921ebaf53ea54ef69035d1a3c929c	2026-03-25	windows-sandbox: isolate temp ACL grants
+5dc507cd41b28599f30238f55c8f128dd7b7f234	2026-03-25	Avoid default AppData ACL grants in Windows sandbox setup
+3f7827043773717e3fabf9998462affb39171210	2026-03-25	fix: isolate windows sandbox temp dir
+c3241d4213c65eb8778a921c7a6113a48fbacca2	2026-03-25	Exclude AppData from Windows sandbox profile grants
+a865992343b42a6ad3d8aa4e57f0182466ab7266	2026-03-25	Skip AppData profile ACL grants in Windows sandbox setup
+20d5a6985148bfeb041560c1ae826061df3d1109	2026-03-25	Avoid default AppData ACL grants in Windows sandbox setup
+95ba76262059226193af10fdfbbb529000f8463c	2026-03-24	fix: support split carveouts in windows restricted-token sandbox (#14172)
+e81f9a3a0bd12acc85f1b8cae9544e192c42e28d	2026-03-24	fix: scope windows sandbox capability sids by writable root
+b753e9b60e3e50f74526d4c4816db99990183bb5	2026-03-24	fix windows sandbox write root capability scope
+658bf9f740755c7f0c02512c4edc39530c94e45b	2026-03-24	Block stdio MCP startup in Windows sandbox
+68baac7cf4f264a22f5674e70a89046480d99ec3	2026-03-24	Bump vedantmgoyal9/winget-releaser from 19e706d4c9121098010096f9c495a70a7518b30f to 7bd472be23763def6e16bd06cc8b1cdfab0e2fd5 (#14777)
+e71a88e17038a6968fbf0ed0805251d1137a1285	2026-03-24	Enable sccache on Windows ARM64 CI
+aac69fd5ba626b884f86e807862e6b6f5402c92b	2026-03-23	Enable Windows sandbox command/exec in app-server
+72ead59eaab060b58a9c9cc4e6fdecdcd98ec07c	2026-03-23	Fix Windows sandbox session formatting and syntax
+427100f11c81b9e9ad216db8c3f762832a4a5a69	2026-03-23	Restore Windows unified exec advertising gate
+e68a0b0dedab6621b9e122535682d106c0cc68c8	2026-03-23	Drop temporary Windows spawn matrix doc
+8f69761b1e0ec920eb0199abe0d00e473cfbd65a	2026-03-23	Add Windows sandbox unified exec runtime support
+314e5d1bd6f2326a502d9c24a6fcfa7fb8dd2af8	2026-03-22	Fix PowerShell apply_patch interception flags
+792d9b05ff93e9a12626a0cb5ad884d78a814020	2026-03-22	Normalize PowerShell execpolicy prefixes on Windows
+1bd7682b37b46f9f00a6d93b6d8749d27feb38c5	2026-03-22	Skip WindowsApps helper read grants
+6111b0ecbb362b9cacfcf5ac3dfcff5802239eb9	2026-03-22	Skip protected WindowsApps helper roots
+3e671ee6e055cd94473522f1a22d55ab147d1256	2026-03-22	Reuse PowerShell parsing for execpolicy matching
+4e4bc9ce5b15f6fc56d89305a4c89abe6af6d84d	2026-03-22	Avoid WindowsApps ACL refresh for copied sandbox helpers
+74b1b679d4a46a5e61ecd7afe545878541c30466	2026-03-22	Skip WindowsApps package dirs in sandbox read roots
+0987e7cabff1ef3ce7e23321e53e24a657b78baf	2026-03-22	Fix Windows sandbox documentation links
+9950c1cc08eb7b0a0d014d8a21ddaedf58849c1a	2026-03-22	Fix Windows sandbox docs links
+835ed45a173a03560e01ab4d9d42783830dc6fb3	2026-03-22	Normalize intercepted PowerShell execpolicy commands
+a8debbf83b9182c7eaf9cf7222ee8807b8c2c0f0	2026-03-22	Normalize simple PowerShell execpolicy commands
+6d4508fccfbc10bd2ebf5539f01c2fe97505e3a9	2026-03-22	Fix stale Windows sandbox docs
+9d6629a5a21dbf7ee73a6f714804f288c593fac4	2026-03-22	Skip WindowsApps paths during read ACL refresh
+9152876b6bd0bd1d5b6b68045cc63bcbe643c782	2026-03-22	Normalize intercepted PowerShell execpolicy commands
+9f076192d8065eaad1de2c324c4c1192642fb711	2026-03-22	Normalize simple PowerShell execpolicy commands
+d28e69825f086ede79080f6a5c2e234a3c539637	2026-03-22	Normalize intercepted PowerShell execpolicy commands
+19ff74dfd4abf9da97573f4c7d2742fb62a3d547	2026-03-22	Normalize simple PowerShell execpolicy commands
+9551330965523b944d8738ad9dee0ae7f6ff441c	2026-03-22	Normalize intercepted PowerShell execpolicy commands
+0ef3bffb5de08180ea69139a8274c2bf1b34148f	2026-03-22	Normalize simple PowerShell execpolicy commands
+3f585df3339681837447aa4f1db856a0961aadaf	2026-03-22	Fix PowerShell apply_patch interception flags
+8a8f818ab20aa5d07bdef3d5e548c8c06333762a	2026-03-22	Normalize intercepted PowerShell execpolicy commands
+efa1fdede8388f45483694956d39310991194d9a	2026-03-22	Normalize simple PowerShell execpolicy commands
+3c5a171c15a4541a45c5ad217fb325cb6b56cce3	2026-03-21	Honor PowerShell-wrapped execpolicy rules
+be520ab93e568dd58f8d7bbbbacb25bc0bea185c	2026-03-21	Add Windows sandbox uninstall flow
+7cd0cff0cf0d30595b7dbe004b83d1bb84e1e90d	2026-03-21	Handle PowerShell prefix rules in execpolicy
+957cab4650d9c10c2bb939be551a0d93254b5d30	2026-03-21	Handle PowerShell -NonInteractive apply_patch wrappers
+163c62fa6565384e380f2f12333461b0a4d3bca4	2026-03-21	Normalize simple PowerShell execpolicy commands
+940345583c78e67b2875ec863b84ce7ca19a3d88	2026-03-21	Fix Windows sandbox documentation links
+632132e602880aea32b1fa7f0d99b82f290ba55c	2026-03-21	Skip WindowsApps helper read roots on Windows
+c080a0deb6389c06fd5d50486e1ba887da32189d	2026-03-21	Fix PowerShell apply_patch interception flags
+85caa3020499d86afdb0df8f798da881d8623673	2026-03-21	Handle common PowerShell flags in apply_patch interception
+eef05848b2a2d23b61c1f8f629a13ae4658fb70c	2026-03-21	Fix stale Windows sandbox docs links
+c1605ffebf411d54ac9cbe8e99db2d5a2a666c77	2026-03-21	Materialize Windows sandbox setup helper
+db8efdad134c91de730cb2eb3c793555ef6661b4	2026-03-21	Skip WindowsApps package dirs in sandbox read roots
+ab67b7ca004ef218b52641237fb46b83281caa16	2026-03-20	Format PowerShell execpolicy normalization imports
+6150226e7de79cfcb756d7257a394a8d5828d14a	2026-03-20	Fix Windows sandbox doc links and support wording
+11ffb668415768ec2d2149713161b73a1d7fde87	2026-03-20	Normalize intercepted PowerShell execpolicy commands
+355bd2dcfd2ad68edfbe5c95610775122fc4b2f7	2026-03-20	Normalize simple PowerShell execpolicy commands
+ea8b07e680da44d8670ed4405ca4a48c468be0ae	2026-03-20	chore(core) Remove Feature::PowershellUtf8 (#15128)
+52a50a6ad505587eba30aee7ea491ecf3c398140	2026-03-20	windows gating
+482e2d028785a26f68989ec6f917224607d6dfbb	2026-03-20	scope json breakout to windows only
+b6340cffa27310f81248f880343b284e997e9ada	2026-03-20	Use binary split-entry keyring storage for auth to avoid Windows credential size failures
+9e31aeadce22fad2cdb7d2d90e7e7bbb9ac4dc77	2026-03-20	Pin Python SDK app-server stdio to UTF-8 on Windows (#15244)
+cc192763e10f55f5d374b60b50e2421d032ea681	2026-03-19	Disable hooks on windows for now (#15252)
+e58e4f939aee99f1641642561d8affeea658239d	2026-03-19	Stabilize Windows parser timeout test
+69750a0b5a9f10f2e085b48943d41fd5b12ebc0b	2026-03-19	add specific tool guidance for Windows destructive commands (#15207)
+d950543e6559db52855a718c96f7577922411fcd	2026-03-17	feat: support restricted ReadOnlyAccess in elevated Windows sandbox (#14610)
+b02388672f7df432fbe34a9128f78e7a1e9d43ea	2026-03-17	Stabilize Windows cmd-based shell test harnesses (#14958)
+a6dbb57e48df87f9751b1cf10ffa9e5ef81d2930	2026-03-17	Remove live PowerShell discovery from shell handler test
+61dbfabc134ce5a9ffb09abf17476ae9c46f3ee9	2026-03-17	Bound Windows PowerShell parser hangs
+4a3181290dbed1fc952c866a048693873627bc56	2026-03-17	Suppress PowerShell CLIXML in apply_patch test
+6a302cb2e30078c7af804d8e23e83a52c5dcd437	2026-03-17	Fix cmd-wrapped PowerShell test quoting
+c14493260342d502a38608e2dc8ba09df2ba3871	2026-03-17	Fix Windows PowerShell parser stdin
+a2b78a66025035dbeed32d084ad343588b8af2d0	2026-03-17	Stabilize Windows shell test harnesses
+83e7ab58a96a75799c5878ba22672f963127ac69	2026-03-16	Bound Windows PowerShell parser hangs
+d0a693e5419dba6b25537f4c931a49fd0ce14ea7	2026-03-16	windows-sandbox: add runner IPC foundation for future unified_exec (#14139)
+4dc05e7c8688abb4e15f2d488d35e85cb9219d15	2026-03-16	drop on windows
+5d819805934ad149537d7ddd946983b8f421c21b	2026-03-15	codex: fix windows help snapshots (#14170)
+8d3ed74adcfe44dc0a82b9872ac76c0fce323686	2026-03-15	tui: defer windows sandbox popup selection
+6cc147624ee3d8cb4e01fc567843d9ba51510d9c	2026-03-15	tui: fix windows selection action inference
+5ebd3486a80f73e9b50eaa89558ece8ce6666cac	2026-03-15	tui: refresh windows slash help snapshots
+648739854ec5e13e6dfe1c24106e1c66a71ea59b	2026-03-15	codex: fix windows slash help snapshots (#14170)
+3a6e3a95beb2ccb538ed4a4d28e9038974287eef	2026-03-15	tui: remove dead windows sandbox event
+614936d113dcdd7591a1f9b0e633d05b2493e919	2026-03-15	tui: fix duplicate windows sandbox import
+d017d0fc3561a7b1d43c2723e7f46cadf5c24305	2026-03-14	Stabilize Windows shell and fuzzy search tests
+c3b8a0ebface81c0279b4715644c6134650ae449	2026-03-14	Correct Windows popup selection assertions
+87941e5d753dba159798576ab519cc97a5dc3edc	2026-03-14	Harden remaining Windows permissions popup navigation
+e96d895c9fcc03e10840855bc3a3f04870d1dc45	2026-03-14	Stabilize Windows permissions popup navigation
+69c8a1ef9e7c5a3c447ea8b0f01ec5d3a068693d	2026-03-14	Fix Windows CI assertions for guardian and Smart Approvals (#14645)
+6b3d82daca540318d074c1ad2afcaba5b3337a3d	2026-03-13	Use a private desktop for Windows sandbox instead of Winsta0\Default (#14400)
+269c46ea82d0857440f0dd8146875dea38c01fea	2026-03-13	tests(app-server): re-enable detached review on windows
+eb16217297191e08d2a89dd3fe3a7266aeb9bdb7	2026-03-13	tests(core): unignore code mode parallel test on windows
+a5a4899d0c0755400534ca1a15f5a1df394675fb	2026-03-12	Skip nested tool call parallel test on Windows (#14505)
+fa265976890e996ed6ce78ee94f62ddd81544ddc	2026-03-12	Do not allow unified_exec for sandboxed scenarios on Windows (#14398)
+52a7f4b68b13f4e0b4eea90a0671890bd09e7ed7	2026-03-11	Stabilize split PTY output on Windows (#14003)
+77a02909a8ea6a08c1a4adfa1040308e95c6d368	2026-03-10	Stabilize split PTY output on Windows (#14003)
+7ca4c040cb0b7bde1915f1421d2a60d3bcede3f3	2026-03-09	utils/pty: stabilize pipe stdin round trip on windows
+a30edb6c17201358273b76a4fd81d2b6ce3c2c54	2026-03-08	Fix inverted Windows PTY `TerminateProcess` handling (#13989)
+4b4f61d37965b7a37ef1462f7dc5aa927618c9ae	2026-03-06	app-server: require absolute cwd for windowsSandbox/setupStart (#13833)
+39d9bf7e3081b3baf8223530de62c16f7ed4cc8a	2026-03-06	tui: parse unix file urls on windows
+8ede18011a8723820630c3956188447777813335	2026-03-06	Codex/winget auto update (#12943)
+5d4303510cc35571ae99a0a4a7d6ac40ccc03089	2026-03-06	fix: windows normalization (#13742)
+3737fe4517ac63f70aa54e7afc0a045b5699dc68	2026-03-05	codex: stabilize windows flaky tests (#13534)
+9315e6e4caedd52fee3bf2d977aca8bf106a5bba	2026-03-05	codex: stabilize stdio-to-uds windows test (#13534)
+406d8b71d86afb47c1a3ed2a266179a85e7a1420	2026-03-05	codex: fix flaky notify capture on windows (#13534)
+6526d00f13b42854b1ec0ea4cd10240dc73fdf97	2026-03-05	codex: stabilize windows app-server tests (#13534)
+77aabe4218ab7ddaf4b6d471887bda043a4c16e6	2026-03-04	## New Features - ChatGPT login now asks for the connector permissions needed to read from and invoke connectors during authenticated workflows. (#12383) - App-server clients can now target Windows sandbox setup at a specific workspace directory, which helps avoid slow first-command setup when the server starts outside the project folder. (#13484) - App-server adds an experimental way to install plugins from marketplace entries, including local `marketplace.json` sources that point at on-disk plugins. (#13422)
+37133fb8455766068008b8453a1da1dacae4274c	2026-03-04	## New Features - Releases now ship one-step installers for macOS, Linux, and Windows, so Codex can be installed directly from published scripts instead of relying on npm-first setup. (#12740, #12741) - Plugins can now be enabled from `config.toml`, and plugin bundles can contribute skills, MCP config, and app manifests that load automatically at runtime. (#12864, #13401) - Memories gained more user control: Codex can forget or hard-clear stored memories, skip polluted captures, and optionally write memory files into the workspace. (#12900, #13008, #13085, #13467) - Multi-agent work is easier in the TUI: you can launch it from `/agent`, review cross-agent approvals, get clearer agent names, and receive plan-mode or user-input notifications. (#12995, #13218, #13246, #13495) - Realtime voice sessions now have an `/audio` picker for microphone and speaker selection, with device choices stored across sessions. (#12849, #12850, #13030) - Sandboxing is more flexible: Linux bubblewrap now supports restricted read-only scopes, and read-only policies can preserve network access when explicitly allowed. (#12369, #13409)
+89b79419a1e0720856d4450cf17379221e5a3b1d	2026-03-04	## New Features - GitHub releases now include a direct PowerShell installer for Windows. (#12741) - Experimental multi-agent mode can now be enabled from `/agent`, with faster subagent startup, approval prompts, and clearer subagent naming in the TUI. (#12935, #12995, #13218, #13246, #13249, #13404, #13412, #13460) - Added under-development plugin loading from `config.toml`, including bundled skills, MCP servers, and app connectors. (#12864, #13333, #13401) - Added under-development presentation and spreadsheet artifact tools for creating and editing `.pptx` and `.xlsx` content inside a thread. (#13341, #13344, #13345, #13347, #13348, #13350, #13355, #13357, #13360, #13362) - Added an under-development `/fast` toggle in the TUI, and expanded app-server service-tier support to `fast` and `flex`. (#13212, #13334, #13391) - Enterprise-managed deployments can now pin feature flags in `requirements.toml` instead of only suggesting defaults. (#13388)
+ef405153d971f2022b4c349aa797b3513662eba6	2026-03-04	fix windows
+168e35b6f237678ced5eaf8766e1c83c83259b29	2026-03-03	Add Windows direct install script (#12741)
+938c6dd3880c3a38708e0b1d2bbe54dc2fe10683	2026-03-03	fix: db windows path (#13336)
+84b662e74f0bdf9deac22a7c4568cfd619159b77	2026-02-28	nit: disable on windows (#13127)
+3b5996f988c35ef282e04df7b7f311a83b562363	2026-02-27	fix(tui): promote windows terminal diff ansi16 to truecolor (#13016)
+925bd22dbca93b71f21cb68f699a64ceeb6b500c	2026-02-26	fix: publish windows direct install docs
+1b70881a5ad6d6d1c0d9e233a563dc14c728a1c1	2026-02-26	test publish for winget.
+de08c70e87c45075a3cb9aed44477cf20f0c9822	2026-02-25	github: use /arm64hazardfree for aarch64 windows builds
+ea621ae1520f49901aafca5ddfefbc64785f784e	2026-02-25	Try fixing windows pipeline (#12848)
+de806f9c2b4cac78a456eb79a9185398c962629e	2026-02-25	ci: remove duplicate windows arm64 release build step
+3fa96709dc0e1d809d1ff7704aeaf262663d114f	2026-02-25	ci: limit release builds to windows arm64 and add timings
+ff7fe5966869db81425047f5cb345d172f76ab6d	2026-02-25	Try fixing windows pipeline
+f26a3c8e7425fc15fc9b65598651ca952e5dec4e	2026-02-25	fix: clarify Windows direct installer status
+02525c193a836483fe220e14f6fd5d3e3e08c3b6	2026-02-25	Add Windows install script
+67d9261e2c05adc175cac6adf1975dcfdc81755d	2026-02-24	feat(sleep-inhibitor): add Linux and Windows idle-sleep prevention (#11766)
+3cd13014091d09d74ca36ca7c03fbeef183a7c0d	2026-02-21	fix(tui): trim CRLF in highlighted spans, enforce diff size guardrails
+65757957771fbf6a366ddc0dd546108bb8edd029	2026-02-21	ci: skip windows arm64 tests on PRs in rust-ci
+110f83b61eca7088cc1758ca70f54a91a680d181	2026-02-21	ci: skip windows arm64 tests on PRs in rust-ci
+292542616a5b7f8f6956a9324358767c7ea55cf3	2026-02-18	app-server support for Windows sandbox setup. (#12025)
+ece9757260912ab728a8c241cf751b90af777284	2026-02-18	Fix Windows HANDLE check for windows-sys 0.52
+c136143be9e8bf1308339deb8f0d0945a65b45ed	2026-02-18	Refine Linux and Windows sleep inhibitor robustness
+69dfa11ba92cbd6b048969bf57d5d0cbb1de2542	2026-02-18	feat(sleep-inhibitor): add Linux and Windows idle-sleep prevention
+5810c1b13ea9be29cc05dd042d53a332c3ca3919	2026-02-18	fix(apply-patch) Handle CRLF gracefully
+36533886fe042ab41e01df5adad61d35efc2f6be	2026-02-17	fix windows tests again
+5296e06b61505233165cbdf115c8bf5c031d75d7	2026-02-17	Protect workspace .agents directory in Windows sandbox (#11970)
+9e122beedf54439bdecbfccdf9126fc2c02c29c9	2026-02-13	Fix Windows HANDLE check for windows-sys 0.52
+97551ba9b9f7e4c19e863c4729b55fde7206e5da	2026-02-13	Refine Linux and Windows sleep inhibitor robustness
+51149e111933231ea715f1f2f0667d8312a074f4	2026-02-13	feat(sleep-inhibitor): add Linux and Windows idle-sleep prevention
+cda5af7363b05564ad751c3288c5c46f11daa5e7	2026-02-13	Fix Windows npm install regression from dist-tag packaging change
+bc80a4a8edd397b077c374341a5c072b41b77484	2026-02-13	feat: increase windows workers stack (#11736)
+2825ac85a809c9cae31c69d9e29640e04c640136	2026-02-12	app-server: stabilize detached review start on Windows (#11646)
+2a0f205e1d9f2c7c95ef4b65ad595ac863273945	2026-02-12	test(windows): stabilize pty repl and schema fixture CI
+8272f9a71ee7364d8de992418103628f8a17eb6f	2026-02-12	## New Features - Added an experimental, feature-gated JavaScript REPL runtime (`js_repl`) that can persist state across tool calls, with optional runtime path overrides. (#10674) - Added support for multiple simultaneous rate limits across the protocol, backend client, and TUI status surfaces. (#11260) - Reintroduced app-server websocket transport with a split inbound/outbound architecture, plus connection-aware thread resume subscriptions. (#11370, #11474) - Added memory management slash commands in the TUI (`/m_update`, `/m_drop`) and expanded memory-read/metrics plumbing. (#11569, #11459, #11593) - Enabled Apps SDK apps in ChatGPT connector handling. (#11486) - Promoted sandbox capabilities on both Linux and Windows, and introduced a new `ReadOnlyAccess` policy shape for configurable read access. (#11381, #11341, #11387)
+4de61af3fbe0e20417e70aab3cd8c5912ce46ac7	2026-02-12	fix: use x64 windows-2022 runners for code signing
+c40c508d4edcdb6d271fd5fee2283d9dcb3f1b77	2026-02-11	ci(windows): use DotSlash for zstd in rust-release-windows (#11542)
+ad9a540ab09bc4dbbddf95283afab66552e3612b	2026-02-11	feat: build windows support binaries in parallel (#11500)
+304baf733ed5c9fcc59cbedf609894ee8cd6bbc2	2026-02-11	feat: build windows support binaries in parallel
+8f2f1b833fa25285ca108d180732a39554e4f936	2026-02-11	feat: build windows support binaries in parallel
+444324175e61ddb419bd9e80c2b417440aa37879	2026-02-11	feat: use more powerful machines for building Windows releases (#11488)
+5cdb3f799a8abbfae07cf412d9d31e5e213347d4	2026-02-11	feat: use more powerful machines for building Windows releases
+87279de434f0b3d85872877a1b14e07a2e4238a6	2026-02-11	Promote Windows Sandbox (#11341)
+b4ffb2eb5852d451388f8d4d928e4fec762e1b78	2026-02-11	fix(tui): increase paste burst char interval on Windows to 30ms (#9348)
+3545251f3cce5d7a75aadf5d7d5b5e25977c03f2	2026-02-10	longpaths
+0e76aa3ec1441dfad599127f0394da33e7f993e1	2026-02-10	windows exec hacks
+9b13e100254b65f7b3e19f81e41d4df65071a3f6	2026-02-10	[bazel] Enable windows builds?
+3192849d8da7b3dc09ec4b01369c113fd51c9d16	2026-02-10	[bazel] Enable windows builds?
+168c359b71c758002a8fcbf04a957c8b1c03cc52	2026-02-09	Adjust shell command timeouts for Windows (#11247)
+86183847fdd99f19d7de0bae75ded15e78b08707	2026-02-09	[bazel] Upgrade some rulesets in preparation for enabling windows, part 2 (#11197)
+9fe925b15a55071f39f49f8026e7dd4fc7e500d1	2026-02-09	Load requirements on windows (#10770)
+44a1355133560359689962427cc218a8bff3fdfb	2026-02-08	[bazel] Upgrade some rulesets in preparation for enabling windows (#11109)
+16e7cf05d24ee33c895ca08437eb6b4b784cd7a6	2026-02-07	Fixed a flaky Windows test that is consistently causing a CI failure (#10987)
+10336068db594bdcf74b4a2512515ee412a071e5	2026-02-07	Fix flaky windows CI test (#10993)
+4cd0c42a28dbfdf370ed053373233b9ca2ce7802	2026-02-06	fix: normalize line endings when reading file on Windows (#10988)
+01bd092e8c9dd5d871cc0ebd5de456fe895dbbde	2026-02-06	fix: normalize line endings when reading file on Windows
+efe6965cde453ac22862ad1e664c878eebe438cb	2026-02-05	core: forward windows sandbox headers on Responses requests
+7b28b350e17c8a000fb3f3fde1f4a1a5f99dd9ad	2026-02-05	fix(tui): flush input buffer on init to prevent early exit on Windows (#10729)
+2572f96fafb3156f79523bfbe2bc84f13e382167	2026-02-04	## New Features - Added `thread/compact` to the v2 app-server API as an async trigger RPC, so clients can start compaction immediately and track completion separately. (#10445) - Added websocket-side rate limit signaling via a new `codex.rate_limits` event, with websocket parity for ETag/reasoning metadata handling. (#10324) - Enabled `unified_exec` on all non-Windows platforms. (#10641) - Constrained requirement values now include source provenance, enabling source-aware config debugging in UI flows like `/debug-config`. (#10568)
+e68e8f41a7a620d8275709e22ee41ddb9f46ee78	2026-02-02	tests: keep only windows command fix for compact remote
+53d847406134bdb5b25c014a6b6fed5e484b28be	2026-02-02	Ignore remote_compact_trims_function_call_history_to_fit_context_window on windows (#10474)
+0e844dd88eb0d3407cd0f188c4f517013afda3eb	2026-02-02	tests: use safe fast windows command in compact remote test
+c0651320389dfdd9296e298643546b7fda44a819	2026-02-02	tests: harden remote compact test on windows
+b68867e3792728e1924c96d7f6312983976df14d	2026-02-02	tests: harden compact_remote trim test timing on windows
+af050804d34844c91ebbccd6569927d7f434e480	2026-02-02	tests: make compact_remote trim command windows-compatible
+6ac6293460b17892ae2725edc1b1fe50283649a8	2026-02-01	Increase Windows timeout budget for v2 app-server tests
+1173d2ef939a8281e125d581c5045daee4e90bd4	2026-02-01	Increase Windows shell test timeout budget
+f27ef275b24e29360320e7fe878bfdeb73eafc8c	2026-02-01	Increase Windows timeout for app-server flow tests
+5ad8c4783efc01397d2c896be3e4874788628ef2	2026-02-01	Stabilize flaky Windows integration tests
+c479bff448ca06418a686a566c3f1b28208c3f13	2026-01-30	fix workspace context test path on windows
+8cc338aecf73ee1a04917413ee2d9905c468fb4b	2026-01-28	emit a metric when we can't spawn powershell (#10125)
+b582daf2d9b9c5618cd9a212f3c9509fbe5f8907	2026-01-28	[bazel] Enable windows builds?
+30eb655ad18827bf2386aef6df7c24927748c78b	2026-01-27	really fix pwd for windows codex zip (#10011)
+313ee3003b5bd527f10df66e849073c9b843a9f9	2026-01-26	fix: handle utf-8 in windows sandbox logs (#8647)
+e2bd9311c9bdb6c7c055ac9128038be5d25803b0	2026-01-24	fix(windows-sandbox): remove request files after read (#9316)
+d9232403aa7dfe92784b00de19af923046924be4	2026-01-23	bundle sandbox helper binaries in main zip, for winget. (#9707)
+c961ee9c150f38e781bf580fd34e4480148534a1	2026-01-21	fix exe paths, prevent winget job from failing main release build
+3685117eaffe48867321a3d87dff95aaa6fc6bb2	2026-01-21	Reapply "templates and build step for validating/submitting winget package" (#6696)
+7a9c9b863654ee6b1ebde16d60a3e68f65f886a6	2026-01-21	forgot to add some windows sandbox nux events. (#9624)
+f81dd128a2212cf51597c75be920e1f248191235	2026-01-21	define/emit some metrics for windows sandbox setup (#9573)
+1a4ec06889202ebd682eb369f22974cd41b72ab5	2026-01-21	feat: disable unified_exec on windows
+80f80181c2923a3d57a63fb5eab27e6edbbaaae3	2026-01-20	fix(core): require approval for force delete on Windows (#8590)
+c73a11d55ee7f684762404a8403629eeec4e6267	2026-01-20	fix(windows-sandbox): parse PATH list entries for audit roots (#9319)
+f2de920185d074e4b4a4dadfdeab5e95b46f437b	2026-01-20	fix(windows-sandbox): deny .git file entries under writable roots (#9314)
+fe9a3949eaed797dd20f22311e57a5bfcf99427e	2026-01-20	Fix a pwsh issue
+2c3843728c11c69b3f3e7d422485e748a69ae674	2026-01-20	fix: `writable_roots` doesn't recognize home directory symbol in non-windows OS (#9193)
+e20cb6c259fdd0a4a9ae7058ae7389a93d971188	2026-01-20	[bazel] Enable windows builds?
+d350498aaa605fd90ad5475c24977ae9b575568f	2026-01-18	fix(tui): note Windows Terminal <1.24 flicker
+3cabb2421089f4941d7d710396ed2b133d2cd9f6	2026-01-16	chore(windows) Enable Powershell UTF8 feature (#9195)
+ebacd28817564480b47351a37ab3db4413e5f871	2026-01-13	fix(windows-sandbox-rs) bump SETUP_VERSION (#9134)
+ddae70bd62614bb28579d693c8f6ba2d7d1d4628	2026-01-12	fix: prompt for unsafe commands on Windows (#9117)
+52168a18f16f3ba82037da8a13c15d1a2789cbf6	2026-01-12	fix: is_known_safe_command() should test exclusively with the PowerShell parser for PowerShell commands
+7e7952e5c2e49785c5f70645369e5e3b30ecc3d2	2026-01-12	fix: is_known_safe_command() should test exclusively with the PowerShell parser for PowerShell commands
+3eab200b6be6acc13b4b37a49469d1c026e53dc3	2026-01-12	fix: is_known_safe_command() should test exclusively with the PowerShell parser for PowerShell commands
+f651e72ef46207194736e4630b9e577cc9e56d66	2026-01-11	windows
+4739d5c6e623a679f6773a824e90abdfc2d24290	2026-01-09	fix: windows can now paste non-ascii multiline text (#8774)
+98122cbad084d4fdc313280d046d49a6398ab83a	2026-01-08	fix: preserve core env vars on Windows (#8897)
+0f8bb4579bd7c0ea905df7124b3a42835159b023	2026-01-07	fix: windows can now paste non-ascii multiline text (#8774)
+083bbbca8e6b80342abd00f78f97f543a3f43c28	2026-01-04	fix(resume-picker): add correct insta windows snapshots
+810ebe0d2b23cdf29f65e6ca50ee46fa1c24a877	2025-12-24	fix: restrict windows-sys to Windows target (#8522)
+46fb8820e378474bbc33fc9a6803b8c801f10a8c	2025-12-23	Improve windows
+afe3673575590e2e933d83f64717615d2df17927	2025-12-23	Fix windows
+33e1d0844a0f4871a3ee74ae601d143a242f10da	2025-12-22	feat(windows) start powershell in utf-8 mode (#7902)
+eeda6a5004db373c50dbf8062003b91022425535	2025-12-19	Revert "Keep skills feature flag default OFF for windows." (#8325)
+6f94a90797f8e65a21d515a0b9d65e4346b79f76	2025-12-18	Keep skills feature flag default OFF for windows. (#8308)
+a9a7cf3488ba9ecfecd2c58a41836f1d1598141d	2025-12-17	download new windows binaries when staging npm package (#8203)
+3a0d9bca64a62fd3483ba3689d799bb768698a02	2025-12-16	include new windows binaries in npm package. (#8140)
+b4635ccc07829eb58e48d03e11466a9a33e289c4	2025-12-15	better name for windows sandbox features (#8077)
+017a4a06b292b9f9fb4bda1b4302cef221bf1ba6	2025-12-15	Fix: Skip Option<()> schema generation to avoid invalid Windows filenames (#7479) (#7969)
+c696456bf11a2def71379c478a0c6601c951c7e9	2025-12-15	stage new windows sandbox binaries as artifacts (#8076)
+4d2deb109891b37f9d6e065a6e0a5eaeebad16fc	2025-12-12	Sign two additional exes for Windows (#7942)
+9009490357fc3843c14cab1c3e0132acc70487ed	2025-12-12	fix: use PowerShell to parse PowerShell (#7607)
+4312cae0055d8b318bb4cb83f6e855dc335873b4	2025-12-11	feat: introduce utilities for locating pwsh.exe and powershell.exe (#7893)
+587f4274e9130b7ce66567195ebd495060b109c6	2025-12-11	feat: introduce utilities for locating pwsh.exe and powershell.exe
+4925c8d96a7d2d4dd26c9c334a77d43c539482ab	2025-12-11	feat: introduce utilities for locating pwsh.exe and powershell.exe
+9e91e49edbd1715a5a4c155d0837f97d0f6276a7	2025-12-11	Revert "fix(apply-patch): preserve CRLF line endings on Windows" (#7903)
+6bb3bc35958e09d34338b9ef5624a51dd759e3f3	2025-12-11	feat: introduce utilities for locating pwsh.exe and powershell.exe
+36610d975a3e92252178f5e1cb3adab60c593d4e	2025-12-11	Fix toasts on Windows under WSL 2 (#7137)
+4174c361ff0f713c82ae97ebc8dfbf7cb8122302	2025-12-11	feat: introduce utilities for locating pwsh.exe and powershell.exe
+1636b9827e62083600b07eab8005fb7c5231afd7	2025-12-11	feat: introduce utilities for locating pwsh.exe and powershell.exe
+ab9ddcd50bd8a1d6eeb1c721313c889736c2f844	2025-12-09	Revert "Revert "feat: windows codesign with Azure trusted signing"" (#7806)
+f11520f5f1250f971917619dd1787fb7dc5533fc	2025-12-09	Revert "feat: windows codesign with Azure trusted signing" (#7804)
+42e081739877ba00528b99090cb63200efc334ce	2025-12-09	Revert "Revert "feat: windows codesign with Azure trusted signing"" (#7757)
+0f2b589d5ef37f31146345ac4e92163afc5cbd01	2025-12-08	Revert "feat: windows codesign with Azure trusted signing" (#7753)
+badda736c6a086a3b6a5766ea471cd9a2616f235	2025-12-08	feat: windows codesign with Azure trusted signing (#7675)
+ee1949450e92061f53062349d824f4874d758524	2025-12-08	fix(windows) update shell_command parameters
+9a73414efe6bc752d8729343cdc86abdf695f8dc	2025-12-06	WIP: updating windows code signing process with OIDC
+6c9c563faf5708f0afe2850b831bb276853e3b49	2025-12-05	fix(apply-patch): preserve CRLF line endings on Windows (#7515)
+f48d88067efae4a1cf5df6d7ec5210c728afa4e1	2025-12-05	Fix unified_exec on windows (#7620)
+37c36024c78f02c2ae274f63768906b0eaa07d2c	2025-12-04	chore(core): test apply_patch_cli on Windows (#7554)
+53a1ec1f34f42c0aa4b37bcc8cce5c811d8ad974	2025-12-03	WIP: updating windows code signing process with OIDC
+ac821fd936529b7c11a9a213fe95de713f34df29	2025-12-02	chore(apply-patch) crlf integration test
+00ef9d37842d4e6fcb38f4ab31c33f55b7d48b53	2025-12-02	fix(tui) Support image paste from clipboard on native Windows (#7514)
+f443555728fffc70ec00710e1c0642562e6a9093	2025-12-01	fix(core): enable history lookup on windows (#7457)
+99e5340c54d1b66f3c080863c24e890541f8d05b	2025-11-24	Windows Sandbox: treat <workspace_root>/.git as read-only in workspace-write mode (#7142)
+1e832b1438631cda9b3d6fa8f0ae955d7af7813e	2025-11-24	fix(windows) support apply_patch parsing in powershell (#7221)
+3bdcbc72927acd3e0071da3df3247e1da7ec578c	2025-11-21	Windows: flag some invocations that launch browsers/URLs as dangerous (#7111)
+f4af6e389ec9868ddea77c2b1da04bc03e453035	2025-11-20	Windows Sandbox: support network_access and exclude_tmpdir_env_var (#7030)
+830ab4ce20aa0d2602ee07b729ee0d28c7b352d7	2025-11-20	Support full powershell paths in is_safe_command (#7055)
+20982d5c6a06ec4dc7e52e9c0279e361584b1a5a	2025-11-19	fix(app-server) move windows world writable warning (#6916)
+cff47cb1d554be15a7afa58ed1dc5a554fa84864	2025-11-19	fix(windows) parse powershell commands
+44c747837a8b94dcd11b6b4612a14d703f90774a	2025-11-19	chore(app-server) world-writable windows notification (#6880)
+030d1d5b1cf28dd654793eb1a08e2280528d6403	2025-11-19	chore: update windows docs url (#6877)
+7e6316d4aa321287d4f7d0115b5e8954acd670bf	2025-11-19	feat: tweak windows sandbox strings (#6875)
+7508e4fd2d0161a3c7558391f7c0ce5fe92224f5	2025-11-18	chore: update windows sandbox docs (#6872)
+3be4047e7eb6eb560c3b253ebaf1987778dcb895	2025-11-18	feat(app-server): supports windows sandbox setting
+b952bd264927d6824a9d5dafcbaceb111cfe8548	2025-11-18	smoketest for browser vuln, rough draft of Windows security doc (#6822)
+cf57320b9fea784228a26bf11f3747404b204d63	2025-11-18	windows sandbox: support multiple workspace roots (#6854)
+4bada5a84d8d29aaec1f2634d118ec1aae3d2179	2025-11-18	Prompt to turn on windows sandbox when auto mode selected. (#6618)
+28ebe1c97a0c7cd01388890c66b6e77286c98518	2025-11-17	fix(windows) shell_command on windows, minor parsing (#6811)
+8bebe86a47aebb262643208b8cf242caa275831d	2025-11-17	Fix TUI issues with Alt-Gr on Windows (#6799)
+98a90a3bb2567e45cf1242b9dcf6959f873776a6	2025-11-17	tmp: drop sccache for windows 2 (#6775)
+702238f0043b3bbc95bd97ba5131eea6e1160e5a	2025-11-16	Fix AltGr/backslash input on Windows Codex terminal (#6720)
+fa5f6e76c921c08f2d6dfbe2bec80ff072de33b2	2025-11-16	Revert "tmp: drop sccache for windows (#6673)" (#6751)
+f828cd28972c358b6677d2d6ccb5e427f62e93a2	2025-11-16	fix: resolve Windows MCP server execution for script-based tools (#3828)
+b560c5cef172ab48a0dff769a3caa92e6664cc49	2025-11-15	Revert "templates and build step for validating/submitting winget package" (#6696)
+37fba28ac38731feacf43fe78c258f06d66c2dda	2025-11-14	templates and build step for validating/submitting winget package (#6485)
+4719cba19afb5b48c39c1f6b99586cb95a81d41d	2025-11-14	tmp: drop sccache for windows (#6673)
+9aff64e017f23a747da29e32b218cf4d0240b2e2	2025-11-10	upload Windows .exe file artifacts for CLI releases (#6478)
+69c75218149bc0fe827282dd5019b845ea538cb2	2025-11-10	fix(tools) Add windows shell tool definition
+625f2208c4ecd6555db10d6c7076fa4bfa13f299	2025-11-09	For npm upgrade on Windows, go through cmd.exe to get path traversal working (#6387)
+2eecc1a2e4eb380ca9373c186c2b35945b3ecb17	2025-11-07	fix(wsl): normalize Windows paths during update (#6086) (#6097)
+aa9d1cac70bababffbcfaf1233b63dd9972eb19a	2025-11-06	gate OnceLock import to Windows
+e52f289bf08c0d350407404dfecff552efb6c7a5	2025-11-06	support user_message bg color for modern Windows terminals
+871d442b8e3591866ec4e51811410f488e4c14ea	2025-11-06	Windows Sandbox: Show Everyone-writable directory warning (#6283)
+86d636cf33c1cf178695dacd4e5ae9a9bd1594f6	2025-11-03	core: exclude OS from env_context diffs; update tests for Windows/WSL OS block
+9f7097160dc593a7b1b3b567eb4ee8346ead8182	2025-11-03	feat: Better OS Detection, starting with windows
+2eda75a8eee6518d766f5c11d0ec9bd91ef70e1b	2025-11-03	Do not skip trust prompt on Windows if sandbox is enabled. (#6167)
+dccce34d84b39bab304f9949b72db3e3d4bc5850	2025-11-02	Fix "archive conversation" on Windows (#6124)
+87cce88f4865685a863e143e0fad4cf5ea542e62	2025-10-30	Windows Sandbox - Alpha version (#4905)
+0c5ce68ac644434c6d0253f95fcfc9a7b2d57ad3	2025-10-30	split command into lines on Windows
+3e9eabcbc19996f55b031c6c6e1e2205048183d7	2025-10-30	skip bash highlighting on Windows due to stack overflow crash
+cbc1b500958908c693843db9c163bee42ea44aa7	2025-10-29	feat: LLD linkers for Windows build
+802d2440b4edc511d161acd7428e98347fbac886	2025-10-28	Fix bash detection failure in VS Code Codex extension on Windows under certain conditions (#3421)
+e9135fa7c58460c2fd72105e69e28defaa3136d3	2025-10-28	fix(windows-path): preserve PATH order; include core env vars (#5579)
+66a4b8982268628e97bc2fc4f9fb440ab0ef2475	2025-10-28	feat(tui): clarify Windows auto mode requirements (#5568)
+52268e7f378d24c82dfeacb76e410fe0cae25bab	2025-10-17	Adjust Windows paste burst timings
+7f3f2add3eefdfbc1b36e38b56c1887089bf9c83	2025-10-07	Gate Windows AppContainer helpers behind optional feature
+56b4e37e8ab768fbaf961dd10cf2e097c244bd9a	2025-10-07	fix windows build errors.
+bb86dbd80d35e5a3fd3a3353bfe1422700fac4ad	2025-10-06	implement terminal_palette for modern Windows Terminal shells.
+3d3ca6475d0a38bb96afd225b49340430fd487f8	2025-10-06	assume true color for any Windows Terminal session.
+8ec36fc336a7c1e7b6cc62068b99617b8edc715c	2025-10-06	adds scaffold for windows sandbox with experimental flag. Does nothing yet.
+494b97c87f0c08d92bb05f5f92473acaa2f6f4c7	2025-10-06	fix windows compilation errors.
+b28888f16af7db5bfa48be8a1c8d70d60421782a	2025-10-06	support Windows themes, which override the color table.
+5b6656101ec701de80e7de85d4176884d284ae97	2025-10-06	initial implementation of user message background color for Windows.
+36f1cca1b131e61592dc5a4ca3e5351bcf8d23e0	2025-10-05	fix: windows instructions (#4807)
+c264ae6021146d1dd1867e4fec9ebf1a5fe5d82b	2025-10-06	feat: tweak windows wsl copy (#4795)
+6c2969d22d9c8f27e6f443eeea050bdd40a5c06f	2025-10-04	add an onboarding informing Windows of better support in WSL (#4697)
+f8bf48ded5ecfd2fd09a85e5b3dad8abf4b06da4	2025-10-04	fix windows line endings
+de8d77274ac2af220f9c0bceae184ee128ef5c52	2025-10-03	set gpt-5 as default model for Windows users (#4676)
+6f97ec4990610fc6a281b25374911c57ab053c92	2025-10-01	canonicalize display of Agents.md paths on Windows. (#4577)
+699c1216063e553d02cad604c0f713e1271e5175	2025-10-01	Handle trailing backslash properly (#4559)
+dde615f482ca8ff2b6f5c5e4421f325141eda1cc	2025-10-01	implement command safety for PowerShell commands (#4269)
+0e5887063442c772640ba15494eec6aed7c4fce1	2025-09-24	adds a windows-specific method to check if a command is safe (#4119)
+9590c08d7c77efc833bcee188fd17f8310ba2d77	2025-09-21	fix(apply-patch): detect CRLF only when all newlines are CRLF to avoid unintended newline conversion\n\n- Count total  vs CRLF pairs and treat as CRLF only if every newline is CRLF\n- Prevents converting LF-formatted files that contain embedded  in literals
+3a953c8b216eb12449ec59a91375c342c1bbe0e6	2025-09-21	fix(apply-patch): preserve CRLF line endings on Windows when updating files (Fixes #4003)
+f69f810658547b4b69a909c437f56ec224d13624	2025-09-20	fix(tui): convert windows clipboard paths on wsl
+cf9a4f4c40614f7271f61b3202dd111bd317a5fc	2025-09-18	core: match review test runtime threads on windows
+b2f6fc3b9a61edcfceab3bbcc06af6c84ee52a76	2025-09-14	Fix flaky windows test (#3564)
+9229c519d2642113e5a30703813b262c481ea08d	2025-09-13	Revert "add repeat for windows ci?"
+631e1eb6b7ecc982c5cc4dbf9299fc73b1fe8caa	2025-09-13	add repeat for windows ci?
+94aa0268b2c04ad456382dcc61037b4b26da393c	2025-09-13	Try attempt fix flaky windows CI
+d0d21550b9be229354f531ab426620a2100576fe	2025-09-07	NIT windows
+8b993b557d0ee65084f40f94fa9a67f44ef52a74	2025-09-02	fix: include arm64 Windows executable in npm module (#3067)
+f2c8398cd60736efc4a5bd5c4c66f68c03d801ac	2025-09-02	fix: include arm64 Windows executable in npm module
+39a2e811388691f7f4fb63dc8fe3e3076654006c	2025-09-02	fix: include arm64 Windows executable in npm module
+4a99f36679a57d3a93ee8e777219bf5e61cc99b4	2025-09-02	fix: include arm64 Windows executable in npm module
+13e5b567f59c21b8577c77f70c2d5b0669c5d9a3	2025-09-02	fix: install zstd on the windows-11-arm image used to cut a release (#3066)
+1e1c09081ec1561ee8ec73a90356fecb804d3c43	2025-09-02	fix: install zstd on the windows-11-arm image used to cut a release
+4b426f7e1ee3269504a3ce077bfe9dc1969a89fc	2025-09-02	fix: leverage windows-11-arm for Windows ARM builds (#3062)
+4ff5d844a0723075bee5d86564c54aba1f4cc642	2025-09-02	fix: leverage windows-11-arm for Windows ARM builds
+7eee69d821d1a9c410306fd261dc6fe0636e56a7	2025-08-28	fix: try to populate the Windows cache for release builds when PRs are put up for review (#2884)
+e5d994ebf42a12b9939deee56e3061ec7fefdb78	2025-08-28	fix: try to populate the Windows cache for release builds when PRs are put up for review
+cc427b75d1eb5d1f908467ffe2b1483acfa2000b	2025-08-28	fix: try to populate the Windows cache for release builds when PRs are put up for review
+f940ddb5364e2d44103968be70cf1479771bdcac	2025-08-28	fix: try to populate the Windows cache for release builds when PRs are put up for review
+568d6f819f3d74b84a6fd886c02174975be86baa	2025-08-25	fix: use backslash as path separator on Windows (#2684)
+cdc77c10fb337ff3626f635ccf0844c70dec96d5	2025-08-22	Fix/tui windows multiline paste (#2544)
+422556ba5bfb721dc4868cd7f034c305117c6eac	2025-08-21	Add windows + single quote tests
+050b9baeb6e0e5b49d4e5a578653954bb1857d75	2025-08-20	Bridge command generation to powershell when on Windows (#2319)
+817ac79367daf1b97584c305e5fbdc211c339b85	2025-08-20	Windows support
+379106d3ebaf8df006ee4916d9003a7985390701	2025-08-15	fix: include an entry for windows-x86_64 in the generated DotSlash file (#2361)
+01aeaadcfcb36ec180397a8d95494b9ee8031138	2025-08-15	fix: include an entry for windows-x86_64 in the generated DotSlash file
+d0cf0367995ebe437d314d709b6ac1ae5716ed9c	2025-08-08	feat: include Windows binary of the CLI in the npm release (#2040)
+91732902981a5cd57659461f4de0947e35291e2d	2025-08-08	feat: include Windows binary of the CLI in the npm release
+c5cf8625d8d877eaa1eb610925c66a4996f18268	2025-08-08	feat: include Windows binary of the CLI in the npm release
+c977d48d84b7056772d76102427d587ee0a8c92f	2025-08-08	feat: include Windows binary of the CLI in the npm release
+0a83828bb96d9f1033b26f21420a21819b07474e	2025-08-08	feat: include Windows binary of the CLI in the npm release
+18eb15700021f0a0cab861c4540212fd161da231	2025-08-08	feat: include windows binaries in GitHub releases (#2035)
+216e9e2ed0aa9ea1f476ade611c76183d540a7b8	2025-08-08	Fix rust build on windows (#2019)
+cb0051f274aca4d5581596775d01f759450da665	2025-06-24	tasks: use tmux windows (tabs) instead of splits for multi-task mode
+34e849a89a9abfb89a12b62d6ad8b92705ce4655	2025-04-27	windows build cleanup
+e7823781762c48aba05a09ba906d67d8d8e1676a	2025-04-26	gate on windows
+f3ee933a74b92b347eac829df555de753aafd380	2025-04-25	ci: build Rust on Windows as part of CI (#665)
+c18f1689a9dbd68619a116601d584cd1c37b041a	2025-04-25	fix: small fixes so Codex compiles on Windows (#673)
+0a13bb010b39443a3d9f40fd77c606c1523bec17	2025-04-25	ci: build Rust on Windows as part of CI to ensure we guard platform-specific code appropriately
+bd74cccddc891d9dd2d63cf6fdcac77c13541ddd	2025-04-25	ci: build Rust on Windows as part of CI to ensure we guard platform-specific code appropriately
+8c09afb5af5fd06aa86f8efa2ca0e7dbd86317cc	2025-04-25	ci: build Rust on Windows as part of CI to ensure we guard platform-specific code appropriately
+4acd7d8617c6b355297cfa2afef21b1e75f6fc32	2025-04-18	fix: Improper spawn of sh on Windows Powershell (#318)
+3a71175236cae47a2950266a0d7888e4f76227c4	2025-04-17	fix: improve Windows compatibility for CLI commands and sandbox (#261)

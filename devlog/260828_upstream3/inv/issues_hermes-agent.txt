@@ -1,0 +1,159 @@
+36929	[Feature]: Support PowerShell as the terminal shell on Windows
+87828	[Bug]: Desktop backend health-check SIGTERM'd on Windows due to slow powershell.exe spawn under Defender Behavior Monitoring
+63783	[Feature]: Selectable Windows shell and execution environment in Hermes Desktop
+89442	[Windows][zh-CN] Terminal tool corrupts native-program output (GBK → U+FFFD) — local.py _run_bash hardcodes encoding=utf-8 + errors=replace
+91479	[Bug]: Desktop SSH: OS probe fails on Windows remotes — assumes python.exe next to hermes.exe
+84437	Add a native Windows test-runner path for contributors
+85384	fix(cli): Windows PowerShell same-surface guard weak + pid_alive cross-module blast radius + voice auto-restart direct invalidate
+83592	Set terminal tab title on CLI startup
+87703	Windows: hermes update hangs ~11 min on cua-driver refresh — interactive install.ps1 (UAC/user prompt) invoked from hidden non-interactive PowerShell
+89857	[Setup]: Cannot install if powershell is in Constrained Language Mode (Cannot change this setting)
+85278	fix(cli): Windows PowerShell same-surface guard weak + pid_alive cross-module blast radius + voice auto-restart direct invalidate
+82624	[Bug]: Windows TUI image paste checks the remote gateway clipboard instead of uploading local image bytes
+84678	Update progress card (WinForms fallback) is born minimized on machines without Edge — script hand-off shows only a bare PowerShell console
+27666	Fix Windows MCP Server for WSL-to-Windows bridge
+69916	[Bug][Windows] terminal() with 'cmd.exe /c start' to launch GUI apps freezes Hermes Desktop UI
+87419	[Bug]: Windows destructive commands (format C:, diskpart, Remove-Item -Recurse) are dangerous-only, not hardline — bypassable under approvals.mode=off / --yolo
+75791	Windows 11 25H2: `hermes dashboard --status` falsely reports no dashboard
+82842	Agent executed rd /s /q against the drive root (C:\) after a scoped, user-approved folder deletion
+43238	fix(cli): _cprint missing sys.stdout.flush() causes streaming output to stall on Windows PowerShell
+70619	[Bug]: Desktop auto-update leaves Hermes installation empty after Windows crashes and reboots
+67637	[Windows] dependency stage discards baseline-import traceback and aborts on transient probe failures
+65439	Bitdefender quarantines wsl-clipboard-image.ts due to PowerShell + -EncodedCommand in same file
+87542	Windows: git strips braces from stash@{N} argv (MSYS re-parse) — update never drops its auto-stash, and plugins update silently fails to restore local edits
+85659	[Bug]: Error with no impact on the Hermes Desktop update
+44567	[Bug]: Bugs Encountered When Using Hermes Dashboard on Windows 11
+86204	fix(cli): orphan CLI python.exe children not reaped on Windows — stacked status frames persist after crash
+83459	[Bug]: [Bug] Accounts page shows misleading "Connected" state for unauthenticated Anthropic OAuth provider; removal actions both fail silently
+74074	[Bug]: hermes profile alias generates broken .bat wrappers on Windows (missing 'chat', no bash script, conflicts with hermes.cmd wrapper)
+15828	[Bug]: windows bug
+87761	`hermes profile delete` on Windows: WinError 32 — _cleanup_gateway_service has no Windows branch, running gateway never stopped
+58275	`hermes desktop` launcher doesn't detach on Windows — leaks Electron/Python zombies and dies when parent shell closes
+55646	[Setup] Installation failed: Cannot bind argument to parameter 'Path' because it is an empty string
+21732	[Feature]: WSL ↔ Windows Host Command Bridge — invoke Windows-native executables from Hermes
+38617	Windows update: managed uv install fails even when uv is already installed
+80184	[Desktop/Windows] Suppress noisy WSL install prompts and simple-git custom binary warnings on startup
+84615	[Bug]: Windows Desktop GUI terminates externally-started gateway on launch, leaving service vacuum
+46199	[Setup][Windows Desktop] Request for supported portable / isolated deployment guidance
+90471	[Windows] Python-side taskkill sites lack PID-ownership guards (same stale-PID → 0xEF risk as #89614)
+73163	Bug: _build_wsl_interop_paths scrapes all /mnt/ paths, causing Plan 9 overload → WSL VM crash
+60132	[Windows] install.ps1 uv stage fails with 'Access is denied' on `& $managedUv --version` — corp-managed PowerShell stdout encoding restriction
+87092	web UI build fails: postcss EISDIR when install path contains "#" (Windows username)
+85132	[Bug] Windows/Chinese file delivery & preview: garbled MEDIA filenames, artifact-tag chain broken on Windows paths, dismiss not persisted
+71890	Windows absolute-path invocations bypass \b-anchored DANGEROUS_PATTERNS (backslash-strip normalization fuses path tokens)
+86571	[Bug][Windows] TUI mouse wheel and selection fail under Windows Terminal/ConPTY
+67185	write_file: cwd-shaped relative path (absolute path missing leading /) silently resolves to doubled path
+77813	lifecycle_guard: ValueError: embedded null character in path crashes terminal tool (Windows)
+78383	MEDIA: tag with spaces in path delivered twice - extensionless fallback defeats dedup (Windows)
+85406	[Windows host + Docker terminal] `vision_analyze` fails for sandbox-side local paths — host-side `Path()` mangles POSIX separators into backslashes before the container exec-read
+40138	File tools prepend Windows drive letters to Linux paths
+91942	[Feature]: Windows environment preflight checks in hermes doctor
+71995	Absolute-path invocations bypass the unconditional hardline floor
+70779	bug: Installation/Build fails on Windows when user path contains non-ASCII/Unicode characters (EIO Access Denied & path distortion)
+90727	[BUG] Dual gateway split-brain after profile migration (Windows)
+47767	[Bug]: Windows MSYS/Git Bash paths rejected by validate_media_delivery_path(), blocking MEDIA directive sends
+79474	lifecycle_guard crashes the terminal tool with "embedded null character in path" on Windows
+87156	Windows update deadlock: pre-#86857 self-lock preflight blocks every update, fix unreachable via normal path
+82443	[Bug]: cron no_agent=true scripts broken on Windows - backslash path mangling (3+ months open)
+80946	[Windows][Desktop] Opening local file paths (C:\...) from artifacts panel fails with "Invalid external URL"
+92225	[Bug]: every ToolRegistry lookup resolves the Hermes home path on the filesystem
+85787	hermes skills update blocked when HERMES_HOME is a Windows junction (physical vs junction path mismatch)
+13261	[Bug]: (cli)(windows)Path completion failed if target path is in a different drive
+76267	[Bug]: Windows sync_back drops remote sandbox file changes
+88810	[Bug] terminal tool crashes: "embedded null character in path" (lifecycle_guard missing ValueError catch)
+76246	[Bug]: Windows hosts allow write_file into /etc and docker.sock despite sensitive-path guard
+43073	Bug: .sh cron scripts fail on Windows - bash receives mangled backslash paths
+49500	hermes doctor shows mixed POSIX and Windows path style in .env message
+92271	[Windows] Docker sandbox broken — session folder name contains ":" (WinError 267)
+80227	computer_use WSL: _EmbeddedCuaDaemon generates Unix socket path for Windows-side cua-driver.exe (OS error 123)
+82572	Hermes uses layered Windows compositor when translucency is disabled
+79827	cron: make windowless Windows script spawns a tested contract (pythonw/CREATE_NO_WINDOW) + audit all spawn paths
+89597	Windows: Settings UI overrides config.yaml; agent cannot edit configs programmatically
+80114	Hardcoded Path.home()/'.hermes' bypasses the platform-aware home resolver; breaks Telegram gmail-triage on native Windows
+84694	Windows gateway disappears after readiness with no exit record
+26041	QQBot send_message cannot deliver local screenshot media from Windows paths
+77466	fix(security): vault CLI binaries trusted unverified — planted bws/op on PATH or binary_path receives live credentials
+57247	Installer writes unquoted AGENT_BROWSER_EXECUTABLE_PATH override into .env — spaced paths break shell source
+77462	fix(security): Windows at-rest ACL hole — _secure_file is a no-op on Windows, secrets readable by SYSTEM/Administrators
+85159	[Feature]: Route file:// links / raw local paths through #media: in Desktop chat (currently rendered as [blocked])
+61568	extract_image_refs misses Windows drive-letter paths (missed by #34632) — kanban image enrichment silently broken on native Windows, 12 tests fail
+83851	## 🐛 Bug: Desktop `[gateway-crash]` — GBK encoding kills gateway on Chinese Windows
+87152	[Bug]: browser_exec UnicodeDecodeError on Windows — browser_use_cli.py missing encoding="utf-8"
+45931	[Bug] WeChat gateway polling hangs + encoding issues on Chinese Windows
+83767	UnicodeDecodeError on Chinese Windows — subprocess text=True uses GBK instead of UTF-8
+86704	[Bug]: Ungoverned default workspace + inconsistent write encoding + fabricated tool-verification text
+89878	[Windows] _schtasks_encoding() returns utf-8 under Python UTF-8 Mode, so schtasks output is decoded with the wrong codec on CP932/GBK hosts
+52244	Bug: Hermes Desktop / Hermes One on Windows truncates agent output messages (UTF-8 encoding issue)
+87889	_auth_store_lock() can raise an unhandled PermissionError under real concurrency on Windows
+60243	tests: POSIX assumptions fail on native Windows (test_tilde_expands + 124 gateway failures: unspecified encoding, setsid)
+85639	[Bug]: scripts/check-windows-footguns.py --all omits top-level modules and evals/ (uncovered read_text() crash)
+83938	[Bug]: tests/hermes_cli/test_profiles.py: 8 failures on Windows / non-UTF-8 locale
+59556	Windows Desktop: Kimi provider returns 'Connection error' despite API working via curl/Python
+60384	[Windows] hermes_bootstrap.py corrupted during 'hermes update', SyntaxError blocks backend startup
+84206	[Bug]: @file text expansion assumes UTF-8 and fails on locale-encoded CSV/TXT files
+60129	[Windows] install.ps1 baseline-import check fails with 'StandardErrorEncoding is only supported when standard error is redirected' on corp-managed PowerShell
+73355	Bug: hermes update can flatten a custom SOUL.md
+54927	winpty-rs panic on Chinese Windows (HRESULT 0x00000000 treated as error)
+84361	[Bug]: Desktop MEDIA: file links dead — tag regex absorbs trailing markdown, and file:// URLs built by string concat
+76965	[Setup]: Desktop app, Unable to change default installation folder (Long path & Cyrillic characters error)
+82184	Skills Hub: tap-controlled cache key is interpolated into a filename, so a tap path can escape index-cache on Windows
+86107	[Bug]: Desktop — single explicit project entry vanishes from sidebar Projects list mid-session; survives restart (backend intact)
+58825	[Bug]: Windows: hermes skills check always shows update_available due to CRLF/LF hash mismatch
+73296	Desktop App Feature Requests: Delete specific message, Quote message, Auto-scroll
+53367	fix: garbled Chinese text in Desktop projects list
+85986	[Bug]: CJK Characters Rendered as Unicode Replacement Character (U+FFFD / ) in Content Area
+85265	[Bug] Windows desktop: closing the app kills the gateway, reopening never respawns it — stale gateway_state.json shows DingTalk 'connected' while all messages are silently dropped
+63717	Windows: Hermes Desktop update failures — comprehensive diagnostic with 7 correlated root causes
+76259	test_managed_uv.py hangs indefinitely on Windows: fake uv.exe triggers a blocking "Unsupported 16-Bit Application" dialog
+8120	[Bug]: vision_analyze frequently times out when analyzing local images in WSL2
+87609	fix(kanban): dispatcher singleton lock fails open → double-dispatch + WAL corruption risk
+89659	[Bug]: hermes-venv-blocker-timeout-issue
+77051	agent-browser spawn fails with EFTYPE on Windows arm64
+88945	[Bug][Windows] Python backend shell-out creates visible flashing console windows (uv/git) — missing CREATE_NO_WINDOW
+86579	Windows: kanban dispatcher-spawned worker crashes ~60s after spawn (pid not alive) even for trivial tasks; same profile works when launched manually
+87833	WhatsApp bridge lifecycle: gateway restart can orphan the old bridge and silently kill inbound delivery (Windows)
+86166	[Bug]: TUI gateway process dies on Windows when spawn_tree gets a long session_id (OSError WinError 123 from mkdir)
+91675	[Bug]: Windows: gateway start still prints ✓ then dies after the 6s liveness poll; post-update cold-start only resumes the active profile
+62429	Desktop terminal fails on macOS 26: posix_spawn rejects long helper path (node-pty spawn-helper)
+69907	[desktop] Chromium utility child process bypasses single-instance lock on Windows
+81535	v0.20.0 Windows: Desktop IPC bridge unavailable + dashboard WebSocket fails
+76129	[Bug]: Windows hermes update cold-starts a standalone gateway after every update when the desktop app (hermes serve) is the runtime
+51215	Bug: Hermes Desktop GUI spawns orphan Hermes.exe processes on Windows update/restart
+90812	apps/desktop: reconnectGateway() lock is per-renderer — multi-window race spawns duplicate SSH remote backends
+77488	[Bug]: agent-browser-win32-arm64.exe is 0 bytes - browser tools broken on Windows ARM64
+91097	[Bug]: Windows Scheduled Task cannot restart gateway watchdog exits
+83583	Windows: desktop backend self-exits on every launch via parent-death watchdog false positive (ppid mismatch, not identity)
+84527	[Windows][desktop] createActiveBackend leaves a persistent 4.5MB uv venv-launcher shell process (double-process)
+78820	[Bug]: TUI gateway crashes on Windows with OSError [Errno 22] on stdin readline — in-flight session lost
+68128	WhatsApp bridge spawn fails with WinError 5 in no-breakaway job objects — adapter missing the documented windows_detach_flags_without_breakaway() fallback
+89756	[Bug]: SSH + Bots tab spawns isolated serve per profile and 1012s the primary chat
+89697	Desktop: selecting a profile spawns its backend but the sidebar never switches — `$activeGatewayProfile` stays on the default profile
+89615	Telegram typing indicator reappears during genuinely idle windows in long-running sessions
+74064	[Bug]: desktop runs .cmd shims with shell:true but never quotes spaced paths (probe + spawn, 4 sites)
+80952	Windows: terminal tool blocks ~330s then falls back to WSL bash when hermes-acp is spawned by an ACP client (Buzz)
+51715	Hindsight daemon fails silently on Windows with uv venv: _windows_gui_interpreter() has no fallback, ensure_running() times out in non-TTY
+84456	fix(verify): Windows teardown deadlock + readiness poll starves child stdout pipe
+73299	Windows: stdio MCP spawn fails ('Connection closed') for Node servers with heavy import graph (Context7, Playwright); HTTP transport works
+69033	[Bug]: Local terminal tool orphans bash/find/grep/head children on Windows (missing process-group/job-object detachment in _popen_bash)
+61557	Windows OpenSSH: 'uv trampoline failed to spawn Python child process' (os error 2) / WinError 448 untrusted mount point
+92091	[Design] Gateway control socket: replace process-scan heuristics with a gateway-owned contract
+72070	MCP server processes never cleaned up on session end — 40+ orphans consuming 1.5GB RAM
+86911	Windows: hermes dashboard --status/--stop never detect a running dashboard (substring match misses .exe entry-point cmdline)
+31485	RFC: Production-grade multi-profile gateway supervisor with adopt-orphan + staggered spawn + Windows-native lifecycle
+48986	Windows-native pytest suite has baseline failures in ACP, path, CRLF, and file-handle tests
+88264	[Bug]: patch/fuzzy_find_and_replace doubles indentation on CRLF files when old_string's first line is unindented (empty old_indent in _reindent_replacement)
+60244	Feature: hermes gateway install --yes for headless provisioning (+ piped-stdin prompt quirk on Windows)
+68058	install.ps1 -Tag fails on fresh Windows clone when system core.autocrlf=true because autocrlf is pinned after clone
+88274	[Bug] hermes update fails with ImportError: cannot import name 'bounded_probe_run' (exit 1)
+75175	`_normalize_managed_eol` does not clear CRLF churn — 5-test cluster fails (merged PR #74487 fails its own tests)
+49582	[Bug] GitHub Copilot OAuth token (gho_) fails with 'Personal Access Tokens not supported' on Windows
+81787	[Bug] Telegram gateway fails on Linux: InvalidURL("Invalid port: '<token-after-colon>'")
+81788	[Bug] Telegram gateway fails on Linux: InvalidURL("Invalid port: '<token-after-colon>'")
+65924	write_file refuses valid .yml files (TypeError: can only concatenate str (not int) to str)
+83586	npm audit: 8 vulnerabilities in build-tool dependencies (dompurify, mermaid, js-yaml, nanoid, undici)
+77429	[Bug]: Desktop quick-entry "Send to" dropdown options render with poor contrast on dark skin
+82344	npm audit reveals 7 vulnerabilities in Hermes v0.20.0 — systemic LangSec failures in dependency tree, 1 CRITICAL with no fix
+57788	write_file reports fabricated success/byte-count when post-write verification fails, defeating the file-mutation-landed check
+31417	[Bug] asyncio subprocess StreamReader default 64 KiB limit truncates long output lines
+82986	Upstream sync v2026.8.3 — conflicts need resolution
+79381	[Hermes decomposition SL3] Dispatch-tick integration

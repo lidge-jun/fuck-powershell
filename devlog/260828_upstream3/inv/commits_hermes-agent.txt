@@ -1,0 +1,690 @@
+b914ebf3b1a5ea1b8f0450e69207f5ed06bfcc7f	2026-08-22	fix windows footguns
+a08b909199a5c4cdc83f6b2077f52d349ff4ba2c	2026-08-22	fix(windows): preserve launcher layout invariants
+9782275b2a79368d6247c0ee9cd5418523a5df3f	2026-08-22	fix(windows): restore dedicated CLI launchers on update
+2a248760f5f230b9f53f86206b8ae44b494fafee	2026-08-22	fix(tests): test_unwritable_bin_dir_is_skipped crashed on native Windows
+d67ff2611f343a63a2296b4682998d22afccc681	2026-08-22	docs(update): _ensure_acp_launcher's Windows rationale caught up with reality
+d1ac562847f59e635d747294db2cb3d193635940	2026-08-22	fix(windows): self-heal the bin PATH launchers the update autostash swept away
+4b30f7f7f7380537137fb8df75c322e43bdda327	2026-08-22	fix(desktop): edit the Windows PATH without the EnVar plugin
+8131b0a29fd811448e9a1a8d6011724cdd8dbd49	2026-08-21	test(windows): #87594 probe asserts on the gateway ANCESTOR, not the direct parent
+4d3a61b63b93cadf1d2579fd5c0300419af4d803	2026-08-21	test(windows): diagnostics in the #87594 probe — parent cmdline/exe + matcher verdict
+4c922a934881270d9b8ca4e1796dfe3eb6c39b5d	2026-08-21	test(windows): realistic gateway-parent argv in the #87594 live probe (child code via file, one-line -c)
+aefcf4d10a8533bca8566cd06c4fb89c24f6c481	2026-08-21	ci(windows-venv-e2e): drop --timeout (pytest-timeout not in dev-only sync)
+f9aed7d7f6904620414a5878cfa1eec0727d3bae	2026-08-21	test(windows): on-demand live venv-holder E2E lane + probe suite (#91277)
+bc5e9a174c9afc2cb06a5113cf568363fcc92306	2026-08-21	Inspired by Claude Code: file tools reject Windows NT-namespace paths (NTLM leak hardening)
+6e64e6b9c697460ef303a90fc9444e0bb34788fc	2026-08-21	fix(desktop): Windows glass windows stop rendering when they lose focus (#91307)
+1ae9670d09de68293318b1377d7aab5dc83f4d58	2026-08-21	fix(installation): read PE VERSIONINFO when a Windows binary prints no version
+18a15a46d81793f9bcbf7e9f4cd93d5db841b7ae	2026-08-20	test(update): Windows progress self-test survives transient /progress socket stalls
+9e23ebddb41af26e96c7e6c7251ae5742fc036cd	2026-08-20	fix: memory-plugin and Qwen-CLI config JSON survives Windows BOM
+c283b1641b1651938e36233c5b3f79f82a1445d6	2026-08-20	fix(install): suppress cua-driver telemetry console and env in install.ps1
+2b1bff624e6e51af2ada75c0d6e5cfe7d32c1883	2026-08-20	fix(update): Windows Desktop updates finish instead of parking on "Updating Hermes" (#90937)
+95fa8142694a9e240f8cb9df96d919f5d042d8bc	2026-08-20	feat(process): positive process identity — spawn tags, machine spawn ledger, Windows job-object self-attach
+d5edb66199cbe82e5465b1581f653f9f5e2a579b	2026-08-20	fix(update): reap leaked serve backends during a GUI hand-off instead of dead-ending the venv sync (Windows)
+a316ef89d112b101b8176ab09401a264148e5ca7	2026-08-20	fix(update): reap leaked serve backends during a GUI hand-off instead of dead-ending the venv sync (Windows)
+c1e2e67dcff1db95a6cce617552acc89c4ffd706	2026-08-20	fix one windows test
+9ae7247616966a02428f2442c414f14d9cdbce12	2026-08-20	fix(desktop): skip source restore in auxiliary windows
+c25aa35e1aab21e0517574026b080e6087c0050d	2026-08-20	fix(desktop): keep peer windows on shared gateway
+f920af7bc70e678a6e27f502fecad1a84a624116	2026-08-19	fix(desktop): Windows chat windows are opaque unless glass is actually on — Snap/FancyZones work again (#90237)
+6d1284a0735b8e4f571d4ddf0f28f83dda71b6f6	2026-08-19	test(update): deflake the Windows progress self-test (both race directions seen in CI)
+6044e7068d95bd9efac501d6a4faf1fdbd721a51	2026-08-19	fix(agent): make locale regression tests accept BOM-tolerant UTF-8 reads
+1583aac83939140baf3c7c749df5ba8823f18002	2026-08-19	fix(windows): read files with utf-8-sig and write files with utf-8
+3acca90eae3e0a2312491fcbe9676ab3bc3522c1	2026-08-19	fix(desktop): a Windows-legal file version for nightly artifacts
+ae6c973fc7eb0fc03436674768b1ee85c15f5ac5	2026-08-19	fix(update): run the Windows update hand-off unattended
+268615cbb3aad3a36aec37151f5c6ef1652494e4	2026-08-19	test(update): cover the Windows shim self-lock class
+3f6d4c6338b258245da98c1ab9f1537352bb6a32	2026-08-19	fix(gateway): run Windows /update as a module, not through the shim
+867ab54e20cf491bae62133614fa4708ccaef96d	2026-08-19	fix(update): re-run Windows updates off the console shim
+eb523288570408132b4e005f58d6cfecb78055ef	2026-08-19	feat(desktop): back window glass with Windows 11 system materials
+2f5db1c4447cf1e8db32b01c112a58f87908f7b3	2026-08-19	feat(desktop): route Windows signing through the sign cache hook
+08de26718df75bff565bb3fdefa3cb100f5d36a1	2026-08-19	feat(desktop): cached Windows sign hook over Azure Trusted Signing
+0223710d0034677406e6dc650e0273a6e867d6ef	2026-08-19	test(desktop): compare get-windows installer path via realpath
+2f8e3348bd331b57715a5c33a0ee5b332bf7430f	2026-08-18	feat(lints): encoding-direction rules in check-windows-footguns
+dc2ec9b0a14be7af8b38bd4e3bc6bbea870c6bcc	2026-08-18	fix(install): retry the publish rename through Windows scanner holds
+2ac58432bb5cbb9202e15e17e305381c422ee34a	2026-08-18	fix(desktop): darwin-x64 builds cryptography from sdist like win32-arm64
+baab100cbfe42eee389a13f080fe085ca3c7fd64	2026-08-18	ci: cache electron-builder winCodeSign on the windows runners
+1529ebf6ccd331c21c4569399dbcf3f53b022333	2026-08-18	feat(update): tell POSIX users who still runs old code; wait out cron scripts on Windows
+1dcbe9c028d822ce0a192bb07ad279001523e6c2	2026-08-18	refactor(install): one git version authority on Windows
+5bc540ccf4478e0a9cf89114fd3f02f3303f61db	2026-08-18	test(install): gate the PowerShell scripts on the real parser
+4bdddf4e9585dccc5b05bc1bcb26a5a8d6300978	2026-08-18	docs: escape backslash in cli-symbols glossary so MDX compiles
+113a07f29d12839a7884c94082d05d5a7c866257	2026-08-18	refactor(desktop): one surface helper for the three chat windows
+48c1eefa2677419a5b80967f708eb1098e415709	2026-08-17	fix(desktop): repair missing Windows runtime
+97a04aef6cf3c75beb8c250ff77c119f0df93bcd	2026-08-17	fix(desktop): install get-windows binding directly
+c86197e60798801f62986e4e59460b1272d0c687	2026-08-17	fix: make the self-repo git guard Windows-only
+70598f52e117209258961de31e8ae3d44da54db1	2026-08-17	fix(desktop): tighten shebang-exec script-name match to known console scripts
+deb49537762794b75c6c4bfbeeae2de1e4fad141	2026-08-17	test(tools): make subprocess env regressions Windows-portable
+040ee114aa12e54cfa176f816169007b3dfc02ff	2026-08-17	fix(desktop): remove invalid get-windows recovery command
+341d5aebc6f51b8073f6099008e8d24bc74a8b0c	2026-08-16	Port from MoonshotAI/kimi-code#2647: read UTF-16 text files by transcoding to UTF-8
+ff7c9511518d39226303a916c8d4bbe27a9cefc8	2026-08-16	fix: suppress windows-footgun false positive on binary tomllib open
+afe238ac7e3cd9a50c4f6bdacf2acff3c864714c	2026-08-16	fix(desktop): scope session/pin lists per connection across windows
+5b010f448f51ec0087a4d7e061ad095bf09bef67	2026-08-16	fix(computer-use): verify Windows driver repair
+dde7075d6c8716cf51dfe0e53a82621b4e817482	2026-08-17	fix(openviking): read .env BOM-tolerantly when rewriting credentials
+4e3de140c1995e11c132328c0fdb2836e1f8aa14	2026-08-16	fix(cli): bound the Windows process-scan probes so a slow WMI scan cannot wedge hermes update (#87134)
+b921fdd886130bd29f07830dffd899fe3ccf8d78	2026-08-16	fix(gateway): improve Windows detach diagnostics
+029a0d8c76e63f44b0d0486714346eee551ece7f	2026-08-16	fix(cron): process .pth files for Windows uv-venv script jobs (#86567)
+c6db20726af9a887a9a10c810e02e130b4f8a43c	2026-08-16	fix(desktop): give Windows start-marker PowerShell probe a 30s budget
+c3d74603aa31b34fc373904d1ba5d7b5480c12bf	2026-08-16	fix(desktop): avoid PowerShell parent marker boot gate
+730c5fc5d0a5b84df00b58c796b6d617b384e600	2026-08-16	fix(gateway): treat Ready scheduled tasks as Windows supervisors
+92c998c86c8348b572b0409e3a53e380c8f60f10	2026-08-15	fix(update): restore quarantined hermes.exe shims after no-op installs on Windows
+a525bbed0ec91726a21b6b532818df580eb286f9	2026-08-15	fix(update): avoid cryptography self-lock on Windows
+5a76c8a978a14324664c5807b972ad638cbc72d4	2026-08-15	fix(update): lazy-import secrets backends + defer registry import — break Windows self-lock loop
+3dc31868732dca5b21dce0f4590ec78319e0ddaf	2026-08-15	fix(main): lazy-import secrets_cli to prevent cryptography._rust self-lock on Windows
+30c469b15313711d47c45e7175d6ef5c8437f1ed	2026-08-15	fix(gateway): spare pidfile-less Scheduled-Task gateways from the orphan reaper on Windows (#83683)
+3af56c22036c501dd0056b59ab1a8b940f967f37	2026-08-14	fix(install.ps1): surface uv installer errors and add GitHub + existing-uv fallbacks (#69216)
+c6a71294b6b16e2e0ebd9559deae912e6d91074e	2026-08-14	fix(update): detect updater self-lock on Windows + repair venvs whose base interpreter is uv-managed
+49d72a02f6fa86187f4158ee0de00ea014dd6615	2026-08-14	fix(update): verify Windows gateway cold-start survives before reporting success
+18b442cdeb54737e5432e1b069a0bd3b7206acdc	2026-08-14	fix(install): abort Windows venv recreate when rename-aside fails
+d82dcf5da070a9c8e0195d27066e22c7bb1705d4	2026-08-14	docs(update): document transactional Windows venv recovery (#83149)
+be1e0c89c98c8cf0ed592aed85a070343cc4aa12	2026-08-14	test(installer): align Windows venv process guard with transactional parking (#83149)
+11268e7e6a254952a180f445c54f67a88c4da0fa	2026-08-14	fix(installer): make Windows venv recreation transactional (#83149)
+102369c5f6ffe2b3eb7d7e27d652d1e8377d734e	2026-08-14	fix(gateway): spare Scheduled-Task-supervised gateway from orphan reaper on Windows
+a373a1b7491e9bfd0c21940cd0a968283e643085	2026-08-14	fix(desktop): tolerate omitted get-windows on ARM64
+689a4be6f218570bec554143fc8e55535cee834e	2026-08-14	fix(desktop): degrade get-windows on Windows ARM64
+58e4bb04d6fbf266bd89334b6681e16e1cc22313	2026-08-14	fix(desktop): make get-windows optional dep so Linux build doesn't break (#85377)
+6f49bc7d5237ce56bc5cd0d3b4dd8e42525ae950	2026-08-14	chore: map contributor email for the salvaged Windows updater commit
+f696380d0781951842770f060c3a66a33a969b60	2026-08-14	test(desktop-update): guard the Windows hand-off python.exe contract
+5bfb7ee42fb0276518c06a4dadcc687670fc72f6	2026-08-14	fix(desktop-update): drive the Windows hand-off through the venv python, not the hermes.exe shim
+ca1b3f870596d4ab24b3cee6eeab4f61e3a9a597	2026-08-14	fix(windows): avoid locale-sensitive update timestamps
+c896c09c42910c584c4c7d2325b58c14713ea42c	2026-08-14	fix(desktop): windows-safe spawn + surface spawn errors in the shard runner
+5e8d25d7e78da269e00d6ac46374a38d97e92081	2026-08-13	fix(cli): --in accepts Git Bash / MSYS-style paths on Windows (#85865)
+cd667debfa09b70e4e1287bde430c7756f5e6490	2026-08-13	fix(install-e2e): windows transcripts were empty; player gets #zip= hash + one player per run
+ac8c6e4e051f3aba25354a4587c1f8666c70033b	2026-08-13	ci: cache electron-builder winCodeSign on the windows runners
+d0bb377c9689df938a5d4699192c2d37b9819f26	2026-08-13	fix(installer): recover Windows setup when node-deps host exits abruptly (#81390)
+d753957e8a12cd75c6192a6a1d73915a7a33fd9c	2026-08-13	fix(install): Windows setup no longer hangs forever on Node.js dependencies (#85529)
+94f095e8b75c692a745f95f973dc19f22653cf77	2026-08-13	test(ci): close the pytest-wrapper gap for check-windows-footguns.py
+793f0b3ff172e157e441be262963e958f6fe30e9	2026-08-13	fix(install): stop npm-installing agent-browser eagerly in install.sh/install.ps1
+f4d3592b65f7cc1787d28c458efbff3f10fec8e0	2026-08-13	fix(cli): restore managed-node-path and PATHEXT-aware fallback rungs
+c196e0f08f6252b757c4d1a99863dea756b6d6ab	2026-08-13	fix(browser): hide console window for npx cache warm-up on Windows
+8b387962ac3230ee1cf0a8040dae239eb0c0a247	2026-08-13	fix(agent): suppress windows-footgun lint on POSIX-only killpg branch
+825a9753c103e9cade72554b120503b8769ecdfe	2026-08-12	fix(computer_use): resolve cua-driver at its official Windows installer path (#85038)
+1965fde3940f2a0ed02ecefa3419dd8daab24a8f	2026-08-12	test: update Windows shell-hook flag test for the Popen-based spawn
+f514d546be05c8cbb12438561e825bc421bc66c9	2026-08-12	test(utils): cover contended Windows renames on the Windows CI lane
+dcbe1754230b405c61bcf25d365933ad6bc1ed1c	2026-08-12	fix(utils): recover Windows renames contended by an open handle
+6e139b2c22f609210015d740cca64ff753edabc6	2026-08-12	fix(windows-e2e): pin the driver's git to git.exe - never through its own shim
+a35402ea33abe83f4ed65b459faf17cf67376b0b	2026-08-12	delete unused git dlls on non-win32
+f20d16fbf168a3cb2b0814aa61addfba515102d3	2026-08-12	fix(windows): SSH ControlMaster gating + stop hijacking the user's python (#84452)
+4a2198bf5124f0c4d915cb958f141116ae8607f0	2026-08-12	fix: Windows MCP PATHEXT resolution + python3 -> python in cross-platform skills (#84429)
+e1caf88c6ca62e364d4599a53c097b10c70ffb03	2026-08-12	fix(security): approval system covers Windows destructive commands and paths (#84428)
+1156ba43bfd222e036a2715885cf2981ad54ecc1	2026-08-12	fix: steer agents off MSYS paths for native tools; pin line-ending preservation (#84426)
+ee472a7fdbbc55924f91ab122dbaa29bd07668b0	2026-08-12	fix: Windows agent-loop papercuts — path splitting, hashing, autocomplete, screenshots, OS detection (#84419)
+adf7d55f4b63412dfde2c0b6fefff03238c08317	2026-08-12	ci(install-e2e): windows composes install x update - one driver, one job
+07ee4a2ec8d3a678248d5e0bdc148a457c782d8d	2026-08-12	fix: Windows path handling in search_files rg calls and patch escape drift (#84378)
+197a18314fbce45499ec9c7149f72858144e1c98	2026-08-12	fix: warn agents off driving interactive console TUIs via pty on Windows (#84364)
+dc23cbbb9b54584cd8e58095d04597bd6c1c9414	2026-08-11	ci(windows-e2e): stderr chatter is not failure - EAP=Continue around native calls
+ae3a822d4e3f736c102972dad9a83958004c29f1	2026-08-11	ci(windows-e2e): driver installs its own pinned @playwright/test - never the app tree's
+7a562a269e5f54de526dd6582cdd4ba5db478314	2026-08-11	test(install): windows installer-script e2e - irm | iex arm goes live
+e6e056f854596db8ede6d32c5c79ec9caad37c68	2026-08-11	ci(windows-e2e): step names carry the actual install-ref
+10e9da6f2df58956ec94fa8c45c80f457d5d797e	2026-08-11	fix: ASCII-only install.ps1 comment; allow-list install_cli's uv PATH fallback
+5521d32a56db94d9cc0036c8661854b44ee7c397	2026-08-11	ci(windows-e2e): probe the starting tag for apps/desktop - pre-desktop releases skip
+3eec049c29afabe2ae30d19ecdc92990bc2af985	2026-08-11	ci(windows-e2e): static inner job name - github renders name expressions unexpanded on skipped jobs
+77c3a398f2f687f9031f40b03c726ff646e92471	2026-08-11	ci(windows-e2e): install ffmpeg - not preinstalled on windows-latest, recording silently skipped
+005fc5a6eb76d98a0e45a9514770902571ea3017	2026-08-11	ci(windows-e2e): ffmpeg screen recording across both GUI phases
+71281c27e5af505117295896ba780315d94e90e1	2026-08-11	fix(windows-e2e): parenthesize the tag-list split - -split bound as a git argument
+e8bdb6933e610948eeaa7a7a5059eedbf06ef944	2026-08-11	fix(windows-e2e): 'auto' sentinel for install-ref - powershell -File eats empty-string args
+2a906ac6a0f720fe999abe171b527659da2e1ba7	2026-08-11	fix(windows-e2e): stage OLD as the served main - the published installer has no commit pin
+27636cf422d8a6de78f6b7cc14106aafea7645fe	2026-08-11	ci(windows-e2e): slot the GUI flow in as the windows-desktop route - generic OLD -> HEAD
+3fedcbc6a8d94bc0c5bc7872f17d8f55bf2b1b94	2026-08-11	ci(temp): branch push trigger for pre-merge validation of the windows e2e
+1f81c63dd0f782eb2390898540775c8ead1adc6c	2026-08-11	ci(windows-e2e): retire the AHK-only axis - superseded by desktop-windows-e2e.yml
+0ce3d187d7020b6b657843791129dea7e9d21d35	2026-08-11	ci(windows): GUI E2E fully green — foreground relaunched window, drop temp trigger
+f83548420a16b3a334df8e9b4681f833713dc9b5	2026-08-11	fix(e2e): pure-ASCII PowerShell/AHK (PS 5.1 parser choke on non-ASCII)
+381cc65c78be58805bf7d535c3131a016284ada5	2026-08-11	ci(windows): REAL-flow GUI E2E — website setup.exe, headed clicks, GUI updater
+82f48a2de5114601f12a5774d347b9fb16badb47	2026-08-11	ci(temp): trigger the Windows E2E on this branch for pre-merge validation
+e64853a37333c44ac2d2ca4b01a9b6786345cf6a	2026-08-11	ci(windows): desktop install + update E2E on a real Windows runner
+503e61b3b1b03cf79aa94d79e95dbe88fd7ced96	2026-08-11	feat(update): shim UI + event channel for the Windows hand-off
+854ab7f6df3f1a3ea1aaaa6767bd538c8b6fdcda	2026-08-11	fix(desktop/windows): quiet minimal update hand-off window
+9ece46e94d65eb7d9db1edc7dfeb0c8b3363fb5a	2026-08-11	ci(windows): GUI E2E fully green — foreground relaunched window, drop temp trigger
+6b65880e69dd929687a1ec0ff42553c81df3cdb7	2026-08-11	fix(e2e): pure-ASCII PowerShell/AHK (PS 5.1 parser choke on non-ASCII)
+973e124a8e192429f7cd3e23cc659d209db6d0a4	2026-08-10	ci(windows): REAL-flow GUI E2E — website setup.exe, headed clicks, GUI updater
+42ad82983e2d41b28fa7b673da8faadfe2d7f713	2026-08-10	ci(temp): trigger the Windows E2E on this branch for pre-merge validation
+f6f9f89a77f3b757cb458384e987c45be1cc004c	2026-08-11	ci(windows-e2e): drop RUST_LOG from the update leg - it manufactured the deadlock it was diagnosing
+478f2a998ba4849ad207826e6ec46003d1b39f65	2026-08-10	ci(windows): desktop install + update E2E on a real Windows runner
+e3d22b5b2966319f51822cbf5e61a52b46d0995f	2026-08-11	fix(update): drain uv/pip stderr - undrained pipe deadlocked windows desktop updates
+bdb1b53c088ca7006e32ac15d6070770f085dcd4	2026-08-10	ci(windows-e2e): 45-min handoff deadline + uv debug tracing - diagnose the silent dep-install hang
+3663b9c9f309234b08b428df900fc8eb8ad239c6	2026-08-10	feat(desktop): rich web progress UI for the Windows update hand-off
+1edfdeee81283a05891a19ea649863410cc200c4	2026-08-10	fix(desktop): keep serve backend alive through Windows launcher
+d9663938143f45eb6e33a745786e378e4cda9e1d	2026-08-10	fix(desktop): wire renderer-lifecycle diagnostics into OAuth and portal login windows (#81290 follow-up)
+bde4b59f2fcf0eb1a48b764bbb52fa408e650714	2026-08-10	fix(windows-e2e): screen-native button crop, ImageSearch only - PixelSearch removed
+455016b82d99ce851e37693e333293f7ba85dece	2026-08-10	ci(windows-e2e): poll for a rendered UI before the welcome screenshot - 10s was blank
+cba48161b9bfc0edca15a9e2473923bf9decab89	2026-08-10	ci(windows-e2e): TEMP - stop after the welcome screenshot, skip the AHK path
+caf0e6ac428072bebdc70cbe7291d7587e3e64a3	2026-08-10	ci(windows-e2e): capture a lossless welcome-screen PNG before the AHK helper runs
+7b3f197c459256a4023f4b2e85e45d896042dff2	2026-08-10	fix(windows-e2e): AHK loop killed a healthy install on its own flawed heuristic
+91490032a82c75b16b17b9558886b343f1877b60	2026-08-10	fix(windows-e2e): pre-seed managed uv - astral receipt hijacks UV_INSTALL_DIR on runners
+f4243c0c7c64c9650aac92ee51e4b7cc82c417f7	2026-08-10	fix(windows-e2e): PixelSearch scan band clipped the blue title, not the button
+5e6eab0cd38b8ecf6bcfc08d01d42b4f9ad7209b	2026-08-10	fix(windows-e2e): fall back to PixelSearch for the Install button
+931a9e9d5663ea62962d61d7a731d650ff6ed266	2026-08-10	fix(windows-e2e): raise the installer window before each ImageSearch attempt
+746aca265472f582869248ffd3c9922d36972ba2	2026-08-10	fix(windows-e2e): button images matched a dev build, not the published installer
+b685efed678d9f3be6bd56b3401256eed05e0229	2026-08-10	fix(windows-e2e): AHK helper wedged on invalid stdout handle before clicking Install
+9b1a2a14ca4a1e76d85591579c7d8fcaa0656782	2026-08-10	fix: use psutil.pid_exists for orphan-reap liveness probe (Windows footgun lint)
+f5cd0b7a6da25c5f4cf445cad2795e6d64153661	2026-08-10	ci(windows): install test tools under RUNNER_TEMP - untracked dirs in the checkout trip the driver's dirty-tree guard
+e74f44d7ae65e37e0165c932b9a8a5def0e5608a	2026-08-10	ci(windows): desktop install/update e2e - published installer to this commit via fake git remote
+9e7700e8a3da8d06ca687e803e3ec9e50e7188f7	2026-08-10	fix(desktop): title HUD windows Hermes HUD
+84434a52505327623509d281f5287ea5fdca0631	2026-08-10	fix(desktop): retry temp file cleanup after 7z extraction on Windows
+e076d230f46fb3cc79f7c0ebe1bdc25821c1186b	2026-08-10	fix(browser): rm secrets from browser_exec subprocess; /browser off; hide windows console
+0ea986db6633a8da997250aaadeda3fef709d200	2026-08-10	change: electron-builder 27 signs with signtool /dlib, not powershell
+847416ab3cdc4dbc4e63767c1dfe57d54fc76e67	2026-08-10	change: pywinpty 3 — v2 sdist cannot link on windows arm64
+3c6073de3c0bbb7244542c948365a4acaa2a4dac	2026-08-10	change(desktop): the windows installer is one-click per-user
+19c0f4e5e2829a1aaf07d436165fe653ceded190	2026-08-10	fix: windows signing config moves to environment variables
+b926dcc3d9214db490b3c93febb7bc6c49ccf8dd	2026-08-10	fix: builder args with spaces survive the windows shell hop
+323df71ed318c8292b6137a19f667f4328d13b1b	2026-08-10	fix(desktop): tag-to-commit resolution survives cmd.exe
+4d0df3882a1f4565569d0ace7aa65ccccd44da2d	2026-08-10	fix: the uv triple gate accepts official windows banners
+641d254db43663334d8dd95da39318f6a18f74c9	2026-08-09	ci: add macos and windows test lanes for the os-marked tests
+3b08a0f9b552093bb42b162f6dc9e5fd2bdd1ad5	2026-08-09	fix(desktop): give the update hand-off script its own console - a detached hidden powershell dies before -File runs
+92be912d7355bb9ed38d0847a5aabafd99fb7010	2026-08-09	feat(desktop): repo-owned Windows update hand-off script - stop depending on the frozen hermes-setup binary
+c77ed825960ad2ea92227f10fda0de0b4143bf09	2026-08-08	fix(install): provision the VC++ runtime before the Windows desktop build
+04afc8d48e60696d74ece96ec0d54a729252440e	2026-08-08	fix(desktop): say why read_window_below cannot see the windows
+a09124cea591e882eb48b6bcf5450e59aae2a3fe	2026-08-08	fix(install): stop managed runtime child trees on Windows
+2cd9e1777b47f001acb6a5d4ec5848677b331c31	2026-08-08	fix(desktop): rebuild get-windows when its win32 binding is missing
+7210db5646151c163f130d312811eb001f7f73ec	2026-08-08	fix(build): allow get-windows install script, refresh stale allowScripts pins
+86b50c6a294ee8097444d33105b862f91989f628	2026-08-08	fix(desktop): keep earlier HUD windows in scope for the turn
+67518a2adf1086b3812f0a6b23f1ec19647ecc78	2026-08-08	fix(desktop): repaint peer windows when the appearance changes
+33554b17fb1dc1a44da376822cd30eee78125b42	2026-08-08	fix(js): allow get-windows install script in npm 12
+7ff9d7db91830ada55da309be669a618571efbca	2026-08-08	fix(desktop): match a project to its cwd across Windows path spellings
+372b3b7bba4b2b8f5880581984eedf685056dbdf	2026-08-08	fix(cli): decode cua-driver autostart PowerShell output as UTF-8
+5b5b5e8da0d5a457b5217d54444d04442834d22e	2026-08-08	fix(goals): decode quality-gate output as UTF-8 instead of the process codepage
+26eeb8568e2609fe88d47d556e5a6c9028ce3cee	2026-08-08	fix(tools): decode git output as UTF-8 in working_diff on Windows
+9dcce84c38999662f4f1d6a7ad142b6f27502cb6	2026-08-08	fix(clipboard): use base64 encoding for PowerShell read path to prevent ANSI codepage corruption
+ad82fc9bdc9d47bc0c7cde59d41e26dc385189eb	2026-08-08	chore: contributor email mappings for salvaged Windows-encoding PRs
+967157a7c9b0fbf834f3810f66aebadbee0c6540	2026-08-08	fix(windows-tests): address parallel runner encoding and symlink privilege errors (Fixes #39480)
+298ef06458f95043ef984876e7f865f732604e5c	2026-08-08	fix(tests): Windows-aware path-list split and UTF-8 progress output in parallel runner
+5945929d4b6c4a31dc7b7640ab4e490b243e26d7	2026-08-08	fix(tests): read and write test files as UTF-8 so the suite runs on Windows
+9bbd7f97c866633ec652070bb2e368c1c690e90f	2026-08-08	test: pin module-level _AUTH_JSON_PATH to tmp store in salvaged windows-encoding test
+9e6cfcda5aee016e51c0b6838ed213d4aacbc7e6	2026-08-08	fix: finish the missing-encoding sweep — BOM-tolerant reads for user-edited stores
+3fee5c291b55175373f2cbe5ca6650bc861ff1a1	2026-08-08	test(tools): cover UTF-8 BOM input in json_parse sandbox helper
+f2feb6f37d01447baf21f3fa47a8262da06cbbbf	2026-08-08	fix(tools): make json_parse tolerate UTF-8 BOM (salvage #57870)
+b11627b5d4453b5dd2636b17dd7df75a48b33fa1	2026-08-08	test(auth): cover the two remaining Windows-encoding readers
+762f1c588eec3eb18020b69f5efd30becce877ba	2026-08-08	fix(auth): read auth stores as UTF-8 to prevent credential loss on Windows
+ece678db97d81e65189b8212b0101b584482e1ac	2026-08-08	fix(cli): apply BOM-safe .env decoding to hermes send's private loader
+b76498ba07ffb55a4f2ce6d2e69e910f25ff3e84	2026-08-08	fix(cli): strip UTF-8 BOM on latin-1 .env fallback path
+aa1fac980d8d2957a0a74b5aed2efb416fcf667f	2026-08-08	fix(cli): read .env as utf-8-sig so a BOM doesn't drop the first key
+a024ccd66e475a9827302cde7fa75b4b0f0ba89d	2026-08-08	test(gateway): regression tests for UTF-16 chunk limits at the Telegram boundary (#55844)
+022d196f38e66562e19fdc8fc287dbcd00ad3681	2026-08-08	fix(telegram): honor UTF-16 entity offsets
+f1c13377a3979f7732ad5ff693ecb549855aba49	2026-08-08	test(cron): regression coverage for Windows encoding cluster
+36f73df13970d2a1aa792cf069e461a4b4b2220a	2026-08-08	fix(skills): widen BOM-tolerant reads to all comfyui workflow-JSON call paths
+092ff2b9aafdb38b2824233735f85d160745d254	2026-08-08	fix: suppress windows-footgun false positives in linter pattern list
+0c2cdccccc805063f7e74e6e1c26196a1140a496	2026-08-08	fix(build): win32 get-windows staging must skip the tarball's bundled darwin binding
+f463a7e8eecf3f8e8b2cf78afafa93055f855a58	2026-08-08	build(desktop): stage get-windows like node-pty
+b14cbbfe034c2e52a1e66dc675104bb108fd4605	2026-08-08	fix: psutil.pid_exists for PID liveness (Windows footgun)
+4af8fb21487a6e3e0d59cfcee9d76da0e0ec8403	2026-08-08	fix(ssl_guard): tolerate truststore SSLContext.get_ca_certs() NotImplementedError on Windows
+8560dc6b97777752cdad1c5c882462b2ce74be5e	2026-08-08	feat(desktop): let a composer draft move between windows
+cc1acfb229ffccae2e42339af71faac493523ddd	2026-08-07	fix: Windows-safe process-group teardown in verify runner (footgun CI)
+979bf0cc4ab218d11de83dc10336d55c6d619eb6	2026-08-07	fix(voice): require minimum evidence for fragment echo matching, use char windows
+c005546cbc4ce87df3cdee13815e5a21595075bd	2026-08-06	test(cli): skip the permission-preservation cases on Windows
+55e70f570e4711d2dc46089dbb991ec11142edf4	2026-08-06	test(sessions): guard the Windows backslash child arm of _cwd_prefix_clause
+2183ed392137dec8d5198d681fd741424a406cbd	2026-08-05	docs: fix stale PATH location in windows-native common pitfalls
+aec331899e4748739927fddf02a54327e64419a0	2026-08-04	chore: suppress windows-footgun false positive on gated killpg
+34833303f55984a3ad96baeca47b227f4aadc8ff	2026-08-04	ci(install): actually run the PowerShell installer tests
+dae7e5477e39a4c59e14208c66ab2c09b6a418fb	2026-08-04	test(install): exercise 8.3 normalization by running install.ps1, not by parsing it
+eb78ab235f1d61c3a66387cde8d78cb7263e4184	2026-08-04	fix(file-ops): decouple BOM detection from pre_content, add V4A backward compat
+696fae8e78c0c93fe4ab1bdbaf7c56127ccfb11e	2026-08-02	fix(agent): strip UTF-8 BOM when loading profile .env into secret scope
+34b31b3a32d1936eb3f967c93f19fd7dacadcf8c	2026-08-01	Revert "Merge pull request #76459 from NousResearch/ethie/bundled-node-path-windows-layout"
+97f13602c1ab823add47f2f5f4282b9e2ee1eb49	2026-08-01	fix(install): install npm 12 into the vendored Node tree on Windows
+5b3b761404d49111c85cf7fb84cd8b73a0b6b598	2026-08-01	fix(desktop/windows): don't pre-write the update marker for stale installers
+3bed7d4ae7bc9139dd9e26cd54fc70e8bc699226	2026-08-01	fix(desktop,install): keep bundled Node ahead of system Node on Windows
+62f00319db1713ffcfbb049a163836072a573cd4	2026-08-01	fix(patch-parser): tolerate CRLF patch bodies and Move-then-Update
+5cb19d7af5bb5b247ec4e340bb11f30ba438a2cc	2026-08-01	fix(desktop): keep Windows SSH runtime at machine root
+80c86c4949901e5f87ecc648c8fff9393f411689	2026-08-01	fix(desktop): make the Windows app icon match native icon size
+05504bd9f090e1825ce08d4ddd10ab9a7edf75d4	2026-07-31	test(gateway): make test_gateway collectable on Windows
+9507f4382e912d200919ee6c511319f0a300a2c2	2026-07-31	fix(update): stop the venv-side launcher of each paused Windows gateway
+0ee9723b52c7b5483e58084f687ff6a7f470eccd	2026-07-31	fix(desktop): make the non-Windows updater bypass an explicit policy
+6e8691f432127e4b798b0421a1ba0462ef5dfdd7	2026-07-31	fix(update): fallback to ancestor-PID check for Windows update lock handoff
+53f7d137ed8fc39257a10db247e7acd4cc3445fe	2026-07-29	fix(windows): native Windows correctness for CLI, gateway status, banner, and WSL browser paths
+3e7a11ca2e5fb9a1faa4866dad493b20fc30b0a4	2026-07-29	fix(test-runner): native Windows venv probe + glyph-safe stdio
+66c4c9c0b1f6450f6443b9d644f0a9653355f558	2026-07-29	fix(tests): forward Windows location vars through the hermetic runner; patch Path.home() in hindsight _clean_env
+e65ff9625fa4368b39c5b6df10df1fc21508e45e	2026-07-29	fix(update): repair managed checkouts still running core.autocrlf=true
+7bc9956660401611863acd9f0785873861a8934f	2026-07-29	fix(computer-use): normalize Windows manifest paths in WSL
+50e27abdd35da2c5ae4e93e7e44ede2f847d300e	2026-07-29	fix(computer-use): hide Windows cua-driver subprocess consoles
+88c19a4edf0adc5ca29037a1e857ab2c9ab81213	2026-07-29	fix(cli): repair Windows cua-driver autostart registration for paths with spaces
+19055492aac32e26bf5c57c3ead376b0b084bd28	2026-07-29	fix: route stray HERMES_HOME hardcodes through get_hermes_home() (profile + native-Windows safety)
+472658d0143ac6599b02408674e6720726de7e43	2026-07-29	fix(desktop): pass shell to serve probe; bound Windows discovery probes
+c892ca25e01afd45367c5ba49f681808c8187dd7	2026-07-29	fix(doctor): resolve managed/legacy agent-browser dirs PATHEXT-aware
+76173ba8cd18ef10b0cf9366346d9e794e55ce94	2026-07-28	lint: suppress windows-footgun false positive on POSIX-gated os.kill probe
+89490ae373bbfa0990e1beab4c6d74ed728b2665	2026-07-28	fix(desktop): honor gitignore across Windows path casing
+15317e1fd7392646cd21542e7e30498a847d841e	2026-07-28	fix(desktop): upload Windows attachments to Linux backends
+0560f52047dfb2c537d34b81bc20e0ebb4276209	2026-07-28	fix(voice): add WSL2 PowerShell audio fallback for TTS playback
+9b89da23fb8d76a7c208168c57c3eb5bec891d60	2026-07-28	Fix Discord ffmpeg discovery on Windows
+c0c5dac5310e9647b440ccb8e091ef96bc94c96c	2026-07-28	fix: stdin=DEVNULL + windows_hide_flags on STT transcode subprocess (guard test)
+d66ec2f5f403b4afdda02aab26f13de337315a9c	2026-07-28	fix: explicit utf-8 encoding on ffmpeg STT transcode subprocess (Windows footgun lint)
+1398cc40cd49d7c6fcefb39a04e239b659bcb4ee	2026-07-28	fix(install): ASCII-only comment in install.ps1 voice-deps helper
+a09015d31e29cac5389fac8eb662b49c0645a8d1	2026-07-28	Revert "fix(scripts): encode tool_search_livetest2 output as utf-8 (Windows footgun)"
+85c2976e22aae0b6c66d9f79e5556da3619bbd3b	2026-07-26	fix(update): migrate legacy pythonw Windows gateway launchers to the hidden-console design
+83dc0b9b85bb8c86ec4aeb012d406e3a4086b6e1	2026-07-26	fix(install): clear stale Windows cua lock
+23d0dca8324e9ae7dbf00f4b3821de566505a56b	2026-07-26	fix(install): reap Windows cua installer process tree
+e286658377ed63f17582be59bdc081811ed63b3d	2026-07-26	fix(scripts): encode tool_search_livetest2 output as utf-8 (Windows footgun)
+6f5714372296b607e59d5cc79e297e65c6f5ae64	2026-07-26	fix(lint): explicit encoding on probe-file open in UE harness (PLW1514 + windows-footguns)
+d9c41b5178657d7159b68199e8bfd571169421f3	2026-07-24	fix(update): detect the OS-native machine for the Windows exe integrity gate
+199f55805876965fadea0f7a7ef29ae9128602ec	2026-07-24	fix(windows): verify rebuilt Hermes.exe integrity before shipping it as an update (#69179)
+0a6fda01e3f4b4742f668606ffa2ca870613ba2c	2026-07-24	fix: restore utf-8-sig BOM tolerance at .env readers the sweep normalized
+75e0d52034656a3f1584649fa0c2a12fbbbeb284	2026-07-24	fix(windows): sweep remaining bare read_text/write_text sites + linter rule
+e02170f54a5dcc57b8ba59619b5d2b7f8f59d6fa	2026-07-24	fix(hindsight): specify UTF-8 encoding for file I/O on Windows
+3f1de1fc4a9a5d34915ad397d781ec6cde75bafc	2026-07-24	fix(install): emit UTF-8 from skills_sync on non-UTF-8 Windows locales
+d083d9dacd4494eb4a9570b4bdf8ad6e5d0fafbf	2026-07-24	fix(desktop): close cross-session leak windows in composer + session refs (#59305)
+d68e043ba7f5e7fef5f58ab576c604f8f7c24a27	2026-07-24	fix(desktop,update): prevent silent state.db zeroing during Windows update (#68474)
+0fb0ba475dee759999fe665a7c59eedba7932be3	2026-07-24	fix(windows): platform._syscmd_ver stub in bootstrap + PYTHONUTF8 in desktop backend env
+d4b867cf9fb8be7d46bf0825b23c64a17cd38313	2026-07-24	fix(windows): sweep remaining unguarded text-mode subprocess sites codebase-wide
+ead23aadb9a8a56e082c7886977bbd37af132e3a	2026-07-24	fix(windows): widen utf-8 subprocess decode guard to sibling desktop-backend sites
+51fcf055dfef8f5daa828bc4575f6c2cd040ce1a	2026-07-24	fix: harden tui_gateway subprocess reads against Windows locale UnicodeDecodeError (#53137)
+0b17d4d71e1ad94aa8d3d9ae3172e031ab42860a	2026-07-23	fix(windows): re-fit env_probe console suppression to the temp-file _run + add no-window tests (#67690 follow-up)
+5c5960d9f93ad4ddb3abb224ef1a2cb2faed0649	2026-07-23	fix(windows): suppress console window flashes in env probes, lazy installs, and platform.win32_ver()
+6c2c866a9ae3a20ee5e7adcd3cc6bf6778b28a58	2026-07-23	fix(desktop): join Windows bash candidates with path.win32 in find-git-bash
+4276fe8ded72b63b4b849d253773ad02a96ba5dd	2026-07-23	test(windows): pin hide-flags contract for LSP client spawn and npm/go installers
+d6ffe3d7677525a9de270628e85b2bf7ca35b06e	2026-07-23	fix(windows): hide console flashes from LSP server spawn and installer subprocesses
+34678d2f2edd46cf930b8d3f6164133e79995eb4	2026-07-23	fix(compression): skip empty post-handoff summary windows
+0dbf639bc8d622efefea495636f38f4a449350a3	2026-07-23	fix(windows): hidden-console daemons — extend the parent-console fix to every detached spawn path (#70205)
+a553bc74e4c6c94a773118018d66736fe565a902	2026-07-23	test(windows): regression coverage for the six #56747 hide-flag sites
+714d7cc1a4695a062a792b85647deb1d5ec4d457	2026-07-23	fix(windows): hide console flashes in GUI-reachable exec paths and provider transports (#56747)
+8aa2a8bbcf48387bddd34c564692012e6012deb0	2026-07-23	fix(update): import-based recovery under Windows hermes.exe self-lock
+72324eacbe4cff89b990c9671c58fe32edb232d6	2026-07-22	fix(lint): explicit encoding on probe-file open in UE harness (PLW1514 + windows-footguns)
+1cb67a5916a04c431f1ecad3b48a85e09670e436	2026-07-22	chore: suppress windows-footgun on the POSIX-gated killpg call
+967e078ae46e6e748cc2ca36a88e0d0146904f7a	2026-07-21	fix(windows): share one bounded, tree-killing git probe across both call sites (#68997)
+6096ad3d7733a624c36e2a88f2847c56ea1cd74d	2026-07-21	docs(touchdesigner): gate skill to macos/windows — TD has no Linux build
+8a0701ca489a172bfdc19454ff64e9b99cb21029	2026-07-21	fix(context): revalidate Codex OAuth context windows
+b14be881b97bc7d887bc72bed4b8f53c7e277b5d	2026-07-21	build: declare pywin32 as a direct win32 dependency
+b586e4eff20de21df6a3aa1209d7d3b089df6bbc	2026-07-20	feat(desktop): open multiple full app windows (electron)
+a0f6c1fab03f3fe4f2bdab0649d732401964e63a	2026-07-20	ci(windows): disable e2e job (not used yet)
+ef7749d4c2245ddd7a6f54bd67ff324cfa716ac8	2026-07-20	ci(windows): add desktop installer e2e with AutoHotkey
+3640b8e66624f1472cac19610b16958cb9fb65ee	2026-07-20	ci(windows): pull e2e-windows scaffolding out to its own branch
+0b40ba10cdab38f8c2bda2048e6f07df27971cbc	2026-07-20	revert(installer): drop install.ps1 rewrite from E2E branch
+ff276045a165fa7e875470c1e8d016f985fbd2f6	2026-07-20	ci: disable e2e windows installer for now
+69fc7a8d1f5979e1a62e15cc575c84ca6acef57e	2026-07-20	ci(windows): add desktop installer e2e with AutoHotkey
+3dab86a956bd0a8ed6e5d6d46659a92f28b5c114	2026-07-20	fix(installer): uv path resolution and PowerShell host handling
+45acb62c6d362da2dfafb5b1dd0d82dfa1888455	2026-07-20	feat(desktop): route Desktop SSH to the Windows lifecycle
+e77ffdc28cdf407f47ad0070c6358e343b390174	2026-07-20	fix(tools): bound env probe subprocess so a Windows inherited pipe can't wedge sessions (#67964)
+b9dba7eff59c9459bc14c62e4873ed30c7b48889	2026-07-20	fix(env-probe): stuck Windows probe can no longer deadlock system-prompt builds (#67999)
+113d9f63b5a1b254839f5f566e339dfd53ada566	2026-07-20	fix: Windows guard, dedup recovery, profile-safe paths, clear SO_RCVTIMEO
+bc6839aa37b7ee63600fe5d3c614796d330eaae7	2026-07-19	fix(desktop): stop hard-failing pack on non-git checkouts + fix ZIP-path autocrlf (supersedes #67643) (#67730)
+e361c5e20402375c74a65ca52810c6a380461226	2026-07-19	fix(desktop): support spaced Windows Git paths in review
+aa1ad32191c4c8b6f15fd7fb213dbf8bfee28652	2026-07-19	fix(desktop): Windows browser-setup journey — console flash, idempotent setup, Nous Portal activation (#67473)
+73b3a8afe3d136369f5e0ce6394aef9bec7ff824	2026-07-19	fix(bootstrap): download timeouts + BOM upgrade for pre-fix cached scripts (#67193 follow-up)
+acee4f25c7247b94f61bfa6ed3960b3a5bfec825	2026-07-19	test(bootstrap): cover CP1252 stderr decode and UTF-8 BOM cache writes
+7d597cc5d47eaaa4f8de35b092a48655d4270114	2026-07-18	fix(cli): sanitize UTF-16 .env without corrupting the first key
+97249cfc8abb9053c518552cbec88ec45aee0d76	2026-07-18	fix(install): keep install.ps1 pure ASCII so Windows PowerShell 5.1 doesn't misparse it
+edfa4cd9b7410d0af759a97675242b3c8d0a05b1	2026-07-18	fix(cron): widen UTF-8 BOM tolerance to backup/curator jobs.json readers
+f361232883470c23237b7ec8115b143be5bc7a01	2026-07-18	fix: tolerate UTF-8 BOM in cron jobs.json and context files
+51e1fb8fb92b490394427f18c36f4266c66457b8	2026-07-18	fix(cron): accept UTF-8 BOM when reading jobs.json
+ddd34a98f3e80783245ec8973365f71d29b7e9da	2026-07-18	fix(desktop): harden Windows sandbox fallback against false-positive sandbox loss
+2b0c4d69ea3ab9913159b0e9a320e548fd0ebfd9	2026-07-18	test(desktop): cover Windows sandbox fallback marker and ACL helpers
+e53d2dfccbb96f0a40e07f798b7c72096195e439	2026-07-18	fix(desktop): recover Windows GPU sandbox 0x80000003 startup crashes
+fb0217c6561a12c77841bfbe1f48632f167048e3	2026-07-18	fix(agent): tolerate lone UTF-16 surrogates in tool-guardrail hashing
+38233b61c2a96c6b646ca9b38148bf38a3b537a7	2026-07-17	fix(desktop): trust Windows system CAs for remote gateways (#66304)
+1b63737f55fa9821391d8d50a4018f1dbc9b5409	2026-07-17	fix(cron): avoid Windows Python launcher popups
+594308d4bbe95548c9fe418bb10c449099426f93	2026-07-17	fix(credential-pool): throttle "no available entries" log to stop Windows log-lock storm (contributes to #62698) (#66338)
+00e9f6dd4d5760c2a0cce4222639513de75e6d50	2026-07-17	feat(serve): add Windows remote backend runtime for Desktop SSH
+780e0980773a875322abd720e5e126a4fe448e7b	2026-07-17	fix: widen UTF-8 BOM tolerance to all sibling frontmatter parsers
+a4ecb3da9ad05b4d97cf968feaebf11a375c6dc4	2026-07-17	fix(skills): strip UTF-8 BOM before parsing SKILL.md frontmatter
+531e5763e8f1dd6eb5c9855c184d39ff2003b1b4	2026-07-16	fix(desktop): hide Windows updater console during handoff (#66040)
+7f06884da6b75441ce950bdbd135a063df989f3b	2026-07-16	fix(windows): accept locked updater exe during self-restage
+8ca0cc159d48f855d6f7b4bbdb3942b5fbb6af29	2026-07-16	fix(apply): skip preflight on Windows when venv path differs
+53fe28889d6ac0f5ed5040527b9f1fd0cc328590	2026-07-16	fix(release): archive bundle/ at root in Windows zip
+87c7260e799e1d5d4f96ed953e7daf80a52a382d	2026-07-16	fix(release): strip leading slash from file:// paths on Windows
+94136efccaf13a1ae4ce19eea85a539a90410313	2026-07-16	fix(cli): don't run Windows npm on WSL update and stop reporting success on Node refresh failure
+5330b2cfade28e48e608beb0a286c8646305f137	2026-07-16	fix: use Windows-aware isabs for native paths under patched _IS_WINDOWS
+f8bf40b18b4c3e15b848a1fd3c4fbc5b67ae6ef4	2026-07-16	fix(photon): hide the npm dep self-heal console flashes on Windows too
+d68ac9092aa7bf348ff5c4a2d97619820220b4c4	2026-07-16	test(photon): cover hidden Windows sidecar spawns
+d8f7b608c98595a8d560b36537d5919cdea43c52	2026-07-16	fix(photon): launch the iMessage sidecar headless on Windows
+0615300ed879ae39100ca417bdbe982c2bfc79f3	2026-07-16	test(windows): verify managed bundle on VM
+ea8e2bb7b75f3a161417a312afec9752f091c8a8	2026-07-15	fix(release): handle runtime symlinks and Windows Python
+7886c5d648d0b79aa70f1e964d925bd11a7705b0	2026-07-15	feat(install): install.ps1 defaults to --bundle, -Source for dev path
+db05e2e3c05bb3ce892592d972368af78bb29508	2026-07-15	test(e2e): desktop update via updater gate + windows checklist
+2b6897f982d470ba001b39b2ebba5d95b58700fa	2026-07-16	fix(computer-use): target Linux app windows reliably (#63725)
+651bd9890a53fe95850216bc0c71224047b5e814	2026-07-15	fix(nix): review fixes — dangling-backslash wrapper bug, rebuild scope, dev venv split
+4a58e22e997ec56802fa93d4ca503a3767a02c4a	2026-07-13	fix(windows): put Git Bash coreutils on PATH for the non-login fallback
+10fbade64bc70106e523f1d488744e8d1b1a0208	2026-07-13	feat(desktop): electron — openDir IPC + ⌘W menu bridge (tabs, not windows)
+727025a2f3d5f8503faa1e91f93d7462e35262cf	2026-07-13	test(desktop): replace windows-child-process.test.ts regex with real tests
+ec2cb3ab4743d86a00fd3257bda0b1835d95a802	2026-07-13	test(desktop): extract Windows hermes-resolution helpers for real unit tests
+4527943e91c9cf767ce90fe85a34f2855d85cd75	2026-07-13	test(desktop): extract hiddenWindowsChildOptions + stopBackendChild for real unit tests
+f0d22e4b6c9a46e0ce2956131aec502797655082	2026-07-13	test(windows): capture bootstrap only in msys wrap-command tests
+c707165212aab9f71709a30a87827ea81baf8739	2026-07-13	test(windows): capture only the bootstrap _run_bash, not the failure probe
+c4622a1d5b355b2f8f73470afe3eccee532d72ad	2026-07-13	fix(windows): survive broken Git Bash login shells
+f2fcf89c1f7ee4b4b2b894b5385cdf80a0dec2d9	2026-07-13	fix(windows): bash-safe snapshot paths after #63113
+d1ad9a0f5d205747dfca035449951e8c4fd1ac84	2026-07-12	fix(windows): rewrite native drive paths to /c/ form for bash file ops
+88fbc8825cd2dedfe145c21252dd5d2953e255aa	2026-07-12	feat(desktop): bridge WSL paths for a Windows host + WSL backend
+ceb179163d767ebbf0f77e6ef7f1c93c7caa3c62	2026-07-12	fix(desktop): mirror Windows path identity in live overlay + WSL spelling
+57dfebe3db10a3ed4692baccb3e72282d33626d0	2026-07-10	fix(desktop): re-apply UI zoom on show/restore, scoped to chat windows
+3f8b22004958506e9d476989365b3ee2ced4ecff	2026-07-10	fix(tools): resolve MSYS paths in file tools on Windows
+e10c8eba00b05a1d1c1b93ebbbe5b0ddb38c946d	2026-07-08	fix(whatsapp): use windows_detach_popen_kwargs to prevent console window flash on Windows
+838d50495f15713be8825615a6e713a3e2f3105d	2026-07-07	fix(mcp): guard POSIX-only kill primitives in stdio watchdog for the Windows footgun linter
+8ff162fb2de05b86ee003a7fc13786dd2adadea1	2026-07-07	test(installer): guard Ensure-NodeExeOnPath wiring in install.ps1
+2bc6e1a74b5848332c606d1b20c97aa7f374947d	2026-07-07	fix(installer): put node.exe on PATH for Windows npm lifecycle scripts
+1deeaf71abcf84d9f5d4d8255abfd5654a0ed2e1	2026-07-07	fix(discord): truncate thread titles by UTF-16 units + AUTHOR_MAP
+87be36c240ecc14c4b47584b401fc236acba549f	2026-07-07	fix(discord): bound component labels by UTF-16 units
+a88e0fd2ab4afce191320ce85d6bac48db1e499b	2026-07-06	fix(file-sync): re-deliver deferred Ctrl+C via raise_signal, not os.kill (Windows hard-kill)
+713236dcd0f26c6d6a794e835e22664ece5ef593	2026-07-05	fix(desktop): normalize CRLF back to LF in update-marker files
+d00c7193c12087067bc4d475cb1811709580241b	2026-07-05	fix(desktop/windows): pre-write update marker before quit dwell to prevent backend respawn
+18e840469ffe9f8235331c787e34ebbe908564b8	2026-07-05	fix(install): guard Windows desktop installs against broken web_server
+3c2f628f5beddafd07b948ef509cf05dfec3bb5e	2026-07-05	fix(desktop): probe venv python in unwrapWindowsVenvHermesCommand so Repair can escape a broken venv (#59204)
+ce82b0c3cf7839993db23a38ed28c1bbe366ef1b	2026-07-05	fix: `hermes journey` crashes on Windows due to `%-d` strftime directive
+af01b3cb384365c4d5ec2603883c99db372456cf	2026-07-05	fix(config): stop provider-key warn-storm that stalls Windows logging
+058873805a85c1195afe23159c714c9522484423	2026-07-04	fix(update): skip unsupported Matrix refresh on Windows
+fab6d4d1b79ae5fde358b27eb9a8505e7142a907	2026-07-04	Fix computer-use crash on X11 windows with null PID
+b14d75f8afdb624be03cbefd19494ccc850bf367	2026-07-03	fix(update): prevent and self-heal half-updated venvs on Windows (#57659)
+359518beacf18f251cdad11af24d752639ab3a8d	2026-07-03	fix(desktop): guard link-title readTitle against destroyed windows
+a2d49de80156cc0e20c1ff5a30c552585f780413	2026-07-02	fix(terminal): also set MSYS2_ARG_CONV_EXCL for MSYS2/Cygwin bash fallback
+51c01062d4a2e3cdccc1fb1fdf712dd44fd18e2a	2026-07-02	test(terminal): cover MSYS_NO_PATHCONV defaults on Windows env builders
+cc2abd570b8c5a842ba5ff77256ee047dd18659c	2026-07-02	fix(terminal): set MSYS_NO_PATHCONV for Windows Git Bash subprocesses
+5d613a5638f8ea02b6b9d82fd8573c3d73724358	2026-07-01	fix(terminal): route init_session bootstrap cd through Windows path conversion
+9ed7252a98607edf0037bdff0c8ee4a3491ae685	2026-07-01	fix terminal cwd handling on windows
+ad5f3341d385ae2448cebd4a455fd01a322f8cbf	2026-07-01	fix(terminal): prefer Git for Windows bash over Linux bash on Windows
+b4342a83bb53363049e0fdcf2e6d57666474179a	2026-07-01	fix(approval): close bare powershell Remove-Item bypass + add ri alias (review)
+4b92a8cd3161c51ee38ee9f4b229e8617e702276	2026-07-01	fix(approval): detect Windows destructive shell commands
+97e0bbef53df86f1dfd253b410b3a85539bee2c1	2026-06-30	feat(lsp): add PowerShellEditorServices language server (#55930)
+b7c4369ca05077ee7d0b1e3f79e5b26056723798	2026-06-30	fix(telegram): chunk formatted messages with UTF-16 length accounting
+e5253d852b24f87af91d77b66141cc5c0b9e6f69	2026-06-30	fix(desktop): tree-kill Windows terminal descendants
+0ea318a7d4de4d2368623c332f5f2c4eb538581a	2026-06-30	test: make windows no-window-flag assertions immune to update-check daemon
+5a3d7fb99d1f23d3156e17575cabc664fc7fe593	2026-06-29	fix(xai): suppress false-positive windows-footgun on binary image read
+7cf6758e336c67b1b90cb93928f609008a3a8e5e	2026-06-29	feat(desktop): read-only spectator transcript for subagent watch windows
+29f096827595708e3ffe9683ad30418d57edd702	2026-06-29	test(windows): harden pid-scan no-window assertion against captured-call leakage (#54707)
+aa2ae36c3fcb6ea9af76c603d262389d832a24dd	2026-06-28	fix(desktop): launch Windows backend as console python so child consoles are inherited, not flashed
+25d35cce18cd51f903b8800dcda31950d6190a16	2026-06-28	infographic: Windows CLH lock-timeout traceback suppression (#54436 salvage)
+98a7cfb8f90ad1c62057a09024a78a3e7b7834f7	2026-06-28	fix(logging): suppress Windows lock timeout tracebacks
+02aa1dbb7d2f4bff3e8034c16da16e8a67ffb601	2026-06-29	fix(desktop): launch Windows backend as console python so child consoles are inherited, not flashed
+cb1bb1a48d76a7b1584b66f541e85d1a84b6bb06	2026-06-28	refactor(windows): unify windowless spawn form across the touched sites
+ee22d853eb131ecdce3a8ba54a9a1c39ee5ca4a1	2026-06-28	fix(windows): hide pdftoppm console flash on PDF attach
+32087e4bc962744b1496da05c8d6e8b770068c12	2026-06-28	fix(windows): hide console flash on checkpoint git + skills_hub gh probes
+df8e2523faa36e0c138065e6648fa203a7b0bfff	2026-06-28	fix(windows): verify launchers after primary install
+76bb8f46a0db2b9d7893dc0d54e2a87f79365fb5	2026-06-28	test(cli): cover Windows console script repair (#52931)
+95994bbc568a61297e10bbea0d0c96f3d2148b07	2026-06-28	fix(windows): repair missing hermes.exe after pip install (#52931)
+9a0010fd469f0de6c7e2146f955ed9980d02b397	2026-06-28	fix(windows): cover remaining console-flash spawn legs (#54417)
+eeca59f489194a4ce288b31de12b46c20d05cd48	2026-06-28	fix(windows): hide remaining backend console-flash legs missed on main
+1ffa01f35fb8bc0bf8825117788092ff0e08421f	2026-06-28	test(windows): cover no-window backend subprocess flags
+cb982ad997c5e04c6b647c4cbb3d1b020ec383fb	2026-06-28	fix(windows): hide console-window flash on backend git/gh/wmic/bash subprocess spawns
+dcc6cd1b42bdc4073f2f56fec8b58fc1543c8200	2026-06-28	docs: add infographic for #52378 Windows update-loop salvage
+ba37c910e0e2d19b3329a7e74dca21def8d4c3b6	2026-06-28	fix(desktop/windows): resolve real hermes over extensionless shim + prefer --update on recovery
+7c9cdad9fd2c786ca931dc32915d436d0ea6c8d9	2026-06-28	test(cli): cover Windows self-lock recovery guard + cmd-quote its hint
+b6f592dbdc4cf679c797343c526d4e776ac8cd7e	2026-06-28	fix(cli): detect self-lock in update recovery to break infinite retry loop on Windows
+c23f394eb863a24ec5ecfe823d43f1188ec89de2	2026-06-28	fix: satisfy ruff encoding + windows-footgun lints for cgroup reaper
+d3d621f7c38bb801d9d734cb2898bd4f9b134709	2026-06-27	revert(windows): roll back terminal-popup PRs #53791 #53810 #53829 (#53853)
+4c677698ff5c6d21be47f1d62c14a8c9de01bda9	2026-06-27	fix(windows): stop persistent gateway console after update + close checker variable-argv blind spot
+749edbf650a259279c32d0addb09c0546040c2f2	2026-06-27	fix(windows): gateway-restart watcher leg must use windowless interpreter
+2ecca1e7d3e7c387b4d350f99dc699e2f43f73c5	2026-06-27	fix(windows): capture is not a no-window boundary; route flashing spawns through chokepoint (#53829)
+5db1430af9ecd7ecc1e5eba93e7e1e965af59927	2026-06-27	fix(windows): stop terminal-window popups from background spawns (#53810)
+ef17cd204d7583c31fe1ace9255077f8c736b47e	2026-06-27	fix(windows): stop subprocess console-window popups + add CI guard (#53791)
+d430684d7cce9f9b445e47fee9abbae796f1168b	2026-06-26	fix(gateway,windows): respawn gateway windowless after GUI update (#52239)
+76074b214517109f4816ea6e83042ea65712b131	2026-06-25	fix(desktop): transparent WCO titlebar chrome on Windows/WSLg
+b8fc8c908bb78db138458988042bfca61de5f4e4	2026-06-25	fix(approval): fold Windows absolute home paths in dangerous-command detection
+bf0513bca0dd5d200d8951114b911fc013a2f422	2026-06-25	test(windows): align gateway restart CI coverage
+e7d2f0b93ca29b2cd95d6623fe8af7646173a75b	2026-06-25	fix(windows): suppress console flashes and harden gateway restarts
+6638199c53f64f995ac02253456f719960ec7673	2026-06-24	fix(install): harden venv-resident process sweep on Windows
+7e55b934ea251ca2496125fb89b337062c85a6ed	2026-06-24	fix(install): kill gateway running from venv before recreating it (Windows)
+050bd01b7b536fa57ffad8c1f69286269adb7f68	2026-06-23	fix(dashboard): serve uvicorn on SelectorEventLoop on Windows (#50641) (#51717)
+23683c3353b0178e7e52663b3a904951deb4c3c8	2026-06-23	fix(installer): re-resolve Python fallback at venv stage on Windows (#50769)
+433db17c0a8d5581b4fb38289539fc1ee5cc7696	2026-06-23	fix(windows): harden gateway scheduled task (#45610)
+c820eb6a5a94bf919867947391a42b08672df668	2026-06-23	ci: remove unused windows installer job
+351afd353d9925935e3c6fd0028b053a4b107d6b	2026-06-23	docs(computer-use): document Windows UIPI elevated-window limitation (#51121)
+f2e37549c673ab3645e5784d066ee95193c119e2	2026-06-22	feat(computer_use): cross-platform cua-driver (macOS/Windows/Linux)
+17dfc6bec4a8b7fd840d479c33e9a7b2449f805d	2026-06-22	fix(desktop): set AppUserModelID on Windows so notifications fire (#50808)
+ef6492b6484aff843aa86598c9ef68b9eecf3038	2026-06-22	fix(gateway): cold-start installed Windows gateway after update when none was running (#50804)
+745c4db235bdb09beb19564f66727dc1f43e4fe2	2026-06-21	feat(desktop/windows): show update-in-progress feedback before the desktop exits (#50419) (#50448)
+aa2aac68b004fbef7ba7ea9c2abd4e1bcea670f8	2026-06-21	fix(V-009): reject Windows drive-letter paths in session field validation
+bb77a8b0d55be158ec8a93a5f892ff62d468ce52	2026-06-21	fix(gateway): respawn unmapped Windows gateways after update (#50090) (#50373)
+f72690825e76fd205b3f475bdac75643e42bcf49	2026-06-21	fix(desktop/windows): stop in-app update from cascading into a backend restart loop (#50381)
+7502d38bf9ce6eeb86a17a0906a4fadf439c39d4	2026-06-21	fix(windows): prefer cmd npm shim on PATH fallback
+9e4348f28ac114c3f88d68e2df1fb915f1c2d3b9	2026-06-20	docs(windows): document uv.exe AV false positive
+2b08a4295a650d27fc354573ef2dde87dd211103	2026-06-20	docs(README.zh-CN): update Windows install from 'not supported' to native PowerShell
+ac83365d9602d4a2d4dfd79f221432e599ef95f9	2026-06-20	fix(install): expand 8.3 short %TEMP% so Windows Node/Electron stages don't abort
+e74033b39bc1b9640f8a21f9416631dab5312559	2026-06-20	test(install): add ConvertTo-LongPath helper for 8.3 short paths
+d4e7dd609da643af19d55b8b3162bbb152d39d5b	2026-06-20	refactor(windows): tidy managed-node resolver helpers
+fcc169057d9083d436db7f89640b41fd668eca2f	2026-06-20	fix(windows): prefer managed npm for hermes update desktop-rebuild gate
+7a7b56d49830682d9c7ec1dbbbe2ec9d99b8eff3	2026-06-20	fix(windows): prefer managed node for whatsapp and desktop
+b12c0cd9970ba7631d094f20c28f6189d4b065b9	2026-06-19	test(windows): run pytest-timeout in thread mode on Windows
+fd92a3a5c9da0079cea0731bf3adf7bb288caa1e	2026-06-19	fix(gateway): Windows restart no longer causes a silent outage
+67316fdc94bae09a2aee6318bc75cd3162decc25	2026-06-18	fix(install): relax native stderr handling in install.ps1 (#48352)
+feff283e177f622e8a7b4087092c6f8c1a68e64c	2026-06-18	test(install): lock uv installer to a resolved PowerShell host
+a14bae6bcc00a6562861e245494cfdcab71737d4	2026-06-18	fix(install): resolve PowerShell host instead of bare `powershell` for uv
+016bce1a09ba0b705bcbd35395cb1a4a5935eb0c	2026-06-17	fix(desktop): recover stranded session windows when resume fails (#47655)
+b07b7894ec55d284bb334454c1d27d101cc9e99d	2026-06-17	fix(desktop): keep streaming painting in unfocused secondary chat windows (#47919)
+44e5848e7418a7f7909d59aea2066a55f1096378	2026-06-16	feat(desktop): stream subagent activity into watch windows (#47060)
+58362361dd9ed5b23d0359bedafe600356246f67	2026-06-16	fix(delegation): stream subagent progress per-tool so live windows update mid-run
+67233d1c2ad5e6770eec6684fa32cba3ce7c0f60	2026-06-15	fix(desktop): sync new sessions across windows
+98c294126bafb2ba5660a2dc817c97e7dc8c95bf	2026-06-15	feat(desktop): open new sessions in compact windows
+368fcf1ff03b3c6dd562bd590fe92805ecca7461	2026-06-15	fix(desktop): read HERMES_HOME from the Windows registry when env is stale (#46772)
+649f4c8c1afc398996e38f22d8bce2da48b8e6d6	2026-06-15	feat(computer-use): cross-platform cua-driver (Windows/Linux install, version warning, lazy mcp)
+d3c34e0126e1f0f1923913bc332c9d1c8310608f	2026-06-15	feat(computer_use): enable Windows via cua-driver-rs
+8eb7aa59669b450dd2eba6d1e486577884a57089	2026-06-15	fix(computer_use): polish Windows UIA salvage integration
+17b35a7d95683cbdc2ec1fe34ba5fad143277ab5	2026-06-15	fix(tools): release stuck input and prevent UIA index drift on Windows
+b062a5d4b96887b441c36e8f83f3bf40693d1a16	2026-06-15	fix(tools): harden Windows computer_use for daily co-located use
+63316ae271d011effe3533f822a99ad157060957	2026-06-15	chore(deps): declare uiautomation for the Windows computer_use backend
+42fc7d86d347a9e491ae07410d57f8857f919266	2026-06-15	feat(tools): on-screen overlay for Windows computer_use
+f76f382a65bd9daaa0999e1551298804a8052503	2026-06-15	feat(tools): add Windows UIA backend for computer_use
+f7955137828e43d26bab926f0aacc5302d5fa357	2026-06-15	fix(windows): kill hermes before recreating venv to release _bcrypt.pyd lock (#45120)
+78c11d99e35b111dd6198d8bc6aa1f7f6f168232	2026-06-13	fix(update): stop Windows gateways before mutating install
+aa53a78d6703ebdb0a9e05bc4d8878c1720930dd	2026-06-13	fix(desktop): hand off Windows bootstrap recovery (#45594)
+d62979a6f34f64f2ed840f159aac66e24d7cad78	2026-06-12	feat(desktop): composer status stack, live subagent windows, editable prompts (#44630)
+b4e95a2efe50c7cb6ec2daab1ffc4065976d2704	2026-06-12	fix(photon): add clarifying comments for Windows-safe os.kill usage
+343803b23cbc83423cffa0107d274af715754b19	2026-06-11	fix(cli): use subprocess on Windows for dashboard profile re-exec (#44282) (#44446)
+9102d4a588c84096f648a99d2a8fc10b154d118f	2026-06-11	fix(dashboard): show Windows 11 in host panel (#44511)
+76fa55240d610e5aaf0e15bf74055dd039620496	2026-06-11	fix(gateway): use base pythonw for post-update Windows respawn
+9662b76d592025c1536a6d7e0cb9aa317c09cc4e	2026-06-11	fix(install/windows): merge PATH in Update-ProcessPathForPackages instead of overwriting
+899acfe42ffd2632e0ba0ac6c3893ea0afebdc66	2026-06-11	fix(install/windows): repair stale winget registration; refresh PATH after every package manager
+264ac72b676b634c0f63b26af53c90205121bffd	2026-06-10	fix(gateway,windows): preserve restart watcher env
+4c797d0e23c12ffdfd9d34ce032e5e335094b2e9	2026-06-10	fix(desktop): hide Windows console children launched by GUI
+2f19512341fe20028958cc26b253c2eb9abd37cd	2026-06-10	fix(cli): repair non-UTF-8 stdout/stderr on all platforms, not just Windows (#43439)
+02f878ec5ac665bd9d7be7ec7093cd017e1084f9	2026-06-09	docs(windows): correct native data dir to %LOCALAPPDATA%\hermes (#42856)
+df9061743db56b0421be7e2ceb7421896f77adf4	2026-06-09	test(hermes_cli): scope concurrent-gate fixture to Windows, fix race at source
+b5f8996ccc2163ef06b4265d0882019fc24b0682	2026-06-08	test(cli): exercise real _prompt_text_input for native-Windows confirm deadlock
+714183530b05b2169a394724b8d6c97e68f017a9	2026-06-08	test(cli): convert stale win32 stdin-fallback tests to the modal contract
+ab98818e5bf3d721d01f1b1899f60ceaeab2a2e9	2026-06-08	fix(cli): use the confirm modal on native Windows instead of deadlocking input()
+d66bac5a1a0bbfffe0255a19cf4b7ce49f278672	2026-06-08	test(cli): failing regression test for native-Windows confirm deadlock (#33961)
+3a0f6ac3d4f355dcbcfa9f574fdd0cdcb8fb33ab	2026-06-08	fix(photon): satisfy Windows footgun + CodeQL checks
+96fd9d4979f327028faa9b2cee0d8d31955b1e9e	2026-06-08	fix(desktop): stop running Hermes.exe locking win-unpacked before Windows pack (#42100)
+abcf996b1f749a647a1b213653a80d1eee58f6d1	2026-06-08	feat(windows): enable dashboard /chat tab via ConPTY (win_pty_bridge) + tests (#42251)
+cef00ae602a8aa1311d55edfad4e322c4ff99993	2026-06-08	fix(tui): handle Windows PTY stdin and detached WS frames (#41953)
+cb13723f53fdb4269f6904740b942b28425c6615	2026-06-08	fix(pty-bridge): mark os.killpg/getpgid windows-footgun-ok (POSIX-only module)
+2aa316ec9c0406d4e8a057f04297215353ba38d0	2026-06-07	docs(windows): fix Get-Command PATH guidance to venv\Scripts\hermes.exe (#40613)
+6bdc4c02314acf76e5e4949d3d385afe555e48c9	2026-06-07	test: skip curses tests on Windows where _curses is unavailable (#40611)
+fe0b3f233832c074aca5bb1dc86615190a9782ba	2026-06-07	fix(windows): retry watcher Popen without breakaway when parent job denies it, plus regression tests for the breakaway bit (#40956)
+210f4e706a19cdc8a9e354084c66392febc7899b	2026-06-06	fix(desktop): resolve powershell.exe by absolute path in Electron bootstrap
+5dee40fcc0a18c148429aa1fbb3959bd2113a3c9	2026-06-06	test(bootstrap-installer): cover PowerShell path layout cross-platform
+8720023e963b9e51ba6dcc69d3ecb86563e856dd	2026-06-06	fix(bootstrap-installer): resolve powershell.exe by absolute path on Windows
+b08662b782beed5160e43c6205e76d9f54aa731b	2026-06-06	fix(gateway): tolerate Unicode in stderr log handlers on Windows
+fc086da8bd831b5f712838152c14582ce7047534	2026-06-06	fix(gateway,windows): reliability — JOB breakaway + status --deep probes + test-leak fix (#40909)
+742732fc12055926e335a47711b99a1292377e06	2026-06-06	fix(windows): respawn gateway after Desktop GUI update by breaking the watcher away from Electron's job object
+ebed881d46c4d39a7723a0bdbb70b53429f65e26	2026-06-06	fix(cli): quarantine running hermes.exe during update dep-verification repair on Windows (#40409)
+182092c5fdd5aafb22f80b4bc55c337cc8ed1bcd	2026-06-06	feat(desktop): default swap-panes to cmd+backslash
+fd234bad62107ca01e7189f19cc13521daf2e53b	2026-06-06	fix(install): detect TLS cert-trust failures during npm install on Windows (#40588)
+14fee4f11265728c427b5afb1942179ba6aba7f7	2026-06-05	fix(update/windows): retry handoff `hermes update` once on first-run crash (#39831)
+98528c78c1434a093be44760b31d4a81b433cc3e	2026-06-05	fix(desktop/windows): stop racing our own backend during in-app update (#39828)
+d880b5be098893e7d766a9179da3501181c6fdb8	2026-06-05	fix(update/windows): don't return _UvResult on Windows (subprocess argv crash) (#39820)
+338f0b22346202b6ab4312ec63c64cec92004b6a	2026-06-04	fix(desktop): recover from corrupt Electron cache in bootstrap install (Windows)
+692146939e476edccea8cdbbbbba3ca08f1ff912	2026-06-04	fix(windows): Split hermes update into two-phase pull + post-pull with re-exec
+27135e0e6a69316c8121a0e4509e29b631df313c	2026-06-04	fix(update): don't try any git commands on windows if .git is missing
+f774e9c6f50da967081f0fb06c24cfd0922178eb	2026-06-04	feat(windows installer): recover from partial clone with no origin
+1f347ee543b650bd788b69af65830719703d74d9	2026-06-04	fix(uv): move venv aside instead of gutting it in place on Windows rebuild
+2059707fce0bfa6720af09cc0223429d6e6f87cd	2026-06-03	fix(gateway-windows): anchor detached/startup cwd at HERMES_HOME
+40fbb0f3c6fe32b69e74615c6a6b160b377a2179	2026-06-03	fix(constants): use windows native default hermes home
+df848bd2da130033aa18d289b30fef8c52168e7b	2026-06-03	test(gateway): cover schtasks locale-safe decoding on Windows
+973decc05048f1d6fe990d5d6457e80389d5f1c5	2026-06-03	fix(gateway): decode schtasks output with locale encoding on Windows
+214b7e070f9ebc456bd0d9f1d768d78b76c706de	2026-06-03	fix(install.ps1): handle dirty worktree on Windows update (#38239)
+43fd63b4b50c931889051f05783d9cb572bf6ae4	2026-06-03	fix(windows): rip out unused submodule support in installer & docker & docs
+b9646276fd5b045d3a9f0be4a72c2b55770e342e	2026-06-01	fix(utils): guard os.fchmod for Windows in atomic_json_write
+4e530f1a273da7cf03c82af803e9250c924c51ae	2026-05-31	add a github action to build& sign a windows installer
+cf328723d43d101a99fa27b9f358d0f336f4e17f	2026-05-31	docs: drop early-beta framing for native Windows support (#36093)
+20d073fd0b1f21ae6baaff954961d56a7f64973a	2026-05-30	test: update extract_local_files Windows-path test for new matching behavior
+51d165a8e71ca84112708af4a9add7a71e4ee424	2026-05-30	fix(gateway): support Windows absolute paths in MEDIA tag regex and extract_local_files (#34632)
+5f84c9144a2c1f1248e92f53eeb2ea8146ad0883	2026-05-30	fix(file-tools): handle UTF-8 BOM in read_file / write_file / patch (#35278)
+2475244ca01fa5eb82bb0e3107119ae6258f5d88	2026-05-30	fix(update/windows): robustly exclude launcher-shim ancestors from concurrent check (#35257)
+296fcdfa52f464feeaa3d345e9d5c89a7727e161	2026-05-30	fix(lsp): handle Windows .cmd shims in LSP process spawn
+460771bf0f20ed8f931e17ce9c57a65eaa9d6ec0	2026-05-30	fix(lsp): detect Windows wrapper binaries in installer probes
+64998fa93e2bd52ee191701ea50c0febcc8e3dc6	2026-05-30	fix(tui): use base64 encoding for PowerShell clipboard writes to preserve UTF-8
+bfa298555341d1e2bd40f9e55078a19cffeeec9e	2026-05-29	fix(merge): keep windows-footgun suppressions inline
+8836b3a113f8b8781a1935217f008fe67ae8e09f	2026-05-29	fix(cli): widen Windows .bat wrapper fix to custom-name alias path
+6312dd8c3a3d2da2c5276c652ea4a21df29ddf47	2026-05-29	fix(cli): create .bat wrapper on Windows instead of POSIX shell script
+7379f175567bd0f1d833eec3a3599d0665b2a491	2026-05-29	fix(gateway): only fire planned-stop watcher for self-targeting markers + fix Windows consume (#34749)
+62e81b2d9b30f2a4c882f57732b5e213b6250c42	2026-05-29	docs(windows): add WSL desktop shortcut guide
+a4cfc8b7408c8b41ddc9b316106afb2cc0543370	2026-05-28	feat(install.ps1): write .hermes-bootstrap-complete marker at end of install
+3b29e65c1bb13eb0e7888a668057925e9b40770c	2026-05-28	fix(install.ps1): restore Initialize-ElectronBuilderCache (CSC env vars alone aren't enough)
+e2d69ce066cfa81f79b65ecc5753c0517dc50e44	2026-05-28	fix(install.ps1): Stage-NodeDeps cross-process $HasNode + stream npm install output to bootstrap log
+17edb1db2ba2bf3c0f29c2c3f22e33e4ad1ecf6e	2026-05-28	fix(installer): bump bootstrap-installer.log to capture stage transitions + every install.ps1 line
+d5fe4672771664574a4d25dadc0974c991a867b1	2026-05-28	fix(install.ps1): tell electron-builder we're NOT signing instead of pre-extracting winCodeSign
+10ee4a729ba22c00718ca12d5192a52e56fb5a09	2026-05-28	fix(gateway): drain on Windows `hermes gateway stop` so sessions survive restart (#33798)
+c7e46f9f3dc9e11e596652701e3ba092f091f2e4	2026-05-28	fix(install.ps1): pre-warm electron-builder winCodeSign cache + fix Stage-Desktop $HasNode false-skip
+3ba896273851013c392d244c8a32a95177860a57	2026-05-27	fix(kanban): add Windows init lock guard
+80d782bc782d52d58350433ed3539da210464ce7	2026-05-28	feat(install.ps1): add -IncludeDesktop switch + Stage-Desktop
+ea34925002707e6dbd13038f9eb5c3ad64a5e128	2026-05-27	fix(discord): recover Windows voice opus decoding
+6bd0be30bee215ff5dab20dcebfb9481050bf96d	2026-05-25	feat(patch): indentation preservation, CRLF preservation, per-file failure escalation (#507) (#32273)
+fae815adc21baba6d12024c94e4dc3a39ae4df5e	2026-05-25	fix(cli): prevent /reset and /new freeze on Windows by falling back to stdin prompt
+323cce7e94295a673dafafbdbee79a1010406bcc	2026-05-24	fix: exclude parent process chain from concurrent instance detection on Windows
+7ce6b504a269ac3f9aed5b406b7a18c432e2fdb5	2026-05-23	fix(process_registry): use taskkill /T /F for tree-kill on Windows
+f8695ed6a7e64f9a62ed73fd559bf6887d69d079	2026-05-23	feat(docker): add Windows Docker Desktop compatible compose file
+b183be95a28bd8a6447ec4ffa99d030186e37afc	2026-05-23	fix(gateway-windows): atomic write for .cmd and startup launcher scripts
+05f02640e1f763afb7afdae4efe6b450016a908f	2026-05-19	fix(windows): drop duplicate creationflags kwarg in LocalEnvironment._run_bash
+60bb98e0036d53992b5d8b87f93a32fdb3e31a42	2026-05-19	fix(install.ps1): pin PortableGit instead of hitting rate-limited GitHub API (#28943)
+7f8b0dd1e06fb21a0d5b69dd6611c8df1c588b9d	2026-05-19	desktop+gateway: harden Slack socket recovery and Windows restart dedupe (#28873)
+a19eb54727a82e79bd09932a550046a135a074e1	2026-05-19	test(gateway-windows): make ctypes.windll monkeypatch tolerant on non-Windows
+d948de39e97821b245021250772dea3bdb6a7bce	2026-05-19	fix(gateway): harden Windows gateway install lifecycle
+95683c02832995f3cff6ab54f49476291b28c5c2	2026-05-19	fix(windows): hide local subprocess consoles
+f007ef8ab521e91576672e3fd2fc303193bb545f	2026-05-19	fix(windows): hide cron script subprocess consoles
+2a7308b7c4c4e76648211d5953395bd8ecd0ad64	2026-05-19	fix(update): quarantine hermes.exe vs concurrent Windows instance (#26670) (#26677)
+417a653d9eed17dd91a5f03db29a5fb8cce8de38	2026-05-18	fix(gateway): prevent Windows Telegram /restart leaving gateway stopped
+5dcfb0b82e1fe3102002c9b7d60a1914fb129fda	2026-05-18	install.ps1: harden Install-SystemPackages against winget msstore failures
+4229facc010b622fd6f079bc540726b8f4585c85	2026-05-18	docs(windows): avoid piping installer directly into iex
+8bcb6082acf83db8e199f1065fa065340d82de0d	2026-05-18	fix(windows): handle redirected stdout in _cprint fallback
+da3bd34c0898844350592cc6ff7045dd5974d4e0	2026-05-18	install.ps1: detect ARM64 Windows reliably for Node and Git stages
+a53e8ca73327da1b4788ef4b913c59155cfbc662	2026-05-18	feat(install.ps1): strip BOM, add -Commit/-Tag pin params, harden git ops
+4b30db1f854f2378d0c3ba1fad7ad8882fa32261	2026-05-18	fix(install.ps1): strip UTF-8 BOM regression that broke 'irm | iex'
+e3a254d65b1b83d9ee75d4591113fa65a7f3a13d	2026-05-18	feat(dep_ensure): complete Windows bootstrap — dep_ensure + install.ps1 + detection (#27845)
+705eaa054a10017f5ebc9f7903d683ceb941e19d	2026-05-18	feat(desktop): thin installer + first-launch install.ps1 bootstrap
+8973b00ff3665a76b69ca17e57c8cd1a39b32d53	2026-05-16	fix(scripts): fix UnicodeEncodeError in footgun checker on Windows
+8bf09455dc498581fe6dea21402ee2a9238a2212	2026-05-16	fix(windows): suppress console window flash on subprocess spawns
+fb138d91ca34c3e2e49ce67f3187da6feeedbbdd	2026-05-16	fix(install.ps1): Stage-Node honest reporting + reject empty -Stage
+3925be2791038e29fc9d1fc10c3fd403a8d5bed7	2026-05-16	fix(install.ps1): trim completion banner + strip em-dash in test
+c0b64f087750ea4a9fe11e32ad9cce21e9857e2d	2026-05-16	fix(install.ps1): address Copilot review on #27224
+e5f19af2a5cfed9ec7f6ea1e1f770f8a8b342de3	2026-05-16	feat(install.ps1): stage protocol + Windows clean-VM hardening pass
+4279da4db62a8a3cba7004c6fb1e1e53ea2c6a29	2026-05-16	fix(windows): make PowerShell installer parse in 5.1
+9c93aa5518339de96eea90d1ff8eb919ccd0754a	2026-05-16	fix(desktop): clarify Windows prereq copy
+d86eb9a0247c599add0a49bb643a9754ec490923	2026-05-16	fix(desktop): include Git in Windows prereq installer
+c5dc9700ebc8b890e349c0cc3e978d133395909b	2026-05-15	fix(windows): silence tirith-unavailable banner + skip install/spawn attempts on unsupported platforms (#26718)
+4aec25bc4411edb4563292cadbd02c365c846286	2026-05-15	fix(windows): stop spamming cwd-missing + tirith-spawn warnings on every terminal call
+7fee1f61eb52d1706af04c9606ee1a2e7ef3afc3	2026-05-15	fix(memory): eliminate TOCTOU race in Windows file lock creation
+622c27e55c58a0d11739a21ae29dd6d072230cf0	2026-05-15	fix(install.ps1): restore EAP=Continue around uv python install, skip Store stub (#26586)
+09d970160bb22748fc9ff3e0759d151e4ea3a907	2026-05-14	fix(proxy): suppress false-positive windows-footgun on guarded add_signal_handler
+38ea2a57a522860c19296531c5aa475236747d2d	2026-05-14	fix(web): handle non-UTF8 Windows console encodings in _build_web_ui
+524490a40937c2a74d7969842a31acaba8d11124	2026-05-14	fix(install.ps1): pin uv sync to venv\, verify baseline imports on Windows (#25755)
+fd9c1504da51f204506d0b37ec592d5bed059504	2026-05-13	fix: gateway PID detection fails on Windows (two issues)
+a33ec10874667469e037c5b0e4dbb1a9c2d3d794	2026-05-12	fix(cli): @-file completion crash on Windows when paths aren't cp1252-decodable
+2b606d20e28d40b64ef54e380f6d1b9fb7f4e7fd	2026-05-12	feat(hermes_state): add get_messages_around for anchored windows
+3f013d289cc0b6b568aede11b98f17f18e2b2812	2026-05-11	fix(process-registry): suppress windows-footgun false positive on guarded killpg
+a479ec01ed73ed43d8649f88781e433aedd980a0	2026-05-11	fix: make web UI build output decoding robust on Windows
+c8c8c53a0c9dbeb2d39c3e7c30a75f151423a525	2026-05-11	feat(desktop): NSIS prereq detection page + auto-install via winget
+61fb5a48b73b327cfd53625957078f3eddafde8e	2026-05-11	refactor(desktop): align install layout with install.ps1 / install.sh
+121bbe0385198856659a6b335eb3f98eadc7b3ed	2026-05-10	test(stream-consumer): add UTF-16 overflow regression tests for #11170
+c0da5d09a67b97094b6db9b2dfd20657b043a273	2026-05-10	fix: use UTF-16 length for Telegram stream consumer message splitting
+4d9dcbc47ae40ad1ddc2f02221fe7283c65106b6	2026-05-10	fix(windows): unbreak install + update on Windows (#23394)
+9c26297c8013b8b4a31e186ae4cbd3ed4410f354	2026-05-09	fix(gateway): preserve Ctrl+C for Windows foreground runs
+70bc52e40896afe3a35a2115f8e1fc8af86cc363	2026-05-09	fix(cli): make Ctrl+Enter insert newline on WSL/SSH/Windows Terminal (#22777)
+4e8b8573ca67c277ead4e30045ba9ce4c614ade6	2026-05-09	tests: add Windows skip guards for UNIX-only stdlib imports
+3801825efd40465ec97e9b1f285cd0e009722dc8	2026-05-09	fix(tests): pin UTF-8 encoding when reading source files on Windows
+d606df81263dcd4a791f438031f08f3b5bd639e3	2026-05-08	docs(cli): call out Ctrl+Enter for Windows Terminal users
+7a4d5c123a29e60dec647977572116bad2036a13	2026-05-08	docs(windows): label native Windows support as early beta (#22115)
+a54cae60d4ac72640f203193e810eec46d4a9859	2026-05-08	fix(setup): offer gateway service install on Windows (#22099)
+3299be6bdb0a604b3730481004d2e0e33d0e83c7	2026-05-08	docs(windows): add native Windows guide + install one-liner on landing page (#22089)
+d3120aeab064c7d8275cd85d39c567313a93f6b2	2026-05-08	ci(lint): add blocking ruff-check + windows-footguns jobs to lint.yml
+59fbcd5ccb4d080f9a00d8a862f6998aa04a1ed7	2026-05-08	fix(install.ps1): strip UTF-8 BOM that broke [scriptblock]::Create
+35fce7699ef61eb11963a498c5489b4e7c7a508b	2026-05-08	feat(windows uninstall): clean up User env, PATH, Scheduled Task, and portable tooling
+0548facc506ff6d19044be28a10879c188b55087	2026-05-08	fix(windows): gateway status dedup + install.ps1 platform-SDK bootstrap
+cc38282b04d997468db782caa3443387fd454359	2026-05-08	feat(cross-platform): psutil for PID/process management + Windows footgun checker
+324567c93662d726e05650c83b06078dce599e37	2026-05-08	fix(windows): os.kill(pid, 0) is NOT a no-op on Windows — route through new _pid_exists helper
+9c263fbf8a622566f0831b8b727ded31b67c64af	2026-05-08	feat(windows): gateway as a Scheduled Task + Startup-folder fallback
+52e497ce7f3f6910764679fcaeef6d53ebd7e46c	2026-05-08	fix(windows installer): UTF-8 BOM, tiered extras, skip tinker-atropos by default
+0ba1e12abc5aef96429413d7532341a69e37d8d8	2026-05-08	fix(windows): browser tool + spurious SIGINT from subprocess spawning
+b18b17f9c9de0f43975a8987821f37be954603a2	2026-05-08	feat(skills): gate 7 Linux/macOS-only skills from Windows via platforms frontmatter
+03566e5124d106656f4152c1b084c233d9c07f3f	2026-05-08	fix(windows): auto-install Playwright Chromium + surface it in doctor
+b63f9645f08af894f2685521ffe4ee55df79d620	2026-05-08	docs: add Windows-Specific Quirks section to hermes-agent skill + keystroke diagnostic
+d1838041e52499094b501056172cc7322233a7bc	2026-05-08	feat: Ctrl+Enter inserts newline on Windows Terminal
+d94fb47717eb6e2c343e1615fdabf436f19b350a	2026-05-08	hermes_bootstrap: Windows-only UTF-8 stdio shim for all entry points
+e614e87954638a164c3e6e552408971e231a10f1	2026-05-08	tests: skip POSIX-venv-layout tests on Windows
+da184439db42a6ac6816d31bb0c2fedd18d93c23	2026-05-08	execute_code: write sandbox files as UTF-8 on Windows
+5c859e57165df24aabb0c9b3a01a5b5b6b5276e7	2026-05-08	execute_code: pass through Windows OS-essential env vars
+a2efad6bea303a3a04a477dc662c711ec761f782	2026-05-08	fix(windows): prefer npm.cmd over npm.ps1, skip .py argv0 in relaunch
+21efeb51bb01bc4a24bb3afb9c621b9baaccabf7	2026-05-08	fix(windows): enable execute_code — stale AF_UNIX gate was blocking the tool
+8f91d7bfa9d8427ca40a392c5fa1ce3dd2fe9231	2026-05-08	fix(windows): %1 install error, patch CRLF false-negative, SOUL.md BOM
+d52e54170ab2d1d7be609fdccfcc820557b8defb	2026-05-08	fix(install.ps1): step out of $InstallDir before touching it + harden repo probe
+c469a05ce58b0f269b9750dc6e9a857abcff7ccf	2026-05-08	fix(install.ps1): validate existing repo via git itself + clean up broken stubs
+fc918867b2bcc311ba8992b73b519d7c49626f3e	2026-05-08	fix(windows): quote cache paths in bash + augment PATH so rg/bash resolve on first launch
+3601e20f47c886d9174aae4129f310f90a00a682	2026-05-08	fix(windows): use PortableGit (not MinGit), fix relaunch os.execvp crash, surface npm errors
+e93bfc6c93bfa6f9edd02629a03f717fc29ce013	2026-05-08	feat(windows): close remaining POSIX-only landmines — TUI crash, kanban waitpid, AF_UNIX sandbox, /bin/bash, npm .cmd shims, cwd tracking, detach flags
+b53bd12fe4c2b5518049c61692090fe26a786d30	2026-05-08	fix(windows-editor): default EDITOR=notepad so /edit and Ctrl+X Ctrl+E work
+b7fe7ed7bd1740b01315c4bd15b254aa738124e5	2026-05-08	feat(windows-install): bundle portable MinGit instead of relying on winget
+9de893e3b078e7ef51437af1ce6743d96a103c6d	2026-05-08	feat(windows): close native-Windows install gaps — crash-free startup, UTF-8 stdio, tzdata dep, docs
+e318b593f1c3391d2965878e5b1ca256d415faf7	2026-05-08	ci(lint): add blocking ruff-check + windows-footguns jobs to lint.yml
+a6168c2a0aea39262655a56f57ffe31a650800e6	2026-05-08	fix(install.ps1): strip UTF-8 BOM that broke [scriptblock]::Create
+7412878acafdcd59b94a596879678e4cf45cd748	2026-05-08	feat(windows uninstall): clean up User env, PATH, Scheduled Task, and portable tooling
+b2bdf274f722cb005c8065ba3bafe6cbd3a98a79	2026-05-08	fix(windows): gateway status dedup + install.ps1 platform-SDK bootstrap
+3dfb3570012ef1beead545d127f78b2776c23198	2026-05-08	feat(cross-platform): psutil for PID/process management + Windows footgun checker
+1cbe399149d11139e1769f0862bd2c67e5422513	2026-05-08	fix(windows): os.kill(pid, 0) is NOT a no-op on Windows — route through new _pid_exists helper
+ac178b78c44fc0debed2f5c227f62acaeabbe050	2026-05-08	feat(windows): gateway as a Scheduled Task + Startup-folder fallback
+87fca8342a2227c305712883e68e2c97f620ffaa	2026-05-08	fix(windows installer): UTF-8 BOM, tiered extras, skip tinker-atropos by default
+acc0a81624686f90300828cf71cf00a9cec0b645	2026-05-08	fix(windows): browser tool + spurious SIGINT from subprocess spawning
+e31f3b3c56e33ba96213de4312367b4f61a745ed	2026-05-08	feat(computer-use): background focus-safe backend — set_value, structured windows, MIME detection
+3e823d5b3e3ce13bcc06b6233de291325c6dd926	2026-05-08	feat(skills): gate 7 Linux/macOS-only skills from Windows via platforms frontmatter
+aefd1a37f426c013de6b6327b2c7f6decd347beb	2026-05-08	fix(windows): auto-install Playwright Chromium + surface it in doctor
+ec3f7d1a89ebe1b75d2f8c68cc02edfab6eda071	2026-05-08	docs: add Windows-Specific Quirks section to hermes-agent skill + keystroke diagnostic
+1cebb3bad8a1516f1f7bb825a4011959c382511c	2026-05-08	feat: Ctrl+Enter inserts newline on Windows Terminal
+ec1714e71f90691e1cf412796e9a4b4ba0d934f4	2026-05-08	fix(install.ps1): handle uv stderr output with ErrorActionPreference=Stop
+0b5bb9f0b5e1024f2ab0781aa869a87fb572f447	2026-05-07	fix(windows): bootstrap utf-8 mode at entrypoints
+60982724545bd13aea50ff7ea7b6e535fb38552d	2026-05-07	hermes_bootstrap: Windows-only UTF-8 stdio shim for all entry points
+31e3bdee9905e3f714c65aab5219c2a1755241f0	2026-05-07	fix(windows): harden native CLI and TUI bootstrap
+f5ec30dfe6ef234a4917befb57f4904a2257d63c	2026-05-07	tests: skip POSIX-venv-layout tests on Windows
+8798bea31fc8af2f8c94e2a9861d27702a513872	2026-05-07	execute_code: write sandbox files as UTF-8 on Windows
+fab984c7f8a1240332729f509b3a0daca50bb0a6	2026-05-07	execute_code: pass through Windows OS-essential env vars
+f0d2516a30ab4de4f5d04fc146af195ae2ac25b1	2026-05-07	fix(windows): prefer npm.cmd over npm.ps1, skip .py argv0 in relaunch
+2e403bd0a416c9c5ae41d15deb59e3c74272d1a7	2026-05-07	fix(windows): enable execute_code — stale AF_UNIX gate was blocking the tool
+2c7b479d16b05bee7db163d37537621644e25b75	2026-05-07	fix(windows): %1 install error, patch CRLF false-negative, SOUL.md BOM
+225b57f31430e19545fd63d265b46ce765fb6701	2026-05-07	fix(install.ps1): step out of $InstallDir before touching it + harden repo probe
+4d7e72e14dd45d04988ff76271bf9de2dedb9e6e	2026-05-07	fix(install.ps1): validate existing repo via git itself + clean up broken stubs
+787d964ea173b0f523f445396add0f125cc23e12	2026-05-07	fix(windows): quote cache paths in bash + augment PATH so rg/bash resolve on first launch
+cf9b2df57a8089bd86f30f64a2df771858cf82ca	2026-05-07	fix(windows): use PortableGit (not MinGit), fix relaunch os.execvp crash, surface npm errors
+eeb723fff24679ca21ce7a5576aa9a54373a65bc	2026-05-07	feat(windows): close remaining POSIX-only landmines — TUI crash, kanban waitpid, AF_UNIX sandbox, /bin/bash, npm .cmd shims, cwd tracking, detach flags
+1da89528e7f67a20d02fccfcd8b34a6b3fe8456f	2026-05-07	fix(windows-editor): default EDITOR=notepad so /edit and Ctrl+X Ctrl+E work
+5486ad2f2ac57f3bde272ec94434d6e1c6727c8f	2026-05-07	feat(windows-install): bundle portable MinGit instead of relying on winget
+fda234a2101d02f3ffff8aee468972e22e17d03b	2026-05-07	feat(windows): close native-Windows install gaps — crash-free startup, UTF-8 stdio, tzdata dep, docs
+c2d6b385f19d812ca9e98d4746234fcb94beb11f	2026-05-07	fix(windows): terminal drain and cwd path conversion for native Windows
+90a7adcb2e90a7ac744d51a86cdde65f7733cdad	2026-05-06	docs(wsl2): expand Windows (WSL2) guide — filesystem, networking, services, pitfalls (#20748)
+74e4f5f97aca5471cfa0b595aa94e1a10e5f3b4e	2026-05-05	docs(i18n): add zh-Hans Tool Gateway, image gen, and Windows WSL guide
+a11234dd68107228f7f4c9f2b8c3eea3de7aa31a	2026-05-05	docs(browser): document WSL-to-Windows Chrome MCP bridge
+026a5e47df53ed84c2b6d3573d605fe7a93b8611	2026-05-04	fix(cli): preserve Windows hidden-dir paths in markdown
+2d7543c61f1334bdcfa741776a357c274830de8b	2026-05-03	fix(windows): enforce UTF-8 stdout/stderr to prevent UnicodeEncodeError crash
+c5e3a6fb5bb33477d639219de14922caedda98ef	2026-05-02	fix(cli): decode .env as UTF-8 to avoid GBK crash on Windows
+ec1443b9f106bf0c4e83669d9abea8ecf934fb3d	2026-04-30	fix(acp): normalize Windows cwd for WSL tool execution
+1ef9e88549fbcbc3f409e912355ced92942e4188	2026-04-30	fix(gateway): write restart markers atomically and fix Windows lock collisions
+cf83982da0fd33a7030e88b65c298167d9abdbc9	2026-04-29	fix(gateway): handle wmic encoding errors on Windows non-English locales
+b85fff9495ad95a829c0fb8b76ea773cd98d10fc	2026-04-29	fix(update): protect dashboard wmic scan against UnicodeDecodeError on Windows non-UTF-8 locales (#17049)
+4689ace7cb1602ca611aab4d64a7842d3f72c135	2026-04-28	review(copilot): clarify table-rule rationale (UTF-16 code units, not graphemes)
+388f5ee22442fcff2951f5f17d168a4af056507a	2026-04-28	feat(computer-use): background focus-safe backend — set_value, structured windows, MIME detection
+413ee1a286912e32bae32b863f3febc553ee40d3	2026-04-28	feat(computer-use): background focus-safe backend — set_value, structured windows, MIME detection
+51f4c9827f4251ab8e1117a12e42011fb0c6ab74	2026-04-23	fix(context): resolve real Codex OAuth context windows (272k, not 1M) (#14935)
+4c02e4597ec971ca2bd5b985e694fa7e5f26fd08	2026-04-23	fix(status): catch OSError in os.kill(pid, 0) for Windows compatibility
+ce4214ec94d86f6a677fb666cd7ef989adc8efea	2026-04-22	Normalize claw workspace paths for Windows
+3821921ef7a556a9c56863603d1d98d5e01cdde8	2026-04-20	fix(whatsapp): kill bridge process tree on Windows disconnect
+de3f8bc6cef8eb0cd0a0b41e6750a110f7ac87f5	2026-04-15	fix terminal workdir validation for Windows paths
+9e992df8aea952c2cf42ee0c76822a4ab14bc3aa	2026-04-12	fix(telegram): use UTF-16 code units for message length splitting (#8725)
+45735e71a273cfb335adfe4350750789ad4458dc	2026-04-12	fix(telegram): use UTF-16 code units for message length splitting
+9fb36738a75b80882dc3aba55f609f101573e299	2026-04-12	fix(claw): address Copilot review on Windows detection and non-interactive prompt
+6e2f6a25a1d439b6ca0883c4d1c4ed2def1b3359	2026-04-07	refactor: deduplicate PowerShell script constants between Windows and WSL paths
+f4528c885b31ab14b66bf1403da81fd893289ff4	2026-04-07	feat(clipboard): add native Windows image paste support
+1096a8fec26c044c433f72e29f26655a55d90ac3	2026-04-07	refactor: deduplicate PowerShell script constants between Windows and WSL paths
+24161d6f4cfaf43a393cbcb12004116f7ead1710	2026-04-07	feat(clipboard): add native Windows image paste support
+abd24d381bcb0f1dc5a91b76d10c51998c8cbbd6	2026-04-06	Implement comprehensive browser path discovery for Windows
+65952ac00c66b2724402a5528185f24ac94ca982	2026-04-05	Honor provider reset windows in pooled credential failover
+466731dde4577352f29d8b12da9edb8404c5de9d	2026-04-05	Honor provider reset windows in pooled credential failover
+43b3a0ac66ae81172fa1f905c47e266107c03510	2026-03-20	fix(telegram): escape backslashes and backticks inside code entities for MarkdownV2
+767b5463f970111b487cdfd13b22a2781b583df6	2026-03-14	docs: add terminal backend and windows troubleshooting
+4bc32dc0f140ed3e1221a6927a6c64b4e9d7dd78	2026-03-09	Fix password reader for Windows using msvcrt.getwch()
+c7541359657e9508e9edd455a1569a3e31585622	2026-03-09	fix: banner wraps in narrow terminals (Kitty, small windows)
+453e0677d63a5cf16cc77006caae29ccf37e4d77	2026-03-06	fix: use regex for search output parsing to handle Windows drive-letter paths
+dcba291d45d966ff67edf3aa16db163b1fe74f3a	2026-03-05	Use pywinpty instead of ptyprocess on Windows for PTY support
+48e65631f64135fb004438544c9672ebf8bd8c93	2026-03-05	Fix auth store file lock for Windows (msvcrt) with reentrancy support
+f2624a142601049bf523305fbe31bf7e84d7b3eb	2026-03-05	docs: remove Windows support references, recommend WSL2
+87f4e4cb9b6c17002fc445aad601f8d9ee1eb82e	2026-03-05	chore: remove Windows install options from landing page
+f90a627f9afd1f88b8f7daaa5da48e0060d261e3	2026-03-04	fix(gateway): add missing UTF-8 encoding to file I/O preventing crashes on Windows
+e86f391cacfeadfdcd19e153b5373f2d2f1cd727	2026-03-04	fix: use os.sep in skill_view path boundary check for Windows compatibility
+535b46f8130cf5b51aef4a26f0fd0ad3d5d74ed6	2026-03-02	feat: ZIP-based update fallback for Windows
+4766b3cdb9d0acaac9ca3c10322bf6149fd49be4	2026-03-02	fix: fall back to ZIP download when git clone fails on Windows
+354af6cceedb31c0f13487bf11cc22a1a75c5325	2026-03-02	chore: remove unnecessary migration code from install.ps1
+c9afbbac0b49a6d972381dc34aee7173e602377a	2026-03-02	feat: install to %LOCALAPPDATA%\hermes on Windows
+83fa442c1bf782ba6a43c99da6909ee45a306e04	2026-03-02	fix: use env vars for git windows.appendAtomically on Windows
+1900e5238b3e3dd2e868c8da9ee3448b77ae68b5	2026-03-02	fix: git clone fails on Windows with 'copy-fd: Invalid argument'
+ddae1aa2e97c27a1a2c5abb853fb58d632dec78d	2026-03-02	fix: install.ps1 exits entire PowerShell window when run via iex
+16274d5a82e92911f31f35d593e21b382d3f246e	2026-03-02	fix: Windows git 'unable to write loose object' + venv pip path
+5749f5809c49d0af296d9eaaa1028431150952e9	2026-03-02	fix: explicit UTF-8 encoding for .env file operations (Windows only)
+245c766512850ff2298fd64c21e0ef51ed307840	2026-03-02	fix: remove 2>&1 from git commands in PowerShell installer
+cdf5375b9a00981235ccf40ddf7cefd88ff53f52	2026-03-02	fix: PowerShell NativeCommandError on git stderr output
+daedec6957df125b012854282b194ba90b59d28a	2026-03-02	fix: Telegram adapter crash on Windows when library not installed (#304)
+de59d91add144937933b532938cd205c94235135	2026-03-02	feat: Windows native support via Git Bash
+3f58e47c63912cb14936b65a2d133878e1771758	2026-03-01	fix: guard POSIX-only process functions for Windows compatibility

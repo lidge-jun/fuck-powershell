@@ -1,0 +1,129 @@
+9e23ebddb41af26e96c7e6c7251ae5742fc036cd	2026-08-20	fix: memory-plugin and Qwen-CLI config JSON survives Windows BOM
+c283b1641b1651938e36233c5b3f79f82a1445d6	2026-08-20	fix(install): suppress cua-driver telemetry console and env in install.ps1
+6044e7068d95bd9efac501d6a4faf1fdbd721a51	2026-08-19	fix(agent): make locale regression tests accept BOM-tolerant UTF-8 reads
+2ac58432bb5cbb9202e15e17e305381c422ee34a	2026-08-18	fix(desktop): darwin-x64 builds cryptography from sdist like win32-arm64
+4bdddf4e9585dccc5b05bc1bcb26a5a8d6300978	2026-08-18	docs: escape backslash in cli-symbols glossary so MDX compiles
+70598f52e117209258961de31e8ae3d44da54db1	2026-08-17	fix(desktop): tighten shebang-exec script-name match to known console scripts
+341d5aebc6f51b8073f6099008e8d24bc74a8b0c	2026-08-16	Port from MoonshotAI/kimi-code#2647: read UTF-16 text files by transcoding to UTF-8
+dde7075d6c8716cf51dfe0e53a82621b4e817482	2026-08-17	fix(openviking): read .env BOM-tolerantly when rewriting credentials
+3af56c22036c501dd0056b59ab1a8b940f967f37	2026-08-14	fix(install.ps1): surface uv installer errors and add GitHub + existing-uv fallbacks (#69216)
+5e8d25d7e78da269e00d6ac46374a38d97e92081	2026-08-13	fix(cli): --in accepts Git Bash / MSYS-style paths on Windows (#85865)
+793f0b3ff172e157e441be262963e958f6fe30e9	2026-08-13	fix(install): stop npm-installing agent-browser eagerly in install.sh/install.ps1
+f4d3592b65f7cc1787d28c458efbff3f10fec8e0	2026-08-13	fix(cli): restore managed-node-path and PATHEXT-aware fallback rungs
+a35402ea33abe83f4ed65b459faf17cf67376b0b	2026-08-12	delete unused git dlls on non-win32
+4a2198bf5124f0c4d915cb958f141116ae8607f0	2026-08-12	fix: Windows MCP PATHEXT resolution + python3 -> python in cross-platform skills (#84429)
+1156ba43bfd222e036a2715885cf2981ad54ecc1	2026-08-12	fix: steer agents off MSYS paths for native tools; pin line-ending preservation (#84426)
+10e9da6f2df58956ec94fa8c45c80f457d5d797e	2026-08-11	fix: ASCII-only install.ps1 comment; allow-list install_cli's uv PATH fallback
+323df71ed318c8292b6137a19f667f4328d13b1b	2026-08-10	fix(desktop): tag-to-commit resolution survives cmd.exe
+2cd9e1777b47f001acb6a5d4ec5848677b331c31	2026-08-08	fix(desktop): rebuild get-windows when its win32 binding is missing
+5b5b5e8da0d5a457b5217d54444d04442834d22e	2026-08-08	fix(goals): decode quality-gate output as UTF-8 instead of the process codepage
+9dcce84c38999662f4f1d6a7ad142b6f27502cb6	2026-08-08	fix(clipboard): use base64 encoding for PowerShell read path to prevent ANSI codepage corruption
+9e6cfcda5aee016e51c0b6838ed213d4aacbc7e6	2026-08-08	fix: finish the missing-encoding sweep — BOM-tolerant reads for user-edited stores
+3fee5c291b55175373f2cbe5ca6650bc861ff1a1	2026-08-08	test(tools): cover UTF-8 BOM input in json_parse sandbox helper
+f2feb6f37d01447baf21f3fa47a8262da06cbbbf	2026-08-08	fix(tools): make json_parse tolerate UTF-8 BOM (salvage #57870)
+ece678db97d81e65189b8212b0101b584482e1ac	2026-08-08	fix(cli): apply BOM-safe .env decoding to hermes send's private loader
+b76498ba07ffb55a4f2ce6d2e69e910f25ff3e84	2026-08-08	fix(cli): strip UTF-8 BOM on latin-1 .env fallback path
+aa1fac980d8d2957a0a74b5aed2efb416fcf667f	2026-08-08	fix(cli): read .env as utf-8-sig so a BOM doesn't drop the first key
+a024ccd66e475a9827302cde7fa75b4b0f0ba89d	2026-08-08	test(gateway): regression tests for UTF-16 chunk limits at the Telegram boundary (#55844)
+022d196f38e66562e19fdc8fc287dbcd00ad3681	2026-08-08	fix(telegram): honor UTF-16 entity offsets
+36f73df13970d2a1aa792cf069e461a4b4b2220a	2026-08-08	fix(skills): widen BOM-tolerant reads to all comfyui workflow-JSON call paths
+0c2cdccccc805063f7e74e6e1c26196a1140a496	2026-08-08	fix(build): win32 get-windows staging must skip the tarball's bundled darwin binding
+55e70f570e4711d2dc46089dbb991ec11142edf4	2026-08-06	test(sessions): guard the Windows backslash child arm of _cwd_prefix_clause
+dae7e5477e39a4c59e14208c66ab2c09b6a418fb	2026-08-04	test(install): exercise 8.3 normalization by running install.ps1, not by parsing it
+eb78ab235f1d61c3a66387cde8d78cb7263e4184	2026-08-04	fix(file-ops): decouple BOM detection from pre_content, add V4A backward compat
+696fae8e78c0c93fe4ab1bdbaf7c56127ccfb11e	2026-08-02	fix(agent): strip UTF-8 BOM when loading profile .env into secret scope
+62f00319db1713ffcfbb049a163836072a573cd4	2026-08-01	fix(patch-parser): tolerate CRLF patch bodies and Move-then-Update
+e65ff9625fa4368b39c5b6df10df1fc21508e45e	2026-07-29	fix(update): repair managed checkouts still running core.autocrlf=true
+c892ca25e01afd45367c5ba49f681808c8187dd7	2026-07-29	fix(doctor): resolve managed/legacy agent-browser dirs PATHEXT-aware
+1398cc40cd49d7c6fcefb39a04e239b659bcb4ee	2026-07-28	fix(install): ASCII-only comment in install.ps1 voice-deps helper
+0a6fda01e3f4b4742f668606ffa2ca870613ba2c	2026-07-24	fix: restore utf-8-sig BOM tolerance at .env readers the sweep normalized
+5c5960d9f93ad4ddb3abb224ef1a2cb2faed0649	2026-07-23	fix(windows): suppress console window flashes in env probes, lazy installs, and platform.win32_ver()
+6c2c866a9ae3a20ee5e7adcd3cc6bf6778b28a58	2026-07-23	fix(desktop): join Windows bash candidates with path.win32 in find-git-bash
+b14be881b97bc7d887bc72bed4b8f53c7e277b5d	2026-07-21	build: declare pywin32 as a direct win32 dependency
+0b40ba10cdab38f8c2bda2048e6f07df27971cbc	2026-07-20	revert(installer): drop install.ps1 rewrite from E2E branch
+bc6839aa37b7ee63600fe5d3c614796d330eaae7	2026-07-19	fix(desktop): stop hard-failing pack on non-git checkouts + fix ZIP-path autocrlf (supersedes #67643) (#67730)
+73b3a8afe3d136369f5e0ce6394aef9bec7ff824	2026-07-19	fix(bootstrap): download timeouts + BOM upgrade for pre-fix cached scripts (#67193 follow-up)
+acee4f25c7247b94f61bfa6ed3960b3a5bfec825	2026-07-19	test(bootstrap): cover CP1252 stderr decode and UTF-8 BOM cache writes
+7d597cc5d47eaaa4f8de35b092a48655d4270114	2026-07-18	fix(cli): sanitize UTF-16 .env without corrupting the first key
+97249cfc8abb9053c518552cbec88ec45aee0d76	2026-07-18	fix(install): keep install.ps1 pure ASCII so Windows PowerShell 5.1 doesn't misparse it
+edfa4cd9b7410d0af759a97675242b3c8d0a05b1	2026-07-18	fix(cron): widen UTF-8 BOM tolerance to backup/curator jobs.json readers
+f361232883470c23237b7ec8115b143be5bc7a01	2026-07-18	fix: tolerate UTF-8 BOM in cron jobs.json and context files
+51e1fb8fb92b490394427f18c36f4266c66457b8	2026-07-18	fix(cron): accept UTF-8 BOM when reading jobs.json
+fb0217c6561a12c77841bfbe1f48632f167048e3	2026-07-18	fix(agent): tolerate lone UTF-16 surrogates in tool-guardrail hashing
+780e0980773a875322abd720e5e126a4fe448e7b	2026-07-17	fix: widen UTF-8 BOM tolerance to all sibling frontmatter parsers
+a4ecb3da9ad05b4d97cf968feaebf11a375c6dc4	2026-07-17	fix(skills): strip UTF-8 BOM before parsing SKILL.md frontmatter
+7886c5d648d0b79aa70f1e964d925bd11a7705b0	2026-07-15	feat(install): install.ps1 defaults to --bundle, -Source for dev path
+651bd9890a53fe95850216bc0c71224047b5e814	2026-07-15	fix(nix): review fixes — dangling-backslash wrapper bug, rebuild scope, dev venv split
+f0d22e4b6c9a46e0ce2956131aec502797655082	2026-07-13	test(windows): capture bootstrap only in msys wrap-command tests
+3f8b22004958506e9d476989365b3ee2ced4ecff	2026-07-10	fix(tools): resolve MSYS paths in file tools on Windows
+8ff162fb2de05b86ee003a7fc13786dd2adadea1	2026-07-07	test(installer): guard Ensure-NodeExeOnPath wiring in install.ps1
+1deeaf71abcf84d9f5d4d8255abfd5654a0ed2e1	2026-07-07	fix(discord): truncate thread titles by UTF-16 units + AUTHOR_MAP
+87be36c240ecc14c4b47584b401fc236acba549f	2026-07-07	fix(discord): bound component labels by UTF-16 units
+713236dcd0f26c6d6a794e835e22664ece5ef593	2026-07-05	fix(desktop): normalize CRLF back to LF in update-marker files
+a2d49de80156cc0e20c1ff5a30c552585f780413	2026-07-02	fix(terminal): also set MSYS2_ARG_CONV_EXCL for MSYS2/Cygwin bash fallback
+51c01062d4a2e3cdccc1fb1fdf712dd44fd18e2a	2026-07-02	test(terminal): cover MSYS_NO_PATHCONV defaults on Windows env builders
+cc2abd570b8c5a842ba5ff77256ee047dd18659c	2026-07-02	fix(terminal): set MSYS_NO_PATHCONV for Windows Git Bash subprocesses
+b7c4369ca05077ee7d0b1e3f79e5b26056723798	2026-06-30	fix(telegram): chunk formatted messages with UTF-16 length accounting
+aa2aac68b004fbef7ba7ea9c2abd4e1bcea670f8	2026-06-21	fix(V-009): reject Windows drive-letter paths in session field validation
+e74033b39bc1b9640f8a21f9416631dab5312559	2026-06-20	test(install): add ConvertTo-LongPath helper for 8.3 short paths
+67316fdc94bae09a2aee6318bc75cd3162decc25	2026-06-18	fix(install): relax native stderr handling in install.ps1 (#48352)
+899acfe42ffd2632e0ba0ac6c3893ea0afebdc66	2026-06-11	fix(install/windows): repair stale winget registration; refresh PATH after every package manager
+714183530b05b2169a394724b8d6c97e68f017a9	2026-06-08	test(cli): convert stale win32 stdin-fallback tests to the modal contract
+182092c5fdd5aafb22f80b4bc55c337cc8ed1bcd	2026-06-06	feat(desktop): default swap-panes to cmd+backslash
+214b7e070f9ebc456bd0d9f1d768d78b76c706de	2026-06-03	fix(install.ps1): handle dirty worktree on Windows update (#38239)
+5f84c9144a2c1f1248e92f53eeb2ea8146ad0883	2026-05-30	fix(file-tools): handle UTF-8 BOM in read_file / write_file / patch (#35278)
+296fcdfa52f464feeaa3d345e9d5c89a7727e161	2026-05-30	fix(lsp): handle Windows .cmd shims in LSP process spawn
+8836b3a113f8b8781a1935217f008fe67ae8e09f	2026-05-29	fix(cli): widen Windows .bat wrapper fix to custom-name alias path
+6312dd8c3a3d2da2c5276c652ea4a21df29ddf47	2026-05-29	fix(cli): create .bat wrapper on Windows instead of POSIX shell script
+a4cfc8b7408c8b41ddc9b316106afb2cc0543370	2026-05-28	feat(install.ps1): write .hermes-bootstrap-complete marker at end of install
+3b29e65c1bb13eb0e7888a668057925e9b40770c	2026-05-28	fix(install.ps1): restore Initialize-ElectronBuilderCache (CSC env vars alone aren't enough)
+e2d69ce066cfa81f79b65ecc5753c0517dc50e44	2026-05-28	fix(install.ps1): Stage-NodeDeps cross-process $HasNode + stream npm install output to bootstrap log
+17edb1db2ba2bf3c0f29c2c3f22e33e4ad1ecf6e	2026-05-28	fix(installer): bump bootstrap-installer.log to capture stage transitions + every install.ps1 line
+d5fe4672771664574a4d25dadc0974c991a867b1	2026-05-28	fix(install.ps1): tell electron-builder we're NOT signing instead of pre-extracting winCodeSign
+c7e46f9f3dc9e11e596652701e3ba092f091f2e4	2026-05-28	fix(install.ps1): pre-warm electron-builder winCodeSign cache + fix Stage-Desktop $HasNode false-skip
+80d782bc782d52d58350433ed3539da210464ce7	2026-05-28	feat(install.ps1): add -IncludeDesktop switch + Stage-Desktop
+6bd0be30bee215ff5dab20dcebfb9481050bf96d	2026-05-25	feat(patch): indentation preservation, CRLF preservation, per-file failure escalation (#507) (#32273)
+b183be95a28bd8a6447ec4ffa99d030186e37afc	2026-05-23	fix(gateway-windows): atomic write for .cmd and startup launcher scripts
+60bb98e0036d53992b5d8b87f93a32fdb3e31a42	2026-05-19	fix(install.ps1): pin PortableGit instead of hitting rate-limited GitHub API (#28943)
+5dcfb0b82e1fe3102002c9b7d60a1914fb129fda	2026-05-18	install.ps1: harden Install-SystemPackages against winget msstore failures
+da3bd34c0898844350592cc6ff7045dd5974d4e0	2026-05-18	install.ps1: detect ARM64 Windows reliably for Node and Git stages
+a53e8ca73327da1b4788ef4b913c59155cfbc662	2026-05-18	feat(install.ps1): strip BOM, add -Commit/-Tag pin params, harden git ops
+4b30db1f854f2378d0c3ba1fad7ad8882fa32261	2026-05-18	fix(install.ps1): strip UTF-8 BOM regression that broke 'irm | iex'
+e3a254d65b1b83d9ee75d4591113fa65a7f3a13d	2026-05-18	feat(dep_ensure): complete Windows bootstrap — dep_ensure + install.ps1 + detection (#27845)
+705eaa054a10017f5ebc9f7903d683ceb941e19d	2026-05-18	feat(desktop): thin installer + first-launch install.ps1 bootstrap
+fb138d91ca34c3e2e49ce67f3187da6feeedbbdd	2026-05-16	fix(install.ps1): Stage-Node honest reporting + reject empty -Stage
+3925be2791038e29fc9d1fc10c3fd403a8d5bed7	2026-05-16	fix(install.ps1): trim completion banner + strip em-dash in test
+c0b64f087750ea4a9fe11e32ad9cce21e9857e2d	2026-05-16	fix(install.ps1): address Copilot review on #27224
+e5f19af2a5cfed9ec7f6ea1e1f770f8a8b342de3	2026-05-16	feat(install.ps1): stage protocol + Windows clean-VM hardening pass
+622c27e55c58a0d11739a21ae29dd6d072230cf0	2026-05-15	fix(install.ps1): restore EAP=Continue around uv python install, skip Store stub (#26586)
+524490a40937c2a74d7969842a31acaba8d11124	2026-05-14	fix(install.ps1): pin uv sync to venv\, verify baseline imports on Windows (#25755)
+c8c8c53a0c9dbeb2d39c3e7c30a75f151423a525	2026-05-11	feat(desktop): NSIS prereq detection page + auto-install via winget
+61fb5a48b73b327cfd53625957078f3eddafde8e	2026-05-11	refactor(desktop): align install layout with install.ps1 / install.sh
+121bbe0385198856659a6b335eb3f98eadc7b3ed	2026-05-10	test(stream-consumer): add UTF-16 overflow regression tests for #11170
+c0da5d09a67b97094b6db9b2dfd20657b043a273	2026-05-10	fix: use UTF-16 length for Telegram stream consumer message splitting
+59fbcd5ccb4d080f9a00d8a862f6998aa04a1ed7	2026-05-08	fix(install.ps1): strip UTF-8 BOM that broke [scriptblock]::Create
+0548facc506ff6d19044be28a10879c188b55087	2026-05-08	fix(windows): gateway status dedup + install.ps1 platform-SDK bootstrap
+52e497ce7f3f6910764679fcaeef6d53ebd7e46c	2026-05-08	fix(windows installer): UTF-8 BOM, tiered extras, skip tinker-atropos by default
+a2efad6bea303a3a04a477dc662c711ec761f782	2026-05-08	fix(windows): prefer npm.cmd over npm.ps1, skip .py argv0 in relaunch
+8f91d7bfa9d8427ca40a392c5fa1ce3dd2fe9231	2026-05-08	fix(windows): %1 install error, patch CRLF false-negative, SOUL.md BOM
+d52e54170ab2d1d7be609fdccfcc820557b8defb	2026-05-08	fix(install.ps1): step out of $InstallDir before touching it + harden repo probe
+c469a05ce58b0f269b9750dc6e9a857abcff7ccf	2026-05-08	fix(install.ps1): validate existing repo via git itself + clean up broken stubs
+e93bfc6c93bfa6f9edd02629a03f717fc29ce013	2026-05-08	feat(windows): close remaining POSIX-only landmines — TUI crash, kanban waitpid, AF_UNIX sandbox, /bin/bash, npm .cmd shims, cwd tracking, detach flags
+b7fe7ed7bd1740b01315c4bd15b254aa738124e5	2026-05-08	feat(windows-install): bundle portable MinGit instead of relying on winget
+a6168c2a0aea39262655a56f57ffe31a650800e6	2026-05-08	fix(install.ps1): strip UTF-8 BOM that broke [scriptblock]::Create
+b2bdf274f722cb005c8065ba3bafe6cbd3a98a79	2026-05-08	fix(windows): gateway status dedup + install.ps1 platform-SDK bootstrap
+87fca8342a2227c305712883e68e2c97f620ffaa	2026-05-08	fix(windows installer): UTF-8 BOM, tiered extras, skip tinker-atropos by default
+ec1714e71f90691e1cf412796e9a4b4ba0d934f4	2026-05-08	fix(install.ps1): handle uv stderr output with ErrorActionPreference=Stop
+f0d2516a30ab4de4f5d04fc146af195ae2ac25b1	2026-05-07	fix(windows): prefer npm.cmd over npm.ps1, skip .py argv0 in relaunch
+2c7b479d16b05bee7db163d37537621644e25b75	2026-05-07	fix(windows): %1 install error, patch CRLF false-negative, SOUL.md BOM
+225b57f31430e19545fd63d265b46ce765fb6701	2026-05-07	fix(install.ps1): step out of $InstallDir before touching it + harden repo probe
+4d7e72e14dd45d04988ff76271bf9de2dedb9e6e	2026-05-07	fix(install.ps1): validate existing repo via git itself + clean up broken stubs
+eeb723fff24679ca21ce7a5576aa9a54373a65bc	2026-05-07	feat(windows): close remaining POSIX-only landmines — TUI crash, kanban waitpid, AF_UNIX sandbox, /bin/bash, npm .cmd shims, cwd tracking, detach flags
+5486ad2f2ac57f3bde272ec94434d6e1c6727c8f	2026-05-07	feat(windows-install): bundle portable MinGit instead of relying on winget
+4689ace7cb1602ca611aab4d64a7842d3f72c135	2026-04-28	review(copilot): clarify table-rule rationale (UTF-16 code units, not graphemes)
+9e992df8aea952c2cf42ee0c76822a4ab14bc3aa	2026-04-12	fix(telegram): use UTF-16 code units for message length splitting (#8725)
+45735e71a273cfb335adfe4350750789ad4458dc	2026-04-12	fix(telegram): use UTF-16 code units for message length splitting
+43b3a0ac66ae81172fa1f905c47e266107c03510	2026-03-20	fix(telegram): escape backslashes and backticks inside code entities for MarkdownV2
+453e0677d63a5cf16cc77006caae29ccf37e4d77	2026-03-06	fix: use regex for search output parsing to handle Windows drive-letter paths
+354af6cceedb31c0f13487bf11cc22a1a75c5325	2026-03-02	chore: remove unnecessary migration code from install.ps1
+ddae1aa2e97c27a1a2c5abb853fb58d632dec78d	2026-03-02	fix: install.ps1 exits entire PowerShell window when run via iex

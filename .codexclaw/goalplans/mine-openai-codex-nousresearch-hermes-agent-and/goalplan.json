@@ -1,0 +1,102 @@
+{
+  "objective": "Mine openai/codex, NousResearch/hermes-agent and openclaw/openclaw for Windows-native failure mechanisms and reflect every non-duplicate one into the fuck-powershell corpus, one PABCD work-phase per repository, then ship and verify live.",
+  "slug": "mine-openai-codex-nousresearch-hermes-agent-and",
+  "createdAt": "2026-08-22T17:33:06.595Z",
+  "updatedAt": "2026-08-22T17:33:06.596Z",
+  "activeWorkPhaseId": "wp0",
+  "workPhases": [
+    {
+      "id": "wp0",
+      "title": "Docs-first roadmap: clone, freeze inventories, write the decade docs",
+      "status": "pending",
+      "criteriaIds": ["c-roadmap", "c-inventory"],
+      "tasks": [
+        { "id": "t0-clone", "title": "Shallow-clone the three upstream repos read-only", "status": "pending" },
+        { "id": "t0-inv", "title": "Freeze commit and open-issue inventories per repo", "status": "pending" },
+        { "id": "t0-docs", "title": "Write 000 plan plus a diff-level decade doc per repo", "status": "pending" }
+      ]
+    },
+    {
+      "id": "wp1",
+      "title": "openai/codex: disposition the inventory, write non-duplicate cases",
+      "status": "pending",
+      "criteriaIds": ["c-cov-codex", "c-gates"],
+      "tasks": [
+        { "id": "t1-lane", "title": "Dispatch a read-only grok-4.6 explorer over the codex inventory", "status": "pending" },
+        { "id": "t1-cases", "title": "Re-read every anchor first-hand and write accepted cases", "status": "pending" },
+        { "id": "t1-audit", "title": "A-gate reviewer verifies claims against primary sources", "status": "pending" }
+      ]
+    },
+    {
+      "id": "wp2",
+      "title": "NousResearch/hermes-agent: disposition the inventory, write non-duplicate cases",
+      "status": "pending",
+      "criteriaIds": ["c-cov-hermes", "c-gates"],
+      "tasks": [
+        { "id": "t2-lane", "title": "Dispatch a read-only grok-4.6 explorer over the hermes inventory", "status": "pending" },
+        { "id": "t2-cases", "title": "Re-read every anchor first-hand and write accepted cases", "status": "pending" },
+        { "id": "t2-audit", "title": "A-gate reviewer verifies claims against primary sources", "status": "pending" }
+      ]
+    },
+    {
+      "id": "wp3",
+      "title": "openclaw/openclaw: disposition the inventory, write non-duplicate cases",
+      "status": "pending",
+      "criteriaIds": ["c-cov-openclaw", "c-gates"],
+      "tasks": [
+        { "id": "t3-lane", "title": "Dispatch a read-only grok-4.6 explorer over the openclaw inventory", "status": "pending" },
+        { "id": "t3-cases", "title": "Re-read every anchor first-hand and write accepted cases", "status": "pending" },
+        { "id": "t3-audit", "title": "A-gate reviewer verifies claims against primary sources", "status": "pending" }
+      ]
+    },
+    {
+      "id": "wp4",
+      "title": "Ship: issues, counts, push, live verification",
+      "status": "pending",
+      "criteriaIds": ["c-ship"],
+      "tasks": [
+        { "id": "t4-issues", "title": "Create, cross-link and close an issue per new case", "status": "pending" },
+        { "id": "t4-counts", "title": "Sync README and ontology counts to the real totals", "status": "pending" },
+        { "id": "t4-live", "title": "Push, confirm the Pages deploy, fetch a new case page", "status": "pending" }
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "c-roadmap",
+      "scenario": "wp0 closes with a 000 plan and one diff-level decade doc per repo, naming the surfaces and candidate mechanisms each is expected to yield",
+      "expectedEvidence": "ls plus head of devlog/260828_upstream3/*.md showing non-outline content",
+      "capturedEvidence": "",
+      "status": "open"
+    },
+    {
+      "id": "c-inventory",
+      "scenario": "Each repo has a frozen commit inventory and a frozen open-issue inventory, both reproducible from the recorded commands",
+      "expectedEvidence": "wc -l of devlog/260828_upstream3/inv/* plus the grep and gh search commands in the plan",
+      "capturedEvidence": "",
+      "status": "open"
+    },
+    { "id": "c-cov-codex", "scenario": "Every row in the codex inventories appears in the codex disposition table", "expectedEvidence": "check-coverage output for codex", "capturedEvidence": "", "status": "open" },
+    { "id": "c-cov-hermes", "scenario": "Every row in the hermes-agent inventories appears in its disposition table", "expectedEvidence": "check-coverage output for hermes-agent", "capturedEvidence": "", "status": "open" },
+    { "id": "c-cov-openclaw", "scenario": "Every row in the openclaw inventories appears in its disposition table", "expectedEvidence": "check-coverage output for openclaw", "capturedEvidence": "", "status": "open" },
+    {
+      "id": "c-gates",
+      "scenario": "After every case-writing work-phase the full chain succeeds and the five prior mining coverage checks stay at 100 percent",
+      "expectedEvidence": "fresh command output with exit codes captured in a check receipt",
+      "capturedEvidence": "",
+      "status": "open"
+    },
+    {
+      "id": "c-ship",
+      "scenario": "New cases have issues that are cross-linked and closed, counts agree with the file count, origin main carries the work, and the live site serves a new case page",
+      "expectedEvidence": "issue URLs, README grep, push output, deploy conclusion, and an HTTP 200 from the live case URL",
+      "capturedEvidence": "",
+      "status": "open"
+    }
+  ],
+  "host": {
+    "armed": false,
+    "armedAt": null,
+    "source": "none"
+  }
+}

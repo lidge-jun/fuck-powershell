@@ -1,0 +1,105 @@
+119882	[Windows] Gateway process exits silently (exit code 0) with no auto-recovery on Windows
+44291	Add native PowerShell smoke coverage for contributor commands
+121188	[Bug]: Windows Companion sandbox hardcodes MXC ui.disable=true (Win32k syscall disable), silently killing every program that links user32.dll (whoami, where, tasklist, powershell, pwsh, cscript) with no output
+91144	[Bug]: Windows native CLI gateway Scheduled Task does not stay running; foreground window worksWindows native CLI gateway Scheduled Task does not stay running; foreground window works
+120134	[Bug]: 'openclaw gateway restart' run via agent exec kills the CLI itself on Windows (taskkill /T terminates child process), leaving the gateway stopped
+127352	Windows Git installer advertises `-Tag` but builds the current checkout instead
+112051	Windows installer cannot repair stale Winget Node registrations
+97800	[Feature]: Console-free windows dashboard autostart (also without duplicate gateway launch)
+124125	[Bug]: cron durable fence fails on Windows — getFileLockProcessStartTime has no win32 path
+119281	[Bug]: Update fails during doctor checks due to Node.js version requirements (Node v24.12.0)
+106203	Remote Windows node is connected and system.which works, but Codex/WebChat exposes no node_exec surface
+18985	[Feature]: Supports Windows 11 MSYS environment and Fishshell.
+126874	Windows CI runs 66 of 10,979 test files, and a skipped checks-windows counts as a passing gate
+88372	Windows provider switch leaves stale model/provider config and session cache
+49931	feat(exec): configurable shell override (tools.exec.shell)
+111900	Codex CLI resume timeouts can leave descendant processes running on Windows
+115430	[Bug]: Corepack fails with EPERM creating pnpm shim in C:\Program Files\nodejs on Windows
+118587	[Bug]: exec: processes killed by SIGKILL before timeout expires + session context loss
+89527	建议：为国内 Windows 用户提供一键安装器方案
+119484	[Bug]: LF-only line endings in .cmd scripts (as written by AI editors) cause CMD to randomly drop characters / break nested blocks 鈥?silent corruption
+77804	doctor returns exit code 0 despite reporting Invalid config at end of output
+74378	[Bug]: OpenClaw CLI commands remain alive as node.exe processes after execution on Windows
+120771	tools.exec.mode: ask with askFallback: deny does not prompt or deny on allowlist misses for gateway-direct exec (Windows)
+48117	[Bug]: npm error code UNABLE_TO_VERIFT_LEAF_SIGNATURE
+89223	[Bug]: SecretRef file provider broken on Windows 11 26200 — icacls /sid unsupported, preflight validator ignores allowInsecurePath
+127250	[Bug]: complete uninstall guide omits Git wrappers and dedicated prefixes
+106149	[Bug]: [Bug]: Embedded agent gets "401 User not found" from OpenRouter despite valid API key
+127411	Source installers can report success from a conflicted git rebase
+78855	Control UI allowInsecureAuth remains enabled after setup - security risk
+108236	Observation: agent created on 2026.7.1 (sandbox=all, sandboxExecServer OFF) routes exec to the gateway host; a 2026.6.11-created agent with identical config routes into the sandbox
+104389	[Bug]: Auto-backgrounded exec failure posts raw system card (internal agent id + command line) to end user
+108265	[Bug]: Feishu streaming mode causes extremely slow frontend rendering after upgrading to v2026.7.1 - characters dribble out a few at a time
+121821	[Feature]: User-activated “Open in default app” for local Control UI files
+88543	TUI: Ctrl+V image paste with inline [imgN] tokens (macOS)
+122834	Windows gateway restart path unreliable after active-turn crash
+111620	[Bug]: Windows file tools misresolve POSIX drive paths
+114207	[Bug]: Windows misclassifies same-path sandbox binds as aliases
+114208	[Bug]: Windows sandbox diagnostics emit a malformed container path hint
+120112	Docs: configuration examples use Unix-style paths, misleading for Windows users
+119361	[Feature]: Support Windows Logbook screen capture
+105667	[Bug] Incorrect Sandbox Bind Mount Parsing for Windows Relative Drive-Letter Paths
+122593	CI: parallelize Windows test configs inside the existing runner
+127925	[Bug] Marketplace symlink tests fail on Windows without explicit directorySymlinkType
+111595	[Bug]: Equivalent Windows cwd spellings split catalog project groups
+127176	[Bug]: CLI and Node Host alternate device metadata approvals on Windows
+127930	[Bug] fs-safe hardlink tests are not fully Windows-compatible
+90985	Gateway health channel activity status patch submission path
+127929	[Bug] fs-safe symlink tests are not fully Windows-compatible
+126011	Gateway restart races with Windows Task Scheduler (MultipleInstancesPolicy=IgnoreNew), causes ECONNREFUSED
+127931	[Bug] Workspace-load symlink tests are not Windows-safe
+127924	[Bug] Memory-core tests leak cached DB handles and fail cleanup on Windows
+126905	googlechat/feishu tests synchronize close assertions on wall-clock windows
+122740	[Feature]: Route PR Windows checks to immediately available hosted capacity
+124407	CLI gateway commands take 10–30s on Windows due to eager module/plugin bootstrap before RPC
+102755	[Bug]: The project won't start on Windows and WSL.
+114200	[Bug]: Structured output is dropped or malformed on OpenAI Responses paths
+105528	exec/read tools silently return empty output on Windows (v2026.6.x regression)
+123176	[Bug]: Windows node exec stops after system.run.prepare; no approval event or UI card
+116954	Design stable case-distinct profile identities across state and native services
+114206	[Bug]: Valid two-dot-prefixed child paths are rejected across agent tools
+114382	security: close residual sandbox path TOCTOU with atomic fs-safe operations
+120377	openclaw skills install still fails with EPERM on Windows: fallback copy succeeds but guardedRename of .fs-safe-move-*.tmp → target fails under gateway watcher
+121713	[Feature]: Feature Request: argPattern-style allowlist support for Windows companion nodes
+122659	[Bug]: SYSTEM_RUN_DENIED persists on node exec despite security=full/ask=off (regression post-2026.6, Windows node)
+113219	[Bug]: exec / read tools mangle GBK-encoded output on Windows (cp936), corrupting transcript and causing empty-response loop
+117080	[Feature]: Single authoritative exec output capture with model-aware continuation projection
+112423	[Bug]: Large SQLite transcript cleanup blocks the gateway event loop
+94716	[Bug]: Anthropic claude-cli provider sends stale user-agent (claude-cli/2.1.75) — bearer auth fails with authentication_error
+91396	Memory embedding fails with HTTP 400 when using SiliconFlow (fetchWithSsrFGuard incompatibility)
+77142	[Feature]: Parametric consolidation channel for dreaming pipeline (CLS Phase 4)
+53408	[Bug]: Write/exec tool parameters silently dropped after long conversations (content/command missing)
+115908	Session transcript projection reconcile can livelock under sustained writes, blocking the main thread and stalling all channel transports
+115034	[Bug]: cross-host `workdir` leaks to node → `spawn /bin/sh ENOENT`
+116240	[Bug]: Unix process-tree kill leaves orphan grandchildren when detached:false (Windows taskkill /T has no Unix equivalent)
+120183	[Bug]: sessions_spawn accepts disallowed model before child failure
+82735	Feature request: stable error codes for runtime/spawn failures
+127514	Secret-FD delivery failure can leave rejected child startup descendants alive
+95072	fix: Windows /restart falls back to in-process restart without changing PID
+127164	TUI exit can orphan approved local-shell process trees
+103067	Centralize chat-session naming; define subagent session lifetime & cross-channel persistence
+127364	Nonzero post-core child exit strands the updater-stopped Gateway without failure finalization
+122712	mcp.servers entries registered via 'openclaw mcp add' never reach the claude-cli agent session, despite healthy doctor/probe status
+120394	Gateway memory leak causes event loop saturation and subagent orphaning
+90158	Gateway self-restart on Windows fails silently when schtasks /Run cannot relaunch the scheduled task
+112173	ACP workers hang forever on permission prompts when Gateway runs as a hidden-console Windows service (stdin.isTTY=true)
+120507	claude-cli backend hangs indefinitely (no output, no error) when a long-lived stream connection drops mid model_call
+121049	A timed-out exec leaves its child's forked processes running forever
+78805	[Bug]: Severe Event Loop Blocking / Freezing due to Synchronous I/O (execSync, readFileSync)
+119229	[Feature]: Set AI_AGENT for OpenClaw subprocesses
+85408	openclaw agent CLI spawn hardcodes --strict-mcp-config + --allowedTools mcp__openclaw__*, blocking user-scope MCPs (distinct from #39225 ACP path)
+45771	Feature: Built-in pace-aware rate limiting for autonomous agents
+79625	[Bug]: Decouple sidecar startup from ACPX — Discord/heartbeat/cron should start in parallel, not after ACPX ready
+105513	[Bug]: Dreaming - system prompt includes a lot of redundant instructions, irrelevant or invalid for dreams
+58289	[Bug]: Non-main agent may miss models.json and fail with "Unknown model" when provider plan is empty
+92285	[Bug]: Parent subagent task and TaskFlow remain stale_running after child becomes lost
+118018	[Bug]: Stale subagent completion can be delivered into a replaced requester lifecycle
+53600	[Analysis] Identify performance bottlenecks in native OpenClaw setup on constrained VPS
+90944	[Bug]: sessions_yield resume reply recorded but not delivered; auto-announce direct-text mirror delivered instead → user gets child raw summary, not parent reply
+98435	MCP loopback transport does not auto-reconnect on CLI side after gateway restart — recovered=1 is misleading
+101190	Feature: Sleep/wait tool — agent can pause execution without burning tokens
+37967	[Feature]: Feishu Group Chat SubAgents for User-Specific Skills and Memory
+50291	Plugin Hooks: Missing trace context for observability (messageId, runId in all hooks, parentSpanId)
+114198	[Bug]: ACP cancellation during pre-active setup can still start unwanted turns
+86050	[Bug]: Gateway buffers claude-cli stream events; surfaces only see the final assembled message
+83959	Codex app-server startup retries can exhaust before replacement server is ready

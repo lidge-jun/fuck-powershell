@@ -1,0 +1,1305 @@
+7002c886c59bb45d878dd272e71303eecea45f97	2026-08-22	fix(models): drop selectable context windows without a valid default
+9f396a73db804df22d5652ba3556342aef403918	2026-08-22	fix(gateway): omit contextWindows from projections when a model declares none
+830196c62855bf1d7284b54e233375e10c5e447c	2026-08-21	fix(scripts): keep Windows lint runs from failing before any file is checked (#126274)
+bf9315f5b59602273b712ce2c5a267e4c3165cd8	2026-08-21	test(release): include Windows-node retry group
+77022c564d8225c4ed25da7b26c961478a7ed0d0	2026-08-21	test(release): preserve Windows candidate scheduling
+fef5e202b77dda42a807baedbbab7a1a39e1ffbd	2026-08-21	docs(release): format Windows-node rerun reference
+8f5b4eb273282a4da26dc2e4751c7a1a909c6f27	2026-08-21	fix(release): pin reachable Windows workflow revision
+d115d6c069ca18f8576a9b1eb5f5a69c6a7a1475	2026-08-21	docs(release): document Windows-node reruns
+6dab45624c413ad4e75e1710d127d7b6acb08443	2026-08-21	ci: validate gateway candidates against Windows releases and main
+b1b2608f8ca9a56d573487c7eae8ecbdfa3aa8cc	2026-08-20	fix(browser): keep Playwright out of Windows CLI registration
+3b9bee7fea6ae4da16f8be17f4bb581f0069d8bc	2026-08-20	fix(agents): scope context windows to agent
+8a09e7195358d81738c4539fbf4d7c1c18732459	2026-08-20	fix(release): bind GitHub and Windows writers
+79279f870108a97b6c6d3002635dec59e6f0c129	2026-08-20	fix(update): parse quoted Windows TUI commands
+bf8712acb03b5461bc96f3d7971109e7295d518e	2026-08-20	fix(update): validate Windows process snapshots
+d00cbd1593f6642a1a072adc289d23019b76ba16	2026-08-20	fix(web-fetch): honor Unicode BOM before HTTP charset (#126854)
+4fdfb8b1bf69c4b74656ada6c1f5bd7c970c5f48	2026-08-20	fix(ollama): carry real Ollama Cloud context windows and capabilities (#126653)
+f4588350156ee8462f3b98f157afafb55089b46b	2026-08-18	fix(install): reconcile launcher in Windows profile
+e5edd1649b1c953fa1047f831e3f076aa4c25804	2026-08-18	fix(ci): prebuild Windows task proof runtime
+a5587ae415307356673114b02656d85dcec56f4f	2026-08-18	fix(install): validate migrated Windows launcher runtime
+8c04b50790de4c50687b37e8144009efeed32647	2026-08-18	fix(install): migrate Windows Git launcher on update
+d77a0086772c77cbd33848498fb4734a36b76569	2026-08-18	fix(installer): preserve quoted Windows launcher paths
+1237fb1e30c08b44ebbb7d0662cf37ab22a4bd05	2026-08-18	test(installer): use hostile source path in Windows proof
+9c775fdfb7e30d60fa8f77ad5f53ef066288baf2	2026-08-18	test(install): prove Windows Git launcher end to end
+9be0a9310892fa990b99967231854c6ccebf9917	2026-08-18	fix(install): escape validated Windows launcher paths
+381e3fb340e13df0f30ae9d0df1f9dc5fb06c386	2026-08-18	test(install): use selected Node in Windows launcher proof
+7c3aa789a2abc442757462292fdd60879b8e9ac6	2026-08-18	test(install): run PowerShell launcher regression on Windows
+018e4e2f03ecdad8d99f82724baaa695425eb1c3	2026-08-18	fix(install): pin Windows git wrapper Node runtime
+8cae198210de93c1158131a1aee9d925e1ed7e22	2026-08-17	fix(cli): default Windows completion to PowerShell (#125211)
+0d78854415bf55a2f6a93562c3119aa3d4cb3d07	2026-08-16	fix(install): reject invalid PowerShell installer options (#124882)
+1f1aa88f14b92195352e2c493902578e82ece768	2026-08-16	perf(ci): split Windows CI two ways instead of one serial lane
+6aa27d6ecd8fd7b8892ba331e43a958a2a99109c	2026-08-15	refactor: retire August compat windows (embedding API, pi aliases, target parser, spawning hook, setup exports, WhatsApp inbound aliases) (#124416)
+19ae7f211012af7017b0e67df80875e4c523e6cc	2026-08-14	perf(ci): keep hybrid Windows on one Blacksmith lane to dodge the 2-runner queue
+ed5e4896335f62fae982a29344daf1784ed8cef2	2026-08-14	perf(ci): widen ui-e2e to 12 shards, ride Blacksmith Windows on hybrid, overlap built-runtime verifiers
+a32a7ae9af967297520f69a1d08ab241ac02601f	2026-08-14	feat(cua-computer): verify the managed driver artifact on Windows and Linux node hosts (#123986)
+46c2136a7d1792e9c2a5c3eef7b782203461afef	2026-08-14	fix(sqlite): allow cold Windows PowerShell startup
+b4f91fadf3ea3a67bab59e36b7d330ddbdb7d99c	2026-08-14	fix(snapshot): survive cold PowerShell starts in Windows staging gates (#123633)
+3a49aa1ac68ffceff75b05d4792bef7d39b911af	2026-08-14	improve: split hosted Windows CI into three lanes (#123577)
+feb09ae4565331248cbdedc10ef8905372d86262	2026-08-13	ci: cover config IO cleanup on Windows
+732b3da091c584e63bc881d8b0aedf5d41641109	2026-08-13	fix(sqlite): preserve Windows private-directory diagnostics (#123023)
+7183536118137f973ac95050595fd660e5435ea5	2026-08-12	improve(ci): parallelize Windows test configs
+a3b2700dff451c7451aac64ee03e70d4a1be2d1b	2026-08-11	fix(deps): bump @openclaw/fs-safe to 0.5.5 for win32 zero-inode identity (#122427)
+a5420dfd91c16f2ddb18be8da082d7c78b86772b	2026-08-11	fix(windows): launch npm-installed native session CLIs (#122334)
+c525f1a549edadced3501eeaf874fae6f0c2695f	2026-08-11	fix(windows): preserve Unicode LAN route aliases (#122263)
+a580c2afa1b6d305a043ebced831348a53546c2d	2026-08-11	fix(windows): parse tasklist CSV for port hints (#122126)
+f798f9999b4d25e468a0bd521f004bdd7b87bb2e	2026-08-11	fix(agent-tools): expand Windows home paths (#122071)
+fd8b1fb1b9927fca04aaf19f042dc5401ab4d840	2026-08-11	fix(windows): preserve provider local service env overrides (#122027)
+03f56cfbc3d5a906e994064800501a0f56e96fd0	2026-08-11	fix(memory): accept Windows extra-file Markdown casing (#121976)
+6bd83561ad50c34bcb362847b9dbad733d078349	2026-08-11	fix(mxc): agent tools fail in Windows workspace subdirectories (#115399)
+63776cf5a08ea167e3a2ed14aeee560006001da2	2026-08-10	fix(mcp): honor Windows PATH key casing in doctor (#121595)
+5b478bb64fafe1febabea60e56e8b4cd267eb38e	2026-08-10	fix(windows): shorten home paths case-insensitively (#121455)
+da0fad6718d0ae5e0f1bd43b450e93edc5a5ace5	2026-08-09	fix(usage): expand Windows footer template paths (#121303)
+db61480056bdef1e4905fa503876b2edbc6c50d3	2026-08-09	fix(windows): honor explicit executable paths (#121094)
+f806abf43bd062a151ed8ae29d9c1541463e5d3e	2026-08-09	fix(cli): preserve Windows user argv after script entry (#121064)
+62b833981f62ecb8dfdb0221e963c7ca3b4f03a0	2026-08-08	fix(windows): preserve unknown port diagnostics (#120845)
+fe85bba59e19ede3b0e3407123d23fd7f410b147	2026-08-08	fix(windows): normalize child environment key casing (#120802)
+eae4011205c2c5da2c5f473ed5c9a6460a00177b	2026-08-08	fix(memory): close Windows session test fixtures (#120720)
+0d5398a9233014776b06d26252162cf5664535ca	2026-08-08	ci: select Windows node release channels by tag convention
+38039f5ea82512e63b09897b8729ae04447cec67	2026-08-09	fix(secrets): preserve Windows ACL diagnostics (#120211)
+e23d545ae855af81b1f8afef7f23c24dfc90c94a	2026-08-08	ci: register Windows node release evidence
+bf8dd3ad8fd1c0dbe29aaa891a1baa0dc30d3f53	2026-08-08	ci: fail closed on newest Windows release asset
+f5ce717b41dfbfd7d1732a4cfc5ba3317795a8bd	2026-08-08	ci: repin Windows node finalization proof
+7fd1f731a6f084be9361c7b072a57a80562cc423	2026-08-09	fix(release): make tar extraction portable on Windows (#120619)
+2c0390802bffa5bf8b727ef9844ee499456fbc49	2026-08-08	style: format Windows release workflow assertions
+d9cf82877ff2645a84b17f4e2cbe06303d5a57b8	2026-08-08	ci: propagate Windows release tag resolution failures
+921538815ec8bbacb6b2a83efff28342554aae88	2026-08-08	ci: repin Windows-node release proof
+b666e8bbf64ed5448ec2296d9b4dbf161078d7ce	2026-08-08	fix(release): make tar extraction portable on Windows
+96053618cf58626df109f537ca64dd5efb3ad376	2026-08-08	ci: pin Windows proof to merged node release gate
+2f51806d5488118737803e0c7b788d3603ccb162	2026-08-08	ci: repin Windows-node wizard lifecycle proof
+b61bbb1776b6eceae3a328a4def74834242bd9fd	2026-08-08	ci: repin Windows-node release proof
+d9ea93acb56432711757f7fdbd59595b9026fd1c	2026-08-08	ci: repin Windows release proof
+7b436bfad8be24ea7de7318363cdd20b51606c77	2026-08-08	fix: bind Windows candidate to producer run
+d7aef618278fbae35cd83c8891a5f3a93ae1646b	2026-08-07	ci: stage Windows-node candidate into caller run
+79ea4d0bab77eed1793dde3f95f2a02863324024	2026-08-07	ci: require selected Windows-node release E2E lanes
+600341a086c3c98adf3305ec47f861db50f2491e	2026-08-07	ci: repin Windows E2E to final release-candidate SHA
+67f1baea580bfbffbfa2b8b0faf32d035e2c4c93	2026-08-07	fix(ci): honor env- and config-selected Windows targets in crabbox run transforms (#120395)
+522ac4a03828a827c5c266194459d995b9982ff9	2026-08-07	fix(ci): route Knip cleanup owners to Windows
+9768b27dd789465b06bb58264c6935a6fa9e8f1d	2026-08-07	fix(ci): bound Knip Windows cleanup
+d4b40a7f32aa597302c7c7852e3db1109c36e33f	2026-08-07	fix(windows): preserve gateway restart CLI during Scheduled Task handoff
+1158197f8de4b5bf5e739fd630cef063a3ff26c4	2026-08-07	fix(ci): route Knip cleanup owners to Windows
+aa7cf44c75a123a2724f20b05cd10d66cf7e65f3	2026-08-07	fix(install): Windows installer no longer reports failed doctor migration as complete (#120033)
+22cb4093593e98111284f4528be9131b2efb3150	2026-08-07	ci: bind Windows release artifact tuple
+e1ebfabd2fce324882a5364c47ac17649f312d18	2026-08-07	ci: repin Windows E2E after test restore
+71c8590f60315ad88a32dbc3830aa2c10c689b10	2026-08-07	ci: repin Windows E2E after RID restore
+e07f2e13251085248bd17c8cc4d2bf6fe62dc607	2026-08-07	ci: correct Windows release E2E workflow pin
+2c88da5b41427189c6a4c34c8cba892658e130f1	2026-08-07	ci: repin Windows release E2E workflow
+d158d5c810374471aeb02226c2144b868fa9f00a	2026-08-07	docs: document focused Windows release checks
+adecadf4dc7378bfa05019ee76e193e26691a23c	2026-08-07	ci: add focused Windows release dispatch
+479ed4816a08e17f652b14d59a8487adda71c503	2026-08-07	ci: pin hardened Windows release gate
+300fe9f8aa544e5cd768bfe2b9ecb1a4f6b918ee	2026-08-07	ci: attest Windows release candidate provenance
+a80262638733ffbdf6277570ce6aaaec159a07a1	2026-08-07	ci: pin repaired Windows node release E2E
+31e056e3ad187f478011655655df24add0f7ee27	2026-08-07	ci: validate stable and prerelease Windows node releases
+08579c536823e39cbe6d78baf3ab9d94d468eb2c	2026-08-07	ci: validate Windows node against release candidate
+11f9930f50d4ab5917a8286995982372e34933d9	2026-08-07	fix(release): capture Windows gateway readiness diagnostics
+94129d74cb2938aff5d6486c0e182623f5a9dc00	2026-08-06	ci: repin Windows E2E after test restore
+c28cbe0993aed4710a34190e010cc660045e45f8	2026-08-06	ci: repin Windows E2E after RID restore
+2bed5fa753c70add5e921df9a25d5da4a07491c6	2026-08-06	ci: correct Windows release E2E workflow pin
+f3f196e731dfa92d29bccfefab9e263749871212	2026-08-06	ci: repin Windows release E2E workflow
+6d387f0af296b87ad834a5e5a261db421b7484bf	2026-08-06	docs: document focused Windows release checks
+200a25eba4a443d7812ab8b770f7d7ffe8505384	2026-08-06	ci: add focused Windows release dispatch
+77f964e0e87a13602147c758c58b6a1ba4a94e12	2026-08-06	ci: pin hardened Windows release gate
+e72b1c76e25d4b62b59daa62bfbd1a32a38f89b3	2026-08-07	fix(code-mode): tighten UTF-16 prompt boundary proof
+94c360c616a00bf05ab969917b81de606fe32013	2026-08-07	fix(code-mode): keep MCP node label truncation UTF-16 safe
+978f9b15eb82ed9ec738f3068b84f88f77aa9850	2026-08-06	fix(test): zalo lifecycle suites fail Windows teardown with EBUSY on agent state DB (#119809)
+a502bfefa23b7dd6c2847349fe49824ea4180c85	2026-08-06	ci: attest Windows release candidate provenance
+2dbd2392723e63dc3147770145fc8fbe7f54f095	2026-08-06	ci: pin repaired Windows node release E2E
+294d8fc0bc5d4f3183a849fa7043836fedd321be	2026-08-06	ci: validate stable and prerelease Windows node releases
+f28ce6d0ce5bb885df01d626fb82f59487642dd3	2026-08-06	ci: validate Windows node against release candidate
+b8834450f57ad375b3f3e5f60c11b21ab6a9d3ae	2026-08-05	fix(sessions): preserve BOMs in Windows-aware exec decoding (#119509)
+532580fa2b1b13f2ff270cccbb170e543fa49237	2026-08-05	fix(ci): retry interrupted Windows dashboard release checks (#119095)
+cb2965dddecec2f449fdf5d990653112dcca8bc2	2026-08-04	fix(scripts): use direct-run helper for Windows guards (#110877)
+01e7fca71670f0cdb3947abc80f35a6bc07a5bb7	2026-08-04	fix(ai): keep OpenAI tool call id truncation UTF-16 safe (#110471)
+b132ceba1a1d2b7ec2d65548e90744de62a10356	2026-08-03	fix(parallels): preserve real Windows launch outcomes after setup timeouts (#118765)
+6c1ba3145dbab5bd99d48ed0237f7436970d846d	2026-08-03	fix(plugins): enforce configured bundled-plugin execution policy (#118701)
+d5887c110e5982b139c9bd77d98a2c02aafa620d	2026-08-04	fix(diffs): restore Windows browser discovery roots (#111257)
+8987e93c65e898d905a4f2c408a3f70a7a4e4852	2026-08-03	fix(parallels): recover Windows poll transport failures (#118479)
+6f6d501ccf9ae64207084da50c1467aeddf38b8c	2026-08-02	test(cli): reuse PowerShell completion process (#118381)
+a2fef81db18b5be132996d254272dca1474fc47f	2026-08-02	test(cli): reuse PowerShell completion process
+9f3b44a1417a770713e7104b4466c22e2ee992e0	2026-08-01	refactor(infra): remove unused Windows firewall probes (#117662)
+29577fb03b5512e47e83617261fa9e8da02f3e66	2026-08-01	fix(daemon): keep backslashes and quotes intact in generated systemd units (#117375)
+aae474ab97df0abb0d8418f3927780cf1a241fee	2026-07-31	fix(macos): stop dashboard windows flashing during reconnects (#117112)
+4ef20f8c2e473a548205d0c0bd34d2e47b9d6961	2026-08-01	test(windows): prove scheduled task process origin
+bc0a7006699b01cba2cab0da001d622699a92d25	2026-08-01	test(windows): measure fallback before task probes
+fa57df5fd02aa4dc0712b294da6e8074f5843208	2026-08-01	test(windows): remove redundant mock coercions
+5716db0978c5eb765d88a6ba15baf7074bf3f62c	2026-08-01	test(windows): fix scheduled task proof contracts
+c340da78ed46f63174526d9cf387c0c78a1b0c81	2026-08-01	test(windows): prove listener-owned task lifecycle
+33a6b50867aeb6bfbdb74b1268fce92bc7cb9f8e	2026-08-01	test(windows): protect scheduled task proof roots
+8c23eb6b1e202b5e807176cd3b4b834458c2ecd5	2026-08-01	test(windows): verify effective task privilege
+b15d6d4d325bb2b3702c772cbbc4d9f7bd32c767	2026-08-01	test(windows): normalize cleanup exit status
+494252e5af3bea6a9b0edce9cad651a23671d879	2026-08-01	test(windows): bind lifecycle proof to checkout
+62d3c66909e393b5e91ae1d627fdbb9bcf84e8e0	2026-08-01	test(windows): harden scheduled task proof cleanup
+9bd68a24263f9bbc2377f51f709212b34254d5e0	2026-08-01	test(windows): prove scheduled task lifecycle
+f393fd5f5c22c533621da66a5c9aaa26937bfd5d	2026-08-01	test(windows): remove redundant mock coercions
+b8b2a5df045d6c7e2bddec8f5d08541bd4967388	2026-08-01	test(windows): fix scheduled task proof contracts
+b1047e9ae7a10244cb62ef043adac552d44a083c	2026-08-01	test(windows): prove listener-owned task lifecycle
+9a18fc21fd7f20dcab27b324aa31ce533a9e2b65	2026-08-01	test(windows): protect scheduled task proof roots
+0d49eecff40662c37c6a32fdc84c4dabba893e25	2026-08-01	test(windows): verify effective task privilege
+16cab1dbd36498c7dff68c43893701e39c3f08f2	2026-08-01	test(windows): normalize cleanup exit status
+9eb2cee5d9ce060fd8a0c74929bcb0582584fbb6	2026-08-01	test(windows): bind lifecycle proof to checkout
+9106aed2ceff58acb49f6422e87dd097f0312908	2026-08-01	test(windows): harden scheduled task proof cleanup
+c4b533df481a2a9976668d8caacfafa43892273c	2026-08-01	test(windows): prove scheduled task lifecycle
+570ef1cac1a397b1177f993c567a82b6607a40f3	2026-07-31	fix(edit): restore UTF-16 difference offsets
+9ccc8fcc271b35dc2b5e75a8c104ec7e71db08b5	2026-07-31	test(infra): run Windows path regressions cross-platform (#116627)
+d5ab7d7d036baab8cb82eccd854615d0bef783fb	2026-07-31	fix(ci): run fs-safe removal Windows coverage (#116510)
+6a1241f14cb0c257a4109a6d0819e2309f73aec0	2026-07-31	fix(release): preserve Windows setup-node runtime
+a013c1a8f572790f1114ed7b3274281c57ad327d	2026-07-31	fix(release): strip isolated Windows service identity
+8398ce913cb42f4bc7e9b9ddcf6e18ce6e9578cf	2026-07-30	fix(windows): verify startup fallback launches
+3b355879b8ccc0404ea6aac3ed2df8018df8944a	2026-07-31	test(infra): run exec allowlist suite on Windows (#116492)
+26f107071e85991de8c7f39ba8388194d34b3c0b	2026-07-31	test(agents): run exec preflight suite on Windows (#116469)
+0b13c439343c54ddd252effad570a5cdde3f4afd	2026-07-30	fix(release): isolate Windows service validation
+85466bd89e748aa2ac972bc31bd03bb9eb5b92c2	2026-07-31	test(mxc): run Windows-only suites in CI (#116451)
+30ef79d9dc4cda4e167cd652d954753b1a29f582	2026-07-30	fix(sessions): preserve canonical repair windows
+705bd4af4fada476175c9bd573d70a16bb516a98	2026-07-30	fix(sessions): remove repaired source windows
+d5f8be355df7c12c1b9c2ecde2fdeb9179402d2f	2026-07-30	fix(sqlite): preserve replaced snapshot targets on Windows (#116284)
+8faf24acc8f722e284b008bee4d90efabaffec3e	2026-07-29	fix(sessions): remove repaired source windows
+8ae0a896bcf9c9d13451aa43a27faa94ceb75f36	2026-07-30	fix(agents): apply_patch converts CRLF files to mixed line endings (#115943)
+190307137add997deb5df34a46fbbb378e7b7691	2026-07-29	fix(file-transfer): strip BOM from inline file fetch text (#115906)
+29497b4e1e864d680270757da8ba1d01c11d6bbb	2026-07-29	fix(agents): keep subagent run ID mask from splitting UTF-16 surrogate pairs (#104874)
+859fd0b11e686f5cd5e176bd9937509f88daa2ee	2026-07-29	fix(markdown): keep IR text slicing UTF-16 safe (#110643)
+216f45af8ec3b354c10abe341ed0436c465292cb	2026-07-29	fix(memory): preserve Windows session ownership (#115851)
+ed17774f3f0b9ee2f9d6b50f399f385e4b02826b	2026-07-29	fix(agents): strip leading BOM from file reads (#115781)
+34c90a8cb3fe32a657c6812d1b4087fba6c988b0	2026-07-29	fix(process): prevent orphaned Windows child process trees (#115535)
+8a35dd3ef94eaaae4f67ac8cac44abf74d298730	2026-07-28	docs: document local TTS on macOS, Linux, and Windows (#110230)
+55c5e54a89d98484f8f778a6aea6c3c22ac92631	2026-07-29	docs(changelog): cover Windows prerequisite readiness
+caa5ae32e9add7e353d289998d46f7db783d47a5	2026-07-29	fix(e2e): preserve Windows installer reboot results
+f6d21cde9b695464af90d3d1360d6f03b899b598	2026-07-29	docs(changelog): include Windows stop safety gate
+6e275bf0b45bfc8a9e42d08cdccbb1525ac202cc	2026-07-29	fix(e2e): force Windows smoke gateway stop
+edd1c4d30af88aaced906a7c9f2dd9f82bb33e27	2026-07-28	fix(infra): preserve text in PowerShell clipboard fallback (#113835)
+a1174b10b5421af1ad388c3f4def9f550b4391b0	2026-07-28	fix(usage): normalize current MiniMax quota windows (#115030)
+d9b498f7f06d06a6e3f8e87068b15f248d9193a5	2026-07-28	fix(agents): prefer native Windows PowerShell on PATH (#114999)
+32a390f4e4512a60543699f802772b7c3f34b240	2026-07-28	fix(cli): restore PowerShell completion after options (#114950)
+eb4c6ca669b0ed49a7594611f95dfb4405b067e4	2026-07-27	fix(agents): prevent Windows shell startup bypassing auto-review (#114652)
+62129e3a68b483f1f605c90f583a683f2784a622	2026-07-28	fix(windows): make scheduled task stop locale-independent (#114434)
+db6b23596eeb5668bb58a7566ee1e3bf84bbc082	2026-07-28	fix-cli-preserve-windows-path-delimiters (#114505)
+b34c19632ffa36278d98c676899e1be73dcce943	2026-07-27	refactor(daemon): split Windows task scheduler integration (#113783)
+f9721b98097aac6e3f02b02117db2e61b82c03bf	2026-07-26	fix(e2e): use the newest Windows smoke snapshot (#114157)
+96aa6be6703b6ea6753527a8281ea501d96bdb36	2026-07-26	fix(e2e): harden Windows prerequisite downloads (#114153)
+25495ad0be8013aef559449ed736f6ab3f9ad051	2026-07-25	fix(ui): focus scoped windows for notification clicks (#113951)
+cb099f5193dcb43f9b1b22105cbdf1a80652cded	2026-07-25	refactor(daemon): split Windows scheduled task service (#113934)
+2296e898e13a5b250bf557e9632e000c093e61f1	2026-07-25	fix(release): stop Windows package descendants after timeout (#111956)
+1e15b18bcbd6ddff0570ef997710084325781abb	2026-07-24	fix(sqlite): support deep Windows state paths (#113336)
+ebf2306c1dcc638d82f9e114e858e6be71172d22	2026-07-24	fix(sqlite): normalize Windows verification paths (#113313)
+48d65f94a13cb7f0a2fec46465888f187e52ab5f	2026-07-24	fix(test): release SQLite fixtures before Windows cleanup (#113316)
+f5cc8b6da63cba9fc766cdbd8a53cf8b5a48b8c4	2026-07-24	fix(sqlite): support long Windows snapshot paths (#113228)
+954a5089b3e94a2912bf562d7054cf6e5e329b16	2026-07-22	fix(browser): detect Windows browsers when install roots are blank (#111256)
+38d1a727f4eb75d3677fdb4b9f1daacf7d7a3561	2026-07-22	fix(discord): keep voice participant labels UTF-16 safe at truncation boundary (#108278)
+feb529fd2bed0dba53ea6ff66f6e7795c1d6c14a	2026-07-21	fix(ollama): preserve cloud model context windows (#112430)
+a8a6e2a8288c90685da340c75e33601d689cb071	2026-07-21	fix(process): bound Windows exec timeout cleanup (#104234)
+c245a7b5a3411f5c658ec8e651c7e85f5000ee74	2026-07-21	fix(cron): close stream admission windows from round-10 review
+f695be341c52aa0248a57e115bc9a1309b2e4de2	2026-07-21	feat(cua-computer): add experimental Windows/Linux computer-use fulfiller (#112267)
+f1205f5f0bcdd0c1018dfdd58f1e767242405adf	2026-07-20	fix(anthropic): complete transcript reverse-scan windows across short reads (#109431)
+8347a52fb655f5affa9d9512949fc1f7256c7d06	2026-07-20	fix(status): keep channel token hint from splitting UTF-16 surrogate pairs (#104850)
+cc8e593c9d47c3fc24b4bf1c381231f5394a7e49	2026-07-20	fix(plugins): keep API key preview from splitting UTF-16 surrogate pairs (#104810)
+430859afc879e82fea4c7fd142d3c766af415604	2026-07-20	fix(ui): avoid splitting UTF-16 surrogate pairs in session display peer-id tail (#104930)
+bb45edac3e57887532248a820695a05179b23cc0	2026-07-20	fix(scripts): keep prompt capture previews UTF-16 safe (#112044)
+9db4b991b0018f94dbc6ec1427b6af600e643e9c	2026-07-20	fix(scripts): preserve UTF-16 surrogate pairs at truncation boundaries in label-open-issues (#109498)
+f267a4f99b09cfb1d40aa1c63d5b815e488a6c6f	2026-07-20	fix(scripts): preserve UTF-16 surrogate pairs in firecrawl truncation (#109561)
+f06b6be182a983528c34c948c12fa3caafe7c9f1	2026-07-20	feat(macos): manage Gateway profiles and multiple windows (#111986)
+e1a82f499169345e42fb91f0f43ed34fe643dd74	2026-07-19	fix(cron): ignore blank Windows shell override (#111260)
+55a2a90610b654e04bfb30b88ab580a2f3047feb	2026-07-18	fix(mxc): preserve Windows path fallbacks for blank env values (#111077)
+2f045a73f42c895c796446aaedb9b63311c666d5	2026-07-18	fix(agents): agent-created files get lowercased names on Windows (#109823)
+4e11da2872eccadeaf4fbd9b7c8a6bf4b229adbe	2026-07-18	fix(process): UTF-8 command output corrupts at Windows byte limits (#105274)
+e228a3ca3a8819a9d8ded1e6ec4b1b1ad825da40	2026-07-17	fix: gateway.cmd launcher garbles non-ASCII profile paths on non-CJK Windows locales (#108967)
+730cfd774d6e453e8be90c8f823c5ead675abee9	2026-07-16	fix(qa): bound Windows taskkill process termination (#109453)
+ad06d83597002e0ea94b61fe471f714a3a122edc	2026-07-16	fix(windows): prevent encoding probes from blocking commands (#109319)
+b35fc165eec174a30ad057c9d2d7642cb59fa935	2026-07-16	feat(linux): extend companion self-update to macOS/Windows test builds (#109244)
+e6ac6c85067eed11a2e79692dcee37ee4b768731	2026-07-16	fix(agents,skills): keep session-identity and experience-review transcript truncation UTF-16 safe (#106370)
+9b48ad597768ee914b01a5757e52671fb5b4e6cc	2026-07-16	fix: avoid redundant Windows restart persistence (#109162)
+f12b4af02148aaaded24d70ca8ecd1d0bd488152	2026-07-16	fix(install): normalize Windows temp short paths (#108050)
+6828bcac539c6434d520c13bf7847e15473cea42	2026-07-16	fix(update): verify Windows restart listener owners (#108023)
+676b397e14388794e4f6717706b59914b2e661e0	2026-07-16	fix(auto-reply): keep export tree truncation UTF-16 safe (#106400)
+1f05cb45cf5b14def072c2cf94add8968d545b8d	2026-07-16	fix(agents): keep read warning previews UTF-16 safe (#106399)
+b3c0aaf38b24c2328d9bdebc1eb31d48a89b2019	2026-07-16	docs(ai): add PowerShell instructions to the minimal chat example (#108567)
+0c544e2c72f41623c6936d6edb93c97aacc2f57c	2026-07-16	fix(infra): keep system-agent approval text UTF-16 safe at truncation boundary (#108298)
+203b8dbf0c158064c7841f405a53cda9536b4e22	2026-07-16	fix(sessions): complete bounded positional read windows (#108941)
+8ebb1d2aec6fc620d24e2133fcc92f43fc49dcf7	2026-07-16	fix(sessions): complete tail-read windows despite short positional reads (#108655)
+8dd204e4fc3b9ade47cd8b5311b711ae2437958c	2026-07-16	fix(installer): retry transient Windows npm failures
+e3e071f8c161959efa19d0c8cd9ab9992197a7d6	2026-07-16	fix(installer): bound PowerShell download stalls (#108791)
+5cd9243465f9f4b9f6d69b7f2b0958757d79a9e8	2026-07-16	fix(ci): bound Windows Testbox phone-home requests (#108755)
+b7270eccc6d19baefa4624cfc9b353f0af6d446c	2026-07-16	fix(e2e): bound Windows prerequisite metadata fetches (#108698)
+cc589409930db3777f3efb92a75741f73c65f57a	2026-07-16	fix(ci): bound Windows WSL rootfs downloads (#108743)
+8959ac8b17e9938c6eda0ea9b9f362d06050d0a8	2026-07-16	refactor(windows): remove launcher encoding test seam (#108750)
+ccec0224fa2e3cd5f782bb9b2a83dda8d3b9f0b9	2026-07-16	fix(daemon): gateway fails to launch on Windows when the profile path contains CJK characters (#107751)
+2fd3d8608d2b08caeeadbbb62d4fc3409a566700	2026-07-16	fix(skills): keep history scans UTF-16 safe (#107720)
+42d42703e64d26fadc0bd332815a367544556971	2026-07-15	fix(session-catalog): keep searches UTF-16 safe (#107719)
+9e6cce6358c01807e7abf810b9cc902c5a810983	2026-07-15	fix(ui): show <1m for sub-minute quota reset windows instead of 0m (#108009)
+fe469082b772881f80bb0e26e4dfe36f1e738872	2026-07-15	chore(plugins): backfill compat windows for deprecated plugin-sdk subpaths (#108035)
+9a8ed45935c41dc35cd21b8f0a89270618213f79	2026-07-15	fix(linux-node): keep command errors UTF-16 safe (#107717)
+c421a3b2e67cb0e12325db9b59599761a483442a	2026-07-14	feat: add reusable Parallels Windows test setup (#107881)
+9f471d0189c1502763ed5d80b766ca25003d1aa5	2026-07-14	fix(gateway): keep worker failures UTF-16 safe (#107718)
+9384a40393097a948f05c87692301344ed06da8f	2026-07-14	build(linux): allow macOS and Windows test builds of the desktop app (#108004)
+934b15b0dc5bc35926e3c3606b980824c07d5295	2026-07-14	refactor(channels)!: close the streaming flat-key and intro-hint deprecation windows
+979ddc29d2405be223eace504802683a5f3f06c5	2026-07-14	fix(backport): use v6.11 UTF-16 utility owner
+4984b5bdb2c800e5e049a18f3600d35ed3157545	2026-07-14	fix: Windows CLI backends fail through npm shims (#101378)
+e8a4f87081335d51a55d4045ba95630047f826b0	2026-07-14	fix(windows): remove findstr from restart probe (#101366)
+4fdb314d9a0e44e410f7f2014a8a2c8a529ff299	2026-07-14	fix(release): normalize Windows checksum manifests
+0f9cc945e37f5fa45a5f26a34a9396faa8f78b81	2026-07-13	fix: Windows installer fails after winget installs Node.js (#106862)
+fc4b6a4254dc0a98c1fc8d450184fe175aac8152	2026-07-13	feat(codex): show the account email with app-server usage windows (#106500)
+a17058d191bd55aa62e1eb9801202e25cb4d9d39	2026-07-13	feat(usage): show the account email with plan windows in the chat context popover (#106200)
+3d83e280abeb405a390ee8b155cd86f7a7b42a1d	2026-07-13	fix(installer): validate upgraded Windows SQLite runtime
+28db14005a77ca146c1f10979501dcfd375e8d01	2026-07-13	fix(installer): validate upgraded Windows SQLite runtime
+008f04a65650f364ddbe40f1697f3c1b020bba97	2026-07-12	feat(mxc): add Windows MXC sandbox backend (#97086)
+afb282ee682c10bf32d52e04c4fbed20abc1eb55	2026-07-13	refactor(infra): trim Windows firewall exports (#105856)
+b4d3a038a2213c251514cd9f77c4d35af52bd575	2026-07-12	fix: run ts-topology entrypoint on Windows (#105397)
+45e681deac183bc38441cb73027e3d22e97f9fad	2026-07-12	fix(slack): guard matchesSlackDeliveryMetadataSignature against UTF-8/UTF-16 length mismatch (#105492)
+2ebf0422dbfd95543318c8fbc0f11bcf32f6e8cf	2026-07-12	fix(discord): keep realtime partial transcript tail UTF-16 safe (#104896)
+1338be03d60b86f8ff1cc00cc9ae7dff66bf69af	2026-07-12	fix(gateway): keep terminal scrollback tails UTF-16 safe
+789e7e2e360271ccc06178c234b46f76d304e4f5	2026-07-12	fix(security): preserve UTF-16 boundaries in secret mask (#104800)
+3c7edce61eafb62f8a9a651cdf00d8f72e8f5861	2026-07-12	fix(codex): preserve UTF-16 pairs in tool output delta truncation (#104116)
+dfeb15261db3f8e8a5867ad0966faa19313fe80f	2026-07-11	fix(agents): keep tool_search_code stderr tail UTF-16 safe (#104767)
+ecd7d6c787f2538e0236294399424ce5566db5c2	2026-07-11	docs(windows): link latest Hub installers (#104774)
+aa8f78788c76d5eea60ce40e2a18efcb4cb0ef87	2026-07-11	fix(agents): keep failover detail truncation UTF-16 safe (#104487)
+6c87afa7cac65180eef24e33681387f3d5f9de40	2026-07-11	fix(gateway): keep worker bootstrap failure details UTF-16 safe (#104619)
+26e1b18a9b5372bb8f3361a4fe3709c4a60f405c	2026-07-11	fix(attempt-execution): use truncateUtf16Safe for summary text truncation (#104454)
+3a4aa5fa168e56e5467dbf17b945e9cf6e4712d1	2026-07-11	fix(qa-lab): keep telegram QA progress detail truncation UTF-16 safe (#104576)
+4b27de4ddb929a81b09762c6e785897fe27d5a45	2026-07-11	fix(gateway): keep worker SSH tunnel stderr tails UTF-16 safe (#104621)
+4206535eb8a0d99774bb8e25396545dfe60de386	2026-07-11	fix(agents): keep tool-result truncation UTF-16 safe (#102087)
+b2702156acae708ff73e1a1b86f7d10a793dd7a7	2026-07-11	fix(agents): preserve UTF-16 boundaries in bootstrap context (#104423)
+1c576a2713106b2f77a87ae069a5c32d33895467	2026-07-11	fix(cron): preserve UTF-16 boundaries in exec tails (#104385)
+9df2ad5de146444d98563a88109f997b07d2ea30	2026-07-11	fix(agents): preserve UTF-16 boundaries in block chunks (#104441)
+c155e4dbd8f49d219191fa688750044db476e5a9	2026-07-11	fix(crabbox): preserve UTF-16 boundaries in CLI failure detail truncation (#104612)
+416d113a2c61f415248bcfa069a3dfb11b81c84a	2026-07-11	fix(utils): use UTF-16 safe truncation for long URL timeout logs (#104301)
+87261fd0b19c0d18297a0dbb5b09cd9cb06fe84d	2026-07-11	fix(browser): keep Chrome stderr hint tail UTF-16 safe (#104603)
+92870e5200639d8e853fb771a4e21e90eef96e12	2026-07-11	fix(agents): preserve UTF-16 boundaries in block chunks (#104441)
+58ef98ec13117e891036c684138fdee0ef63a850	2026-07-11	fix(agents): keep scp stderr tail UTF-16 safe end-to-end (#104148)
+a498fc511efaa1d96b2e5cc9f1b7f073539438e5	2026-07-11	fix(file-transfer): keep bounded stderr tail UTF-16 safe end-to-end (#104151)
+ab9a1c9a84878497d8acad990cc02f978e3a281b	2026-07-11	fix(voice-call): use sliceUtf16Safe for bounded child output tail cap (#104260)
+13817a6108b3d838a408434c828e0e1024bdf12e	2026-07-11	fix(agents): preserve UTF-16 boundaries in context pruning (#104404)
+9523a52871cff3d601000ae56e229c09fdc949da	2026-07-11	fix(ui): stop sidebar session sections from painting over each other in short windows (#104447)
+af807360575b65a5f1a86d2a2c6c7aae2ad283e7	2026-07-11	fix(qa-lab): keep bounded web snapshots UTF-16 safe (#104249)
+67e1d43911537e034f56797297591cc7f2b08c5d	2026-07-10	fix(ui): preserve UTF-16 workshop previews (#104047)
+7ac8e2e227a318f6f1acd7704b6d377ed6e99364	2026-07-10	fix(telegram): preserve UTF-16 model labels (#104037)
+790cd2aff2d41ced3fb2acef3a8d4591ae20d683	2026-07-10	fix(twitch): preserve UTF-16 pairs in outbound chunks (#104030)
+57a3b1e99dba9b64eb50bb96c99784b103ea0d29	2026-07-10	fix(tui): preserve UTF-16 pairs in long tokens (#104024)
+0120cacf9e4e62178b59b4543d9542804babf449	2026-07-11	fix(macos): let onboarding use taller windows (#104004)
+9dee9ebffa582d6191c59f307ffdd1bfddfc1a2f	2026-07-10	fix(qa-lab): use truncateUtf16Safe for tool search gateway and mock OpenAI text truncation (#103219)
+425787544850f30bcdbdda07f6b1f785bc7a806e	2026-07-10	fix(qa-lab): keep saved view text truncation UTF-16 safe (#103789)
+6f6c802ea513fefd229392b670919e7f5a5dc48a	2026-07-10	fix(infra): keep restart log tails UTF-16 safe (#103757)
+5bb5e4fb0a2e582808b89d055584fe706e448a62	2026-07-10	fix(cron): preserve UTF-16 table boundaries (#103616)
+c8ebfd8a3a6463fce65a84e798c2e7f956819e4b	2026-07-10	fix(security): preserve UTF-16 token mask boundaries (#103843)
+e484bdd993c394105bdc97dc376eec8915d25e31	2026-07-10	fix(memory-host): keep redacted token hints UTF-16 safe (#103813)
+4d004e2054bac950f72d6f7c0d7f66570474b4f2	2026-07-10	fix(logging): keep support diagnostics truncation UTF-16 safe (#103580)
+b745862361e5e985af3706469903f1605c12098c	2026-07-10	fix(discord): keep thread-binding persona UTF-16 safe (#103543)
+0990bccb3278cf56f1e1109139988566b57bd1b6	2026-07-10	fix(gateway): use truncateUtf16Safe for voice-wake trigger truncation (#103210)
+328eaa3a23d61f3c59c2c094c0c6519e8dda0097	2026-07-10	fix(logging): keep redacted token hints UTF-16 safe (#103341)
+2894a42a3f8e9101d42fbe6a0729bd3e1fab8e45	2026-07-10	fix(memory-wiki): keep terminal truncation UTF-16 safe (#103178)
+af3a76f320a29197d92c313a617ede86d9cc2b2e	2026-07-09	fix(ui): refresh session windows after events (#103134)
+e251bc4c2feda2d353a31fdd2e773ecb99968c9f	2026-07-09	fix(agent-core): keep file info basename on Windows paths (#102813)
+8021f351957fdd3250677480789cff0170499cf5	2026-07-09	docs(changelog): credit preserved UTF-16 fixes (#103105)
+bb16ca50d622b62baf56abd725c8d0e6b1e92619	2026-07-09	fix(identity): keep bounded identity values UTF-16 safe (#103034)
+1d4c17073cbef6b4c20df029b4dcbdbcf5ba99ca	2026-07-09	fix(android): keep link preview metadata UTF-16 safe (#102988)
+b714fdb3ae47708e9a78c0790c06894f18fa891f	2026-07-09	fix(sandbox): keep redacted session keys UTF-16 safe (#102969)
+b451d8b5e59539c21009947c23e203df7d438943	2026-07-09	fix(workshop): keep approval target names UTF-16 safe (#102963)
+88acda11b837e5c77e6a08576f2738087521c887	2026-07-09	fix(nextcloud-talk): keep error snippets UTF-16 safe (#102949)
+8c78e1c035a639be8ebc860eb82ca0d53e650ce6	2026-07-09	fix(cli): keep session key truncation UTF-16 safe (#103010)
+921b6c1e2d7955f72fbe2f674c877be4b2955cf2	2026-07-09	fix(agent-runner-memory): use truncateUtf16Safe for memory flush error truncation (#102685)
+fe18ceda762ce37fe067855948af7b0b7f320d9c	2026-07-09	fix(gateway): keep command-list field clamping UTF-16 safe (#102816)
+5ef269c2bbfc020e86db25691afbdeeb1df5b268	2026-07-09	fix: keep bounded Unicode text valid across UTF-16 boundaries (#102823)
+20646156a76298a367edf0ea6201a32f53e0a52d	2026-07-09	fix(lifecycle): keep install output truncation UTF-16 safe (#102833)
+4c55d462541f8b76918a1fca2ad82278c38ee8ae	2026-07-09	fix(imessage): keep CLI stderr tails UTF-16 safe (#102626)
+2e9e46bb37948660567ba75da523b794b0c9980b	2026-07-09	fix(crestodian): keep prompt history UTF-16 safe (#102627)
+763ef215e05f7d7a041560e52fe8114af2b3776f	2026-07-09	fix(ui): keep event payload previews UTF-16 safe (#102625)
+0e626690cd5d471f7beb577db146bf679acc81e1	2026-07-09	fix(qa-matrix): keep shared reply previews UTF-16 safe (#102656)
+f786efddcd88445d6678124341a1c939d5a41bd8	2026-07-09	fix(cron): keep bounded diagnostics UTF-16 safe (#102624)
+5b2c316950bce53561b020d5149cdfd62c8c45cd	2026-07-09	fix(auto-reply): keep fallback reason truncation UTF-16 safe (#102631)
+813a5da839865c44dc28b9c991002922f1c1a043	2026-07-09	fix(media): keep input_file text truncation UTF-16 safe (#102634)
+e99b5deb7a790f6287b0d6c64ad2bc399bc2763c	2026-07-09	fix(codex): keep dynamic tool output UTF-16 safe (#102622)
+5497662408a626e87ccc2bb5f5a98cd7223bfa99	2026-07-09	fix(active-memory): keep search queries UTF-16 safe (#102621)
+7222e3e1ea17d11488adc4e1251b4c04c6aa1d0d	2026-07-09	fix(agents): use truncateUtf16Safe for runner error text truncation (#102618)
+57c468ca1be17c7f9c799f23f16b0784a3fc715f	2026-07-09	fix(google-meet): use truncateUtf16Safe for log value truncation (#102617)
+d750477d4352b9af77e71e4ef096ffde192b7911	2026-07-09	fix(migrate-claude): use truncateUtf16Safe for skill description truncation (#102616)
+0aae1ea81663d755207dbb44fe554a3a735ff2a5	2026-07-09	fix(slack): use truncateUtf16Safe for message body preview truncation (#102612)
+0bdd646fc21ca137a2a96c6d2734aa6a5b522f63	2026-07-09	fix(text): keep context tails UTF-16 safe (#102599)
+6c3a46fb4183c5ac36f7343403bcf8953e57b6db	2026-07-09	fix(openai): use truncateUtf16Safe for image gen log value truncation (#102611)
+ac710748073016b50455a5fde0f79b581f729c62	2026-07-09	fix(mattermost): keep slash command error truncation UTF-16 safe (#102607)
+08663917fa3732bb6192da78dae6c093730a3a26	2026-07-09	fix(inworld): use truncateUtf16Safe for error body and parse error truncation (#102608)
+5ba981a4370db7010be564d2565875732484f7e4	2026-07-09	fix(qa-matrix): keep room scenario preview truncation UTF-16 safe (#102606)
+0ac8933721f7e47ad679b06c894f4cbdb55b3d14	2026-07-09	fix(text): keep diagnostic truncation UTF-16 safe
+c067802cda3ad911bca37f21f2949505e0534ecb	2026-07-09	fix(microsoft-foundry): keep connection test error truncation UTF-16 safe (#102605)
+c335ecdb73e64c5379028280202cc2ee2141248a	2026-07-09	fix(microsoft-foundry): keep Azure CLI error truncation UTF-16 safe (#102604)
+0a8677ec99481dfa44653b09b5d2b3a3eb04d821	2026-07-09	fix(whatsapp): keep echo tracker log truncation UTF-16 safe (#102603)
+29d2a1ed42fc5f37c060e3bb6dcb4d3b1b8b8af7	2026-07-09	fix(ollama): use truncateUtf16Safe for malformed NDJSON log truncation (#102593)
+c87b9a7cee909a7ac276b26e0f74f0fde79ce9a9	2026-07-09	fix(parallel): use truncateUtf16Safe for MCP error JSON truncation (#102592)
+1beea4b87357e6b11786a67cc1c7c83559da0bdb	2026-07-09	fix(qqbot): use truncateUtf16Safe for debug log URL/key truncation (#102572)
+6ad8a77b512f5796e0932743b1d50735809b6413	2026-07-09	fix(telegram): use truncateUtf16Safe for raw update log truncation (#102567)
+e39e628a8416ef5426b5bf62e42539bd058e86bb	2026-07-09	fix(active-memory): use truncateUtf16Safe for log value truncation (#102551)
+fae5421f8116005a829d8c24811b52e889796770	2026-07-09	fix(diagnostics-prometheus): use truncateUtf16Safe for error message truncation (#102591)
+4be6fa7413af0fdc6a3624f99045406dc6419bd0	2026-07-09	fix(codex-supervisor): use truncateUtf16Safe for stderr tail truncation (#102590)
+f650d641e439186de9c4f9d8784f551e47ec3836	2026-07-09	fix(codex): use truncateUtf16Safe in trajectory and client parse log truncation (#102576)
+d0264de0581a5f542d9e531876668458207d890e	2026-07-09	fix(gateway): use truncateUtf16Safe in WebSocket log formatting (#102561)
+b8cca6ac725f140602aac1d793f8ce33731f7e3c	2026-07-09	fix(logging): use truncateUtf16Safe in diagnostic stability and session context (#102570)
+4792fa583f9ccc406ef1c9a47341e71d1eb2d7b2	2026-07-09	fix(auto-reply): keep ACP steer output UTF-16 safe (#102583)
+9bf212765f665cd3d741e6f66ede5abc420385d2	2026-07-09	fix(ui): keep workboard capture text truncation UTF-16 safe (#102544)
+bb1fa4012ecffa3ed37f6b08cccf030a5789c6e5	2026-07-09	fix(memory-host): use truncateUtf16Safe for QMD stderr context truncation (#102547)
+4ad94febcb31fddd5b07f74ace42c1302a1052d1	2026-07-09	fix(agents): keep cleanup timeout details UTF-16 safe (#102565)
+0de5d37f92fc1721596a7d1a0197cb23d699329a	2026-07-09	fix(logging): keep bounded log text UTF-16 safe (#102560)
+f7cc6ebe1e0b8d76bde694ee78fdd57037101fdb	2026-07-09	fix(agent-core,memory-core): keep compaction summary and memory snippet truncation UTF-16 safe (#102542)
+3ac7729f4c5f98fd55996223ea2e5db0e24f9e92	2026-07-09	fix(mistral): use truncateUtf16Safe for error text truncation (#102539)
+6a3834d41d0c29b7cb8659552eb9a80fa2714ad9	2026-07-09	fix(memory-core): use truncateUtf16Safe for diary context truncation (#102524)
+32de66616303474f4167a127f401441ae9a35f16	2026-07-09	fix(codex): use truncateUtf16Safe for tool transcript output truncation (#102522)
+145b71f57efce9948a0615bb9e6793d78a0bcf82	2026-07-09	fix(oc-path): use truncateUtf16Safe for error message path truncation (#102527)
+ed9ce1c58438353a17cb7fb0a2213d202c5eb3b4	2026-07-09	fix(discord): use truncateUtf16Safe for deploy error body truncation (#102525)
+49a5b6a23575892774967d09d7a2847957942247	2026-07-09	fix(compaction): use truncateUtf16Safe for post-compaction context text (#102515)
+8c608ae6748521740908f181537182d576496e15	2026-07-09	fix(gateway): use truncateUtf16Safe for config path display truncation (#102513)
+720aeb1547fec89ad030dc2d8f2ef151e6ce65f7	2026-07-09	fix(config): use truncateUtf16Safe for allowed-values hint text (#102512)
+d0c49a7ad422b12bede975294cf7ef8ccd34a1e8	2026-07-09	fix(mcp-runtime): use truncateUtf16Safe for MCP metadata text truncation (#102500)
+51bb5f684778c8f86f095249d0cd5ce69a631c85	2026-07-09	fix(agents): keep provider error detail truncation UTF-16 safe (#102496)
+f0d4d4f2fccda02915cfa9d467e660f82ff9bb1d	2026-07-09	fix(talk): use truncateUtf16Safe for LLM-prompt-facing text truncation (#102477)
+e5aefd5656e81fd2eef5ee609d19c1446ad856df	2026-07-09	fix(gateway): keep live chat assistant buffer tail truncation UTF-16 safe (#102484)
+f0cc5e500f6658b8dde9100c08588b60649b4c46	2026-07-09	fix(auto-reply,infra): keep startup context and heartbeat event text UTF-16 safe (#102483)
+3e787f31878553fa09f96d5d7a380e822bb5b782	2026-07-09	fix(android): preserve UTF-16 boundaries in notification text (#102442)
+4fa3118049c1592c3a057b25ac4857fa08cfdc38	2026-07-09	fix(native-hook-relay): use truncateUtf16Safe for hook display text truncation (#102467)
+472e5167d38a370b8b9f61b19988dc913585ce95	2026-07-09	fix(tool-policy-audit): use truncateUtf16Safe for audit field truncation (#102464)
+bc6a4bdd94ab71faa1fc782b70e4c1374c98d041	2026-07-09	fix(agents): keep tool-result context guard truncation UTF-16 safe (#102466)
+18e80760a70da0be87e976e32dd29a9c0ab7e098	2026-07-09	fix(channels): keep inbound log previews UTF-16 safe (#102407)
+4adfc30b90e8e70830a0024d3c9e0c218db36b97	2026-07-09	fix(codex): app inventory error diagnostics stay UTF-16 safe (#102414)
+7de325d06023ca1a679660b73785795fa00e2218	2026-07-09	fix: keep task title truncation UTF-16 safe in restart/diagnostic output (#101934)
+a3f00d32c914ece43c0885d8c7eb26cc78ab612e	2026-07-09	fix(telegram): keep DM topic auto-rename user message UTF-16 safe (#101781)
+acac359de64ee9510074c1a5ad4ae1a24663dd78	2026-07-09	fix(matrix): keep HTTP error and tool-progress truncations UTF-16 safe (#102395)
+9b4cbe47589d3bd7ff90c0c80a8dcdadfceed373	2026-07-09	fix(agents): keep chunkString and buildResumeMessage truncation UTF-16 safe (#102085)
+1d4d8474da853845687ed0d0a5b18870b3f0ddd3	2026-07-09	[AI] fix(memory): use truncateUtf16Safe for dreaming snippet truncation (#101946)
+6e4670f9c14790264516f70acb5c20dab71eadd5	2026-07-09	fix(acp): keep background-task summaries UTF-16 safe at truncation boundaries (#101976)
+9614129c2bfb877411780b3568c3a0bc7db0d099	2026-07-09	fix(gateway): keep session title and preview text truncation UTF-16 safe (#102090)
+9e75ce9dd1e10d9a25a4d85efd21a12be955b030	2026-07-09	fix(agents): keep tool-result truncation UTF-16 safe (#102087)
+7daa0909357e064c61fe6e6e29af3be92e2bbcad	2026-07-09	fix(doctor): keep scrubbed error truncation UTF-16 safe (#102066)
+e90bf318292759ff53a6bb35e3fee75242df1236	2026-07-09	fix(discord): keep gateway close reasons UTF-16 safe (#102246)
+e8bd3ae26a952eda29b16f979abab03ab7df3460	2026-07-09	fix(agents): keep steering metadata truncation UTF-16 safe (#101736)
+97c64d8c41b4b24b1f7258fd1a53325c52ef757f	2026-07-08	fix(qa): remove unused Matrix Windows helpers
+7e0324263b867d3d47138d1d2b1e9afd1dd2016f	2026-07-07	fix(text): keep reachable truncation boundaries UTF-16 safe
+5bdea31c945505b0b8f0af35f938097d0ca918c8	2026-07-07	fix(browser): keep Playwright truncation UTF-16 safe (#101761)
+a7faec8ca1d0ce5d20ab7475b5cc7b42e8c23764	2026-07-07	fix(gateway): support native Windows exec approvals (#101669)
+a9582a1bb62aa70bb0b0ceb72536d0d76f08eab8	2026-07-07	fix: keep bounded text truncation UTF-16 safe (#101654)
+d26a842799e035c2d5ee1557fe57443704046419	2026-07-07	fix(auto-reply): keep suppressed reply text preview truncation UTF-16 safe (#101575)
+988f30e30ecd0011084dcf26e0401314c11c0082	2026-07-07	refactor(memory): trim unused Windows spawn exports (#101594)
+42fc9e8a92f992c82a06ea52d125cffc7cd19c6f	2026-07-07	fix(acp): use truncateUtf16Safe for event mapper error text truncation (#101535)
+3db8174f0e7de490ba33a5baed0c918ee42d2090	2026-07-07	fix(gateway): keep plugin approval text UTF-16 safe (#101579)
+2fe39692ad0d040987d14d92436725ba3f3d6c8b	2026-07-07	fix(gateway): preserve UTF-16 plugin approval fields (#101580)
+e7d617d4d9369a41d059f3345d4ec1e455ff635e	2026-07-07	fix(agents): keep exec auto-reviewer rationale truncation UTF-16 safe (#101513)
+78f9449d73af54a4029192b6c627ffac1aef9f43	2026-07-07	fix(channels): use truncateUtf16Safe for thread binding name truncation (#101527)
+84d0a714062d97ef32471727dca625ea22f20304	2026-07-07	fix(memory): preserve UTF-16 chunk boundaries (#101574)
+37d613a596540cbc2252453c06a5f94999d70c3c	2026-07-07	fix(codex): use truncateUtf16Safe for attempt notification text truncation (#101534)
+c2cc50c9a07a1f2aade01fcb767a51c39559edaf	2026-07-07	fix(codex): use UTF-16-safe truncation for approval display paths (#100177)
+5511b6fcafcc0941186fa19a172522e9cf9c6e15	2026-07-07	fix(status): keep issue message truncation UTF-16 safe (#101503)
+9fb24032215a7f273e8ea3b90286e7d6df6d3f76	2026-07-07	fix(discord): keep thread title prompts UTF-16 safe (#101551)
+079a704dda76e682775003483d644ac4d72c7a8b	2026-07-07	fix(voice-call): keep realtime context truncation UTF-16 safe (#101304)
+240487179b69724a3e30909704844ae8337f7841	2026-07-07	fix(web-fetch): keep spill content truncation UTF-16 safe (#101312)
+b84ae420637b58e3e5fb1e7578ff2204396779b1	2026-07-07	fix(agents): keep prompt data truncation UTF-16 safe (#101303)
+d01015b243c7ea9c8cf2a9f6d783ae71f07dac71	2026-07-07	Fix UTF-16-safe audit context truncation (#101298)
+ccbd9eb28dfb7a903dbb301ebe42c95fa2c3f05f	2026-07-07	fix(qqbot): keep bounded previews UTF-16 safe (#101516)
+deb35780d1aef71abf58604236a3390f3d857330	2026-07-07	fix(qa): remove unused Matrix Windows helpers
+048fe0850edd0fca4d6dde573dea88f5fc4f5f9e	2026-07-07	fix(qqbot): use UTF-16-safe truncation for messaging reply and approval previews (#101421)
+3929c52069fb0b4d1f8d13f229c26aa9ad2853f5	2026-07-07	fix(agents): keep structured prompt summaries UTF-16 safe (#101311)
+7b366e16b0b317e422ecc195d0eb41d6962e4cd0	2026-07-07	fix: Windows CLI backends fail through npm shims (#101378)
+3a482a71beed15a72c36ca0d3931e59692e975a2	2026-07-07	fix(windows): remove findstr from restart probe (#101366)
+1898afe076b8c70e8d8e68c2f4716e45b366dbb7	2026-07-07	perf(test): overlap PowerShell installer exit checks
+ac24461252b0689a2217dc12b7aadfff208951ec	2026-07-07	fix(feishu): keep operator logs UTF-16 safe (#101364)
+84e5327720b409cdfbbd7e54e72d7ef211d3ec25	2026-07-06	fix(text): keep bounded outputs UTF-16 safe (#101355)
+f3106057e62b5144144dad0c1a18ab6feea1a91c	2026-07-06	perf(test): batch install PowerShell cases
+dbba3d2a8ed25dd5fc9b9df23b88b36fc3a034ac	2026-07-07	fix(ci): stabilize Windows startup fallback tests (#101223)
+bab9952801a1837dec3cd1f2e0bfea3d227fdb6f	2026-07-06	test(windows): isolate fallback ownership models
+bb44c2311d7416922a9a8e1ed9f28b16df3ebc0e	2026-07-07	fix(windows): repair legacy gateway fallback updates (#101213)
+1d375c31da5bc7725a5279fa6320d7d35bdea9a6	2026-07-06	test(browser): replace broad win32 skip with dynamic directory symlink check (#90365)
+675045f49f119186d75a3db98b914c271aef6c21	2026-07-06	fix(browser): read Windows Chrome version from build dir in doctor (#87937)
+56fe5d0459a8f6d93f2d844535f1b7c1461032fc	2026-07-06	fix(release): skip loader lifecycle scripts on Windows
+a13a198a4b99009048b086fc6ec6ad384a08b068	2026-07-06	fix(update): guard Windows task autostart during package updates (#100757)
+8380667bd0e39d3b7f816669228842ecf08f04bf	2026-07-06	fix(agents): keep bounded exec output UTF-16 safe (#98721)
+8ccacd9f4e39a63b33ebc8e4d0969da2ed6822f4	2026-07-05	test: batch PowerShell function probes
+685c22dfb7e110730e51fe3cb712fc913308882b	2026-07-05	fix(irc): chunk PRIVMSG on UTF-16 boundary to avoid lone surrogates (#96572)
+abde81a621359baa80d3fc1bab61ea37c2d2bbb8	2026-07-05	fix(shared): return "" from sliceUtf16Safe when end <= start, matching native .slice
+33f7c17f233fef095c42eb0e6526e97839b0d211	2026-07-05	[codex] Fallback when Windows gateway task exits early (#76245)
+66081c09ee501d5edd8b0d2f0fa46218f8934833	2026-07-05	fix(core): keep backend truncation UTF-16 safe (#100244)
+3adfaf03941c14cc610b9191effcfb7cad72ff6c	2026-07-04	fix: detect localized Windows netstat listeners (#100012)
+a580a7fe3fbd1b3329c978d58ca2f70e8ca37aee	2026-07-04	fix(e2e): preserve Windows config shape during updates
+bee5dee5214a234265d2ab381a2146117aa813ae	2026-07-04	fix(e2e): scrub single-plugin allowlists on Windows
+fda00a0f90b5bbcddc1b978e39812bf11e33b047	2026-07-02	fix: escape qa lab report table backslashes
+eb417fa206e6ec76df12c500d08f8fd8691298e9	2026-07-01	fix: diagnose Windows LAN Gateway firewall blocks (#98666)
+d9d6108086dae988f92d1e923c45e4e47f49973e	2026-07-01	fix(agents): preserve UTF-16 tool summary truncation (#98644)
+fbceb309e75b26bd6d6d3ac9e6beae31cb7e4e44	2026-07-01	fix(media): normalize Windows inbound paths case-insensitively
+99bce5fef4121a232c392908fb77365e61a0feaf	2026-07-01	fix(agents): don't crash autoreview copilot engine on Windows temp-dir cleanup (#97901)
+8028269d32875905d60ead1b37191e274961b9f5	2026-06-30	fix(core): propagate caller env PATHEXT through isExecutableFile on Windows (#98093)
+2499b64f9be668e50de3881f2dc14db2dc07272c	2026-06-30	fix(parallels): stabilize Windows beta smoke transport
+3811001d278300adaf52fa70f009b08a5b1cbad5	2026-06-30	fix(exec): bind Windows allowlist execution path (#98260)
+c16bb8725a8a04d5de92855769cf87e13574384f	2026-06-30	fix(channels): keep text previews UTF-16 safe
+f92ec2d4e88b7c4cea6cf733c70028c641ab3be4	2026-06-29	test(shared): add unit tests for surrogate-safe UTF-16 string slicing helpers (#97805)
+6299b679c05f2cb453dd9664a1965983dd8bc747	2026-06-28	fix(tlon): truncate approval message preview on UTF-16 boundary (#97599)
+4109755592bbe8d2849637e8f5e5901e5e48fe0c	2026-06-28	fix(discord): truncate model picker button labels on UTF-16 boundary
+352f47f888dedae1947db9331c5ffef504fcfded	2026-06-28	fix(imessage): coalesce merged text on UTF-16 code-point boundary
+1841c4caf51507174585295cf16201ffe4aeaf1b	2026-06-28	fix(feishu): truncate comment prompt text on UTF-16 boundary
+e8d7b1feafe85cacf54c3226d0f4a25f8caa97c5	2026-06-28	fix(slack): truncate rich text preview on UTF-16 boundary (#96577)
+686a2876c7f4163ca801b5d740c2f7a57c303550	2026-06-28	fix(cron): truncate failure alert error text on UTF-16 boundary (#97298)
+c9d2edfb7e597edb9792fee22e10f615079927af	2026-06-28	fix(shared): use UTF-16 safe truncation in subagent line display (#97557)
+4b36cf451c74e66949e08b5f8fba45fa68e31bdd	2026-06-28	fix(line): truncate template title/altText on grapheme boundaries, not raw UTF-16 (#97428)
+0a4d0daa8cc99e9b2c6bc78c2e67357272a9fd53	2026-06-28	fix(parallels): stabilize Windows beta smoke transport
+e445d614c03d400664e6626cf3bc7668283294cb	2026-06-28	fix(shared): use UTF-16 safe truncation in assistant error formatting (#97289)
+1b8b8500cee077d7ac7927def0f566febf7dacb8	2026-06-27	fix(auto-reply): truncate user-facing text on UTF-16 boundary (#97299)
+e5c3c59c6757c4af0d98fa6e501ff6aeef58f8c9	2026-06-27	fix(synology-chat): truncate sanitized input on UTF-16 boundary (#96574)
+2e881ab1c679d1b20c4f352fe98e71236f2eeb99	2026-06-27	fix(googlechat): truncate approval card text on UTF-16 boundary (#96573)
+90c20d15c22e2ef9130344da2e262de5711e6410	2026-06-27	fix(slack): truncate approval mrkdwn on UTF-16 boundary (#96576)
+cb8bc71ff80ffae5558690a7566356f69180421b	2026-06-27	fix(whatsapp): elide auto-reply text on UTF-16 boundary (#96580)
+6c5a9fde9f1c2f63e2bf4b65f4d9a4a3acea2a5b	2026-06-27	fix(msteams): truncate reflection prompt on UTF-16 boundary (#96578)
+0a986f893a55cb02fce041f851502b1bc57b0c9a	2026-06-23	fix(daemon): type Windows task env fixture
+f354889efa1c8bafca9304767afba2c270add549	2026-06-23	fix(crabbox): share Windows hydrate handoff path
+f5148aff2505020cb01bfffc313aa7cfd768fd59	2026-06-23	fix #89231: [Bug]: Windows installer-created scheduled task launches gateway.cmd with visible console — should use windowless launcher (#95480)
+ca0eb62c87a0d0d10ec218336264432f879f37e4	2026-06-23	fix(ci): finalize Windows Testbox after setup failures
+1252378018f899bfc110914bac7cba94b65b8930	2026-06-23	fix(installer): unblock Windows source installs
+82316c2f45f7129322ebc3950c48770b5a018e96	2026-06-23	test: make qqbot symlinked media helper test robust on Windows
+fac091b39de230d9ed90e8412123126cf676004f	2026-06-23	fix(installer): detect native Windows ARM64 hosts
+dcb6b0dd6f6a2be647d80cae29fc83e4db767b81	2026-06-23	fix(ci): restore macOS and Windows QA gates
+ea9065bc68dd4ff94495b85a7dcb4491cf41b67a	2026-06-23	fix(installer): skip llama postinstall in Windows source installs
+d5d9a8256d6bc2ff8d699152923357bd61c606c1	2026-06-23	fix(crabbox): route native Windows hydrate jobs
+8d5fe803034a922ba7573dacaa3c03deb6d748e6	2026-06-22	ci(windows): clarify WSL2 reboot requirement
+b335381247c8d5ed98507bc77fd0ad7a29372199	2026-06-22	fix(memory): preserve Windows QMD command paths (#95274)
+dab145ef7629a877eaee854c13b4b70bd6b51db7	2026-06-23	refactor(infra): share Windows port inspection
+b3b5b08e67a26efd648c7c7d879e5487223cd796	2026-06-22	fix(memory): preserve Windows session transcript paths
+54d24cd956ff91f4fa8c4924f17c06798c1e0359	2026-06-22	fix(scripts): preserve node command shim arguments on Windows
+ceb69221ec199f5262d4fe49af9a71a8515d358e	2026-06-22	test(scripts): run kitchen sink bash tests on Windows
+b796890b97773c07e48c522926f0252b29209aed	2026-06-21	test(sdk): resolve Windows package taskkill path
+2a140e6e6ae8c48edb5bd52d8d177915f0555d70	2026-06-21	fix(daemon): resolve Windows scheduled-task tools
+b8a5dac1a2f07bec19a7d5b7490efa1ce0d222df	2026-06-21	fix(qa-lab): resolve Windows PowerShell path
+15c880aeff1f4e55964ad7204d14733a2d1362f7	2026-06-21	fix(infra): share trusted Windows process argv lookup
+c4facb2bb372e99037f497e2640ca7bdc5cbc5f6	2026-06-21	fix(infra): resolve Windows port inspection tools
+a70b34a3cba60e11fab350eb1a762022f6da5f1f	2026-06-21	fix(qa-lab): resolve Windows node lookup tool
+72b9bc730370e3b1155fb231621c2bc7b2c87b56	2026-06-21	fix(core): resolve Windows PATH locator tools
+d3b44442f6c8bedd765dc20a06316d3420b5d854	2026-06-21	fix(infra): resolve Windows binary lookup tool
+a5fde9119c9c50685a392bff078a2f76a03d749d	2026-06-21	fix(agents): resolve Windows extraction tools
+735d70d9db9565cfaee26bff60eb311f588f7f11	2026-06-21	test(extensions): pin Windows taskkill test roots
+15300291ed26208b8ab39da613007602df1a4ef4	2026-06-21	fix(qa-matrix): resolve Windows taskkill path
+61d1fd1f72174f7a4082b31057655b0d7dc3f694	2026-06-21	fix(qa-lab): resolve Windows taskkill path
+6c4028e073694e6b7bdae2c61d6c060c623625cf	2026-06-21	fix(scripts): resolve Windows cmd shim launcher
+c000e4811d681736fc7100f89011a0bcc06d167c	2026-06-21	fix(scripts): resolve Windows tools in kitchen sink walk
+a192b2ea52b3166a7d190bf5f60f3feb030306bb	2026-06-21	fix(windows): resolve taskkill in core spawns
+e9b694ef9cd8b7528a76d85b8be2a830b296a5e1	2026-06-21	fix(windows): resolve process inspection tools
+7dd01d15c56da2ee50f55746ba725d708682fca9	2026-06-21	fix(windows): resolve cmd handoff path
+c22e300084f713d48c853759c532cf73c123fc01	2026-06-21	fix(scripts): taskkill managed children via system32 on windows
+830691b2010bd0406399adb8a2e97e0b043e2ca8	2026-06-21	fix(memory-host-sdk): taskkill qmd process trees on windows
+06574920dd2de71147fd8f70048410fac11b24fe	2026-06-21	fix(sdk): taskkill package e2e trees on windows
+b06e2f9149e879ef647763dcc4c8b2329928aa38	2026-06-21	fix(qa-matrix): taskkill scenario cli trees on windows
+604aa301899f9a6dc901ea383349cd82932eac2a	2026-06-21	fix(qa): taskkill lifecycle probe trees on windows
+5b224093891ca45843c9b13de7436254c2fe4a9c	2026-06-21	fix(qa-lab): taskkill gateway children on windows
+b970d57175874dbaff6b38cea6fd6c105b7737b0	2026-06-21	fix(qa-lab): taskkill timed-out cli trees on windows
+c43822077ad02a7fd9d57e0bfaf60832654f6b6d	2026-06-21	fix(qa-lab): force taskkill scenario trees on windows
+273eb888749f4b7af51a2c536efe6c5559784bda	2026-06-21	fix(runtime-smoke): force taskkill bundled trees on windows
+140a2fa5206f34105c3c801357b14678cb41fa25	2026-06-21	fix(crabbox): force taskkill telegram proof trees on windows
+c8b48c78d0e85ef463d248f7a7bce03fd160fd12	2026-06-21	fix(qa): force taskkill telegram credential trees on windows
+29033e67af458352a3ec6a26a0e782c4a0452393	2026-06-21	fix(bench): force taskkill gateway bench trees on windows
+4d17a52924a66a083beee6a924e85a621ba71467	2026-06-21	fix(scripts): force taskkill boundary node steps on windows
+4b2298e8cbcb9181e0ab699a4fa45bbcb8f34413	2026-06-21	fix(package): force taskkill candidate runner trees on windows
+f640ca11f95368589804e4f3250c8dfade7b6c59	2026-06-21	fix(scripts): force taskkill run-with-env trees on windows
+2029f87f29ec171abfb6f04b7a1de8d24ad54d3d	2026-06-21	fix(scripts): force taskkill managed trees on windows
+ca1aa33ebad164ae570d4b036966f2e1ce58e30c	2026-06-21	fix(rpc): force taskkill rtt gateway trees on windows
+5b212162d364362acec05d9bcaa11e6c21ac479e	2026-06-21	fix(rpc): force taskkill kitchen sink trees on windows
+3df5207389cd0e19c1bb92f682679602b7a222df	2026-06-21	fix(testing): force taskkill group report trees on windows
+78f30a010c7e678bed06b21b52dfcc0b25b3db33	2026-06-21	fix(build): kill startup metadata trees on windows
+83785a6e79eb64841e450ae148a516732ba2dee4	2026-06-21	fix(build): kill tsdown trees on windows
+195890f815708ddcad88d5f158c3e8308ed0de32	2026-06-21	fix(dev): kill tui pty watch trees on windows
+7b28b73e786b770b096a16e34da9eb4a182cae63	2026-06-21	fix(e2e): preserve secret proof windows tree cleanup
+3650766f2697958afcdf1a441cd201677616a985	2026-06-21	fix(rpc): kill kitchen sink trees on windows
+38c8b0c196b5b190c151c9bc7fc9726aa552db45	2026-06-21	fix(crabbox): kill telegram proof trees on windows
+0030a192c8e4c7501263ecc7f8165c8ac633ca21	2026-06-21	fix(qa): kill telegram credential trees on windows
+34806b39cd7baf10fbcf567828cc6426d7e15e4c	2026-06-21	fix(package): kill candidate resolver trees on windows
+b0f21f8af7dfadca985b7b8534aa4cd7f4f46c91	2026-06-21	fix(scripts): kill boundary prep trees on windows
+5af318b95d9a7e0fcb8b92683dcc7eec2e294131	2026-06-21	fix(testing): kill group report trees on windows
+8d2e6d7686b0b5c1cc1f9b9d104b3bf7479d47d6	2026-06-21	fix(scripts): kill run-with-env trees on windows
+85f71f4c8fca59d5d30625432c2be05592106b03	2026-06-21	fix(scripts): kill managed child trees on windows
+98a7741468fb81d719eff6281b7cd7f0be0ae6d2	2026-06-20	fix(parallels): bound windows smoke downloads
+44422b2151916191c6dff5662e1f8a6f7e4675ca	2026-06-20	fix(e2e): isolate Windows background control markers
+0cd8db97f91a6d340f9267efec55db769b41df65	2026-06-20	fix(bench): kill gateway child trees on windows
+4514b5a387be32037bc2dca98913a80b148673e1	2026-06-20	fix(runtime-smoke): kill bundled child trees on windows
+f719f0cf77217d1659f99af9a079dbbb92d3739b	2026-06-20	fix(rpc): kill measurement gateway trees on windows
+a6e41a0cc1b804068d1637e13e6ea075c43ebd23	2026-06-20	fix(qa-lab): kill script timeout trees on windows
+6f1cc2f8df751565bd759610990e2079b8a6e9b0	2026-06-20	fix(scripts): honor Windows platform overrides
+fb022a2b07cbe98837279de56b46cbefae139fe9	2026-06-20	fix(qa-lab): use junctions for Windows workspace repo links
+592373f0ea3898ff733fe090e0d20bee5e28e468	2026-06-20	fix(ci): quote Windows testbox phone-home payloads
+7779bc64d20e3f40418aa3cd1d951240e9cf9f44	2026-06-20	fix(tui): wrap Windows auth shims explicitly
+5e7bb9cf9b4dc346d300c336081514194d2cabaa	2026-06-20	fix(hooks): share Windows gog command wrapping
+2248aa431570b47050c087449d562e71c4c96335	2026-06-20	fix(process): wrap Windows command shims
+9192ff8416bfd5e50a1f3b4c5536caa87f149351	2026-06-20	fix(scripts): write Windows markers without BOM
+688ecb1655064f0395c54a7afc87c1ba49f3f4ef	2026-06-19	fix(release): wrap bare Windows npm execpath
+74ad4f592adfdd32743a00b6e4f51cb45d9c6c89	2026-06-18	fix(ci): route Windows proof away from Linux Testbox
+3f4c04f4dff53e8029aae7e534df92b55ba934ac	2026-06-18	fix(windows): prefer native arm64 portable git
+78d86f710e28934f174a314a7d7ef8c258a9652f	2026-06-18	fix(ci): add focused windows ci probe
+df87b40bec5164de02dbbb0792fbd84eb5da54e8	2026-06-17	fix(telegram): guard UTF-16 surrogate pairs in outbound chunkers (#93938)
+6567f99625d74f6fc6fc3a98acc7e9ceb47a268a	2026-06-17	strip UTF-8 BOM when reading SKILL.md in quick_validate (#93811)
+642ae618285a603a22cca7cf15924da53e8fa64c	2026-06-16	fix(qa): reject loose Windows sampler metrics
+7bf821a2eed08b014809a1f997028764f1ca98d9	2026-06-16	fix(qa): match Windows RPC sampling ports exactly
+f285a0c4c4576b41b57d7ad8ec6f2f8f85c39f7e	2026-06-16	fix(ci): fail unusable Windows testbox phone-home
+a117064697f7534b3db2980f98aa8305413f3106	2026-06-16	fix(read): route text decoding through shared Windows codepage fallba… (#93555)
+add00d747b6dd367922f29d0b9d42da72e6a3bcb	2026-06-16	build(docs): finish PowerShell-safe docs formatting (#93512)
+a89c9937c20cdaa44df341f918834f601782e045	2026-06-16	fix(ci): normalize Windows WSL probe output
+11a0ad10e91a50d5a0e636494eea4d7ad3eaf9fc	2026-06-16	test: make install-safe-path symlink tests compatible with Windows
+95da644f6db6c349ddf420b6d525c3a5e829efc4	2026-06-16	docs(windows): fix WSL gateway-autostart recipe for WSL ≥ 2.6.1.0 idle-termination (#90992)
+4029fbd2b238af1893e595391b71033626fa30d5	2026-06-15	fix(status): avoid stale session context windows (#93220)
+8ae1adfdccce746c07c829604338da60256bafcd	2026-06-13	ci: gate stable releases on Windows companion assets (#92555)
+edd76238feda01c1f8609b9be8674435dc396039	2026-06-14	fix(daemon): keep duplicate Windows gateway tasks visible
+618d78144edcc6a8d6827cc6323acaa21299ce6e	2026-06-13	fix(usage): don't resolve subscription windows for an absent auth signal
+b0bd9c8ed810082ff15c651a25fbbfc6860cbc35	2026-06-13	fix(docs): pin Windows Hub download links to v2026.6.5 (#92605)
+9a6c71a47d9526c677a325531dfc44adc054d9bb	2026-06-11	fix(agents): retry same model across short rate-limit windows (#91911)
+d328502046931b42de2695491edf340531a2990b	2026-06-09	fix(windows): preserve installer build exit status
+82afc4678ace1ae52e81bd8faaefb71780414a3d	2026-06-09	fix(config): use Start-Process -FilePath for Windows config opener (#90157)
+8295d1f051a8c7c9bea6e7a4a0c38670d853e651	2026-06-06	fix(release): route windows release checks to blacksmith
+c72c82726f206f15dd868e437062369995e53fa1	2026-06-05	fix(installer): print npm debug logs on Windows install failure
+e7bcbd3e7ede0a05d8d6270e5a95591edee1f27d	2026-06-05	test: isolate windows acl system root
+116bc2a0f0c478bbce8042d7b295a601c0e5d654	2026-06-03	docs: surface Windows Hub across docs
+190fd034d59c98f6c6d373ba2945e20b8c94123f	2026-06-03	docs: refresh Windows Hub platform guide
+ed283490b542b3f04e75dfe0a4f7c1ff4f4051f8	2026-06-03	docs(release): require verified Windows asset links
+bf368e760957664d4948953aae0f55dbba4755ae	2026-06-03	ci(release): promote Windows node installers
+bdd81004490e8da2dfbaed3c307e9e146e5ce909	2026-06-03	test(parallels): retry Windows background log appends
+6ba25c10dcb419c53a8c819298c82a7d09d02cc9	2026-06-02	fix(build): cap tsdown heap on native Windows
+db6fc20559bd8061c72bc8848d030db66de06984	2026-06-01	fix(e2e): clean Windows background smoke timeouts
+3322212f145cf31093afebcddc6bb48e7a44a9c7	2026-06-01	fix(ci): tolerate pnpm workspace state on Windows hydrate
+81d35885268d781b99153f6c166b2eb00400bf48	2026-06-01	fix(ci): tolerate pnpm workspace state on Windows hydrate
+ddbd595f2f0c2166c086b294b878db192a65903b	2026-06-01	fix(ci): link Windows hydrate node modules
+fb17986af5967a38432474c5ec599c5948ab4710	2026-06-01	fix(ci): preserve hydrated Windows test deps
+3969e5dea526e8c168cfc139ddef44519a4a3db1	2026-06-01	fix(ci): preserve hydrated Windows test deps
+54b60c838d568ac1de82533aa617457b8141efc8	2026-05-31	fix(cli): repair Windows node typecheck
+6768cd33fd3fc1a4659dd4a66ed9b20d6a43d0a7	2026-05-31	fix(cli): repair Windows node validation
+4bb4d9bd01c08e6ce842a4ad99b4e89ac59d0e18	2026-05-31	fix(cli): satisfy Windows node approval lint
+45c9ba7866add9904278780c66320090c436e455	2026-05-31	fix(gateway): expose Windows exec approval node commands
+a3b6afdcb69108456876b34f5ef33362994bc2ac	2026-05-31	fix(cli): harden Windows node gateway commands
+c0836571bcaa669ae6ed2a43e3404e93bac241b6	2026-05-31	test(memory): cover scoped qmd windows probe
+bb045724e029f38d9c096506ee2a409fbdd0730a	2026-05-31	fix(memory): resolve qmd Windows cmd shims
+0faa38b3129080687a90a14772fe0e453a549dee	2026-05-31	fix(daemon): clean stale Windows startup fallback
+11f564ede1ba3acade0a697090e62e21794c8e59	2026-05-31	fix(windows): preserve recovered gateway tokens
+2b5e01e898563788208b333ee932cbf79cbfca54	2026-05-31	fix(windows): remove hidden startup fallback launchers
+faa1a47af5047ab91fc0fe6f4b8ede0d7047d108	2026-05-31	fix(windows): repair doctor update fallback migration
+da348c17f407fa21e2985274fae070d90765850a	2026-05-31	fix(update): handle default enabled Windows tasks
+3be0bfaa60339df9f56b4cbf04d1b92af8dd50fb	2026-05-31	fix(update): guard Windows task autostart during package updates
+c3305deac275e9ceb9ef66fe2978e9dc36161218	2026-05-31	Daemon: query Windows task runtime directly
+f71df664c9d46fef301ce7bf999bf29ee0e7642d	2026-05-31	fix(synology-chat): bound rate limit windows
+edb2c498d5e1267a55b46fc23f0c588875abcf9e	2026-05-31	fix(auth): bound profile unusable windows
+e6a2e83e7a5f1223c384c5d8f96225c162d8dff7	2026-05-30	fix(infra): scope Windows path realpath caches
+bb4fbc9dc8e15408bf6b3bf19866f37872d6ff2e	2026-05-30	fix(cli): stabilize Windows scheduled-task restart health after ready
+35ce103378297b3d51a371a03838ffe145dfc25e	2026-05-30	fix(agents): harden autoreview Windows harness (#88284)
+4305fb7cdf2c237be000a3245f4541b2411b5e98	2026-05-29	fix(auth): reject unsafe wham reset windows
+9bf48660b3eda8b6891261ae5e52b9a082d585d3	2026-05-29	fix(ci): keep Windows Crabbox hydrate fetch alive
+2990c00cb5488df6b5188f8d3f817620c0030754	2026-05-29	fix(skills): tolerate BOM-prefixed frontmatter
+25a5cb3270cf947460626d56633794d920425d86	2026-05-29	fix(memory): default non-finite qmd read windows
+5c7f9601252f77211c73dd9aba30e090e57800ba	2026-05-29	fix(test): resolve temp dir outside Windows mock to prevent dirty folders on Linux (#85677)
+d1eb8c4d6b070404330965803603115a622d27f0	2026-05-28	fix(policy): handle Windows sandbox bind destinations
+dc5671edae5c0c2f13525342c7035b5120875be0	2026-05-28	fix(install): harden Windows git installs
+13427276b807c125b5be61014a120c03996cee6a	2026-05-28	fix(release): speed windows upgrade fallback
+1955319f87f734e5c3891e6de20a4d7b0870cb98	2026-05-28	fix(release): speed windows upgrade fallback
+101c83448b89e2b67a515d370db49b8a84cea0b0	2026-05-27	fix(qa): relax Matrix artifact modes on Windows
+6afe3e89523d0abc94d15c831033652d7afcb81e	2026-05-27	fix(crabbox): prefer Azure for Windows targets (#87186)
+95c8fc9678763a6b0dbdd33e54da3acd81a50264	2026-05-27	ci: support native Windows Crabbox daemon hydration (#87175)
+d92a33306e57823451c36859eaed9ff5e37ba362	2026-05-27	fix(daemon): keep Windows Scheduled Task running on battery power (#59299)
+126a3363a343aace5bed80fa6db1f0cf03378f30	2026-05-26	fix(daemon): ignore recursive Windows gateway wrapper
+df688a6cbe55271bd70e245c91778f40ae3dfd37	2026-05-26	fix: restore shared CI replay and Windows Node setup
+bb48fcf36a2db4fe7c5fb04cc985265560c951f8	2026-05-26	ci: support windows node download fallback
+ce4db4f9f3b71ad0320e2cf392c7da61bd58841a	2026-05-26	ci: allow Windows Node 22 patch range
+167054e39ec28c39308c9d034c4cdc5ea245942d	2026-05-26	ci: keep Windows node lane on Node 22
+03ae999a1ac2c26aee47a13e0b6448b95c573871	2026-05-26	ci: normalize Windows toolcache paths
+5e8f4981a52275f862917bc6c0e4074a0cc8d750	2026-05-26	fix(cli): add Windows stack-size respawn (#87031)
+cfbcca7c383eaed4b563515a55d25de7b81a305d	2026-05-26	ci: normalize Windows toolcache paths
+c84f61cd2ef0a8959017ab8b52873daed781e92e	2026-05-26	ci: normalize Windows toolcache Node paths
+a805224293540530d051bf34dd694337e4d5fa46	2026-05-26	ci: normalize Windows toolcache Node paths
+5c3fb1f9d1bc61314349a90ef64beb20524cd614	2026-05-26	test(scripts): make run-vitest test Windows-safe
+1e9b6b76270e31a8ecd5e8801da087e16f641894	2026-05-26	test(qqbot): make OPENCLAW_HOME media test Windows-safe
+bc3d6bafaedf142131d219d57e9ad5c462b0077a	2026-05-26	ci: disable pnpm action cache on Windows
+3eb06e305e69ba0cfd47c7f1f949d0832b3683de	2026-05-25	fix(qa): harden restart inflight Windows scenario
+252aed1f1a2f799e01435375771d2b9eb7e78ec0	2026-05-25	fix(config): skip shell env fallback on Windows (#85739)
+50d6611c10f4fd86b4ced5e5262af78262c10894	2026-05-25	test(crabbox): tolerate Windows shell capture
+8a93851ee20471006a72fc2803c8abacd48660f3	2026-05-25	fix(qa): extend config cleanup Windows budget
+3f363e0450aff7a930256b4c86da31886e2a8e59	2026-05-25	fix(qa): extend config mutation Windows budget
+ba2b820c5c39398650fc1176607a429c0a0cf797	2026-05-25	fix(qa): extend memory fallback Windows budget
+0bb9b421f3e66ed75db4d22b31b8cabc9b34f2a2	2026-05-25	fix(build): support Windows UI builds
+9afbfc1b63cde5e152e24f280f2132d8957bc50f	2026-05-25	fix(qa): capture Windows gateway metrics
+73189e3ecb0c0b32d63c767339fc651aa3e1cf15	2026-05-25	fix(e2e): sample Windows kitchen sink gateway RSS
+4798264a2993412a26209d6f1abee9cd83b5c0e6	2026-05-25	fix(e2e): harden bundled lifecycle probe on Windows
+793e300cc52b821ad6046471d279f90192bcad5c	2026-05-25	fix(plugins): support linked source checkouts on Windows
+06bf302864b650d21f24749e22a54cf5dc42b83e	2026-05-24	fix(config): skip shell env fallback on Windows (#85739)
+4d4ce9e2f3382d5abfeb581157e1fa42388fe4c9	2026-05-25	fix(scripts): launch env package scripts on Windows
+8ae997749d3ab72405addb07e50487048585edbc	2026-05-25	fix(test): make import timing scripts Windows-safe
+b681d5d5a6267e8cd84f94d66ed2534f69aaae7a	2026-05-24	fix(test): make max Vitest scripts Windows-safe
+3e275a53dc9ec39d058100442a3247c86bf9f03a	2026-05-24	fix(e2e): retry Windows kitchen sink probes
+43252c809910df22e22d533ea3c23062fbf8b1d7	2026-05-24	fix(scripts): harden Windows native opus install
+0a985594402a0552dc1cc193c86f3e9cafd63e88	2026-05-24	fix(scripts): harden Windows generated formatting
+8edc671eb4be487e841d9348f8356468d0c2bb23	2026-05-24	fix(e2e): harden Windows plugin assertions
+85f6a0741b2682347bf62b12c8800eab4d2552bb	2026-05-24	test: mount Windows helper in Docker harness
+87a2eba427632caf1f4e58fcaecb3f62104d94e5	2026-05-24	fix(e2e): harden Windows kitchen sink assertions
+c643370fd85bdd17dfc4d256ff61d92c15aa5a1c	2026-05-24	fix(e2e): harden Telegram credential paths on Windows
+483d7be6c40a8d8615aecd06f4cc57d13e702334	2026-05-24	fix(scripts): harden Windows upgrade survivor recipe
+ce48e4c197e57ac384bed027d9208dd7ac101be2	2026-05-24	fix(codex): harden Windows protocol formatting
+5be62e779b2e42d4c12bad0d6f4efde7d2690d84	2026-05-24	fix(scripts): harden Windows ZAI fallback repro
+581c8a637526c3f662caa5c72cc88be982786944	2026-05-24	fix(scripts): harden Windows control UI i18n commands
+71547678c7ec85ec272ed4df66d880896ed1c438	2026-05-24	fix(release): harden Windows cross-os command shims
+75ac11aca267320c7a70583370df292074481031	2026-05-24	fix(release): harden Windows release-check npm probes
+07c2407133d9d5bd38ea7b7b1240fc453abc2cc6	2026-05-24	fix(plugins): harden Windows npm package staging
+abdd8a40ccee5cc19a8a0fd11de39646457d8a12	2026-05-24	fix(plugins): harden Windows npm package staging
+0b9f9db1b615ed0e733a0f1358c4c7a437351e97	2026-05-24	fix(release): harden Windows npm shim verification
+a56f4529720b2c7a6d19d0ecc34b5c0b04c62ce7	2026-05-24	fix(release): harden Windows npm shim verification
+d21abb88e43c0adfe8f384558211e77b00b0c011	2026-05-24	fix(scripts): harden Windows install checks
+32f91503bed868284dbc79e9485ca30f9bce8bae	2026-05-24	fix(scripts): harden Windows QA runners
+208a0679e26ae6b8110e7e53a829f19806fb7d4a	2026-05-23	fix(scripts): avoid Windows shell argv warnings
+8a94e825cd5fe2babe1308d722710e06950fc448	2026-05-23	fix(scripts): run Windows check commands through shims
+1f32a4855a70c539bfa8f9772da0ef2b1fc99566	2026-05-23	fix(release): run npm shims on Windows
+5c535df0a2ee350b188005c55cd43a6c2fbfd1c2	2026-05-23	fix(scripts): resolve Crabbox shims on Windows
+15d9134fc6579abad8699698b2744e0cb394ce6e	2026-05-23	fix(e2e): prefer x64 MinGit on Windows
+6657b493e26bf3205e3b9d7695ae301a034c43f3	2026-05-23	fix(e2e): scrub Windows update config on PowerShell 5.1
+73c1e375e43f7c69842a2e2ebb5fbf9006868c7e	2026-05-23	test(e2e): sample kitchen sink RSS on Windows
+648f479a15adcc87ce2ef9391941ddbdc3959704	2026-05-23	fix(installer): raise Windows git build heap
+2edd6e24621d73e0099660c5dbebcd699b2ba0d3	2026-05-23	fix(installer): fail failed Windows git builds
+684a9b2e6edb5ab0fcdccb8ce3abe93614b95bca	2026-05-23	fix(installer): tolerate WSL UNC launch cwd
+5b90a48e9d268ac2ca87a40420cdf4a0ce7a92e0	2026-05-23	fix(installer): persist portable Git on Windows
+81d22c817da9e60b867884665e7c65757b2d3ae4	2026-05-22	fix(build): normalize cache paths on Windows (#85437)
+fe33125a07250b262eac25da1ed3e46110c5b243	2026-05-22	test(release): extend windows packaged update timeout
+3551e98433928884c077513d08368e7ee31ec4cb	2026-05-22	fix(installer): bootstrap portable Windows Node
+229490a4892460fd439fcde3b94265ae68b5e779	2026-05-22	fix: constrain Windows task script names [AI] (#85064)
+aef93881af5f2a9fd96481f902238d42bd1b5c68	2026-05-19	fix(installer): preserve windows onboarding tui (#84044)
+81dc3bc9e6598c1275a666477d6b8baa5e38e3e8	2026-05-18	test(parallels): avoid Windows background log write races
+53c863084ce802028bd56a041b5111d3ffafd49b	2026-05-18	test(parallels): avoid Windows background log write races
+60a1613a973cd69025152ad5aa60b6133cc3716c	2026-05-17	test(parallels): avoid Windows background log write races
+4c60ab366652730a06539aed84a52a42f9405f6d	2026-05-17	test: extend release qa wait windows
+5fc6b714a6aeca34a842249d660918cce9998472	2026-05-17	test: extend live transport stability windows
+3c6ec521d5e5b54b348b46a4c2e2f711d59fa602	2026-05-17	fix(cli): resolve PowerShell completion profiles
+fe68af5307a3b3964d05b21d8bd89aab50929cee	2026-05-17	fix(cli): show concrete PowerShell completion profile path
+9ac7773b7f077eed7b88ed365b926de7985b98a3	2026-05-16	fix(node): hide Windows task launcher (#81267)
+3ae34bbe2b0c46157a051103cba4ccdf38d74ab2	2026-05-17	test(parallels): avoid Windows background log write races
+e0c3c80ebc8dd90957414f68b99d2f71b481fec2	2026-05-17	test: share Windows platform spy helpers
+ad450a7dfbb6b1c7e649731e870091e6f602beda	2026-05-16	Fix Windows image model event loop stalls (#82799)
+2ce9c4f22e158606950ef727ba4f7c93b5240b7d	2026-05-15	fix: persist PowerShell file aliases
+4004c9342d7dcc78fd33a94b248d5420f3b92f3f	2026-05-14	fix: use Codex context windows for OpenAI runtime (#81906)
+3729ea5769e441f70591d989f5fdf6ac515115e2	2026-05-14	fix(process): normalize Windows child env keys
+7f05ea60fa966727121c413c07a2c5f79443e26f	2026-05-14	changelog: cover Windows sandbox bind, env-marker inference, bodyless media
+d656cda46d91fa3b944f868c7ee6d2c8600c34de	2026-05-14	fix(process): normalize Windows child env keys
+cffae53b43ab1ba41028d38d3fc9dafbc1721508	2026-05-13	fix(security): classify broad Windows SIDs as world principals
+609187f5f6db39df3c033d8b05792147571696c1	2026-05-13	fix(security): classify dangerous Windows sandbox binds first (#63074)
+a97399a25cb7a984298483a4274dc0b3e1140405	2026-05-13	fix: enable native require fast path on Windows for plugin-sdk root alias (#80878)
+4f7a6cebbc259862764b370ff97e6636b9f53535	2026-05-13	test: dedupe windows restart mock read
+4182fbaad02fc2975ce2d1d70618e364ac627a24	2026-05-12	fix(install): don't abort install.ps1 when git writes to stderr (#80834)
+d06f0a0ee78da48ab8ee88467ad5347fef152c57	2026-05-12	fix(install): don't abort install.ps1 when git writes to stderr (#80834)
+95e9b87d6934ad966e594199c7431fddc4cf7273	2026-05-12	test: dedupe pi lsp windows spawn mock reads
+4223dd2886f21e0d9e0603c62da125e1484c3b75	2026-05-12	fix: enable native require fast path on Windows for plugin-sdk root alias (#80878)
+de47989731d3651c8096512d508f4d2b2759107f	2026-05-12	Recognize PowerShell -ec inline commands [AI] (#80893)
+f468f0f61f008201695b3b73400b5d1c991f52cd	2026-05-12	test: guard windows exec mock calls
+efdd3745aaa229ef175da4b20ea0c859855c11ff	2026-05-12	test: guard windows task restart mock calls
+60e5804a9d1d3b853d110f616fb78b427ac18df4	2026-05-11	test: guard windows exec spawn call
+a70d46717c7747043c042cb5b691b73d8e7e3d2d	2026-05-12	fix: skip windows gateway command spans
+0946638943fb21ebd498e81d5c65c8b9f52277ae	2026-05-11	test: allow anthropic windows agent proof
+fbaac02823d9c362d7659c38393434cc62c0a5e3	2026-05-11	test: assert windows task restart spawn
+da6b9445935224323d320249024d2226435b67ac	2026-05-11	test: use minimal thinking for windows proof
+d0275702622c4340af8e4dd98c6b64d5829830b6	2026-05-11	test: tighten windows agent proof
+cb0f983544dc45d0a2911fb39761eaafdbe6d192	2026-05-11	test: tighten windows task restart assertions
+6d26609f7baf44d64eef54df36991c8fd31f25fd	2026-05-11	fix(windows): prevent restart race from duplicate schtasks /Run (#52487)
+eb38d2d277bfc4da36d9fcb42ff0d779ab31697a	2026-05-11	fix(deps): update fs-safe Windows stat fallback
+f12f123f43bad829b3de782746c0a12096a8b049	2026-05-11	fix: keep workspace file status on Windows
+917df00f3ad3f414a47b08ebda61a774e3c79587	2026-05-11	test: add windows agent exec proof
+8847d390bc7f9b66e159beec47c1a676d327e60b	2026-05-11	fix(skills): normalize backslashes in compacted skill paths on Windows
+66c47a9aa37b9ecaef5e9a2b60daef23a2226761	2026-05-11	fix: use pathToFileURL for Windows path comparison in generate-base-config-schema
+2d10a2c76f301de7815d76f8271e914de0ff186b	2026-05-11	fix(doctor): case-insensitive safe-bin trusted dir matching on macOS/Windows
+7cf660e4cc5019c25e6e7d5ee90c6f29e4379752	2026-05-10	fix(acpx): hide Windows MCP proxy child
+3cebb019d0bb11be4d45788d3eee770173e9210f	2026-05-11	test: tighten windows exec assertions
+93b413c1424c06839b24790da3ae93228f5b83e6	2026-05-10	ci: shorten windows release upgrade fallback
+f6e2ad07ece629965f45ee312bd96c0b40e405df	2026-05-10	ci(release): normalize Windows loader npm paths
+9a180ca24b32cf826c59473572195630d20862c1	2026-05-09	test: tighten windows acl command assertions
+4cdf19eabe612a37f410fb8d85a8b4c895667c3f	2026-05-09	fix(telegram): add local chat context windows
+3ba2ce6694d2b1a4e97c9455cbd11474baaea0b3	2026-05-09	fix(plugins): avoid managed npm prefix on Windows
+5adbbaa3cbcc20df26d5425318dbb71d2962fa55	2026-05-08	fix(scripts): avoid DEP0190 when spawning .cmd files on Windows
+61afdefe0c76c3a6d45e3a6209e59c35cf784096	2026-05-08	test: tighten windows acl assertions
+de8270160371ad1eca6cc1432a0bc3c55694f777	2026-05-08	test: require powershell command runner
+2d5a5ee666b24d7c2f723d7a6413801698fda14d	2026-05-08	test: tighten windows acl command assertions
+2d65908f7fa0c0b543229f71b509408185c91926	2026-05-08	fix(update): pipe post-core child stdio on Windows (#78483)
+2bd4529dfd95cf1284a87912287f7e75625cc65e	2026-05-08	fix(shell-env): hide Windows login shell probe (#78266)
+d9931ff607c8e3262b80d3d00e20306a0d85dfaf	2026-05-08	ACPX: hide Windows MCP proxy child
+5f783d7ddd85cae5776f1ec14c3b48325ea9d163	2026-05-06	Plugin skills: use Windows junction links
+03e6a029ab121756507aeaedc8a7ed21988976ef	2026-05-06	Windows startup: handle localized schtasks access denied
+b971ebaaab65df1dc821db09a3fe02a68f1d3e8c	2026-05-05	fix(exec-approvals): guard Windows rename fallback (#77907)
+478138e2885c8eca0799f90e7377f14b6fedaaa9	2026-05-05	docs(windows): update GitHub connectivity notes (#53788)
+f126f72d6388be6b7dfa528fc5e4ab3f3c7d1710	2026-05-05	fix(windows): resolve Gmail helper PATHEXT shims
+b73317c217bb7afdc3826c602c0b40bc1f7a8d7e	2026-05-05	fix(sandbox): support Windows drive-letter bind sources
+8017dc4c3bdabb689382fd0f31b230d0894c07e6	2026-05-05	fix(gateway): skip IPv6 loopback binding on Windows (#69701)
+d02fbc6116ed9cbd501ad6a1e4d08f3fc71c1dd8	2026-05-04	fix(sandbox): support Windows drive-letter bind sources
+978bc53e80cccdc23d42324b18c4d20cd4749315	2026-05-04	fix(gateway): skip IPv6 loopback binding on Windows (#69701)
+46a04099a456fb125eb381a449571a9786311599	2026-05-04	fix(infra): skip POSIX tmp path on Windows (#73533)
+3e4f0767235b7df068836615d4755606d0ecba77	2026-05-04	fix(lsp): resolve Windows .cmd shims (#75343)
+25db482cc6513efae2cc8e0e4a059c7ed289be8b	2026-05-04	fix(media): use r+ for Windows media fsync (#76593)
+021373a4541e53cc5a29e7cd672e578a96fe3276	2026-05-04	ci(release): recover Windows packaged update no-restart timeout
+982d123b80525067a02ff1c26e0f04dd47697614	2026-05-04	Harden Windows command wrapper resolution (#77472)
+94f8f1914e36c6541b43f7099c8c91e6d7e743d9	2026-05-04	test(release): match versioned Windows upgrade tarballs
+2e399e6f1ab3bf076d540d21de5e87e8ecb902f9	2026-05-04	test(release): recover known Windows packaged upgrade timeout
+3921e1b0b7c7282a8a8e9a450c3386b7f166c7d5	2026-05-04	fix(process): kill Windows command trees on timeout
+9aad2b82c30be700ed721f93a6ae7ba4f0cdbb09	2026-05-04	Use trusted Windows browser helper root (#77469)
+e8e8fb66021e419f8e4635cf2d06f7c9be4b2373	2026-05-04	fix(update): preserve Windows pnpm update path
+30e259b9c565bfb57ed51ced07fb4e19cd312b3d	2026-05-04	test(qa-lab): accept native Windows paths
+3d3b0dad77511a2edfb2f47bd61cb6d4735d73ec	2026-05-04	test(whatsapp): accept native Windows auth paths
+15b9966781a2438c6e558f4f64179f72304461ae	2026-05-04	test(telegram): accept native Windows session file paths
+0dd30c804cdfb32c5a3f3bf115c52a592d259a26	2026-05-04	test(memory): cover native Windows paths and locks
+fa1d826a41ccf97f9886b5bccf1b66763c6357ac	2026-05-04	test(matrix): cover native Windows file semantics
+4f2f5e04610c4dea689652d1d0cd8794156e8c3e	2026-05-04	test(feishu): cover native Windows webhook and workspace paths
+03d04c243b86629166386e73ee657ca38c0e42ce	2026-05-04	test(acpx): cover Windows extension test paths
+c1da0ddd5452487270530fd254783d7180373454	2026-05-04	fix(security): block workspace env from overriding Windows system root paths [AI] (#74458)
+9cc3ae100b846437dd3dcbcfaf20b242d9f6f6a2	2026-05-04	fix(process): kill Windows command trees on timeout
+14f756c05b9f884be38e8c93f1c6eeffbec58bb3	2026-05-04	test(release): leave Windows updater timeout headroom
+b4d5ebdcf1612511f3c90b03ac0dee176b4cbf8e	2026-05-04	test(release): leave Windows updater timeout headroom
+8f75a4ebdf2a6cc5e99ec93c6f25b8ac040b8301	2026-05-03	ci: preserve Windows Testbox phone-home POST
+36bab71abccc0852b6c962f06454f1773bb83c00	2026-05-03	ci: preserve Windows Testbox phone-home POST
+5a6cedc14ae9186688834f5af8cd57fb8090b3a6	2026-05-03	ci: follow Windows Blacksmith phone-home redirects
+18db16471bddfb4a61ca66fb09ed8f1a7fae7f21	2026-05-03	ci: keep Windows Blacksmith testbox ready
+3d0563dee239a067895cd9e7ce6a982770e2c030	2026-05-03	ci: support Windows Blacksmith testbox phone-home
+7be29b2801db425ed02a8b186904a034ef2f7eff	2026-05-03	ci: add Windows Blacksmith testbox
+32b4d1ec8ac89ec1bf3943260775397fe87783ba	2026-05-03	ci: expand Windows WSL probe runners
+b2f0f67e0d26b2fd0c541c18b463b11286093e23	2026-05-03	ci: support Ubuntu import in Windows WSL probe
+90d25d59c6103a231eeaad7d048ee4af04831dd2	2026-05-03	ci: keep Windows probe alive after WSL check
+9dc3271efbd7fa327774702255590b923dbf9ef4	2026-05-03	ci: add Windows testbox probe
+857580108dab237522d6199e5f081e17b0ff0a80	2026-05-03	fix(ci): continue Windows upgrade fallback checks
+c1db7df2eabcfb8a5453b2a75aa0bd48a6afd085	2026-05-03	fix(ci): run cross-os checks on Windows
+d3043345ca142f43b45f733e880ca3abb9efd71c	2026-05-03	ci(testbox): remove unusable windows harness
+ac1e56f4ec489910bf1747eb98e4ae0bfd489748	2026-05-03	docs: note crabbox macos windows targets
+1110c249ae871e589177aa79cd9328ab5d9b2cff	2026-05-03	test: keep windows smoke compatible with old agent cli
+468656bc1b480998aca6813a479b26572905ecb3	2026-05-03	ci(release): recover Windows packaged upgrade smoke
+afe42fc9774a1c94903b686c6220631c786b03d2	2026-05-02	fix(e2e): escape Windows stale update import regex (#75315) thanks @steipete
+bf91494035ca50d7132b2836b06d8ddf9ee1c0f6	2026-05-02	test: keep windows smoke compatible with old agent cli
+3dcd579435bd69e4ed08293252ae42fcdf892fbc	2026-05-02	test: keep windows smoke compatible with old agent cli
+f3fd0eedff215967eb75361d241dd5e6cea602e8	2026-05-02	fix(memory): retry transient index swaps on Windows
+c3b8e5c812356681c0ca64ce82700ca0d8b06b77	2026-05-02	fix(release): stabilize windows npm install
+3916d5ab7f1004daf72843f3f503f91c1c6e546b	2026-05-02	fix(release): stabilize windows npm install
+500d235d8ef8c4564386bc95547d462b60937ea5	2026-05-02	fix(release): stop windows smoke gateway before update
+214621790c7c870e9766617aca2a2a10e4c22540	2026-05-02	fix(release): stop windows smoke gateway before update
+890a053062b681caaef542537591a07e233aabae	2026-05-02	test(release): strip BOM from Windows smoke config
+55e6ab3425216c060139ab27ed4c16bd75c55e69	2026-05-02	test(release): strip BOM from Windows smoke config
+34b40b007c44b44884b37908a207d7565e13891a	2026-05-01	test(release): fix Windows smoke config patch quoting
+4031b15e3b31b33eee5105773133a45e26b53406	2026-05-01	test(release): fix Windows smoke config patch quoting
+cce08881ecba48097959fdd90f7738e6636a7cdf	2026-05-01	test(release): harden Windows smoke model setup
+ba47b3af82e9e831c5f2d13394911264af47e5cc	2026-05-01	test(release): harden Windows smoke model setup
+b56bb9f43dd35f7742531f9e4b4cd310a24a7d13	2026-05-01	fix(dotenv): block Windows shell trust-root vars from workspace .env [AI-assisted] (#74460)
+e2a465df4b7bee515ec9d3465cd3ad311ca6369b	2026-05-01	test(parallels): force Windows OpenAI SSE smoke
+04d35fd5c6b520cb62a812a7d16c76e654e46c1a	2026-05-01	test(parallels): force Windows OpenAI SSE smoke
+76c8f9ac3f119d8ac5a6ace71945c6a1fed32625	2026-05-01	test(parallels): budget Windows agent retry
+33cbb0fc5f3a5bba17a781e7c9d5f26a8d362081	2026-05-01	test(parallels): budget Windows agent retry
+03bde3d65c28774159f386b94c8bb84912aece40	2026-05-01	test(parallels): retry Windows agent idle exits
+2137218d4184873f1f4b7f86f4e12ab077c5e1ab	2026-05-01	test(parallels): retry Windows agent idle exits
+3196abb0641e98b358cc594543312921ff950953	2026-05-01	test(parallels): expose portable Git to Windows agent turns
+135719ac05b907dd99a37b8d652a0838e9dc0d7d	2026-05-01	test(parallels): expose portable Git to Windows agent turns
+efe6b37407a2b24cd44cbb74da4a399adcbfbeac	2026-05-01	test(parallels): write Windows provider config via batch file
+571f120642325034b3eb44330fec98f24809a509	2026-05-01	test(parallels): write Windows provider config via batch file
+5c95fc06fa6337571bce3e227eb584e154c5e04e	2026-05-01	test(plugin-sdk): align facade loader windows fast path
+cba0a348dcdd455a65b97e7667e7e9b016cb478b	2026-05-01	fix(infra): block Windows system path env vars from workspace .env injection (#74456)
+f85bd0f5a99beb5e1ac5162a859c1a044c7d293b	2026-05-01	test: retry Windows Parallels agent turn
+7719dd88047c47f2c0c714e6d160af756c2a62c4	2026-05-01	test: use built-in OpenAI provider in Windows smoke
+39ab11425f456e84235fe41931a29ac3c3b29238	2026-05-01	test: clear Windows Parallels smoke sessions
+d3bb5ce9e9d625f55f6b1fd0bf3c9c96a40739af	2026-05-01	test: write Windows Parallels provider timeout directly
+ca620eaf353bfe936050283e15266490bf26884e	2026-05-01	test: extend Windows Parallels OpenAI timeout
+48794b9f88c3939115abe3ae14cd3e64ea56690f	2026-05-01	test(parallels): recover stale windows update swap
+10c39c33bf88490d3d0127bf7175ee48ea7e3cf1	2026-04-30	test(parallels): accept silent Windows background starts
+d1708b8003082f6711687759deea3be0d61a7910	2026-04-30	test(parallels): stabilize Windows background launches
+6c0ce491afa6b110a749ca16b09f9a2a1c4a7cf3	2026-04-30	test(parallels): retry missing Windows background launch
+402b826ba2a99392c0d9ecab99e7431807424722	2026-04-30	fix: existing doctor-contract Windows loader test still expects Jiti to be called for contrac... (#74923)
+c4a4c189f11e1a41b9245b10c3169a22dc5b16ca	2026-04-29	fix: enable native require fast path on Windows for bundled plugins (#74173)
+897ca6abbb186a59ea575bb18a8503b38b7b27e3	2026-04-29	fix: Windows-specific reliability gap in the new timeout cleanup path (#74703)
+1a9763f578085e54e0380337dea2b14825ad350e	2026-04-29	fix(google): accept Windows ADC manifest paths
+d363565375f5bd20865530e5d326cbd2cedced5b	2026-04-30	fix: harden Windows Parallels update smoke
+eb7d89f4b9d5e7de330073ac835006a7b91148ee	2026-04-29	fix(status): honor channel model context windows
+34d11d57579d05e0e7aa1ebff4bd1d1804d7d2b0	2026-04-29	fix(gateway): recognize Windows gateway listeners via PowerShell
+18fa75469925ad77549c0f545f97981d7d6cdfb7	2026-04-29	test(parallels): quote Windows npm update allowlist batch
+de0f54b54acc8b2b394f4c18bbbba431f23fab7c	2026-04-29	test(security): isolate windows acl user fallback
+9aa980bf8e1facb070d33bf050483755e5f5593b	2026-04-29	test(release): use batch file for Windows smoke allowlist
+17d6fa87c83d36dfed12b9284b2cd46e8d8170a8	2026-04-29	test(release): preserve Windows smoke JSON config
+bf08cb21663d07fe3b60c87a23befb94c151548d	2026-04-28	fix: enable native require fast path on Windows for bundled plugins (#68656)
+4932e91517ad04797ae57283a602bd5c2ac92199	2026-04-29	fix(test): wait for Windows gateway recovery
+2dbafe9d47a9b6add642d72b962109b406a63cc5	2026-04-29	fix(test): wait for Windows gateway recovery
+512ef7f4809aa57c0d90a30eea105e249303dcf6	2026-04-29	fix(exec): decode Windows command output with codepage-aware streams
+03195583fed6d9287deb9c1da07e19655edc8465	2026-04-29	test(parallels): extend cold Windows and macOS gateway proof
+78d51dcebe9e4fe21ccdc63052909fddb630e572	2026-04-29	Clear Codex app-server env keys case-insensitively on Windows (#73102)
+727bff8133e1c67224e9f57bcc71167c2c923400	2026-04-28	test(release): stabilize windows parallels agent check
+8f277e4b7f4f06a4cd7825a39b3739d396fb942c	2026-04-28	fix: allow safe Windows companion node commands (#71884)
+3dff1272e963d7f72ab2df3c50362cd70f99c4bc	2026-04-28	fix: harden Windows gateway restart fallback (#69056)
+09d044e0f494fe0d8a574de4aa9168195e667c1d	2026-04-28	test: tolerate old Windows updater restart handoff
+81390c643b96c9269fda17c2ff1ef2dd555791e2	2026-04-27	fix(update): restart Windows startup gateway after update
+17596fc484e4b20f42be130461c0e2b0b697a18d	2026-04-27	fix(update): restart Windows startup gateway after update
+189535308f0e49932af201e664f23da25cec18ab	2026-04-27	test: align plugin jiti Windows expectations
+b056d594b4695198f7925ef1adfaca0dfac9b072	2026-04-27	fix(plugins): normalize Windows Jiti paths
+c85065eb7f396557efdc407dd16ec01639f889e3	2026-04-27	fix(cli): tighten Windows restart policy-close health checks
+cf499101a28e05c25225bdf9d3584d3d660f3e38	2026-04-27	fix(agents): normalize Windows runtime imports (#72731)
+13f9deb619796f128a2bc93b45b9cd6375be2a2a	2026-04-27	fix: audit windows task managed env drift
+57092a17944aa28eef03c9a07fb088596dd3697d	2026-04-27	ci: harden cross-os release harness on Windows
+276291d399edb8043dc0fbeae91cd1d5eeea09d3	2026-04-27	fix: hide bonjour Windows ARP shell probe
+15e634d50c93429dd7a276c39bfe368ebc7b1525	2026-04-27	fix(plugins): normalize windows override imports
+d23ee2f7022707b7edc0ee0cb63e9874b70dd4b1	2026-04-27	fix: hide bundled runtime npm windows
+e6d2c9b080058734f6a06e066d4b1a571e621ab6	2026-04-26	fix(process): decode Windows command output with console codepage awareness (#72393)
+b77514b6d94a79d18484f556a4bfb35c75e03716	2026-04-26	fix: avoid PowerShell error variable collision
+4a3030df9efa72c44bab567a4390ac0c4876a73f	2026-04-26	fix: avoid PowerShell error variable collision
+a87edd732d369a79308038c620e810469de58532	2026-04-26	fix: harden Windows Parallels smoke
+5baf90ffeffbaf5725e60bfb8f280306bb7b6946	2026-04-26	chore(plugins): cap compat removal windows
+4c7a94aac41e4537fdfcd95285f2326f4fdef851	2026-04-26	fix: quote Windows UI runner paths
+1de4aff06dddc5c972a624f0237f0de7f30b2c10	2026-04-26	fix: cover Windows pnpm and Lobster install regressions
+d1e5f4bd3c62f7b6d38717a2036a2fc56a199475	2026-04-26	fix(update): bound Windows scheduled task stop
+8368026986a9309c92e7367b9b597d0d5c3971e5	2026-04-26	fix(installer): preserve PowerShell host on failure
+0f58a6597dceb2ff2cf7d9ca5d0dd8f8904480ee	2026-04-25	test: extend Windows Parallels agent turn timeout
+b49d499b458c379adc16309a92ec4f0bdb0ecd93	2026-04-25	fix: stabilize native Windows onboarding
+30aa7e0d4d225650b58c2fba79e71bffa5627b08	2026-04-25	fix: harden Windows browser open
+52ea8eadcb06ee7a041a51209441e1bea0093889	2026-04-25	fix(codex): normalize compacted Windows permission paths
+5b340821062a345271a6a60b362a76ed14c369b4	2026-04-24	fix(codex): resolve Windows app-server shims
+afbda612d4ac2aaf8a5057e1c996a05200705ff6	2026-04-23	refactor(agents): unify hook history windows
+c1f423f845ca33c42228610af16c3b7d3563dbee	2026-04-23	fix(secrets): harden Windows ACL fallback and strip BOM (#70662)
+2a15a3bb53f911c5ea77a8708a600fcfcc65b7dc	2026-04-22	fix(amazon-bedrock): add known model context windows to discovery (#65952)
+7ff8f8cef8396905e264bce4f2aba82c26cb9de1	2026-04-22	ci: narrow windows check scope
+b1b19798413fba5598c0219e203514962c031c7b	2026-04-22	ci: skip windows for test-only changes
+a9be41d8c76af32789a63de3317eaa32791b3e19	2026-04-22	ci: keep workflow edits off windows lane
+fccb2b8ace6c599d16186d97fe480a81379e7242	2026-04-21	fix: launch Windows startup gateway directly
+6f5b7120b8cf15ec7f88928453842fb63d521f8f	2026-04-21	fix: trim windows dev update preflight
+8edf705238f532a92c31cf5974e1fadfa312c609	2026-04-21	chore: satisfy strict linters and patch Windows CI corepack bug
+40db9734c4d488aac07a305ffd28311f1903baec	2026-04-20	ci: start windows checks earlier
+8b05743df27d4589330e26102a1c70ae429e0a68	2026-04-20	ci(windows): normalize node path for bash
+21fbe416d43d4ceda737cb9140befe3010fe9b56	2026-04-20	ci: fix Windows node path capture
+25e51bba5245d79677a37de6a6db280e55ae96f1	2026-04-19	fix: parse PowerShell cron tools allow-list (#68858) (thanks @chen-zhang-cs-code)
+f624b1d246a9aae71465e95620ddb9122492f9b0	2026-04-16	fix(security): 7 P1 hardening fixes — scan-paths, windows-acl, audit-extra (#67003)
+557c06625c802a0b0c4b00635511d4b1aadcb9e8	2026-04-14	Agents: fix Windows drive path join for read/sandbox tools (#54039) (#66193)
+36820f16765606fb9afb2e54ae0e9728f0688f60	2026-04-14	Agents: fix Windows drive path join for read/sandbox tools (#54039) (#66193)
+bb064d359abf5e99ab0136c2896efbdeb129b0c6	2026-04-13	test(parallels): harden Windows npm smoke
+0bca55aceafadd8772222a5365de9d01db5651e9	2026-04-12	fix: use installer baseline for windows parallels upgrade
+d2a1078007f3cdc287ff7af0dd40a5bc5c0f21be	2026-04-12	refactor(parallels): share windows permission checks
+bc724a86cbccf3afe3656422ad7c8755243f3a57	2026-04-12	test(parallels): verify windows install permissions
+4938b2cc43ecc30edae3ed4f2e282ac027214ac7	2026-04-12	fix: Provider-supplied OAuth URLs inject Windows cmd.exe via openUrl (#64161)
+19d369c750b0d2e05f180cfb9ef73b45bd834c16	2026-04-12	test(parallels): add windows discord smoke
+e9fec40af7f19a84c81961225895f86b0ec2aed6	2026-04-12	test(parallels): add dashboard smoke on windows and linux
+b22bbf5660445f2735426b7cdb7f1cf85075a6ee	2026-04-12	test(process): share shimmed windows success assertions
+7e6b4d70b94a8039fb6974404798f23c172c4533	2026-04-11	fix(msteams): accept SingleTenant sts.windows.net issuer in JWT validator (#64270) (#64641)
+61322946909a1b185bb43598bcd9de46ffc53d5e	2026-04-11	fix(agent-init): honor calendar-day startup memory windows
+e08f4c12da3435812e867fae6cc3610753e2263a	2026-04-12	test(parallels): stop windows gateway before update
+6debabb002c5aae48b6fd9d158e182d3de6bef59	2026-04-12	test(parallels): retry killed Windows fresh install
+da127a3a2973cfc2b216bdf9eb7d9a20a298c7a0	2026-04-11	test: extend Windows update poll timeout
+0f77fdf4a059d852ac1d07756e2a65cfa918b1ae	2026-04-11	test: tolerate Windows gateway restart timeout
+a3b047b5fcfbc59391c6d4b9370b1ca65d36d20a	2026-04-10	Preserve Discord lifecycle windows on rebind
+f7a10d6759c235c6d99d858c4a36102f1b948d93	2026-04-10	refactor: isolate strict-agentic execution policy
+b0a20b1691080a95ff86b417fa0d0b9aae5add77	2026-04-10	fix: settle Windows supervisor waits from exit state (#64072)
+df35c5b2959345428057421b00e90db743e438a9	2026-04-10	fix(process): drain Windows stdio before exit fallback settle
+818435b54e6e3653727613dbbf920b50bb27e852	2026-04-10	fix(process): wait for close after Windows exit fallback
+4f2e37f6345f0c041ed90044120330122a87be0c	2026-04-10	fix(process): settle Windows supervisor waits from exit state
+4ad4ee196248c57a08e4cffc83c4003eefd4eb02	2026-04-10	fix: settle Windows supervisor waits from exit state (#64072)
+c003e982a2df7efc743439c5a27a52c985e5f064	2026-04-10	fix(process): drain Windows stdio before exit fallback settle
+063049c0d4deea1888e34734b6b32398a2a5e8d0	2026-04-10	fix(process): wait for close after Windows exit fallback
+4b6b1a3ed358e16cc3ed1f1b42afd6b7b237ee9a	2026-04-10	fix(process): settle Windows supervisor waits from exit state
+a8c47db668e2d1ac951b082ac67d679fdf7b63a7	2026-04-09	fix: repair Windows dev-channel updater
+3d9a151fd1598d82d10e5b592f002e3324973e74	2026-04-09	ci: narrow Windows node test lane
+b14bf19c63053b9158f15a3e546d6230913fcbb2	2026-04-08	ci(test): fan out windows test lane
+b2ef706b0b4a4caf99994727e1047fd36dd18dcb	2026-04-08	fix(test): stabilize windows tooling assertions
+024b94d874ac85b0a37f53c72d5715516020cad3	2026-04-08	fix: unblock windows update build
+f24bfdb2aac0679c8e067982908816037598d6da	2026-04-08	fix: force cmd shell for windows smoke update
+379108660e7d1fc09277f55054a8346f67c7a711	2026-04-08	Tests: stabilize memory dreaming time windows
+54f078dc8629db0bcffccd65cd55e80435316fbb	2026-04-08	ci(test): fan out windows test lane
+45542fa72641e6edfbb531e61baeaad4c6afba5a	2026-04-08	fix(test): stabilize windows tooling assertions
+4f5c137f88ff418dd266a3f4c8fc2db7714f88e2	2026-04-08	fix: unblock windows update build
+8f30a6c4ec57a72e08ab367253e022385bf45704	2026-04-08	fix: force cmd shell for windows smoke update
+27f122c4bf9b53cb40c14ee09075a176ca5e57c6	2026-04-08	Tests: stabilize memory dreaming time windows
+de3f742221cfe8895b686c9e31efa98aa3372c83	2026-04-07	fix: centralize Windows bundled Jiti loader policy (#62286) (thanks @chen-zhang-cs-code)
+9a6a1508c128c01fd9dcb4753328a96f47bc3595	2026-04-07	fix: avoid native Jiti dist loads on Windows
+c88870ac931df047e742e9e2d9f440a2dd63e63f	2026-04-06	refactor: dedupe windows cmd runner helpers
+50082f91ff4bc681ad6d075649a69df936f03cfd	2026-04-06	fix: harden windows dev update fallback
+6ed33d29c8c48d74d019844a9f6d87a06919f89f	2026-04-06	fix(windows): disable native jiti setup loaders
+7f11941134e4421534a223fa0aa5752f6a9285a5	2026-04-06	fix(windows): preserve plugin loader alias resolution (#61832) (thanks @Zeesejo)
+62b61e07035e49072cc825cae8907a6faf038953	2026-04-06	test: capture windows npm debug tails in smoke logs
+71d2eba0a6e2221b04d665150d8713650caa14cc	2026-04-06	test: add windows dev-update smoke lanes
+edab013e51ff8af39e3d8676f55b6b9a28cf4349	2026-04-06	fix: support corepack cmd shim on windows
+d8abb287eb66995b367497cfda7c796608ea6fbd	2026-04-05	fix: align Windows onboard smoke timeout budget
+791c083c0a9b59f39a3b06d377b0f79e3d79fd1e	2026-04-05	fix: extend Windows daemon onboarding health budget
+5ad27fa25f730309407d4af8de1a7f693c8f3e20	2026-04-05	fix: allow slower Windows gateway restart health
+63fcc52520d6487ccd47c11604416ad3c6552e94	2026-04-05	fix: windows self-restart stale gateway cleanup (#60480) (thanks @arifahmedjoy)
+3a4b96bfbf658855bc9b2f04f2d0ac80122c30cc	2026-04-05	fix: normalize plugin SDK aliases on Windows
+003f52db98ab0dfb8c2dcb937234134a786fc8d1	2026-04-05	fix: add Windows fallback for atomic JSON writes
+5eb551ccfa729627876e6c6091eae07d1003733f	2026-04-05	fix: harden Windows Parallels smoke install and onboarding
+0e61a1d0caf4b3edf8ec2768c8fc71dd54676174	2026-04-05	fix: windows restart fallback when scheduled task is unregistered (#58943) (thanks @imechZhangLY)
+9dd449045a79342f79b2eef7d06d6accd17a7242	2026-04-04	fix(google-gemini-cli-auth): fix Gemini CLI OAuth failures on Windows (#40729)
+e4dc03f108ea06bb0477dbdd32b79cf5f9b9d008	2026-04-04	refactor(acpx): split Windows command parsing
+e985324d87fa53acb3f5549bfa153deceb4c3f49	2026-04-04	fix(acpx): preserve Windows Claude CLI paths
+0fef95b17d727bd89b76a266516daf731edb4a8d	2026-04-04	fix: preserve Windows scheduled task restart/install behavior (#59335) (thanks @tmimmanuel)
+be1d31fa8a853440b3c592118d5fd6471c78620c	2026-04-03	test(ci): fix windows update and task cleanup cases
+267b6f595c515cc951da95f791fcaa787781f54d	2026-04-03	test: harden windows ci coverage
+0464435777c3a31ebaaa8464944aaa0509cc0303	2026-04-04	fix(ci): align windows builtin mock types
+ab57d24f79483a3e172e1d474e92746eaed4f6d7	2026-04-03	fix: stabilize npm owner update test on Windows (#60153) (thanks @jayeshp19)
+7ede711caefb4f95150985cf813c143a530acd0c	2026-04-03	fix(test): use shell spawn for windows test runner
+1a68e55f474d4d6a556e4848bd8345c61da26eac	2026-04-03	test: stabilize Windows startup fallback daemon tests
+9e47c1a2c5438ef0374dd98bafbf69752b3c19a4	2026-04-03	test: avoid windows task-owner tempdir hangs
+5f6e3499f3214d364dafb46279c5905d6ae6230c	2026-04-02	fix: detect PID recycling in gateway lock on Windows/macOS + startup progress (#59843)
+5874a387aefa2e73138b70b5afd30ddfffcd8a4e	2026-04-02	fix(windows): reject unresolved cmd wrappers (#58436)
+f03d7c5a4c402c5753b0f8eecf5b4051281b03f4	2026-04-02	refactor: centralize Windows exec invocation
+bacc938c2a2d2b707bdd6b00432425ac639b18e5	2026-04-03	docs: note windows exec landing (#59466) (thanks @lawrence3699)
+2fd7f7ca52750f616d47a20522f3264354a6234b	2026-04-03	fix(exec): hide windows console windows
+a406045f2f60e5b0ffa44c5709acac91cddfbdde	2026-04-03	test: accept Windows exec approval denial path
+2170d361713724e7f26d0734ab860ac9ae697a2b	2026-04-03	docs(changelog): add Windows drive-less exec fix note (#58040) (thanks @SnowSky1)
+e6ce31eb54cfde05dfcaf5d07c6c75a4b0aa4e07	2026-04-03	fix(exec): ignore malformed drive-less windows exec paths
+eb261fa690ae40485c583345b481c2bd87c3e81e	2026-04-03	fix: land Windows exec allowlist (#56285) (thanks @kpngr)
+36d953aab625c3504833d194c9fbdafe8f0cb0b9	2026-04-03	fix(exec): make Windows exec hints accurate and dynamic
+fff6333773f2ecf31e211c5f79185db32b83caa7	2026-04-03	fix(exec): implement Windows argPattern allowlist flow
+751263d78919f90acff9511f588e733c56d67ad4	2026-04-02	fix: improve parallels windows smoke logging
+906524372959ea6f77899f5ab8cd427d26ecae63	2026-04-01	fix: stop stale Windows gateway before upgrade onboard
+187d3ed053076c9b2d655c4839f79c7d59b2504b	2026-03-31	fix(acpx): fall back to PATH node for shebang wrappers (#58614)
+b87f33c920422e91aa52b1915315ab59a375a52e	2026-03-31	test(ci): deflake windows npm exec coverage
+407fa09573efa5393bf05fb653744a64d919dd72	2026-04-01	fix(ci): restore matrix monitor import guards and windows npm exit codes
+5bf54dec8377061e2559e90a5e10a9745a0b00b1	2026-04-01	fix(ci): restore dotenv trust boundary and windows npm exit handling
+3b14b91024b9bb86f4d30162c6f194a2ce00d50b	2026-04-01	fix(ci): restore matrix guardrails and windows exec shim
+37099dae3e0f96342ec157168b110ad789e738f8	2026-03-31	fix(ci): restore matrix monitor import guards and windows npm exit codes
+11590eb6ce38e2b3af145d5c7d018402bf9ae1b7	2026-03-31	fix(ci): restore dotenv trust boundary and windows npm exit handling
+25a3d3797075ba5da6b91adcf4742eeba072d121	2026-03-31	fix(ci): restore matrix guardrails and windows exec shim
+82695bb24decd93174ebb923a1792d136952ba19	2026-03-31	test: remove timeout-prone windows ci waits
+da03d857f9783fd9aa38f788cdb15d65a1093db2	2026-03-31	test: stabilize recurring windows ci suites
+6ab0f62b3b7a469bc97bda4aefd43912c1fd90d6	2026-03-31	test: stabilize remaining windows ci timeouts
+7d70b1b51ebe0e603700713d294a7e88e6faf280	2026-03-31	test: stabilize windows registry cleanup flows
+82681ba215f3927bd8158c9531a41ba084b39467	2026-03-31	test: stabilize exec timeout assertions on windows
+56c9e2493bccf6e5b025fc9c7889a6193a563fb5	2026-03-31	test: harden windows timeout-sensitive suites
+b878a345911366ec1cba03624be20fc10a0e3075	2026-03-31	test: stabilize windows flow and session cleanup tests
+9590e2ccaed780a361710c2cfeeccef64831cc8a	2026-03-31	test: stabilize windows task registry and exec timeouts
+922846958c83269ac5b3a3b157a9832dc4b4bc07	2026-03-31	test: remove timeout-prone windows ci waits
+9e8d5f403808c6ef4e20433e7212b0494944c4fe	2026-03-31	test: stabilize recurring windows ci suites
+86dde59082bcdc01b4bcabd6b41d5c85bf9c2a17	2026-03-31	test: stabilize remaining windows ci timeouts
+bcd0f0fd56240b8a74814af4afb0dab34b0696d6	2026-03-31	test: stabilize windows registry cleanup flows
+126e3d24356e3702165a6559e4050d807ace50cb	2026-03-31	test: stabilize exec timeout assertions on windows
+7ed48bf1ac82471c325e3d06ca03346509bdb807	2026-03-31	test: harden windows timeout-sensitive suites
+332659bdd594ca6acf773408929122c5b1c13ca3	2026-03-31	test: stabilize windows flow and session cleanup tests
+f4a62ed0d6c93a91b2d3107710dde65af4414856	2026-03-31	test: stabilize windows task registry and exec timeouts
+c7d0beb98d9231091b5652ecf5166297991583f5	2026-03-30	fix(ci): harden Windows test cleanup
+e7984272a720dbc57d5fe6b79b5a5a3fc8ee09b0	2026-03-29	Tests: make package contract guardrails Windows-safe
+f8547fcae4c05147a6648ed4765dcd1a2026bc72	2026-03-29	fix: guard fine-split against breaking UTF-16 surrogate pairs
+8ea4c4a6badc2e07e7cc6502bb887344e910fa2e	2026-03-28	fix: tolerate npm stderr in Windows Parallels update smoke
+7a878164b07335c35376f91ffeceef986722465b	2026-03-28	ci: align bun shard counts with windows (#56429)
+cfba0ab68f7d5ffbe6d560f0ef8bda02d95acc27	2026-03-28	fix(process): wait for windows close state settlement
+c3c1f9df54c711f72cd7cdbbc58c23a46fd6236e	2026-03-28	fix(process): wait for windows exit code settlement
+e0ba57e9c75ce2b0d5632f6d070eafebf033fb84	2026-03-28	fix: preserve windows child exit codes
+d6662e2aa777e42db642c918fee41a78c560c5c4	2026-03-27	fix(test): stabilize windows lock and cache paths
+1ff167998450aa45dbecbeb819470c971b9e97ff	2026-03-27	test: harden parallels windows smoke polling
+c48a3e4fc97268763865e4746ee12e7c894bd1e4	2026-03-26	ci: optimize windows test shard fanout (#55261)
+6efc4e8ef23aa35a20ff447926ea75b1f1a7aed6	2026-03-25	test: fix windows tmp root assertions
+ee714f5a420b20b99809375bd8c59c6c089fa07a	2026-03-25	test(media): make local roots fixture windows-safe
+358ca9d7a33970498913dbc852627f8765121bcc	2026-03-24	Fix Windows profile path test expectation
+64432f8e469cfc4e97fb792edf6fbd786d98060f	2026-03-24	test: disable Vitest fs cache on Windows
+a6cfb9f64b7880cf475b7e7288298b6645eb7b3a	2026-03-24	test: disable Vitest fs cache on Windows
+36de481541f831973c8dc61a806900b8e74d8460	2026-03-23	docs: capture windows parallels install learnings
+ea99984e237aa3d41090ea5da25581858bea321c	2026-03-23	test: fix windows parallels agent quoting
+d841d02439d6679909cb4bb19eb339c09f239fcf	2026-03-23	ci: stabilize windows and bun unit lanes
+9d3d7f9e650bbf3dfcba94da5b214a9525b97d3e	2026-03-23	fix: restart windows gateway after npm update
+5637f9b51688d14b81b230283b9c7378f604a442	2026-03-23	fix(changelog): note windows media path guardrails (#52738)
+9fbb840c79edb79039d8da53254a29b170cdc60d	2026-03-23	docs(changelog): add Windows media security fix
+ddf823036b1f9c488f29eb31af9c1e5a20768cdf	2026-03-23	fix: harden Windows Parallels smoke installs
+ac6542584bff316d0b9a02b5d0f8c94d3068892c	2026-03-22	fix(ci): unblock windows generator and gateway test typing
+60273758f82138782e7cba9bccb838475e7f1bd5	2026-03-22	fix(ci): use Windows-safe formatter spawn
+c0cbc7403b7f06423665067277b9b7daddfd6fc0	2026-03-22	test(env): normalize path expectations on windows
+d91913c207cbdd8d8c9ff18e57377c622002b8cd	2026-03-22	test: fix windows bundled metadata generation
+465bd0cef115bdb1da067d15bd52ddb632d189ce	2026-03-22	fix(test): normalize repo-relative paths on Windows
+829beced044de609d5b8b646e001f0af4d571628	2026-03-20	fix(ci): avoid Windows shell arg overflow in unit-fast
+22c1bda2a0fbb60cab341bc96306295e8ee8366b	2026-03-19	docs: clarify native Windows support alongside WSL2 across getting-started, windows, and onboarding-overview
+f571f6d534645853feb02bf9b8d5b82eed0b8fcc	2026-03-19	Fix Windows bundle MCP and Matrix contract seams
+8d66245825566ed86fff1c3257fb09a38bafbacb	2026-03-19	Address Windows review regressions
+9cd74ca94be8d6b4b6c328b7ad2eebcb89d1b20b	2026-03-19	Fix Windows hook path containment
+92a1ba88bd5690e1a3b110a35e423d097a9f01bd	2026-03-19	Fix Windows hook path containment
+53a34c39f623ee4c90bb978207c0bc6dcdcdaee1	2026-03-18	Fix windows ACL os mock typing
+74b9ad010a24099333f3b1b7bb0345515c027b0e	2026-03-18	test: preserve node os exports in windows acl mock
+3abffe0967d9db44f60ed3c69989c7fb89ce48df	2026-03-18	fix: stabilize windows temp and path handling
+b4f16bad327c8bb03be390ddcd194d7fdab2fa24	2026-03-18	Plugin SDK: export windows spawn and temp path
+8ab2d886eba78cc0e9389cfb0e3114d34c9b838b	2026-03-17	test: merge audit windows acl cases
+941debaa5ef1066a2329c0d8f9236dfbccf06584	2026-03-17	test: fix Windows path normalization in bundle-mcp, plugin-hooks, and logger tests
+f40583500ecaa482e701dc28152225fe8f20c078	2026-03-17	fix: bundle-mcp test TS error + Windows CI timeouts
+9488fff7d52806d90410da98f844e69271a4b02d	2026-03-17	test: fix oxfmt in auth-profile-propagation, add timeout for wizard contract on Windows
+a0395bb71bb1531669ce5cb4333d846372bea772	2026-03-17	test: fix Windows CI failures (paths, timeouts, sourceLabel)
+0f1953c170e91dc9718194852be74e35625c3dc6	2026-03-16	chore(ci): retrigger windows matrix
+25a1f49c9cc6e6880fa1a1e9a18a94d0d450b581	2026-03-16	fix(tests): tighten windows ci follow-ups
+0b58a1cc1304f00009edba73e599362f7cb593cb	2026-03-15	fix: stabilize windows parallels smoke harness
+abe7ea4373ae1ac75171ee63604119f29bf11732	2026-03-15	fix: accept schtasks Last Result key on Windows (#47844) (thanks @MoerAI)
+3e8bc9f16ac31e593dbc9655a02d72fe27d02826	2026-03-15	fix(daemon): accept 'Last Result' schtasks key variant on Windows (#47726)
+7d5e26b4a283882787f71ef4d7151f03a2976a05	2026-03-15	Tests: stabilize bundle MCP env on Windows
+2524abc56dc9a4ecdae0bcd6c3f2e25c8907723c	2026-03-15	CLI/completion: fix PowerShell nested command paths
+ad6577881893f6eabd5334b5d56980329359aaa4	2026-03-14	fix: keep windows onboarding logs ascii-safe
+4dbab064f0f1432c5b1f2b9a8bd7f9839bda629d	2026-03-14	test: add parallels windows smoke harness
+71639d1744dc3f9b16518ff2f1aaad4528c0d43d	2026-03-13	test: share lobster windows spawn assertions
+9da06d918fbfab7850ada774ee85d905d8aff650	2026-03-13	fix(windows): add windowsHide to detached spawn calls to suppress console windows (#44693)
+87116e959c5f84c710bc4220fd696bfe134c86f7	2026-03-13	fix: hide windows restart console flashes (#44842) (thanks @MoerAI)
+817e68da6bc4d337c23aba790e2309d8717133c3	2026-03-13	fix(windows): add windowsHide to detached spawn calls to suppress console windows (#44693)
+28a49aaa34398b3b69302b3d7769a50eae1d0c26	2026-03-13	fix: harden powershell wrapper detection
+7d69579634ad792fa600aa73e036fa7158a41342	2026-03-13	refactor: share windows daemon test fixtures
+5189ba851c2d3f611abf92f1bb0ebdc9859743c8	2026-03-13	fix: stop windows startup fallback gateways
+6cb87299524e32645aec2f26143fd6135fe35f66	2026-03-13	fix: harden windows gateway stop cleanup
+5ea03efe92d639169769762e5b5082b54d60dbb6	2026-03-13	fix: harden windows gateway lifecycle
+202765c8109b2c2320610958cf65795b19fade8c	2026-03-13	fix: quiet local windows gateway auth noise
+a0f09a458975558e93dcb9afdbdc9532a4f31970	2026-03-13	test: fix windows startup fallback mock typing
+32d8ec948262396722c97e22343b1b6437eb869d	2026-03-13	fix: harden windows gateway fallback launch
+fc2b796f027f60e81b7ea0bf4ce40040827fa669	2026-03-13	test(proxy): make env proxy tests windows-safe
+c52f23f794a837c27ec4354f8e83d1ea138c5c3b	2026-03-13	test(qmd): make windows cli fixtures explicit
+433e65711f78492e961e5da678de91175b4f151b	2026-03-13	fix: fall back to a startup entry for windows gateway install
+0979264ed5fb403968c8725f8dc047fade7d9578	2026-03-13	test(qmd): make windows cli fixtures explicit
+fb9984a774dce2dde7b23a35956cba230995a9be	2026-03-13	fix(memory): stop forcing Windows qmd cmd shims
+b858d6c3a91ee94905131a2d41b7ee17608ebd00	2026-03-13	fix: clarify windows onboarding gateway health
+296a106f4991a139220c9514fa7c35364b16915b	2026-03-13	test: stabilize hooks loader log assertion on Windows
+0068f55dd81b32e2232f3d3d419f56d9d2722c59	2026-03-13	fix(memory): fail closed for Windows qmd wrappers
+d96069f0df1a8fa33aaf79bfe50875d22be76dd3	2026-03-12	feat: add windows update package spec override
+91b701e183b078883b9fa2c7ed3c4834cdf34d58	2026-03-12	fix: harden windows native updates
+86a3149b2eaa3f006235d95dc9fc8d2961c36751	2026-03-12	fix: harden windows npm runtime path
+9cb0fa58c20c71e22a58f4b499a982fa169f6385	2026-03-12	fix: restore protocol outputs and stabilize Windows path CI (#44266)
+b6d83749c8650a9e3c6baec65576737400cee820	2026-03-11	fix(terminal): sanitize skills JSON and fallback on legacy Windows (#43520)
+344b2286aa725e288c417583ea102382168d8483	2026-03-10	refactor: share windows command shim resolution
+2b8828ea46b89d500863b06010f4883a41fd693a	2026-03-09	test: fix windows runtime and restart loop harnesses
+6c11b4378a269f29069c0c606422211c9f9822ae	2026-03-09	fix: normalize windows runtime shim executables
+ddc3a3fc71dcdc3041082418629ac9bfdec4705a	2026-03-09	test: fix Windows fake runtime bin fixtures
+648213653dce6aa8fc1c7e07cb656aa275967581	2026-03-09	test(secrets): skip ACL-dependent runtime snapshot tests on windows
+dad107630e66aaf24a377f640c034ca2a6ce9c4b	2026-03-09	test: fix windows secrets runtime ci
+cc0f30f5fb64b06c38a41d7b892f4f2933f2d288	2026-03-09	test: fix windows runtime and restart loop harnesses
+66c581c64c1ce35a6ca961e995bbe398987fd398	2026-03-09	fix: normalize windows runtime shim executables
+912aa8744aa83cc1fcead8058645cd06aa4bfe89	2026-03-09	test: fix Windows fake runtime bin fixtures
+4bb8104810fd515480f7c162b0b7bebe72f3ac01	2026-03-09	test(secrets): skip ACL-dependent runtime snapshot tests on windows
+41eef15cdc477a1a6207b89a65a74bac6f6d4e0f	2026-03-09	test: fix windows secrets runtime ci
+9d467d1620d2e89a3a50bb17e071aa9eecc1e559	2026-03-08	docs: add WSL2 + Windows remote Chrome CDP troubleshooting (#39407) (thanks @Owlock)
+1d1757b16f48f1a93cd16ab0ad7e2c3c63ce727d	2026-03-07	fix(exec): recognize PowerShell encoded commands
+708187f28c3babfcc80a2fb598668207716535bb	2026-03-07	fix(outbound): prevent replay after ack crash windows (#38668, thanks @Gundam98)
+4dcd93092334789ed3c32c539ff81730275ff5a7	2026-03-07	fix(test): strip windows drive prefix from darwin hints
+b9dd6e99b677cd44ed5d04fcfface0effdcbc83a	2026-03-07	fix(daemon): avoid freezing Windows PATH in task scripts (#39139, thanks @Narcooo)
+912f7a55251da6f19db71fabd5ab8b5d971dbdfa	2026-03-07	CI: enable Windows pnpm side-effects cache
+de7848e2275f43a01dca66948b54be2f5adf276d	2026-03-07	CI: cache Python and Windows pnpm stores
+7735a0b85c72a39b4cb88793e5f46e0f73538b87	2026-03-07	fix(security): use icacls /sid for locale-independent Windows ACL audit (#38900)
+05c240fad6fea1caed99ddf8b2d093eff4ee1f31	2026-03-07	fix: restart Windows gateway via Scheduled Task (#38825) (#38825)
+d000316d1901a802f06a77bc8d1ddf52aa504012	2026-03-06	fix: Windows: openclaw plugins install fails with spawn EINVAL
+30c0f7e89ff040a41a45b05316f60f30092dfa7e	2026-03-05	fix(memory): retry mcporter after Windows EINVAL spawn
+d45aa68ae8d6e05d07b69f2d39ce6e6d34fc7613	2026-03-02	CI: disable flaky sticky disk mount for Windows pnpm setup
+a5a6952bf23cfb4e2a22a20f06f44c98a0a86e60	2026-03-02	CI: reduce critical path for check build and windows jobs
+5ef04d2822f439266ab6e717c2ad7f5b1eb71f27	2026-03-02	CI: speed up Windows dependency warmup
+a951ecdd7bdabd7d3692c59e7da71084d0496ffb	2026-03-02	CI: shard Windows tests into sixths and skip cache restore
+99a48aad0896bcf9b7170f17f2c549eb32e9df5c	2026-03-02	CI: increase checks-windows test shards to 4
+8b80848ae9269b7ed6a8a654a051113cf2d5eb40	2026-03-02	CI: increase checks-windows test shards to 3
+153a4f55dba6b426cd6d9a5ed86ca01e1393309c	2026-03-02	CI: reduce pre-test Windows setup latency
+05aa16c040a0df89266cdd73e67af688f51e88ee	2026-03-02	CI: allow blacksmith 32 vCPU Windows runner in actionlint
+2c6616b830f8327af0360b5c32870bd62196a81c	2026-03-02	CI: gate Windows checks by windows-relevant scope (#32456)
+f2c37e543e4f3c1a5fb03ee2b33dbb070304e427	2026-03-02	CI: optimize Windows lane by splitting bundle and dropping duplicate lanes
+6bf1abf6036d6e6c36fc35e1bdce295a24da0167	2026-03-03	ci: use valid Blacksmith Windows runner label
+40f2e2b8a6b493b9f9308b010976fe2cc7165e80	2026-03-03	ci: scale Windows CI runner and test workers
+00215f76f7d9283574926e0a03a63c1bc6823824	2026-03-02	Config: harden validation paths and preserve first lookup context windows
+abec8a4f0ac17b564d647c3dddd1c1b7392f8ffc	2026-03-02	test: preserve windows backup-rotation compose coverage (#32286) (thanks @jalehman)
+41bdf2df41a29f5c4da9d12da608aee63c68410f	2026-03-02	test: skip chmod-dependent backup rotation tests on Windows
+f257818ea525335625cec8a6df7052daffff49f0	2026-03-02	fix(sandbox): prevent Windows PATH from poisoning docker exec (#13873)
+6358aae024ed8f1d0270a8590fdb009b4906f061	2026-03-02	refactor(infra): share windows path normalization helper
+ef89b48785f108898a256e398a0b7e7a9e7bd237	2026-03-02	fix(agents): normalize windows workspace path boundary checks (#30766)
+351c18c84d79fe0e7f783fdead003d3b112b234c	2026-03-02	fix: label codex weekly usage windows correctly (#31938) (thanks @bmendonca3)
+602f6439bd05e55afa134fe9b86f0a659bdcaa5c	2026-03-02	test(memory): stabilize windows qmd spawn expectation
+8ae8056622109dd4e5525564383502059511b3fc	2026-03-02	test(perf): trim telegram webhook artificial delay windows
+193ad2f4f0e3a6a6e33a6b3c1a616786041dd0e4	2026-03-02	fix: handle PowerShell execution policy on Windows install (#24794)
+a0e11e63fe76a8af2d85da83325675567e1b7ed4	2026-03-02	docs(faq): add Windows exec encoding troubleshooting (#30736)
+7a55a3ca07f1e4b2a778c75c63dd781bbe3db7eb	2026-03-02	fix(install): correct Windows PATH troubleshooting docs (#28102)
+1b462ed174e662374ad6ced13f57a03caf4c8b28	2026-03-02	fix(test): use NTFS junctions and platform guards for symlink tests on Windows (openclaw#28747) thanks @arosstale
+88284181118f42bcf1d601b640315fee3691f997	2026-03-02	test(subagent-announce): fix flaky Windows-only test failure (#31298) (openclaw#31370) thanks @zwffff
+21708f58ceb0429dbc3fcdb1cd2eefeb4c767e0a	2026-03-02	fix(exec): resolve PATH key case-insensitively for Windows pathPrepend (#25399) (#31879)
+3fb0ab743532103c7040aa810afc52b24ef2878c	2026-03-02	test(perf): tighten cron issue-regression timeout windows
+9f98d2766a500519b89a77472cf651380429feab	2026-03-02	fix(logs): respect TZ env var for timestamp display, fix Windows timezone (#21859)
+944abe0a6c1eee77667a41c39bfa7febd9ebc489	2026-03-02	fix(security): recognize localized Windows SYSTEM account in ACL audit (#29698)
+e23b6fb2ba75bf6c5ce68b0286bc8d445b80d428	2026-03-02	fix(gateway): add Windows-compatible port detection using netstat fallback (openclaw#29239) thanks @ajay99511
+d145518f94be0919c2407b98543666b4b7fab28d	2026-03-02	fix(cli): wait for process exit before restarting gateway on Windows (openclaw#27913) thanks @tda1017
+2892dbbc7bfa6159b5a62f2efdbbe84ae4a0ef84	2026-03-02	fix(exec): resolve PATH key case-insensitively for Windows pathPrepend (#25399)
+2a11a20fe2d69bcb01873bb201a36e336bc2c318	2026-03-02	test(windows): stabilize exec wrapper mock assertions (#31771)
+c2d41dc4731051ff0778c5a1530a0d27a9b8c6fe	2026-03-02	fix(daemon): recover Windows restarts from unknown stale listeners (openclaw#24734) thanks @chilu18
+a05b8f47b11a1e7279aef52b19dfba2aaab04b2a	2026-03-02	test(perf): tighten cron regression timeout windows
+8421b2e848415b9715672eb3bd5b3e76a0ddbad3	2026-03-02	fix(gateway): avoid stale running status from Windows Scheduled Task (openclaw#19504) thanks @Fologan
+cd653c55d7ce98efdc280822f805485a91e95a71	2026-03-02	windows: unify non-core spawn handling across acp qmd and docker (openclaw#31750) thanks @Takhoffman
+7b5a410b831367fc9b204e78758de9b3c1aff95d	2026-03-02	fix(node-host): decode Windows exec output with active code page (openclaw#30652) thanks @Sid-Qin
+6e008e93beeb6ece160eca88d0f0c612bba2e792	2026-03-02	Process: fix Windows .cmd spawn EINVAL (openclaw#29759) thanks @icesword0760
+79cb5e2c9b87bce26feaba05641096b0a44b2d61	2026-03-02	test(perf): trim cron regression timeout windows
+127217612c0921923701bbc6c2883bbc9e5ad63d	2026-03-02	fix(CI/CD): use path.resolve in expandHomePrefix test for Windows compat (#30961)
+a1a8ec68709b3cb85799c50be8015572f1572f11	2026-03-02	fix(windows): land #31147 plugin install spawn EINVAL (@codertony)
+a5f0a9240fb135293c7dcc60c9a4b3819b5bba61	2026-03-01	fix(cron): retry rename on EBUSY and fall back to copyFile on Windows
+949200d7cb8e9a1ab1fb7f3e82d5f6fac54a8b30	2026-03-02	test(browser): fix windows download tmp path assertions
+68a8a98ab761cee8a22839a6a447253e735d0493	2026-03-02	fix(acpx): default strict windows wrapper policy on windows
+12c12570238c14a4cfc309f9bcf2afa06bc1d1b3	2026-03-01	fix(acpx): share windows wrapper resolver and add strict hardening mode
+9e6e7a3d69958da000df3690c7cbb186bb1825e8	2026-03-01	fix(acpx): harden windows cmd wrapper spawning
+ac5d7ee4cd5691e062116e9c1dcfa2e3d7df36d0	2026-03-01	Tests: normalize HOME expansion assertion on Windows
+6bf51fd9923d6483738bd7a07ae4398b6734b118	2026-03-01	fix(test): use path.resolve in tilde expansion test for Windows compat
+339a06c3c0c1ea883d33aaa11dab41f66a8d059e	2026-02-28	chore: retrigger CI (unrelated Windows flaky test)
+645791c35e7fbe435db7122ce1828b01110dbaf1	2026-02-27	ci: add timeout for windows checks job
+f7041fbee33c0d640e23194def5ceb6c0cd66ee5	2026-02-26	fix(windows): normalize namespaced path containment checks
+485cd0c512f3998873e5885eb2e3f553788eb790	2026-02-26	fix(test): skip exec-backed audit batching assertion on windows
+060ede8aaa6c44eb314f794de34511522e6baaa4	2026-02-26	test(secrets): skip windows ACL-sensitive file-provider runtime tests
+b84d7796bea24d9dbf16a41866f0942c07fc871d	2026-02-26	test(secrets): skip strict file-permission resolver tests on windows
+0e812c0e4f1698dff642eaa5ed208ee3a3cffafb	2026-02-26	CI: shard Windows test lane for faster CI critical path (#27234)
+72adf2458bb538b5568bbabe68ff141419cf92a3	2026-02-26	CI: shard Windows test lane for faster CI critical path (#27234)
+dd6ad0da8c3f8ec7b588971494bef87348d1ea25	2026-02-25	test(exec): stabilize Windows PATH prepend assertion
+fa525bf212807735c0a0fb926e416ac55f0dbe99	2026-02-25	fix(shell): prefer PowerShell 7 on Windows with tested fallbacks (#25684)
+a177b10b79bcfeefed1a9970294fadf56f31ad1e	2026-02-25	test(windows): normalize risky-path assertions
+2157c490afcf3c787517a3a37d1a8cb6cec4e5c0	2026-02-25	test: normalize tmp media path assertion for windows
+196a7dbd24fcf94cbd91f2fac2fc7592f296a3d3	2026-02-25	test(media): add win32 dev=0 local media regression
+943b8f171a78fda44ba065dcec29da27b8c072c0	2026-02-25	fix: align windows safe-open file identity checks
+7455ceecf88803be2e12c76937da301d7a964e80	2026-02-25	fix(windows): skip unreliable dev comparison in fs-safe openVerifiedLocalFile
+04bcabcbae66b6c322f192e1265d817b14c290cf	2026-02-24	fix(infra): handle Windows dev=0 in sameFileIdentity TOCTOU check (#24939)
+60f1d1959aa05eb08348c9b32e091e7b074e5692	2026-02-24	test: stabilize invoke-system-run env-wrapper assertion on Windows
+0ae7f470a28fd7c4189a43a11cd615fe8710d0d5	2026-02-23	test: normalize skill prompt path assertions on windows
+a58b40e153753f90172c37fc3389332d152e45dd	2026-02-22	chore(test): stabilize mcporter assertions on Windows
+84e5ab598a6acd56c96986360542c8865daed1ca	2026-02-22	fix: make windows CI path handling deterministic
+1ad9f9af5a3735617e15f84ce37e5f0e75420f1a	2026-02-22	fix(memory): resolve qmd Windows shim commands
+1e582dcc6f06aaf42b9637c4e0e2db5f1b6bbb24	2026-02-22	fix: harden windows path handling in CI tests
+e55ab6fd91062860736b9fb3a121a8986ba1803b	2026-02-22	test(ci): harden background abort timing on windows
+c5be45dfd2a357ba76bcc3dda281261fc6684f32	2026-02-22	test: skip CLI auto-detect e2e tests on Windows (#23626)
+7c3c406a35137ca7bc03de0ccd3607f22f089b82	2026-02-22	fix: keep auth-profile cooldown windows immutable in-window (#23536) (thanks @arosstale)
+239963ac44014111aefbe8c42aa3a750cc773858	2026-02-22	perf(test): shrink bash command fixtures and polling windows
+c56ab39da5c063064b0fa277b6621940764912d5	2026-02-22	perf(test): reduce bash e2e wait windows
+9ab7b85a66de5d800e2110e4e419a768d7eb7cfd	2026-02-22	perf(test): tighten background abort timing windows
+2b0ca9447c486815722a69bcd47f5dba5dccf0ac	2026-02-22	perf(test): trim bash e2e sleep and poll windows
+bd4f670544d77a7df39f8cbb7db0b564f555ec8b	2026-02-22	refactor: simplify windows ACL parsing and expand coverage
+85a3c0c8187b70ff03201b72cfdc8354600afcfb	2026-02-22	fix: use SID-based ACL classification for non-English Windows
+11986a601f7f292ba314d57e3f691481126ee305	2026-02-22	fix: harden windows acl sid classification and locale handling (#23415) (thanks @akramcodez)
+3cce93359e17f6fbc3137788452b5121bc2ea8e0	2026-02-22	fix: use SID-based ACL classification for non-English Windows
+69cedc7a151ada2b868ffb17941aa1ecf03a4dc5	2026-02-21	test: make brew fallback assertion windows-safe
+14b37432285e9fa22c0e1ebc147be9a0a3215105	2026-02-21	fix(ci): stabilize Windows path handling in sandbox tests
+dff61a10e162c0f86f7c49e0b99f1cb1f0df5288	2026-02-21	docs(changelog): add windows system.run approval mismatch fix note
+035832b4c53c98330c265c5777c0e57aa99ca3ab	2026-02-19	refactor(daemon): extract windows cmd argv helpers
+280c6b117b2f0e24f398e5219048cd4cc3b82396	2026-02-19	fix(daemon): harden windows schtasks script quoting
+8288702f51a3ccbf7783e165c4593ce381d5c852	2026-02-19	docs(changelog): add Windows schtasks injection fix note
+1faa7a87a050dfa23d01458dcf6265f9df21266e	2026-02-19	lobster: parse windows cmd shim paths with rooted tokens (#20833)
+02123e591cf34aaa7717f0d7ac64a158696f12eb	2026-02-19	refactor(lobster): extract windows spawn resolver
+6b14498d2f935263b164c6489279fd554d04d46a	2026-02-19	test(lobster): use lobster.exe in windows plugin path case
+ba7be018da354ea9f803ed356d20464df0437916	2026-02-19	fix(security): remove lobster windows shell fallback
+647a46a06161c34a05cb94212983deca62840735	2026-02-19	ci: skip bun setup for windows checks
+8a6b55e7153eb82b7e0a6ace95cf9fd9cd3e1db3	2026-02-18	perf(test): tighten channel health monitor timer windows
+cb488df5720a5e71804a08ce7797eb9497d25344	2026-02-18	perf(test): tighten fake timer windows in channel restart tests
+48b0b55fa4caa96247da6d72e3598e105f47ba68	2026-02-18	test: make shell-env cache assertions windows-safe
+bbb5fbc71f1a70dd4c0aaa748b70f353c347b9d9	2026-02-16	fix(scripts): harden Windows UI spawn behavior
+726ad45c75241860580c70d86712fdce7984672f	2026-02-16	Revert "fix: add windowsHide: true to spawn in runCommandWithTimeout"
+25126d75c3acacf11cdf8e16a61fb75fc52bfc37	2026-02-17	Revert "Agents: improve Windows scaffold helpers for venture studio"
+6244ef9ea85871f48cc064ecdd6f20b16fc6756b	2026-02-17	fix: handle Windows and UNC bind mount parsing
+dacffd7ac8762415298c3ee07a6e7e2d27b710cd	2026-02-17	fix(sandbox): parse Windows bind mounts in fs-path mapping
+3c3a39d1650feea71b779d6dcb77758346e2801c	2026-02-17	fix(test): use path.resolve for cross-platform Windows compatibility
+65a1787f92c37a87d0a9ab431d119b5ad73f7cae	2026-02-17	fix: normalize paths to forward slashes for Windows RegExp compatibility
+a1a1f568415d98ccedfa91e4a290cffa6ecb953e	2026-02-16	fix(process): disable detached spawn on Windows to fix empty exec output (#18035)
+94eecaa446aa04c0d4e8cf7c12a40f8441711191	2026-02-16	fix: atomic session store writes to prevent context loss on Windows
+b6d934c2c7da1276ce5a001ef7f1d16773918f0c	2026-02-16	Agents: improve Windows scaffold helpers for venture studio
+b60b44b42e5931c5324346011d1128495022b526	2026-02-16	fix(scripts): fix spawn EINVAL error on Windows in ui.js
+32c66aff49fcdb295484dd94f56c9c8a8f0d9482	2026-02-16	fix: add windowsHide: true to spawn in runCommandWithTimeout
+9a6f7c9b23de4c473d8b38a183adbbfc07fba7df	2026-02-16	test: retry cron delivery temp cleanup on windows
+ec349c4d15880ae5dec9f61da97406cb628122db	2026-02-16	test(exec-approvals): gate safe-bins assertions on windows
+38ac4b808327af7214aea25941685d1d6f4d0a0e	2026-02-16	test(pty): stabilize non-windows signal assertion
+7d89bebc4f9684641a289bacb53489f8955452a8	2026-02-14	chore (changelog): note windows git-bash multiline paste fallback
+a47b08d55198d5a9971ead1999cdb80febecd6bd	2026-02-15	fix(ci): make Windows unit tests deterministic
+d355fecd4dfec032c53a20c21ce4dfac460c5973	2026-02-15	fix(ci): avoid Windows spawn EINVAL in test runner
+a7eb0dd9a54c5ded8e49b04b90fe987773f5f730	2026-02-15	fix(security): harden Windows child process spawning
+513576b487b69d546edb838f3b0770e0cac43b30	2026-02-15	fix(test): disable safeBins expectations on Windows
+d1f36bfd846b687edac07fdb6964b00d185d7dc5	2026-02-14	refactor(cli): share windows argv normalization
+fe514213b653554fbd6494f4a62802f8b30e2858	2026-02-14	test(browser): fix Windows path expectation in file chooser hook
+0a724127dc92fbdf904290faa60e100f674f5a7e	2026-02-14	perf(test): tighten telegram media e2e flush windows
+ab0d8ef8c10d5f78f3346d8baac80fed2675e893	2026-02-13	fix(daemon): preserve backslashes in parseCommandLine on Windows (#15642)
+c50183feb1b27141f4af08d15e73fc80f3d6a4b8	2026-02-13	fix(daemon): preserve UNC backslashes in schtasks parsing (#15642) (thanks @arosstale)
+f641b945d742713604201c46914564a364405820	2026-02-13	fix(daemon): preserve backslashes in parseCommandLine on Windows
+be18f5f0f077220cc52512a648796947c94b97d9	2026-02-13	Process: fix Windows exec env overrides
+d91e995e469191eb6c701baf12baf8cc3113a8fc	2026-02-13	fix(inbound): preserve literal backslash-n sequences in Windows paths (#11547)
+23b1b5156866328ee969753d1ccd8178af1ab352	2026-02-13	fix(windows): normalize env entries for spawn
+e97aa45428f16b54778870748809c68a05d43c87	2026-02-13	fix(windows): handle undefined environment variables in runCommandWithTimeout
+d7fb01afad3dfaf456de905296fe50f614710280	2026-02-13	fix(windows): resolve command execution and binary detection issues
+a5faea614bf02a02ec9ce98ceafe2058049f2efc	2026-02-13	fix(msteams): detect windows local paths for uploads
+8ff89ba14cd6e3ae0351a3209f750fff4e8cd906	2026-02-13	fix(ci): resolve windows test path assertion and sync protocol swift models
+0a7201fa8475a6156cd9bc28ee3fbcfb831d88c0	2026-02-13	docs: add Windows installer debug equivalents
+c0c34c72bb7ff79dd2cb1c6dd344a06f28cb6ed3	2026-02-12	chore: fix windows CI tests
+fbb90b155d121f2b8cb6ffa8f299f010b07d41e3	2026-02-10	Fixing windows test
+1fad19008e50063bc6e700cdc0a98a7c57e9edb6	2026-02-09	fix: improve code-size gate output and duplicate detection, fix Windows path in source-display
+1a435ebd039e70a96ef93a725db815fd71190c5b	2026-02-09	feat: add doctor-state-integrity command, Telegram messaging, and PowerShell Docker setup scripts.
+456bd5874076dc6eb6fb778f18c9d2374e4cb130	2026-02-08	fix(paths): structurally resolve home dir to prevent Windows path bugs (#12125)
+f4fc65d2346b2cbdd768cfa03ef987fe464f5f9c	2026-02-09	test: skip unix-path OPENCLAW_HOME tests on Windows (#12206)
+2519626293bfc6b81a9216bb611b6dfc36d76d6b	2026-02-08	test: skip unix-path OPENCLAW_HOME tests on Windows
+783f855e7904a301b814c5ff9459fb404dda5343	2026-02-08	test: skip unix-path Nix tests on Windows
+2d7428a7f2b5aec03bcdafef7c3ca57f9e184e03	2026-02-06	ci: re-enable parallel vitest on Windows CI
+47596257ea10f5580cce9699598b01b620659d50	2026-02-06	ci: add concurrency controls, consolidate macOS jobs, optimize Windows CI
+328b69be17bd26920d8cc828a3ed449a663cbb90	2026-02-06	chore: Fix audit test on Windows.
+d6cde28c8e33f4908f91a4160fbeb331862a5901	2026-02-05	fix: stabilize windows acl tests and command auth registry (#9335) (thanks @M00N7682)
+f26cc608727b556566d1891ac8dc8b6e9a242a07	2026-02-05	Tests: add test coverage for security/windows-acl.ts
+39cd70caf53f929ae8fd2f521e73252d095bc70a	2026-02-05	fix: stabilize windows acl tests and command auth registry (#9335) (thanks @M00N7682)
+e9c5dc20c38ed3f5fe06dd77604c0dbd3490b93a	2026-02-05	Tests: add test coverage for security/windows-acl.ts
+a7f4a53ce80c98ba1452eb90802d447fca9bf3d6	2026-02-03	fix: harden Windows exec allowlist
+4c1771ec8ec8063d8ed7121fbf593190d07bf3d7	2026-02-01	fix(web): check sanitized segment instead of full path in Windows test
+b897389b877a9d3a92cbc02c77f8c30d54d35337	2026-02-01	fix: friendlier Windows onboarding message (#6242)
+3d5c03ec29ebe60e3d6a46151e4034e3ee5edcfe	2026-01-31	fix: resolve Windows npm spawn ENOENT (#5815) (thanks @thejhinvirtuoso)
+5c8880ed3f43e0971037bf5fdda8a3e64127d1d2	2026-01-31	fix(process): resolve npm/pnpm spawn ENOENT on Windows
+b5d51ed07cf37b4c05c4340c319c18f9237f1c9a	2026-01-31	fix(lobster): make Windows spawn fallback handle ENOENT (#5335) (thanks @vignesh07)
+14c77f82959e43c90675bcd653769e7af91c4007	2026-01-31	feat: add completion subcommand to generate shell completion scripts for Zsh, Bash, PowerShell, and Fish.
+c20035094ddf95d3186429e88c1b753b99edc36b	2026-01-29	fix: use & instead of <> in XML escaping test for Windows NTFS compatibility (#3750)
+d93f8ffc13b67f6ea065fdfece1ea311c6a6ddbc	2026-01-28	fix: use fileURLToPath for Windows compatibility
+72a304654119965ce271114b34d3a74416fa2d6e	2026-01-28	test: honor windows homedir env for legacy config
+640c8d1554a787ac3797ee75df2abd5f4b202f8a	2026-01-27	fix: ignore windows vitest worker crashes
+4a9c921168ed133333a60f0c1e743fa4bc634e7b	2026-01-27	fix: use threads pool for windows ci tests
+cf334d3b7d1620aa4548c0c1e2983ac1aa6eb4b3	2026-01-27	fix: shard windows ci test runs
+240232aed1303d1be999305aa0651ed69538b570	2026-01-27	fix: run windows ci tests serially
+889882f33984fb8a9f3896e40433bd6698156b72	2026-01-27	fix: cap windows vitest workers in ci
+a8ad242f885de2225455ae00f8564c83c7c4b162	2026-01-26	fix(security): properly test Windows ACL audit for config includes (#2403)
+8e051a418fcc1529611684f33c92020ed3f12b6b	2026-01-26	test: stub windows ACL for include perms audit
+ab73aceb27de266d842fa94f9b5c6ace29e66915	2026-01-26	fix: use Windows ACLs for security audit
+7a5e103a6aeeedd969a7dd9bd12b472d9bf4ca0f	2026-01-25	fix: treat Windows platform labels as Windows for node shell (#1760)
+4e23b7f65403cc4d67ad08b178614988faecdc03	2026-01-25	fix: use exact match for win32 platform detection
+67db63ba05c81638001d9cc06594b3601f746e63	2026-01-25	fix: enable scrolling in settings page on Windows (#1780)
+d1ef5571b64350325a16aa7a41f44ce505f717b1	2026-01-25	fix: allow settings scroll on Windows (#1780) (thanks @robbyczgw-cla)
+97501eaaca5aa4e470381028f69e4be8d651173d	2026-01-25	fix: enable scrolling in settings page on Windows
+ef078fec70c0878459ba64129db945404f37c508	2026-01-25	docs: add Windows install troubleshooting
+4a82c258c75d6c136428d91f6bf9754350b852fc	2026-01-25	docs: add windows restart faq
+8f4426052cb44ece85b4f9ae5f8504bb31a84b57	2026-01-24	CLI: fix Windows node argv stripping (#1564)
+f2795754e9a659c7ab9bc4eec6c211d247257287	2026-01-24	fix: normalize Windows argv handling (#1564) (thanks @Takhoffman)
+4ab6263762c56d4b749f8f379cbb3f26c8a89095	2026-01-24	fix: normalize Windows argv (#1564) (thanks @Takhoffman)
+d3df6916847f146b354775519125395358a571df	2026-01-24	CLI: fix Windows node argv stripping
+d9f173a03d4f72240ca691b2c4dc543413dc534d	2026-01-24	test: stabilize service-env path tests on windows
+86e0916fa3375455259097a3d58a6816951a31f2	2026-01-23	fix: allow windows spawn in test parallel
+bec1d0d3d42c89195d87daad6a58dfe9da900893	2026-01-23	fix: extend gateway chat test timeout on windows
+b65916e0d1adfce8ea9536de272003fe2076dcdb	2026-01-23	CLI: fix Windows gateway startup
+ee24cfb58e7b691a53e244cd39babc4cbb9a21dc	2026-01-23	fix: cover Windows exe argv (#1480) (thanks @Takhoffman)
+ea7791f2b920372abc92a24420861f55bb0a1d26	2026-01-23	CLI: fix Windows gateway startup
+4b19066cc15dc1c808c4067ab3d2964095368ff9	2026-01-23	fix: normalize Windows exec allowlist paths
+5045a9a00dd2a3e24261961dc393188fff662402	2026-01-22	test: relax Windows vitest limits
+e389bd478bb4325a36ace2c539d53af438abbfd7	2026-01-22	fix: keep backslashes in quoted exec paths
+1a4fade2f77383f8a17f578f4f8c0d0528ccf119	2026-01-22	fix: honor Windows Path casing
+b748b86b235c987c1eda23c15930014d8e7331d5	2026-01-22	fix: canonicalize allowlist paths on Windows
+230211fe26a23afc9fa086042ec812a556d3e3d2	2026-01-22	fix: resolve Windows exec paths with extensions
+bc8e5ad6b372a7a9114dd058cd5cd32410337d08	2026-01-22	fix: stabilize avatar tests on Windows
+13dab38a2683291dd1e1e4961f06904ffcad2c95	2026-01-22	fix: retry lobster spawn on windows
+51cd9c7ff4f35dbfc60399953a3259e3c3c0469f	2026-01-22	fix: make lobster tool tests windows-safe
+db61451c6737d1fcc3e24ba26bb20cc03d256db4	2026-01-22	fix: handle Windows safe-bin exe names
+c6ef7ff9212521a1d67382ee85e4880780754eb1	2026-01-19	fix: harden windows argv parsing
+3690be94196f198e634f3a32707ddfd8f3abd523	2026-01-19	test: stabilize gateway windows sigterm
+c7808a543d0d8e28c18f3e40978b7fe87ac539b8	2026-01-19	test: stabilize windows gateway sigterm
+1aed588743a3157221dca2129c74c53604cf7eaf	2026-01-19	fix: sanitize windows argv control chars
+0af4eda8c547af88350c19e5171be9264f425a1e	2026-01-19	fix: strip noisy windows argv entries
+5df58e404fb0f656c1e30183fba6507e549f3129	2026-01-19	fix: stabilize windows cli tests
+ef352d4dc6531b2baee6daf0eb2dc8eff59ddfa3	2026-01-19	style: format windows argv helpers
+cb2add8459c486db073ebf48dbd00169bfccb495	2026-01-19	fix: sanitize windows node argv
+d9c20f6fa5e15e66bf5f6b62f979a7f090c8e07e	2026-01-19	fix: normalize windows argv in cli
+48bfaa2371c3e05ba5818e2410a344d05242146b	2026-01-19	fix: normalize quoted windows argv
+56316ad932f27f1eeffba5a1a26c824857738373	2026-01-19	fix: strip windows node exec from argv
+ba2514fc4c7b4ff39a1ce2a13404a7a18651907e	2026-01-19	fix: stabilize windows test timeouts
+9e06d945a286261dd52d12afbf2626a661543bbd	2026-01-19	fix: stabilize gateway tests on windows
+111aeb2c4fd83962661182541d6d88e0d6917b2d	2026-01-19	fix: cover sync ui spawn on Windows (#1212) (thanks @longmaba)
+23c2c638b74fe3f7669d3aa4cf610ad461488ae1	2026-01-19	fix(ui): enable shell mode for spawn on Windows
+6a4b5fa4b5e10a82588dcdc497416e9bddf47b45	2026-01-19	fix: harden windows cli launch
+ee2f0a175a015078f4028d20400364bd828d9898	2026-01-18	docs: add Windows installer git mode
+be12b0771c584a0edc86602a58396450106b80c2	2026-01-17	fix: soften windows daemon install
+8ec4af4641ff457392547cbec8bda5e1935eeecb	2026-01-17	fix(status): show 2 usage windows in /status (#1101)
+cccd7c7b8ef9fb9423a628a4907a684b9f769c5d	2026-01-17	test: stabilize windows pty expectations
+e6364d031dbbefe06da1ee2ccb540c659569085e	2026-01-16	fix: stabilize windows queue + pairing tests
+9c1122def0345e724628dd1a3ed2dc0347cb040a	2026-01-15	test: fix Windows security audit perms
+ad46e95df941b2173eb48d175f6a412c06243521	2026-01-15	test: relax browser act contract timeout on Windows
+1c7ac2a6abd42d705cd79671664ad80a5e81f148	2026-01-15	test: fix windows-only expectations
+1732932c5750cb5c90e241ce41485463244e0d54	2026-01-15	fix: unblock launchctl stub on windows
+3061d8e0571a47a8e6285fc07dcb424bfdac12e3	2026-01-13	fix: preserve Windows cmd start URL quoting (#794) (thanks @roshanasingh4)
+ea9486ae2dccce046ad03ff37d46aaec7fdbcc87	2026-01-13	Fix: quote URLs when opening browser on Windows
+8fb655198f54c673f8bcf79278f1a774b7aaf855	2026-01-12	test: skip lan auto-token on windows
+b33bd6aaeb90fe220cbbd19538146814e2afd8fd	2026-01-12	fix(bash): use PowerShell on Windows to capture system utility output
+c1236e86faf00abd4ee5e43a5fe4e5593641a4ed	2026-01-12	test: fix windows nix config path assertion
+cb095c86069162fe89bdeef94ef4ad67c562b31b	2026-01-12	test: fix includes tests on windows
+241bc737cf9ea06a9bb1b1dd637e456d98ca5e60	2026-01-10	test(telegram): deflake media groups on windows
+2cfed7952e8466aff8429d67c958bb7474d38dd9	2026-01-10	test(telegram): relax media group timeouts on Windows
+9b1f16444780ffa19a3df23232e2339fb6e7f9ff	2026-01-10	fix: guard small context windows
+40b4341a1d6391aa30b0a1bcc4f218e65426a219	2026-01-09	test: fix Windows path in LID mapping test
+d6d84ce34911cb29b8066a49743a345728c20f31	2026-01-09	test: harden logout path check on windows
+6aac3184c39190afccdcc49249b83e1949f6a89c	2026-01-09	test: normalize windows path assertions
+b3e0fafe5022b0e1e08186d864a67002bdeb2dd9	2026-01-09	fix: stabilize windows CI (#558) (thanks @carlulsoe)
+17a7d4e8ddcc0117f5b800e40f258c003224d15d	2026-01-09	test: stabilize Windows test env (#567) (thanks @erikpr1994)
+d28c266771de164379933516ccfd4d7d0e6f464b	2026-01-09	fix: sanitize Windows test output
+fd3cbd96a8578053586663b351813a704df2b720	2026-01-09	test: sanitize Windows CI vitest runner output (#567) (thanks @erikpr1994)
+cb96deb517670a90dcb9bb6f1540112d8422f113	2026-01-09	test: harden Windows CI output sanitization (#567) (thanks @erikpr1994)
+f58b3d082f49d1ab02c094cec6d8b4bdd94d7b20	2026-01-09	test: sanitize Windows CI buffer output (#567) (thanks @erikpr1994)
+090d16392bab056388f4cf84e87c94f800a59ada	2026-01-09	test: sanitize Windows CI output (#567)
+760e9b3df56f216bbaae83cf4d97fbf773e16baf	2026-01-09	fix: avoid Windows runner unicode crash (#567)
+63f5fa47deb6d2f193d7b98634dc0ecafecd77e6	2026-01-09	fix: avoid invalid UTF-16 in truncation (#567)
+d148c7136814eb95b1917e09665dbfed529cc0d5	2026-01-09	ci: run Windows job in pwsh (#569) (thanks @bjesuiter)
+bdb2a660d768c1dd9c926d23fd08d01948297abe	2026-01-09	ci: pin Windows runner image (#569) (thanks @bjesuiter)
+81ab281b5101023e7707eb1c1283f8f61110aaef	2026-01-09	ci: silence vitest on Windows only (#569) (thanks @bjesuiter)
+81271f1b1cdf75ffbab3243606e8f41f1a4391ef	2026-01-09	ci: silence vitest on Windows (#569) (thanks @bjesuiter)
+49a2db78c95d51cd65100a746a8f9323f2a25bce	2026-01-09	ci: fix Windows runner encoding (#569) (thanks @bjesuiter)
+6640b4387601e8601e07826e6cd1e267109c7829	2026-01-09	ci: move UTF-8 step to windows job
+64f50e5c492054f4927336ed8b11665ec3cc8b33	2026-01-09	ci: force UTF-8 on Windows runners (#569) (thanks @bjesuiter)
+bd6e881ebafa60cf1725da4cb1587bee9aa15164	2026-01-09	fix: sanitize Windows CI output safely (#569) (thanks @bjesuiter)
+22b224a343a96a7ada5f730ab13c1dc7672a0853	2026-01-09	fix: sanitize Windows CI test output (#569) (thanks @bjesuiter)
+6feeb651eea5945295e4c29d3f68ef902c8318e4	2026-01-08	fix(ci): normalize windows log whitespace
+609df06cb72a7fce334dc64e1fe877b6edb21186	2026-01-08	fix(ci): stabilize windows tests
+ad6095c807f24f1114c31daccffddca9687a61e5	2026-01-08	fix(ci): normalize windows test output
+0af3af34a1764f556008d499ff5d059896f447c9	2026-01-08	fix(ci): stabilize windows bash tests
+35759e409a3ece98da84da6c58f400b0f7876148	2026-01-08	fix(ci): harden windows tests
+6e4174b5dcbba016f48fab6c8f6b8ea17066badc	2026-01-08	fix(ci): stabilize windows paths
+fbeb9e6775dfe32b42381810bfac4670419cd80f	2026-01-08	fix(ci): stabilize windows tests
+1e826862c37c1e9f7d8c749c64e21e0a9fc3bc70	2026-01-08	fix(browser): support Windows Chrome detection (PR #439, thanks @mrdbstn)
+7294ba037d762983793baadf99a054674a30668a	2026-01-08	browser: add Windows Chrome executable detection
+c15a87e75f6bbe85e50a00d1cb9b9400ff3e3c74	2026-01-08	ci: add windows checks
+0116184b1c63d5c4a177c19e04f89c2f3dc343f7	2026-01-07	docs: recommend WSL2 for Windows installs
+a53cdbf1b4d93cef7a5296e66abaec6765f29422	2026-01-02	docs: clarify Windows is untested in FAQ

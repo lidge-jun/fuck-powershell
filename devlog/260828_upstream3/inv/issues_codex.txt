@@ -1,0 +1,176 @@
+36560	Codex Windows PowerShell Console Flash
+37599	Windows: codex-code-mode-host opens a visible Windows Terminal window
+38683	Windows CLI welcome screen shows macOS-only installation tip
+39843	Bundled PowerShell 7.6.4 (.NET 10.0.10) crashes with CET fail-fast on Windows 11 21H2 (22000.1455)
+39484	Codex CLI on Windows hangs for minutes when executing PowerShell/shell commands
+36247	Windows Powershell installation instructions should use -NoProfile
+37306	Windows Computer Use fails before enumerating any windows.
+26803	Windows sandbox runner fails with CreateProcessAsUserW failed: 5 on Windows 11
+26613	Codex Desktop on Windows flashes visible PowerShell/console windows during background process polling
+38069	Windows Codex loses foreground command execution handle after ~30 seconds —
+40060	Windows execpolicy false positive when Start-Process and an unrelated URL appear in the same PowerShell script
+37578	Windows TUI drops non-BMP Unicode characters on paste/input
+38137	[Windows][Scheduled Tasks] ACTIVE scheduled task skipped its 08:40 run
+34266	[Bug] Windows desktop app flashes visible console windows for internal git/taskkill children, even while idle
+37962	[Windows][WSL] Integrated terminal auto-closes when Git availability probe fails
+38898	Codex/Windows Sandbox Failure
+37592	Windows sandbox inconsistently fails to start PowerShell with CreateProcessAsUserW error 5
+38290	CreateProcess: Rejected("Failed to create unified exec process: helper_unknown_error: setup refresh had errors")
+38345	Codex Windows App failed to start after switching to WSL mode
+39711	Regression in Codex App 26.813.12317 on Windows 10: pwsh commands fail:"Unknown Hard Error", while 26.730.61639 works
+39841	Workspace terminal fails to start with "setup refresh had errors"
+37506	Windows crash when pressing Enter with Chinese Pinyin IME at line-wrap boundary
+38421	[Windows] plugin marketplace add fails to spawn Git when PATH has a stray quote before Git
+33891	[Bug] Windows desktop flashes visible PowerShell window during background command monitoring
+39574	[Windows Codex CLI] exec_command hangs on trivial PowerShell and cmd.exe commands in both pipe and PTY modes
+38301	[Windows][Desktop 26.803.10989.0] cert-parent-death sentinel opens visible Terminal error 0x800700E8
+30024	Windows sandbox command runner fails with CreateProcessAsUserW failed: 1312
+21606	Sandbox breaks workdir on Windows
+26896	Windows sandbox: CreateProcessAsUserW failed: 5 - unfixable on Windows 11 Enterprise (Dell)
+34577	[Windows] Codex Desktop leaks high-CPU elevated PowerShell processes after completed shell tool calls
+40102	Codex Desktop Windows native sandbox setup fails, WSL works; unelevated fallback also fails
+40101	Codex Desktop Windows native sandbox setup fails, WSL works; unelevated fallback also fails
+35827	[Windows][Desktop 26.721.4979.0] Blank console flashes during tool activity: ChatGPT.exe spawns PowerShell/conhost process snapshots
+36118	Windows: `codex update` installer blocked by McAfee Real Protect as `rp-fileless`
+39418	[Bug] Windows 0.148 composer colors ignore terminal theme after dropping OSC 10/11
+37769	Windows Terminal detection via WT_SESSION changes TUI background from white to black
+40075	Codex App regression after Aug 21 update Shell Helper, PowerShell and Git commands no longer execute
+38886	[Windows][Codex App] Exact user-authorized file deletion blocked by policy before PowerShell starts
+37576	Windows Desktop command runner exposes duplicate Path and PATH process variables
+33311	Windows Codex Desktop repeatedly leaves thousands of __PSScriptPolicyTest_*.ps1 files in %TEMP%
+38216	Deep Scan Windows path bug
+30481	“Copy path” uses forward slashes on Windows, producing an invalid Windows path
+39248	Windows: overlong Codex checkpoint ref paths break git fetch
+39689	Archiving fails on Windows when rollout_path contains the \\?\ prefix
+39399	[Windows] Browser/Chrome plugin fails trusted RPC dependency path validation
+39378	# [Windows] Unable to archive threads when `rollout_path` contains `\\?\` prefix
+39150	[Windows] Cannot archive conversations when rollout paths use the \\?\ prefix
+40100	Windows Desktop + WSL2: inline Visualize silently fails because /mnt/c/... is normalized as a Windows root path
+39209	[Windows] Archiving fails with os error 2 when rollout paths use the \\?\ prefix; external path normalization is ineffective
+38694	[Windows Desktop] Open folder generates malformed path and fails with ENOENT
+39855	Windows Remote: every new projectless chat fails trust verification with malformed path
+39502	Browser and Chrome plugins fail trusted-path validation on Windows after update
+39387	[Windows] Bundled Browser service rejected because trusted code paths are not synchronized
+31413	Windows: Codex-launched PowerShell process contains duplicate Path/PATH environment keys
+32474	File viewer sends /C:/... paths and fails with AbsolutePathBuf deserialized without a base path
+36608	Switching Codex from Windows-native to WSL breaks existing project chats and preserves invalid Windows path bindings
+37501	/side windows disappears when two /side windows are opened
+37255	Windows Computer Use Cannot Enumerate Any Application Windows
+40002	Android Remote fails to verify trusted Windows projects due to case-sensitive path lookup
+37739	Computer Use on Windows: EnumWindows failed (0x80070003) when calling sky.list_windows()
+39705	[Windows] thread/archive schedules one rollout twice when SQLite uses a verbatim path alias
+37559	Windows: turn-diff checkpoint refs exceed path limit and break Git operations
+39215	[Windows]Browser plugin dont work
+39318	Browser control fails: trusted RPC dependency outside configured trusted code path
+36768	[Windows] Workspace dependency reinstall fails on 260-character MAX_PATH extraction limit
+37153	Windows desktop Codex flashes visible command-prompt windows during work
+28075	Windows Sandbox makes PATH binaries appear missing
+37589	[Windows] Computer Use returns no apps/windows and launch_app fails with 0x80070490
+37595	[Windows] Computer Use list_windows/list_apps fail with EnumWindows 0x80070003 when interrupt marker path is absent (@oai/sky 0.6.2)
+37293	[Windows] Computer Use fails with spawn EPERM after app restores AppData runtime paths
+27334	Windows tool shell contains both Path and PATH, breaking Start-Process with redirected stdio
+38293	Windows computer control plugin cannot read windows and still returns EPERM after permission is granted — Environment: Windows, Codex desktop app
+39486	[Windows] Browser plugins fail trusted RPC dependency validation
+27822	Codex Windows app crashes on startup with non-ASCII Windows user path
+35910	Codex generates 214-character loose checkpoint refs that exceed Windows path limits
+29072	Windows Codex App: apply_patch fails because codex-windows-sandbox-setup.exe cannot launch from package path
+37911	/side isnt respecting ctrl+/ in Git Bash Windows
+32958	Skill Creator scripts fail to read UTF-8 SKILL.md files on Windows non-UTF-8 locales
+35349	Codex Desktop stuck in "Windows Setup Incomplete" loop despite Windows Sandbox feature enabled
+13755	False Turkish encoding corruption warnings during code review on Windows PowerShell
+35527	Bundled GitHub review fetcher crashes on Unicode output under Windows CP-1252
+34674	Windows apply_patch invalid-base64 failures and silent large-file truncation
+36023	GitHub review helper fails to decode emoji on Windows cp1252 locale
+37740	Windows Desktop mangles Korean USERPROFILE in generated notify/node_repl paths, causing invalid config.toml and setup loop
+36844	config.toml rewritten without BOM corrupts non-ASCII project paths, app fails to boot
+36375	[Windows] Presentation preview rendering crashes in skia-canvas with 0xC0000005
+9767	Powershell: issue with '' [Console]::OutputEncoding=[System.Text.Encoding]::UTF8'
+28079	Codex GUI exits immediately on Windows when user profile path contains Korean characters
+23903	Windows: SkillsWatcher blocks fs::rename in replace_plugin_root_atomically
+39276	Windows sandbox: CreateProcessAsUserW failed: 5 (Access is denied) — no command spawns under read-only or workspace-write
+27390	Windows Codex should prefer pwsh over legacy powershell.exe
+9580	Failed to apply patch due to encoding issues
+27784	apply_patch fails on UTF-8 BOM files
+8340	How to configure the default encoding (utf-8) in Codex/VSCODE
+38923	Windows Terminal Preview duplicates non-ASCII input in Codex TUI under WSL
+35446	Windows 10 Computer Use deadlocks awaiting SoftwareBitmap conversion inside FrameArrived 
+23044	Windows: shell wrapper via `powershell.exe -Command` mojibakes UTF-8 files on non-English locales (PowerShell 5.1 `Get-Content` defaults to ANSI codepage)
+10090	`elevated_windows_sandbox` causing all agent commands to fail with `(no output)` (logs show `CreateProcessAsUserW failed: 5`)
+31219	Bug: Chinese UTF-8 characters garbled in handoff context serialization
+25497	Sandboxed PowerShell commands intermittently fail on Windows with `windows sandbox: spawn setup refresh`
+30722	Codex Desktop crashes when clicking same-folder relative Markdown link on Windows
+39135	[Windows][Codex Desktop 26.814.41407] Composer turns bright cyan over RDP; rollback fixes it
+33220	Codex Desktop silently omits a valid V2 custom pet on native Windows
+39968	Cross-host Handoff fails for large chats because Windows drops segmented remote-control envelopes
+25178	Windows Computer Use screenshot fails on Windows 10 22H2 when SetIsBorderRequired is called
+28226	Windows Codex app: large pasted text fails to attach with "Large pasted text could not be attached"
+18466	Codex Desktop (from ms store) breaks file encoding and fails to save changes when files are inside folders with square brackets in the name
+24576	Codex CLI TUI rendering corruption and visible ANSI cursor sequences in Windows Terminal
+17208	Codex Extension running Powershell behind every command
+27117	Windows standalone update from pwsh inherits PSModulePath into powershell.exe, causing Get-FileHash to fail
+36123	macOS Codex global-state atomic writer recreates private state files as 0644
+34201	Windows: apply_patch.bat fails for non-ASCII user profiles because UTF-8 wrapper is parsed using the legacy code page
+27506	[Windows] App crashes ~1s after launch when Windows user profile path contains non-ASCII (Korean) characters — `windows-updater.node` throws "in __char_to_wide: Illegal byte sequence"
+28017	Windows desktop app crashes on launch (no window) for CJK/non-ASCII usernames — cua_node runtime deploy fails in cpSync with __char_to_wide: Illegal byte sequence
+23712	Windows Desktop: unelevated sandbox still repeatedly launches elevated setup helper
+14687	Codex silently fails loading global AGENTS.md file when encountering encoding issues.
+37427	[Windows] Computer Use list_windows fails with spawn EPERM before enumeration
+37272	[Windows] Computer Use fails with `spawn EPERM` after Codex update
+40069	[Bug] Subagent task messages never delivered to spawned agents; agents idle or act on inherited context (Windows desktop app)
+37678	Windows Computer Use fails before window enumeration with `spawn EPERM` after reinstall/restart
+35790	Windows Desktop + WSL: branch switch fails with cannot spawn NUL/post-checkout
+37553	Cant open windows apps from chatgpt
+37415	Windows Computer Use fails with spawn EPERM; elevated sandbox setup fails on WindowsApps ACL
+38029	[Windows app regression] Subagent threads lose direct visibility/control and Spark is missing from spawn overrides
+37629	[Windows] Computer Use capture and elevated sandbox spawn fail in app 26.803.5235.0
+34672	Codex app is continuously spawning git.exe processes
+38908	[Windows App] Task summary panel shows completed child pages as “Working” with timers still increasing
+24740	Windows Chrome plugin connection fails: windows sandbox failed: spawn setup refresh
+27170	Windows sandbox cannot spawn local commands: CreateProcessWithLogonW 1326/1909 and spawn setup refresh failure
+37793	[Windows][Computer Use] No working sandbox mode: elevated capture fails 0x80070424, unelevated helper startup fails with spawn EPERM
+34842	Windows: sandbox broker wedges conversation thread across client restarts (deny-read ACLs -> silent hangs, spinning codex-windows-sandbox-setup); evidence of ACE accumulation (TokenDefaultDacl error 1344)
+37453	Windows Codex Desktop: opening/resuming historical subagent threads spawns duplicate MCP and node_repl process stacks
+38754	[Windows Codex app] Local stdio MCP servers are repeatedly spawned and not reaped within a single task
+26304	Windows Desktop: Computer Use fails because node_repl kernel exits with `windows sandbox failed: spawn setup refresh`
+34889	0.145.0: Windows sandbox setup re-runs ACL repair when writable-root rights are inherited-only; large %TEMP% makes spawn hang >60s (windows-sandbox tests deterministically time out)
+31768	Windows sandbox runner fails to spawn any local command with CreateProcessAsUserW failed: 1312 on Windows 11 24H2
+37484	Windows Computer Use cannot attach to any window; reports identical process as wrong owner
+38968	[Windows] ChatGPT app launches but no window appears — main process stuck "Not Responding"
+34964	spawn_agent does not expose gpt-5.6-luna
+38168	Windows: hook commands with embedded quotes never execute (cmd /C outer-quote wrap in command_runner.rs) but hooks report Completed
+38985	Windows sandbox: setup payload passed on the command line exceeds the CreateProcess limit (os error 206)
+37264	[Bug] codex exec via subagent runtime fails on Windows: 'apply deny-read ACLs' blocking unified exec process
+37509	[Windows] Computer Use screenshots fail with 0x80070424 under CodexSandboxOffline; launch_app times out
+38960	Windows Desktop 0.148-alpha.9: parent /root session has no exec, only wait + collaboration tools
+38528	[Windows App] Request to submit deferred migration line-ending checksum fix
+32643	Proposed fix: normalize Windows SQL migration line endings
+35232	Windows app collapses blank lines pasted from CRLF text, while LF text renders correctly
+35789	apply_patch: preserve existing line endings or support CRLF/LF selection
+25048	apply_patch inserts LF into CRLF files on Windows, causing VS line-ending warnings and unreliable undo
+37302	Pasting CRLF content inserts two newlines per line break (bracketed paste)
+26945	Windows: restoring a pasted Chinese draft with Windows paths causes persistent blank window
+23841	WSL agent environment corrupts local state_5.sqlite migration on Windows
+9914	failing to write newlines with apply_patch because of mixed CRLF; fallback to (very slow) python
+24718	Codex Desktop startup rewrites config.toml and removes user-defined MCP servers on Windows
+34167	🩹 Outlook Email drafts collapse plain-text paragraphs while the connector accepts undocumented HTML
+23927	Bug: Codex Desktop fails after enabling WSL
+23787	Recovery tool for Codex App 0.130→0.131 startup crash: SQLx checksum drift + 30s backfill timeout
+28231	Codex CLI stopped after successful command execution and interrupted the conversation
+29066	Windows CLI can hang after shell output with quotes/non-ASCII corrupts function_call_output JSONL
+34917	Windows Codex App: rejected apply_patch can leave a partial file modification after auto-review 400
+23848	Fixed: share how to fix, Codex GUI failed to launch because it could not initialize its local SQLite state DB.
+9455	Diff view shows a lot of line ending changes
+23893	Codex App for Windows: WSL2 agent mode blocks launch due to SQLite migration mismatch
+23251	WSL CLI cannot share Windows Codex App CODEX_HOME: migration 1 was previously applied but has been modified
+23923	Codex Windows Store 26.519.2736.0 fails on startup: "migration 1 was previously applied but has been modified"
+32325	TUI command output should render bare carriage-return progress updates as terminal-visible state
+35906	Codex Desktop: MCP form elicitation messages collapse newline characters in approval UI
+13721	Codex App on Windows/WSL: targeted patch workflow is inconsistent, and review pane can show unstaged diffs while Git stays clean
+28074	WSL integration broken even with fresh installs
+21750	state runtime: corrupt `state_5.sqlite` (SQLite "file is not a database") wedges startup with no auto-recovery
+17067	Questions Get Skipped When Pasting via Right Click
+23863	Desktop App startup crash due to sqlx migration checksum mismatch on logs_2.sqlite after updating to
+25216	Windows Desktop + WSL needs an end-to-end release gate across config, state, plugins, exec, and recovery
+23851	Desktop: thread.archived silently reset to 0 on next app cycle for any thread whose sessions/<rollout>.jsonl exists
+27395	Desktop: "Error submitting message" — turn/start times out (30s) while app-server sidecar stalls silently for minutes
+27644	Inline TUI history inserts use region scrolls that xterm.js deletes — permanent transcript gaps in VS Code terminal and other xterm.js hosts

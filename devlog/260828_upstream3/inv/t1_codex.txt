@@ -1,0 +1,44 @@
+3685a61dadefebb66690f8c0f945df044fc11b25	2026-08-15	Normalize CRLF line endings in pasted text (#38704)
+661339bb0941c055602688a83bcc8f72be21b54d	2026-07-22	Document `PathUri` drive letter canonicalization (#34667)
+707bd3cc1879dfd0ea5b11fd470e2839316080cc	2026-07-10	Test stdio JSON-RPC size limits with LF and CRLF (#32134)
+f142f1f78557384442dd4d92b57037ccd54ed2cf	2026-06-22	code-mode: make execution policy independent of observation
+ee3f14b2cbb4b0fce98972e557e248a5691bbbb4	2026-06-15	Remove unused PathExt import
+5e58b6d77f91d4f50197680b1afb21a0ce2eee34	2026-06-15	[codex] remove stale PathExt import (#28344)
+2e48f92fbed64922e8952988071bc5813f74815a	2026-06-12	refactor(core): unify tool execution policy
+2662873a608ce38c59a34095dc8476edd6f8c74f	2026-06-11	fix(apply-patch) Handle CRLF gracefully
+0b08bbb9d93c2e9ae1ad79fe156084dcebb855b7	2026-06-11	[codex] Provide ARM64 MinGW powl compatibility support (#27323)
+37c8aefa14e1a8bb817ee63ddc4561da04741082	2026-06-04	Use Winget release environment secret (#26466)
+1b3b6da296c51b2bf3e3db929c7b9a86e625dbf1	2026-06-04	Use Winget release environment secret
+8a2bc6d9d6776b019cd6536c638733e3ed05bca5	2026-06-02	windows sandbox: skip WSL UNC ACL refresh roots
+1f0fe5b8d981a9b1c2ea63c69edc6151809685e2	2026-05-29	Fix cmd.exe session env capture
+f3596f713c647ca4bc88b3ed7d1aa6369b2a0d22	2026-05-29	Support cmd.exe session env files
+a1441890a41ebd24e147e84056594b5910294e75	2026-05-22	fix: skip WSL UNC ACL roots in windows sandbox refresh
+7dbf1d7c6c0c15ee726038fc6a771a30d518006a	2026-05-22	Skip Windows ACL refresh for WSL UNC roots
+a6cfdbf74888be8f9c23b939b331bd72660a8f71	2026-05-22	Skip WSL UNC ACL refresh roots
+b15c918836ae114f9706e24532465e864f5506c4	2026-04-03	fix: use cmd.exe in Windows unicode shell test (#16668)
+c1a29a13bebc1b514cf8fa58ae902e498be59f58	2026-04-03	fix: use cmd.exe in Windows unicode shell test
+14f95db57b269a06c8b56b62a280ae54c7bf819b	2026-04-02	fix: use COMSPEC in Windows unicode shell test (#16665)
+96a855374ce9a8541872fee0b2bf71d32f257f65	2026-04-02	fix: use COMSPEC in Windows unicode shell test
+beb3978a3ba15c631d6844a967b05e0b68a3a196	2026-04-02	test: use cmd.exe for ProviderAuthScript on Windows (#16629)
+fa49cae7194f20a6c8f24e79a009e7d77cd6180d	2026-04-02	test: use cmd.exe for provider auth scripts on Windows
+deba695a71c3e1f7f25dce60a4d43b40c5f01f91	2026-04-02	test: use cmd.exe for provider auth scripts on Windows
+68baac7cf4f264a22f5674e70a89046480d99ec3	2026-03-24	Bump vedantmgoyal9/winget-releaser from 19e706d4c9121098010096f9c495a70a7518b30f to 7bd472be23763def6e16bd06cc8b1cdfab0e2fd5 (#14777)
+8ede18011a8723820630c3956188447777813335	2026-03-06	Codex/winget auto update (#12943)
+1b70881a5ad6d6d1c0d9e233a563dc14c728a1c1	2026-02-26	test publish for winget.
+3cd13014091d09d74ca36ca7c03fbeef183a7c0d	2026-02-21	fix(tui): trim CRLF in highlighted spans, enforce diff size guardrails
+5810c1b13ea9be29cc05dd042d53a332c3ca3919	2026-02-18	fix(apply-patch) Handle CRLF gracefully
+3545251f3cce5d7a75aadf5d7d5b5e25977c03f2	2026-02-10	longpaths
+d9232403aa7dfe92784b00de19af923046924be4	2026-01-23	bundle sandbox helper binaries in main zip, for winget. (#9707)
+c961ee9c150f38e781bf580fd34e4480148534a1	2026-01-21	fix exe paths, prevent winget job from failing main release build
+3685117eaffe48867321a3d87dff95aaa6fc6bb2	2026-01-21	Reapply "templates and build step for validating/submitting winget package" (#6696)
+9e91e49edbd1715a5a4c155d0837f97d0f6276a7	2025-12-11	Revert "fix(apply-patch): preserve CRLF line endings on Windows" (#7903)
+6c9c563faf5708f0afe2850b831bb276853e3b49	2025-12-05	fix(apply-patch): preserve CRLF line endings on Windows (#7515)
+ac821fd936529b7c11a9a213fe95de713f34df29	2025-12-02	chore(apply-patch) crlf integration test
+702238f0043b3bbc95bd97ba5131eea6e1160e5a	2025-11-16	Fix AltGr/backslash input on Windows Codex terminal (#6720)
+b560c5cef172ab48a0dff769a3caa92e6664cc49	2025-11-15	Revert "templates and build step for validating/submitting winget package" (#6696)
+37fba28ac38731feacf43fe78c258f06d66c2dda	2025-11-14	templates and build step for validating/submitting winget package (#6485)
+625f2208c4ecd6555db10d6c7076fa4bfa13f299	2025-11-09	For npm upgrade on Windows, go through cmd.exe to get path traversal working (#6387)
+699c1216063e553d02cad604c0f713e1271e5175	2025-10-01	Handle trailing backslash properly (#4559)
+9590c08d7c77efc833bcee188fd17f8310ba2d77	2025-09-21	fix(apply-patch): detect CRLF only when all newlines are CRLF to avoid unintended newline conversion\n\n- Count total  vs CRLF pairs and treat as CRLF only if every newline is CRLF\n- Prevents converting LF-formatted files that contain embedded  in literals
+3a953c8b216eb12449ec59a91375c342c1bbe0e6	2025-09-21	fix(apply-patch): preserve CRLF line endings on Windows when updating files (Fixes #4003)
+568d6f819f3d74b84a6fd886c02174975be86baa	2025-08-25	fix: use backslash as path separator on Windows (#2684)
