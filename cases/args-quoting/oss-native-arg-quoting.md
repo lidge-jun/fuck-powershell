@@ -9,6 +9,7 @@ source: third-party
 repro: verified
 refs:
   - https://github.com/PowerShell/PowerShell/pull/14692
+  - https://github.com/lidge-jun/cli-jaw/commit/77153112420acaadd961defc6a2b9a170ee70d43
   - https://github.com/PowerShell/PowerShell/pull/15408
 ---
 

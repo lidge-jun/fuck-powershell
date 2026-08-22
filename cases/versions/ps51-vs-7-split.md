@@ -9,6 +9,8 @@ source: third-party
 repro: verified
 refs:
   - https://github.com/parsaesmaili038/ticketing-v1/commit/d5a4d513e34d557f345b41d9e1b9fdd2806d4a04
+  - https://github.com/lidge-jun/cli-jaw/commit/322ac1801a5f7422792e690c5f8dcec87425a50b
+  - https://github.com/lidge-jun/cli-jaw/commit/dccabcd055a6a8d258487ae01512ad508161dd63
   - https://github.com/lidge-jun/cli-jaw/blob/main/scripts/install.ps1
 ---
 
