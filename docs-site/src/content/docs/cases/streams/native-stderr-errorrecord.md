@@ -3,9 +3,7 @@ title: "PS 5.1 turns native stderr into NativeCommandError"
 description: "streams landmine — misleading-error (5.1)"
 ---
 
-| category | versions | failure | context | source | repro |
-|---|---|---|---|---|---|
-| streams | 5.1 | misleading-error | script, ci | third-party | verified |
+<div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
 
 ## Symptom
 

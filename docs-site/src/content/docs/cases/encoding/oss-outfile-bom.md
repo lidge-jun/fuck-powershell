@@ -3,9 +3,7 @@ title: "Out-File writes UTF-16; your POSIX tools read garbage"
 description: "encoding landmine — silent (5.1)"
 ---
 
-| category | versions | failure | context | source | repro |
-|---|---|---|---|---|---|
-| encoding | 5.1 | silent | ci, script | third-party | verified |
+<div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
 
 ## Symptom
 

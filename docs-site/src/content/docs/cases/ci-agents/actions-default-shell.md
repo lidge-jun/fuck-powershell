@@ -3,9 +3,7 @@ title: "GitHub Actions on Windows defaults to PowerShell — your bash-ism dies 
 description: "ci-agents landmine — hard-error (both)"
 ---
 
-| category | versions | failure | context | source | repro |
-|---|---|---|---|---|---|
-| ci-agents | both | hard-error | ci, agent | third-party | verified |
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">ci</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
 
 ## Symptom
 

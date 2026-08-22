@@ -3,9 +3,7 @@ title: "A BOM-less .ps1 is read as ANSI — non-ASCII corrupts before execution"
 description: "encoding landmine — silent (5.1)"
 ---
 
-| category | versions | failure | context | source | repro |
-|---|---|---|---|---|---|
-| encoding | 5.1 | silent | script, agent | first-party | verified |
+<div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span></div>
 
 ## Symptom
 

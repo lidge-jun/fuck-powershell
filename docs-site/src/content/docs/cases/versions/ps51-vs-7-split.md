@@ -3,9 +3,7 @@ title: "powershell.exe and pwsh are different languages wearing one syntax"
 description: "versions landmine — silent (both)"
 ---
 
-| category | versions | failure | context | source | repro |
-|---|---|---|---|---|---|
-| versions | both | silent | script, ci | third-party | verified |
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
 
 ## Symptom
 

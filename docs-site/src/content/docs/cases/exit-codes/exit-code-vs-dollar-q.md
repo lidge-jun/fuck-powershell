@@ -3,9 +3,7 @@ title: "$? lies about native commands; check $LASTEXITCODE"
 description: "exit-codes landmine — silent (both)"
 ---
 
-| category | versions | failure | context | source | repro |
-|---|---|---|---|---|---|
-| exit-codes | both | silent | script, ci, agent | third-party | verified |
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">ci</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
 
 ## Symptom
 

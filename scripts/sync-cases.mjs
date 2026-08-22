@@ -30,11 +30,17 @@ for (const f of readdirSync(CASES, { recursive: true }).map(String).filter((f) =
   // body: drop the duplicated H1 (Starlight renders title from frontmatter)
   const body = m[2].replace(/^\s*# .*\n/, "");
   const refs = (fm.refs ?? []).map((r) => "- <" + r + ">").join("\n");
-  const badge = [
-    "| category | versions | failure | context | source | repro |",
-    "|---|---|---|---|---|---|",
-    `| ${fm.category} | ${fm.versions} | ${fm.failure} | ${(fm.context ?? []).join(", ")} | ${fm.source} | ${fm.repro} |`,
-  ].join("\n");
+  const ctxChips = (fm.context ?? [])
+    .map((c) => '<span class="badge badge-context">' + c + "</span>")
+    .join("");
+  const badge =
+    '<div class="case-badges">' +
+    '<span class="badge badge-version">' + fm.versions + "</span>" +
+    '<span class="badge badge-failure-' + fm.failure + '">' + fm.failure + "</span>" +
+    ctxChips +
+    '<span class="badge badge-meta">' + fm.source + "</span>" +
+    '<span class="badge badge-meta">repro: ' + fm.repro + "</span>" +
+    "</div>";
   const out = [
     "---",
     `title: "${String(fm.title).replace(/"/g, '\\"')}"`,

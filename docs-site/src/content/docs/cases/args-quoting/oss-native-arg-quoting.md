@@ -3,9 +3,7 @@ title: "Embedded quotes and empty args vanish before native commands see them"
 description: "args-quoting landmine — silent (both)"
 ---
 
-| category | versions | failure | context | source | repro |
-|---|---|---|---|---|---|
-| args-quoting | both | silent | script, agent | third-party | verified |
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: verified</span></div>
 
 ## Symptom
 

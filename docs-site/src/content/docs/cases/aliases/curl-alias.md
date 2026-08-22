@@ -3,9 +3,7 @@ title: "curl silently becomes Invoke-WebRequest"
 description: "aliases landmine — misleading-error (5.1)"
 ---
 
-| category | versions | failure | context | source | repro |
-|---|---|---|---|---|---|
-| aliases | 5.1 | misleading-error | agent, ci, script | first-party | verified |
+<div class="case-badges"><span class="badge badge-version">5.1</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">agent</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span></div>
 
 ## Symptom
 

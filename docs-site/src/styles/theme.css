@@ -1,0 +1,80 @@
+/* fuck-powershell docs theme — macOS-27 direction (DESIGN.md 260822)
+   Glass budget: header ONLY. Sidebar + content + code = solid. */
+
+:root {
+  --fp-radius: 16px;
+  --fp-blue: #0a84ff;
+  --fp-red: #ff453a;
+  --sl-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Pretendard Variable", sans-serif;
+  --sl-font-mono: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, monospace;
+}
+
+/* ---------- light ---------- */
+:root[data-theme="light"] {
+  --sl-color-bg: #f5f5f7;
+  --sl-color-bg-nav: rgb(255 255 255 / 0.82);
+  --sl-color-bg-sidebar: #f5f5f7;
+  --sl-color-text-accent: var(--fp-blue);
+  --sl-color-accent: var(--fp-blue);
+  --sl-color-accent-low: #d6e9ff;
+  --sl-color-accent-high: #0060cc;
+}
+
+/* ---------- dark ---------- */
+:root[data-theme="dark"] {
+  --sl-color-bg: #0a0a0a;
+  --sl-color-bg-nav: rgb(10 10 10 / 0.78);
+  --sl-color-bg-sidebar: #111113;
+  --sl-color-black: #0a0a0a;
+  --sl-color-gray-6: #161618;
+  --sl-color-text-accent: var(--fp-blue);
+  --sl-color-accent: var(--fp-blue);
+  --sl-color-accent-low: #0c2b4d;
+  --sl-color-accent-high: #63b3ff;
+}
+
+/* ---------- chrome: frosted header (the ONLY glass layer) ---------- */
+header.header {
+  background: var(--sl-color-bg-nav);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+}
+
+/* sidebar stays solid — including mobile expanded state */
+.sidebar-pane,
+.sidebar-pane[aria-expanded="true"] {
+  background: var(--sl-color-bg-sidebar);
+  backdrop-filter: none;
+}
+
+/* ---------- content: unified radii ---------- */
+.sl-markdown-content pre {
+  border-radius: var(--fp-radius);
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+.sl-markdown-content img { border-radius: var(--fp-radius); }
+
+/* ---------- case badges (emitted by scripts/sync-cases.mjs) ---------- */
+.case-badges {
+  display: flex; flex-wrap: wrap; gap: 0.45rem;
+  margin: 0.25rem 0 1.4rem;
+}
+.case-badges .badge {
+  display: inline-flex; align-items: center;
+  padding: 0.28rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.8rem; font-weight: 600; line-height: 1;
+  border: 1px solid transparent;
+}
+.badge-version { background: color-mix(in srgb, var(--fp-blue) 16%, transparent); color: var(--sl-color-text-accent); }
+.badge-failure-silent { background: rgb(255 214 10 / 0.18); color: #b8860b; }
+:root[data-theme="dark"] .badge-failure-silent { color: #ffd60a; }
+.badge-failure-hard-error { background: rgb(255 69 58 / 0.16); color: #c22218; }
+:root[data-theme="dark"] .badge-failure-hard-error { color: var(--fp-red); }
+.badge-failure-misleading-error { background: rgb(255 159 10 / 0.16); color: #b25f00; }
+:root[data-theme="dark"] .badge-failure-misleading-error { color: #ff9f0a; }
+.badge-context, .badge-meta {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  color: inherit; opacity: 0.85; font-weight: 500;
+}

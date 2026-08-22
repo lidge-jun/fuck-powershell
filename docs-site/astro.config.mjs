@@ -11,6 +11,7 @@ export default defineConfig({
       title: "fuck-powershell",
       description:
         "A reproducible-case archive of PowerShell landmines: where POSIX assumptions explode.",
+      customCss: ["./src/styles/theme.css"],
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/lidge-jun/fuck-powershell" },
       ],

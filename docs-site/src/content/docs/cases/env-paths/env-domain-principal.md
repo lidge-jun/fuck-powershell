@@ -3,9 +3,7 @@ title: "$env:USERDOMAIN is not your identity"
 description: "env-paths landmine — hard-error (both)"
 ---
 
-| category | versions | failure | context | source | repro |
-|---|---|---|---|---|---|
-| env-paths | both | hard-error | script | first-party | verified |
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-hard-error">hard-error</span><span class="badge badge-context">script</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span></div>
 
 ## Symptom
 
