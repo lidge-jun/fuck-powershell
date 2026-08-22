@@ -9,7 +9,7 @@ const OUT = join(ROOT, "skills", "powershell-landmines", "references");
 mkdirSync(OUT, { recursive: true });
 
 const byCat = {};
-for (const f of readdirSync(CASES, { recursive: true }).map(String).filter(f => f.endsWith(".md"))) {
+for (const f of readdirSync(CASES, { recursive: true }).map(String).filter(f => f.endsWith(".md")).sort()) {
   const text = readFileSync(join(CASES, f), "utf8");
   const cat = text.match(/^category:\s*(\S+)/m)?.[1];
   if (!cat) continue;

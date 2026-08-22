@@ -1,42 +1,4 @@
 
-# Execution policy blocks your downloaded installer
-
-## Symptom
-
-A user downloads `install.ps1` and runs it. Windows PowerShell refuses:
-"running scripts is disabled on this system" (PSSecurityException,
-UnauthorizedAccess). The same content pasted into the terminal runs fine —
-confusing everyone.
-
-## Repro
-
-```powershell
-# Default Windows PowerShell policy is Restricted (client SKUs):
-powershell -File .\install.ps1
-# File ... cannot be loaded because running scripts is disabled on this system.
-```
-
-## Cause
-
-Execution policy gates SCRIPT FILES, not commands: `-File` and `.ps1` dispatch
-are blocked under Restricted/AllSigned (and unsigned downloads under
-RemoteSigned via Mark-of-the-Web), while in-memory text execution is not. That
-asymmetry is why installer one-liners are `irm URL | iex` — piping text into
-the session bypasses file policy. It is a distribution constraint, not slop.
-
-## Workaround
-
-- Distribute the documented entrypoint as `irm <url> | iex` (and then follow
-  irm-iex-kills-host: the script must `throw`, never `exit`).
-- For local runs, `powershell -ExecutionPolicy Bypass -File install.ps1`
-  scopes the override to one process — do not change machine policy.
-- CI runners set Bypass for `shell: powershell/pwsh` already; this trap bites
-  end-user machines, not Actions.
-
-
----
-
-
 # GitHub Actions on Windows defaults to PowerShell — your bash-ism dies quietly
 
 ## Symptom
@@ -110,3 +72,41 @@ platform-locks the script.
   run-with-env.mjs pattern) or cross-env.
 - Or set variables inside the Node process; keep package.json scripts
   shell-neutral.
+
+
+---
+
+
+# Execution policy blocks your downloaded installer
+
+## Symptom
+
+A user downloads `install.ps1` and runs it. Windows PowerShell refuses:
+"running scripts is disabled on this system" (PSSecurityException,
+UnauthorizedAccess). The same content pasted into the terminal runs fine —
+confusing everyone.
+
+## Repro
+
+```powershell
+# Default Windows PowerShell policy is Restricted (client SKUs):
+powershell -File .\install.ps1
+# File ... cannot be loaded because running scripts is disabled on this system.
+```
+
+## Cause
+
+Execution policy gates SCRIPT FILES, not commands: `-File` and `.ps1` dispatch
+are blocked under Restricted/AllSigned (and unsigned downloads under
+RemoteSigned via Mark-of-the-Web), while in-memory text execution is not. That
+asymmetry is why installer one-liners are `irm URL | iex` — piping text into
+the session bypasses file policy. It is a distribution constraint, not slop.
+
+## Workaround
+
+- Distribute the documented entrypoint as `irm <url> | iex` (and then follow
+  irm-iex-kills-host: the script must `throw`, never `exit`).
+- For local runs, `powershell -ExecutionPolicy Bypass -File install.ps1`
+  scopes the override to one process — do not change machine policy.
+- CI runners set Bypass for `shell: powershell/pwsh` already; this trap bites
+  end-user machines, not Actions.

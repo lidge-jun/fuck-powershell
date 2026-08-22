@@ -1,37 +1,37 @@
 
-# Set-StrictMode turns missing JSON fields into crashes
+# PowerShell 5.1 has no && or || — agents loop on parser errors
 
 ## Symptom
 
-A script parses a JSON manifest and reads optional fields (`$entry.tag`,
-`$entry.artifacts.$arch`). It works for months — then dies with
-PropertyNotFoundException the first time a manifest omits an optional field,
-because the script also sets `Set-StrictMode -Version Latest`.
+An AI agent (or a developer used to bash/pwsh 7) runs `build.cmd && deploy.cmd`
+in Windows PowerShell 5.1 and gets "The token '&&' is not a valid statement
+separator in this version." Agents told to "retry" replay the same line and loop
+forever on the identical parser error.
 
 ## Repro
 
 ```powershell
-Set-StrictMode -Version Latest
-$entry = '{"name":"x"}' | ConvertFrom-Json
-$entry.tag
-# PropertyNotFoundException — without StrictMode this quietly yields $null
+# Windows PowerShell 5.1
+echo a && echo b
+# ParserError: The token '&&' is not a valid statement separator in this version.
+# pwsh 7: works (pipeline-chain operators were added in PowerShell 7).
 ```
 
 ## Cause
 
-StrictMode changes the CONTRACT of property access: missing note-properties go
-from "$null" to "throw". Optional-field patterns written under default mode
-become latent crashes when someone adds StrictMode later (usually to catch the
-dq-regex class of bug — the two traps travel together).
+Pipeline-chain operators `&&`/`||` shipped in PowerShell 7. 5.1 treats them as
+parser errors. The trap compounds for agents: `;` is NOT a substitute (it runs
+the next statement unconditionally, losing the failure gate), and bash habits
+like `cd /d` or heredocs also die in PS.
 
 ## Workaround
 
-```powershell
-if ($entry.PSObject.Properties.Name -contains 'tag') { $entry.tag }
-```
-
-Probe `PSObject.Properties.Name` before dereferencing optional fields; the
-referenced fix wraps every optional manifest access this way.
+- Gate conditionally: `command1; if ($?) { command2 }` — or check
+  `$LASTEXITCODE` for native commands.
+- Agent system prompts targeting Windows hosts must ban `&&`/`||` for 5.1 and
+  map POSIX recovery commands (cat/ls/grep) to PS equivalents
+  (Get-Content/Get-ChildItem/Select-String). The referenced fix ships exactly
+  that guidance into an agent bridge.
 
 
 ---
@@ -76,36 +76,36 @@ pinning a version target two runtimes at once.
 ---
 
 
-# PowerShell 5.1 has no && or || — agents loop on parser errors
+# Set-StrictMode turns missing JSON fields into crashes
 
 ## Symptom
 
-An AI agent (or a developer used to bash/pwsh 7) runs `build.cmd && deploy.cmd`
-in Windows PowerShell 5.1 and gets "The token '&&' is not a valid statement
-separator in this version." Agents told to "retry" replay the same line and loop
-forever on the identical parser error.
+A script parses a JSON manifest and reads optional fields (`$entry.tag`,
+`$entry.artifacts.$arch`). It works for months — then dies with
+PropertyNotFoundException the first time a manifest omits an optional field,
+because the script also sets `Set-StrictMode -Version Latest`.
 
 ## Repro
 
 ```powershell
-# Windows PowerShell 5.1
-echo a && echo b
-# ParserError: The token '&&' is not a valid statement separator in this version.
-# pwsh 7: works (pipeline-chain operators were added in PowerShell 7).
+Set-StrictMode -Version Latest
+$entry = '{"name":"x"}' | ConvertFrom-Json
+$entry.tag
+# PropertyNotFoundException — without StrictMode this quietly yields $null
 ```
 
 ## Cause
 
-Pipeline-chain operators `&&`/`||` shipped in PowerShell 7. 5.1 treats them as
-parser errors. The trap compounds for agents: `;` is NOT a substitute (it runs
-the next statement unconditionally, losing the failure gate), and bash habits
-like `cd /d` or heredocs also die in PS.
+StrictMode changes the CONTRACT of property access: missing note-properties go
+from "$null" to "throw". Optional-field patterns written under default mode
+become latent crashes when someone adds StrictMode later (usually to catch the
+dq-regex class of bug — the two traps travel together).
 
 ## Workaround
 
-- Gate conditionally: `command1; if ($?) { command2 }` — or check
-  `$LASTEXITCODE` for native commands.
-- Agent system prompts targeting Windows hosts must ban `&&`/`||` for 5.1 and
-  map POSIX recovery commands (cat/ls/grep) to PS equivalents
-  (Get-Content/Get-ChildItem/Select-String). The referenced fix ships exactly
-  that guidance into an agent bridge.
+```powershell
+if ($entry.PSObject.Properties.Name -contains 'tag') { $entry.tag }
+```
+
+Probe `PSObject.Properties.Name` before dereferencing optional fields; the
+referenced fix wraps every optional manifest access this way.
