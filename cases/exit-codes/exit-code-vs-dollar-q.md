@@ -9,6 +9,7 @@ source: third-party
 repro: verified
 refs:
   - https://github.com/PowerShell/PowerShell/pull/10461
+  - https://github.com/lidge-jun/ima2-gen/commit/1442bd1fa555ebda0db9b2a4a86f48ab504fd122
 ---
 
 # $? lies about native commands; check $LASTEXITCODE
