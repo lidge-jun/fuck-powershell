@@ -17,6 +17,12 @@ Saw an error? Find the landmine.
 
 [npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [cmd-posix-env-prefix](/fuck-powershell/cases/ci-agents/cmd-posix-env-prefix/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/)
 
+## eaddrinuse
+
+A bind is refused because the endpoint is occupied, and on Windows the occupant may be a leftover transmission control block rather than a process, so the port appears busy while every process listing is empty.
+
+[tcp-tcb-survives-listener](/fuck-powershell/cases/env-paths/tcp-tcb-survives-listener/)
+
 ## ebusy
 
 Node reports EBUSY when Windows refuses a rename or delete because another handle holds the file without FILE_SHARE_DELETE; the error names neither the holder nor the reason.
@@ -51,7 +57,7 @@ File or command not found — on Windows often a PATHEXT/extension resolution mi
 
 Operation not permitted — including WindowsApps appExecLink spawn denials.
 
-[tcp-tcb-survives-listener](/fuck-powershell/cases/env-paths/tcp-tcb-survives-listener/) · [windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [icacls-inheritance-r-empty-dacl](/fuck-powershell/cases/env-paths/icacls-inheritance-r-empty-dacl/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+[windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [icacls-inheritance-r-empty-dacl](/fuck-powershell/cases/env-paths/icacls-inheritance-r-empty-dacl/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
 
 ## exit-code-leak
 

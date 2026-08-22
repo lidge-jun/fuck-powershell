@@ -5,7 +5,7 @@
 76 reproducible cases of Windows shell & process landmines — alias traps, spawn
 semantics, PATH/PATHEXT resolution, encodings, exit codes, cmd.exe re-parsing,
 mandatory file locking, CRLF residue, localized tool output, PowerShell 5.1
-legacy behavior — bound into a typed ontology (268 nodes, 563 edges) that an
+legacy behavior — bound into a typed ontology (271 nodes, 563 edges) that an
 agent can QUERY BEFORE PATCHING instead of debugging after the explosion.
 PowerShell is the brand; the corpus is the whole Windows interop minefield.
 

@@ -69,9 +69,15 @@ for (const f of files) {
   if (!REPROS.includes(fm.repro)) err("bad repro: " + fm.repro);
   const refs = Array.isArray(fm.refs) ? fm.refs : [];
   if (refs.length === 0) err("refs must have at least one public URL");
+  // A third-party case must point at evidence someone else can check: either a
+  // public commit/PR that hit the wall, or the vendor's own documentation of the
+  // behavior. Documented-mechanism cases (MAX_PATH, reserved device names) have
+  // no originating commit in this project's history, and citing an unrelated
+  // commit to satisfy the rule is worse than citing the spec.
   if (fm.source === "third-party" &&
-      !refs.some(r => /github\.com\/[^/]+\/[^/]+\/(commit|pull)\//.test(r)))
-    err("third-party case requires a commit/PR URL");
+      !refs.some(r => /github\.com\/[^/]+\/[^/]+\/(commit|pull)\//.test(r)
+                   || /^https:\/\/(learn|docs)\.microsoft\.com\//.test(r)))
+    err("third-party case requires a commit/PR URL or an authoritative vendor doc URL");
   for (const s of SECTIONS) if (!text.includes(s)) err("missing section " + s);
 }
 

@@ -12,7 +12,7 @@ refs:
   - https://github.com/lidge-jun/opencodex/commit/b1713b574fea949300ff477dd3ea48fda0ada814
 ontology:
   affects: [env-windows, runtime-node, env-win32-api]
-  manifests_as: [error-eperm]
+  manifests_as: [error-eaddrinuse]
   caused_by: [mechanism-tcb-retention]
   mitigated_by: [workaround-delete-tcb-entry]
 ---
@@ -32,8 +32,8 @@ handles are closed. Waiting a minute or two fixes it, which is the tell — and 
 is the fact that a restart loop in CI fails while a human retrying by hand
 succeeds.
 
-You already set `SO_REUSEADDR` because that is what fixes this on Linux. It does
-not fix it here.
+You reach for `SO_REUSEADDR`, because that is what fixes this on Linux. Your
+runtime will not let you — and that refusal is deliberate.
 
 ## Repro
 
@@ -52,17 +52,23 @@ bind on the same local endpoint is refused while it exists.
 
 A closed socket does not immediately free its endpoint. The kernel keeps a
 Transmission Control Block for it — `TIME_WAIT` after an active close, plus other
-lingering states — so late packets from the old connection cannot be delivered to
-a new one. That part is standard TCP and happens on every platform.
+lingering states — so late packets from the old connection cannot reach a new
+one. That much is standard TCP and happens everywhere.
 
-What differs is the escape hatch. On Linux, `SO_REUSEADDR` means "let me bind
-even though a `TIME_WAIT` exists here", which is exactly the permission you want.
-On Windows, `SO_REUSEADDR` means something else — roughly "let two sockets share
-this endpoint" — and it does not grant the thing you were reaching for. The
-POSIX-shaped fix is a no-op for the POSIX-shaped problem.
+What differs is the escape hatch, and the difference is worse than "it does not
+work". Windows `SO_REUSEADDR` DOES let you bind over a `TIME_WAIT` — and it also
+lets you bind over a port another process is actively listening on, hijacking it.
+The two behaviors are the same option. That is why runtimes refuse to set it for
+you: libuv's Windows implementation says so directly in its bind path, because
+enabling it to solve your restart problem would let any process steal any
+listener.
 
-So the port stays unbindable until the state ages out, and there is no socket
-option that shortens the wait.
+The adjacent option is not a workaround either. `SO_EXCLUSIVEADDRUSE` exists to
+prevent that hijacking, and it makes the `TIME_WAIT` case strictly worse: a bind
+fails even for endpoints only lingering state occupies.
+
+So the honest summary is that Windows gives you a choice between a security hole
+and your current problem, and your runtime already chose for you.
 
 ## Workaround
 
@@ -85,9 +91,14 @@ Because of those limits, the durable answer is usually to stop needing the exact
 port on the next start: bind port 0 and publish the assigned port, or use a small
 candidate range with fallback. That turns a hard failure into a startup detail.
 
-If you do enumerate rows to find what to delete, read them structurally rather
-than by scraping `netstat` text — that output is localized, and matching English
-state words is its own trap.
+`SO_LINGER` with a zero timeout avoids creating the state in the first place, by
+sending an RST instead of a clean close — but it is a decision the CLOSING side
+makes before closing, not something you can apply to a port already stuck, and it
+discards unsent data.
+
+If you enumerate rows to find what to delete, read them structurally rather than
+by scraping `netstat` output — that text is localized, and matching English state
+words is its own trap.
 
 ---
 

@@ -9,6 +9,12 @@ POSIX builtins absent in PowerShell (command -v) parse as argument noise and fai
 
 Cases: [command-v-noop](/fuck-powershell/cases/aliases/command-v-noop/)
 
+## folder lookup answers empty instead of failing
+
+A known-folder lookup verifies the directory before answering and returns an empty string rather than an error when it is absent, and that empty string is a valid argument to every path function downstream, so the failure becomes a relative path instead of an exception.
+
+Cases: [known-folder-empty-not-error](/fuck-powershell/cases/env-paths/known-folder-empty-not-error/)
+
 ## non-atomic ACL mutation order
 
 Windows permissions are changed by a sequence of separate mutations with no atomic replace, and removing inheritance takes effect immediately, so an interrupted restrict-then-grant order leaves an empty DACL that denies everyone including the owner.
@@ -103,7 +109,7 @@ Cases: [reserved-dos-device-names](/fuck-powershell/cases/env-paths/reserved-dos
 
 A Windows absolute path begins with a drive letter and colon, so any API that parses its input as a URL reads that letter as the protocol, while an absolute POSIX path coincidentally parses as root-relative and works.
 
-Cases: [file-url-encodes-backslash](/fuck-powershell/cases/env-paths/file-url-encodes-backslash/) · [dynamic-import-needs-file-url](/fuck-powershell/cases/env-paths/dynamic-import-needs-file-url/)
+Cases: [dynamic-import-needs-file-url](/fuck-powershell/cases/env-paths/dynamic-import-needs-file-url/)
 
 ## env casing
 
@@ -115,7 +121,7 @@ Cases: [env-path-vs-PATH-casing](/fuck-powershell/cases/env-paths/env-path-vs-PA
 
 USERDOMAIN/USERNAME env vars are writable, unreliable identity sources; workgroup machines put the computer name in USERDOMAIN.
 
-Cases: [known-folder-empty-not-error](/fuck-powershell/cases/env-paths/known-folder-empty-not-error/) · [wslenv-shared-with-host](/fuck-powershell/cases/env-paths/wslenv-shared-with-host/) · [env-domain-principal](/fuck-powershell/cases/env-paths/env-domain-principal/)
+Cases: [wslenv-shared-with-host](/fuck-powershell/cases/env-paths/wslenv-shared-with-host/) · [env-domain-principal](/fuck-powershell/cases/env-paths/env-domain-principal/)
 
 ## errorrecord format
 
@@ -237,6 +243,12 @@ Environment variables live in the registry; a process gets a merge snapshot at c
 
 Cases: [envpath-pollutes-user](/fuck-powershell/cases/env-paths/envpath-pollutes-user/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/)
 
+## backslash is data inside a URL path
+
+A general-purpose URL type percent-encodes a backslash because it is an ordinary path character rather than a separator; only implementations following the WHATWG special-scheme rule convert it, so the same conversion is correct in one language and broken in another.
+
+Cases: [file-url-encodes-backslash](/fuck-powershell/cases/env-paths/file-url-encodes-backslash/)
+
 ## statement terminator
 
 ';' terminates a PowerShell statement; joining fragments of ONE call with ';' splits it into broken statements.
@@ -263,7 +275,7 @@ Cases: [dollar-backslash-vars](/fuck-powershell/cases/args-quoting/dollar-backsl
 
 ## TCP control block outlives the socket
 
-Windows retains the transmission control block for a closed socket so the endpoint stays unbindable, and SO_REUSEADDR carries different semantics there than on POSIX, so the option that waives TIME_WAIT on Linux does not waive it here.
+Windows retains the transmission control block for a closed socket so the endpoint stays unbindable, and its SO_REUSEADDR waives that state by also permitting an active listener to be hijacked, so runtimes refuse to set it and the POSIX escape hatch is unavailable rather than merely ineffective.
 
 Cases: [tcp-tcb-survives-listener](/fuck-powershell/cases/env-paths/tcp-tcb-survives-listener/)
 

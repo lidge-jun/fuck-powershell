@@ -6,4 +6,4 @@ label: "TCP control block outlives the socket"
 
 ## Definition
 
-Windows retains the transmission control block for a closed socket so the endpoint stays unbindable, and SO_REUSEADDR carries different semantics there than on POSIX, so the option that waives TIME_WAIT on Linux does not waive it here.
+Windows retains the transmission control block for a closed socket so the endpoint stays unbindable, and its SO_REUSEADDR waives that state by also permitting an active listener to be hijacked, so runtimes refuse to set it and the POSIX escape hatch is unavailable rather than merely ineffective.

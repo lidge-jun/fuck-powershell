@@ -13,7 +13,7 @@ refs:
 ontology:
   affects: [env-windows, runtime-node, runtime-python]
   manifests_as: [error-enoent]
-  caused_by: [mechanism-drive-letter-as-scheme]
+  caused_by: [mechanism-separator-as-url-data]
   mitigated_by: [workaround-normalize-before-url]
 ---
 
@@ -39,47 +39,57 @@ points nowhere.
 
 ## Repro
 
-```js
-const u = new URL("file:");
-u.pathname = "C:\\Users\\me\\state.sqlite";
-u.href;                       // "file:///C%3A%5CUsers%5Cme%5Cstate.sqlite"
-```
-
-Same shape in Go and Python, because they are all doing the correct thing:
-
 ```go
 u := url.URL{Scheme: "file", Path: `C:\Users\me\state.sqlite`}
 u.String()   // file:C:%5CUsers%5Cme%5Cstate.sqlite
 ```
 
-And the POSIX case that hides it:
+And the POSIX input that hides it, because it needs no conversion:
+
+```go
+u := url.URL{Scheme: "file", Path: "/home/me/state.sqlite"}
+u.String()   // file:///home/me/state.sqlite
+```
+
+Which library you use decides whether you meet this at all. Checked on Node
+v24.17.0:
 
 ```js
-u.pathname = "/home/me/state.sqlite";
-u.href;      // "file:///home/me/state.sqlite"  — correct by coincidence
+const u = new URL("file:");
+u.pathname = "C:\\Users\\me\\state.sqlite";
+u.href;   // "file:///C:/Users/me/state.sqlite" — WHATWG converts it for you
 ```
+
+That is not a reason to relax. It means the same logic is correct in one language
+and broken in another, so a port, a rewrite, or a second service in a different
+stack acquires the bug silently.
 
 ## Cause
 
-A backslash is an ordinary character in a URL path, not a separator, so any
-conforming URL builder percent-encodes it. The library is right; the input was
-never a URL path.
+A backslash is an ordinary character in a URL path, not a separator, so a
+general-purpose URL type percent-encodes it as data. Go's `net/url` does exactly
+that, and it is right to: it was handed a string that was never a URL path.
+
+The WHATWG URL standard carves out an exception — for special schemes, `file:`
+among them, a backslash is treated as a forward slash — which is why browser-shaped
+implementations like Node's `URL` quietly do the right thing. Go's `net/url`,
+Python's `urllib.parse.urlunparse`, and most DSN builders follow the RFC rather
+than that living standard, so they do not.
 
 Two things have to happen for a Windows path to become a valid file URL, and a
 generic builder does neither:
 
-1. Separators must be converted to forward slashes BEFORE the value is handed to
-   the URL type, otherwise they get encoded as data.
+1. Separators must be converted to forward slashes BEFORE the value reaches the
+   URL type, or they are encoded as data.
 2. A drive-absolute path needs a leading slash, because `file:` plus `C:/...`
-   yields two slashes where the spec wants three. `file:///C:/...` is the correct
-   form.
-
-A POSIX absolute path already starts with `/` and contains no backslashes, so it
-passes through untouched and the bug never appears in development.
+   yields two slashes where the form wants three. `file:///C:/...` is correct.
 
 ## Workaround
 
-Use the runtime's dedicated conversion when there is one:
+Use the purpose-built conversion when your runtime has one — Node's
+`pathToFileURL` and Python's `pathlib.Path.as_uri()` both produce the correct
+form, including percent-encoding characters that are legal in a path and special
+in a URL:
 
 ```js
 const { pathToFileURL } = require("node:url");
@@ -91,7 +101,7 @@ When the target is a DSN rather than a plain URL — a SQLite connection string 
 query parameters, say — normalize first and build second:
 
 ```go
-normalized := strings.ReplaceAll(path, `\\`, "/")
+normalized := strings.ReplaceAll(path, `\`, "/")
 if len(normalized) >= 2 && normalized[1] == ':' {
     normalized = "/" + normalized          // file:///C:/...
 }
@@ -99,11 +109,12 @@ u := url.URL{Scheme: "file", Path: normalized}
 ```
 
 Then assert on the result in a test: a DSN containing `%5C` is always wrong, and
-that one check catches every future call site.
+that one check catches every future call site — including the one someone adds
+next year in a different language.
 
 ---
 
 `dynamic-import-needs-file-url` is the loud version of the same confusion, where
-a loader refuses the path outright. This is the quiet version: the conversion
-succeeds, produces a syntactically valid URL, and the failure surfaces as a
-missing file somewhere else entirely.
+a loader refuses a path outright because the drive letter reads as a protocol.
+This is the quiet version, and a different mechanism underneath: nothing is
+refused, the conversion succeeds, and the separators simply become data.

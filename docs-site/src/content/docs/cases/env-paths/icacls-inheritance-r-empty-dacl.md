@@ -1,5 +1,5 @@
 ---
-title: "icacls /inheritance:r before the grant leaves a file with no ACEs at all, and you cannot repair it because repairing needs access you just removed"
+title: "icacls /inheritance:r before the grant leaves a file with no ACEs at all, so an interrupted hardening script locks every consumer out of a file that still says you own it"
 description: "env-paths landmine — hard-error (both)"
 sidebar:
   label: "icacls inheritance r empty dacl"
@@ -14,22 +14,24 @@ sidebar:
 ## Symptom
 
 A hardening routine that locks down a secrets file half-runs — a timeout, a
-transient failure, a killed CI job — and afterwards nobody can touch the file:
+transient failure, a killed CI job — and afterwards nothing can read it:
 
 ```
 Access is denied.
 ```
 
-You own it. `dir` shows it. You cannot read it, cannot delete it, and cannot
-re-run the hardening script, because that script's first act is another
-`icacls` call and `icacls` needs access too. The state is not recoverable by
-retrying, which is what makes it worse than a plain failure.
+You own it. `dir` shows it. You cannot read it and cannot delete it, and neither
+can the service that needs it. Re-running the hardening script does not help,
+because it starts by stripping inheritance again on a file that already has no
+ACEs. Recovery exists, but it is a DIFFERENT command than the one that broke it,
+and nothing in the failure tells you that.
 
 ## Repro
 
 The dangerous order, interrupted after the first step:
 
 ```
+C:\> echo secret > secret.txt
 C:\> icacls secret.txt /inheritance:r
 processed file: secret.txt
 
@@ -40,19 +42,26 @@ C:\> del secret.txt
 Access is denied.
 ```
 
-The file now has an owner and an empty DACL. On POSIX, `chmod 000` looks similar
-and is not: the owner can always `chmod` it back, because ownership carries the
-right to change the mode.
+The file now has an owner and an EMPTY DACL, which is not the same as no DACL: an
+empty DACL grants nothing to anyone, while a null DACL grants everything to
+everyone. Every consumer is locked out, including the service the hardening was
+for.
 
-Recovery on Windows needs an ownership-based repair, which is a different command
-than the one that broke it:
+Recovery is possible because ownership carries `WRITE_DAC` — but only through a
+different invocation:
 
 ```
-C:\> icacls secret.txt /grant "%USERNAME%":(F)
+C:\> icacls secret.txt /grant *S-1-5-32-544:(F)
+C:\> icacls secret.txt /reset
 ```
 
-That works only because `WRITE_DAC` is implied by ownership — but any script that
-assumed it could just re-run its hardening sequence is stuck.
+That is the part that makes this expensive in practice: the automation cannot
+self-heal by retrying, and a human has to know that `/grant` or `/reset` is the
+way back in.
+
+POSIX `chmod 000` is a fair comparison for the data access and not for the
+recovery — there the owner restores the mode with the same tool they broke it
+with.
 
 ## Cause
 
@@ -76,10 +85,14 @@ Grant first, restrict second, and treat the sequence as one that can be
 interrupted at any point:
 
 ```
-icacls "%TARGET%" /grant "%USERNAME%":(F)          rem 1. keep a way back in
-icacls "%TARGET%" /inheritance:r                   rem 2. now safe to strip
-icacls "%TARGET%" /remove:g "BUILTIN\Users"        rem 3. drop the rest
+icacls "%TARGET%" /grant *%SID%:(F)          rem 1. keep a way back in
+icacls "%TARGET%" /inheritance:r             rem 2. now safe to strip
+icacls "%TARGET%" /remove:g *S-1-5-32-545    rem 3. drop the rest
 ```
+
+Name principals by SID rather than by `USERDOMAIN\USERNAME` — that is
+`env-domain-principal`, and it matters here because a grant against the wrong
+name is a grant that did not happen.
 
 For a directory, the grant needs the inheritance flags — `(OI)(CI)(F)` — or
 children created later inherit nothing.
@@ -94,9 +107,9 @@ did run.
 
 ---
 
-`env-domain-principal` covers who to name in the grant — the token SID rather
-than `USERDOMAIN\USERNAME`. This case is about when to name them: the identity can
-be perfectly correct and the order still locks you out.
+`env-domain-principal` covers WHO to name in the grant — the token SID rather
+than `USERDOMAIN\USERNAME`. This case is about WHEN: the identity can be perfectly
+correct and the order still locks every consumer out.
 
 ## Refs
 

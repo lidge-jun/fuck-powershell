@@ -69,10 +69,12 @@ Three details do most of the damage:
   not reserved. `CON.txt` is. Serial ports past 9 need the `\\.\COM56` form
   precisely because they are not in the legacy set.
 
-When a reserved-name call does fail rather than succeed, the runtime error is a
-second layer of confusion: Win32 `ERROR_INVALID_NAME` (123) surfaces as
-`ENOENT` in Node and `EINVAL` in Python, so the same wall has two different
-names depending on your language.
+When a reserved-name call fails rather than succeeds, the runtime error adds a
+second layer of confusion. Following the published mapping tables, Win32
+`ERROR_INVALID_NAME` (123) reaches Node as `ENOENT` and Python as `EINVAL`, so
+the same wall would carry two different names depending on your language. Which
+Win32 code a given reserved name actually returns, for a given open disposition,
+is not something this corpus has executed — see the verification note.
 
 Windows 11 did not repeal this. What changed there is narrower: .NET's
 `Path.GetFullPath` no longer rewrites a path that BEGINS with a legacy device
@@ -103,12 +105,17 @@ hatch, not an application-wide setting.
 
 ## Verification note
 
-The `COM¹` behavior and the `NUL.txt` equivalence are quoted from Microsoft's
-file-naming documentation. The exact errno each runtime reports on a FAILED
-reserved-name open, and whether a `\\?\`-prefixed `nul.txt` create produces a
-real file, are documented-behavior inferences rather than observed runs — this
-corpus has no Windows host, and this case is marked `repro: historical`
-accordingly.
+Quoted from Microsoft's file-naming documentation: the reserved list including
+the superscript forms, the "reserved in every directory" statement, the
+`NUL.txt` and `NUL.tar.gz` equivalence, and `echo test > COM¹` failing to create
+a file.
+
+NOT executed, and therefore stated as inference rather than observation: the
+exact Win32 error a given reserved-name open returns and how each runtime maps
+it; whether a `\\?\`-prefixed `nul.txt` create produces a real file (the docs
+say the prefix disables the parsing that performs the device rewrite, which is
+not the same sentence); and whether reading `con.txt` blocks on console input.
+This corpus has no Windows host, hence `repro: historical`.
 
 ---
 
@@ -122,4 +129,3 @@ whole name is redirected to a device.
 - <https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file>
 - <https://learn.microsoft.com/en-us/dotnet/standard/io/file-path-formats>
 - <https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew>
-- <https://github.com/lidge-jun/fuck-powershell/commit/6e1e5cf>

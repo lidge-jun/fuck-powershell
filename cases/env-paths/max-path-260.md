@@ -12,7 +12,6 @@ refs:
   - https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
   - https://learn.microsoft.com/en-us/windows/win32/sbscs/application-manifests
   - https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
-  - https://github.com/lidge-jun/fuck-powershell/commit/6e1e5cf
 ontology:
   affects: [env-windows, runtime-node, runtime-python, env-win32-api]
   manifests_as: [error-enametoolong]
@@ -39,14 +38,21 @@ missing; it is too long.
 
 ## Repro
 
+Start from a SHORT root, or the first create already exceeds the limit and the
+demonstration never runs — a normal `%TEMP%` is already 30 to 50 characters:
+
 ```powershell
-PS> cd $env:TEMP
-PS> $a = 'a' * 240
+PS> New-Item -ItemType Directory -Force C:\t | Out-Null
+PS> Set-Location C:\t
+PS> $a = 'a' * 200          # C:\t\<200> is ~205, under the 248 directory ceiling
 PS> New-Item -ItemType Directory -Force $a | Out-Null
-PS> New-Item -ItemType Directory -Path (Join-Path $a ('b'*240))
-# .NET Framework: PathTooLongException (HRESULT 0x800700CE)
-# PowerShell 7: IOException wrapping ERROR_FILENAME_EXCED_RANGE (206)
+PS> New-Item -ItemType Directory -Path (Join-Path $a ('b' * 100))   # crosses 260
 ```
+
+What that second create throws depends on the host, which is its own trap:
+.NET Framework raises `PathTooLongException` (HRESULT 0x800700CE), while
+PowerShell 7 surfaces an `IOException` wrapping `ERROR_FILENAME_EXCED_RANGE`
+(206).
 
 The prefixed form works where the plain one does not:
 
@@ -123,10 +129,18 @@ paths, and the shell all still meet 260.
 
 ## Verification note
 
-Every load-bearing claim here is from Microsoft's own documentation, and the
-runtime opt-in table is read from each project's source manifest rather than from
-a shipped binary. The exception types in the repro are what the documented error
-codes map to per runtime; this corpus has no Windows host, so the case is marked
+Every load-bearing claim is from Microsoft's documentation: the 260 layout
+including the terminating NUL, the 248 directory ceiling, the extended-length
+prefix and its restrictions, and the two-part 1607 opt-in with the "will only
+affect applications that have been modified" wording.
+
+The runtime opt-in table is read from each project's SOURCE — CPython's
+`PC/python.manifest`, Go's `os.fixLongPath`, Node's `node.exe.extra.manifest` —
+not from a shipped binary, so a distributed build could in principle merge a
+manifest fragment its source tree does not declare.
+
+The exception types named in the repro are what the documented error codes map to
+per runtime, not observed throws; this corpus has no Windows host, hence
 `repro: historical`.
 
 ---

@@ -416,47 +416,57 @@ points nowhere.
 
 ## Repro
 
-```js
-const u = new URL("file:");
-u.pathname = "C:\\Users\\me\\state.sqlite";
-u.href;                       // "file:///C%3A%5CUsers%5Cme%5Cstate.sqlite"
-```
-
-Same shape in Go and Python, because they are all doing the correct thing:
-
 ```go
 u := url.URL{Scheme: "file", Path: `C:\Users\me\state.sqlite`}
 u.String()   // file:C:%5CUsers%5Cme%5Cstate.sqlite
 ```
 
-And the POSIX case that hides it:
+And the POSIX input that hides it, because it needs no conversion:
+
+```go
+u := url.URL{Scheme: "file", Path: "/home/me/state.sqlite"}
+u.String()   // file:///home/me/state.sqlite
+```
+
+Which library you use decides whether you meet this at all. Checked on Node
+v24.17.0:
 
 ```js
-u.pathname = "/home/me/state.sqlite";
-u.href;      // "file:///home/me/state.sqlite"  — correct by coincidence
+const u = new URL("file:");
+u.pathname = "C:\\Users\\me\\state.sqlite";
+u.href;   // "file:///C:/Users/me/state.sqlite" — WHATWG converts it for you
 ```
+
+That is not a reason to relax. It means the same logic is correct in one language
+and broken in another, so a port, a rewrite, or a second service in a different
+stack acquires the bug silently.
 
 ## Cause
 
-A backslash is an ordinary character in a URL path, not a separator, so any
-conforming URL builder percent-encodes it. The library is right; the input was
-never a URL path.
+A backslash is an ordinary character in a URL path, not a separator, so a
+general-purpose URL type percent-encodes it as data. Go's `net/url` does exactly
+that, and it is right to: it was handed a string that was never a URL path.
+
+The WHATWG URL standard carves out an exception — for special schemes, `file:`
+among them, a backslash is treated as a forward slash — which is why browser-shaped
+implementations like Node's `URL` quietly do the right thing. Go's `net/url`,
+Python's `urllib.parse.urlunparse`, and most DSN builders follow the RFC rather
+than that living standard, so they do not.
 
 Two things have to happen for a Windows path to become a valid file URL, and a
 generic builder does neither:
 
-1. Separators must be converted to forward slashes BEFORE the value is handed to
-   the URL type, otherwise they get encoded as data.
+1. Separators must be converted to forward slashes BEFORE the value reaches the
+   URL type, or they are encoded as data.
 2. A drive-absolute path needs a leading slash, because `file:` plus `C:/...`
-   yields two slashes where the spec wants three. `file:///C:/...` is the correct
-   form.
-
-A POSIX absolute path already starts with `/` and contains no backslashes, so it
-passes through untouched and the bug never appears in development.
+   yields two slashes where the form wants three. `file:///C:/...` is correct.
 
 ## Workaround
 
-Use the runtime's dedicated conversion when there is one:
+Use the purpose-built conversion when your runtime has one — Node's
+`pathToFileURL` and Python's `pathlib.Path.as_uri()` both produce the correct
+form, including percent-encoding characters that are legal in a path and special
+in a URL:
 
 ```js
 const { pathToFileURL } = require("node:url");
@@ -468,7 +478,7 @@ When the target is a DSN rather than a plain URL — a SQLite connection string 
 query parameters, say — normalize first and build second:
 
 ```go
-normalized := strings.ReplaceAll(path, `\\`, "/")
+normalized := strings.ReplaceAll(path, `\`, "/")
 if len(normalized) >= 2 && normalized[1] == ':' {
     normalized = "/" + normalized          // file:///C:/...
 }
@@ -476,40 +486,43 @@ u := url.URL{Scheme: "file", Path: normalized}
 ```
 
 Then assert on the result in a test: a DSN containing `%5C` is always wrong, and
-that one check catches every future call site.
+that one check catches every future call site — including the one someone adds
+next year in a different language.
 
 ---
 
 `dynamic-import-needs-file-url` is the loud version of the same confusion, where
-a loader refuses the path outright. This is the quiet version: the conversion
-succeeds, produces a syntactically valid URL, and the failure surfaces as a
-missing file somewhere else entirely.
+a loader refuses a path outright because the drive letter reads as a protocol.
+This is the quiet version, and a different mechanism underneath: nothing is
+refused, the conversion succeeds, and the separators simply become data.
 
 
 ---
 
 
-# icacls /inheritance:r before the grant leaves a file with no ACEs at all, and you cannot repair it because repairing needs access you just removed
+# icacls /inheritance:r before the grant leaves a file with no ACEs at all, so an interrupted hardening script locks every consumer out of a file that still says you own it
 
 ## Symptom
 
 A hardening routine that locks down a secrets file half-runs — a timeout, a
-transient failure, a killed CI job — and afterwards nobody can touch the file:
+transient failure, a killed CI job — and afterwards nothing can read it:
 
 ```
 Access is denied.
 ```
 
-You own it. `dir` shows it. You cannot read it, cannot delete it, and cannot
-re-run the hardening script, because that script's first act is another
-`icacls` call and `icacls` needs access too. The state is not recoverable by
-retrying, which is what makes it worse than a plain failure.
+You own it. `dir` shows it. You cannot read it and cannot delete it, and neither
+can the service that needs it. Re-running the hardening script does not help,
+because it starts by stripping inheritance again on a file that already has no
+ACEs. Recovery exists, but it is a DIFFERENT command than the one that broke it,
+and nothing in the failure tells you that.
 
 ## Repro
 
 The dangerous order, interrupted after the first step:
 
 ```
+C:\> echo secret > secret.txt
 C:\> icacls secret.txt /inheritance:r
 processed file: secret.txt
 
@@ -520,19 +533,26 @@ C:\> del secret.txt
 Access is denied.
 ```
 
-The file now has an owner and an empty DACL. On POSIX, `chmod 000` looks similar
-and is not: the owner can always `chmod` it back, because ownership carries the
-right to change the mode.
+The file now has an owner and an EMPTY DACL, which is not the same as no DACL: an
+empty DACL grants nothing to anyone, while a null DACL grants everything to
+everyone. Every consumer is locked out, including the service the hardening was
+for.
 
-Recovery on Windows needs an ownership-based repair, which is a different command
-than the one that broke it:
+Recovery is possible because ownership carries `WRITE_DAC` — but only through a
+different invocation:
 
 ```
-C:\> icacls secret.txt /grant "%USERNAME%":(F)
+C:\> icacls secret.txt /grant *S-1-5-32-544:(F)
+C:\> icacls secret.txt /reset
 ```
 
-That works only because `WRITE_DAC` is implied by ownership — but any script that
-assumed it could just re-run its hardening sequence is stuck.
+That is the part that makes this expensive in practice: the automation cannot
+self-heal by retrying, and a human has to know that `/grant` or `/reset` is the
+way back in.
+
+POSIX `chmod 000` is a fair comparison for the data access and not for the
+recovery — there the owner restores the mode with the same tool they broke it
+with.
 
 ## Cause
 
@@ -556,10 +576,14 @@ Grant first, restrict second, and treat the sequence as one that can be
 interrupted at any point:
 
 ```
-icacls "%TARGET%" /grant "%USERNAME%":(F)          rem 1. keep a way back in
-icacls "%TARGET%" /inheritance:r                   rem 2. now safe to strip
-icacls "%TARGET%" /remove:g "BUILTIN\Users"        rem 3. drop the rest
+icacls "%TARGET%" /grant *%SID%:(F)          rem 1. keep a way back in
+icacls "%TARGET%" /inheritance:r             rem 2. now safe to strip
+icacls "%TARGET%" /remove:g *S-1-5-32-545    rem 3. drop the rest
 ```
+
+Name principals by SID rather than by `USERDOMAIN\USERNAME` — that is
+`env-domain-principal`, and it matters here because a grant against the wrong
+name is a grant that did not happen.
 
 For a directory, the grant needs the inheritance flags — `(OI)(CI)(F)` — or
 children created later inherit nothing.
@@ -574,9 +598,9 @@ did run.
 
 ---
 
-`env-domain-principal` covers who to name in the grant — the token SID rather
-than `USERDOMAIN\USERNAME`. This case is about when to name them: the identity can
-be perfectly correct and the order still locks you out.
+`env-domain-principal` covers WHO to name in the grant — the token SID rather
+than `USERDOMAIN\USERNAME`. This case is about WHEN: the identity can be perfectly
+correct and the order still locks every consumer out.
 
 
 ---
@@ -602,13 +626,22 @@ materialized on that machine.
 
 ## Repro
 
-```powershell
-PS> $env:USERPROFILE = "C:\nonexistent-profile"
-PS> [Environment]::GetFolderPath('LocalApplicationData')
+The documented behavior is that the call returns an empty string, rather than
+throwing, when the folder it would name does not physically exist:
 
+```powershell
+PS> [Environment]::GetFolderPath('LocalApplicationData')
+C:\Users\me\AppData\Local
+
+PS> # on an account whose profile has never been materialized on this machine
 PS> ([Environment]::GetFolderPath('LocalApplicationData')).Length
 0
 ```
+
+The realistic triggers are a service account running before first interactive
+logon, a redirected or roaming profile that has not been created on this host,
+and a sandboxed CI user. What they share is that the folder is legitimately
+absent, which the API answers by declining to name it.
 
 And the shape that reaches production:
 
@@ -622,21 +655,20 @@ This one has a third outcome.
 
 ## Cause
 
-`GetFolderPath(SpecialFolder.LocalApplicationData)` — and the convenience
-wrappers layered on it — resolve through the environment, chiefly `USERPROFILE`.
-When the profile named there has no AppData directory on disk, the call does not
-treat that as an error. It returns an empty string, because "the folder does not
-exist" is not the same question as "where would it be".
+`GetFolderPath(SpecialFolder.LocalApplicationData)` verifies the folder before
+answering, and when verification fails it returns an EMPTY STRING rather than
+throwing. Microsoft documents that behavior plainly, and it is defensible: "the
+folder does not exist" is a different question from "where would it be".
 
 That is a defensible API contract and a terrible default for callers, since the
 empty string is a perfectly valid argument to every path function you will hand
 it to. Nothing downstream can tell the difference between "AppData is here" and
 "nobody knows".
 
-The environment dependence is the deeper problem: `USERPROFILE`,
-`LOCALAPPDATA`, `HOMEDRIVE`, and `HOMEPATH` are all writable by anything in the
-process tree, so a value your code treats as an identity is actually inherited
-state.
+There is a second hazard stacked on top for anyone who reaches for the
+environment instead: `USERPROFILE`, `LOCALAPPDATA`, `HOMEDRIVE`, and `HOMEPATH`
+are all writable by anything in the process tree, so a value your code treats as
+identity is inherited state that a parent process can set.
 
 ## Workaround
 
@@ -644,21 +676,30 @@ Ask the known-folder registration for the effective token instead of asking the
 environment:
 
 ```powershell
-# SHGetKnownFolderPath, FOLDERID_LocalAppData, KF_FLAG_DEFAULT_PATH (0x400)
+# SHGetKnownFolderPath, FOLDERID_LocalAppData, KF_FLAG_DONT_VERIFY (0x4000)
 $sig = '[DllImport("shell32.dll", CharSet = CharSet.Unicode)] public static extern int ' +
        'SHGetKnownFolderPath(ref System.Guid id, uint flags, System.IntPtr token, out System.IntPtr path);'
 Add-Type -MemberDefinition $sig -Name Shell32 -Namespace Win32 | Out-Null
-$id = [Guid]'F1B32785-6FBA-4FCF-9D55-7B8E7F157091'
+$id  = [Guid]'F1B32785-6FBA-4FCF-9D55-7B8E7F157091'
 $out = [IntPtr]::Zero
-[void][Win32.Shell32]::SHGetKnownFolderPath([ref]$id, 0x400, [IntPtr]::Zero, [ref]$out)
-[Runtime.InteropServices.Marshal]::PtrToStringUni($out)
+$hr  = [Win32.Shell32]::SHGetKnownFolderPath([ref]$id, 0x4000, [IntPtr]::Zero, [ref]$out)
+if ($hr -ne 0) { throw "SHGetKnownFolderPath failed: 0x{0:X8}" -f $hr }
+try   { [Runtime.InteropServices.Marshal]::PtrToStringUni($out) }
+finally { [Runtime.InteropServices.Marshal]::FreeCoTaskMem($out) }
 ```
 
-`KF_FLAG_DEFAULT_PATH` is what makes it answer whether or not the directory
-exists on disk, and a NULL token is what makes it answer for the effective
-account. Passing `(HANDLE)-1` is not equivalent — that resolves the built-in
-Default profile, a namespace no real account writes to, which turns a wrong
-answer into a wrong answer that looks plausible.
+Three details decide whether this actually helps:
+
+- `KF_FLAG_DONT_VERIFY` (0x4000) is the flag that returns the path whether or not
+  the directory exists. `KF_FLAG_DEFAULT_PATH` (0x400) is a different thing — it
+  asks for the DEFAULT rather than the current, possibly redirected, path, and it
+  still verifies existence unless you also pass DONT_VERIFY. Reaching for 0x400
+  because it sounds like "just give me the default answer" gets you neither.
+- A NULL token means the current user. Passing `(HANDLE)-1` is not equivalent: it
+  resolves the built-in Default profile, a namespace no real account writes to,
+  which turns a wrong answer into a plausible-looking one.
+- Check the HRESULT and free the buffer with `CoTaskMemFree`. The API allocates,
+  and a nonzero HRESULT leaves the pointer undefined.
 
 Whatever API you settle on, treat an empty result as a hard failure at the
 boundary. A path helper that can return `""` should refuse instead, because every
@@ -666,10 +707,19 @@ consumer downstream will silently accept it.
 
 ---
 
-`env-domain-principal` is the identity version of the same environment
-dependence: trusting `USERDOMAIN` and `USERNAME` instead of resolving the token
-SID. This is the location version, and it carries an extra hazard — the wrong
-answer is empty rather than wrong, so it fails a null check you did not write.
+`env-domain-principal` is the identity version of the same family: trusting
+`USERDOMAIN` and `USERNAME` instead of resolving the token SID. This is the
+location version, and it carries an extra hazard — the wrong answer is EMPTY
+rather than wrong, so it slips past a null check you did not think to write and
+becomes a relative path.
+
+## Verification note
+
+The empty-string return and the flag semantics are quoted from Microsoft's
+`Environment.GetFolderPath` and `KNOWN_FOLDER_FLAG` documentation. Which
+environment variables the default lookup consults internally is NOT documented,
+so this case does not claim a specific variable causes the empty result — only
+that the folder being absent does. `repro: historical`; no Windows host was used.
 
 
 ---
@@ -694,14 +744,21 @@ missing; it is too long.
 
 ## Repro
 
+Start from a SHORT root, or the first create already exceeds the limit and the
+demonstration never runs — a normal `%TEMP%` is already 30 to 50 characters:
+
 ```powershell
-PS> cd $env:TEMP
-PS> $a = 'a' * 240
+PS> New-Item -ItemType Directory -Force C:\t | Out-Null
+PS> Set-Location C:\t
+PS> $a = 'a' * 200          # C:\t\<200> is ~205, under the 248 directory ceiling
 PS> New-Item -ItemType Directory -Force $a | Out-Null
-PS> New-Item -ItemType Directory -Path (Join-Path $a ('b'*240))
-# .NET Framework: PathTooLongException (HRESULT 0x800700CE)
-# PowerShell 7: IOException wrapping ERROR_FILENAME_EXCED_RANGE (206)
+PS> New-Item -ItemType Directory -Path (Join-Path $a ('b' * 100))   # crosses 260
 ```
+
+What that second create throws depends on the host, which is its own trap:
+.NET Framework raises `PathTooLongException` (HRESULT 0x800700CE), while
+PowerShell 7 surfaces an `IOException` wrapping `ERROR_FILENAME_EXCED_RANGE`
+(206).
 
 The prefixed form works where the plain one does not:
 
@@ -778,10 +835,18 @@ paths, and the shell all still meet 260.
 
 ## Verification note
 
-Every load-bearing claim here is from Microsoft's own documentation, and the
-runtime opt-in table is read from each project's source manifest rather than from
-a shipped binary. The exception types in the repro are what the documented error
-codes map to per runtime; this corpus has no Windows host, so the case is marked
+Every load-bearing claim is from Microsoft's documentation: the 260 layout
+including the terminating NUL, the 248 directory ceiling, the extended-length
+prefix and its restrictions, and the two-part 1607 opt-in with the "will only
+affect applications that have been modified" wording.
+
+The runtime opt-in table is read from each project's SOURCE — CPython's
+`PC/python.manifest`, Go's `os.fixLongPath`, Node's `node.exe.extra.manifest` —
+not from a shipped binary, so a distributed build could in principle merge a
+manifest fragment its source tree does not declare.
+
+The exception types named in the repro are what the documented error codes map to
+per runtime, not observed throws; this corpus has no Windows host, hence
 `repro: historical`.
 
 ---
@@ -1052,10 +1117,12 @@ Three details do most of the damage:
   not reserved. `CON.txt` is. Serial ports past 9 need the `\\.\COM56` form
   precisely because they are not in the legacy set.
 
-When a reserved-name call does fail rather than succeed, the runtime error is a
-second layer of confusion: Win32 `ERROR_INVALID_NAME` (123) surfaces as
-`ENOENT` in Node and `EINVAL` in Python, so the same wall has two different
-names depending on your language.
+When a reserved-name call fails rather than succeeds, the runtime error adds a
+second layer of confusion. Following the published mapping tables, Win32
+`ERROR_INVALID_NAME` (123) reaches Node as `ENOENT` and Python as `EINVAL`, so
+the same wall would carry two different names depending on your language. Which
+Win32 code a given reserved name actually returns, for a given open disposition,
+is not something this corpus has executed — see the verification note.
 
 Windows 11 did not repeal this. What changed there is narrower: .NET's
 `Path.GetFullPath` no longer rewrites a path that BEGINS with a legacy device
@@ -1086,12 +1153,17 @@ hatch, not an application-wide setting.
 
 ## Verification note
 
-The `COM¹` behavior and the `NUL.txt` equivalence are quoted from Microsoft's
-file-naming documentation. The exact errno each runtime reports on a FAILED
-reserved-name open, and whether a `\\?\`-prefixed `nul.txt` create produces a
-real file, are documented-behavior inferences rather than observed runs — this
-corpus has no Windows host, and this case is marked `repro: historical`
-accordingly.
+Quoted from Microsoft's file-naming documentation: the reserved list including
+the superscript forms, the "reserved in every directory" statement, the
+`NUL.txt` and `NUL.tar.gz` equivalence, and `echo test > COM¹` failing to create
+a file.
+
+NOT executed, and therefore stated as inference rather than observation: the
+exact Win32 error a given reserved-name open returns and how each runtime maps
+it; whether a `\\?\`-prefixed `nul.txt` create produces a real file (the docs
+say the prefix disables the parsing that performs the device rewrite, which is
+not the same sentence); and whether reading `con.txt` blocks on console input.
+This corpus has no Windows host, hence `repro: historical`.
 
 ---
 
@@ -1156,8 +1228,8 @@ handles are closed. Waiting a minute or two fixes it, which is the tell — and 
 is the fact that a restart loop in CI fails while a human retrying by hand
 succeeds.
 
-You already set `SO_REUSEADDR` because that is what fixes this on Linux. It does
-not fix it here.
+You reach for `SO_REUSEADDR`, because that is what fixes this on Linux. Your
+runtime will not let you — and that refusal is deliberate.
 
 ## Repro
 
@@ -1176,17 +1248,23 @@ bind on the same local endpoint is refused while it exists.
 
 A closed socket does not immediately free its endpoint. The kernel keeps a
 Transmission Control Block for it — `TIME_WAIT` after an active close, plus other
-lingering states — so late packets from the old connection cannot be delivered to
-a new one. That part is standard TCP and happens on every platform.
+lingering states — so late packets from the old connection cannot reach a new
+one. That much is standard TCP and happens everywhere.
 
-What differs is the escape hatch. On Linux, `SO_REUSEADDR` means "let me bind
-even though a `TIME_WAIT` exists here", which is exactly the permission you want.
-On Windows, `SO_REUSEADDR` means something else — roughly "let two sockets share
-this endpoint" — and it does not grant the thing you were reaching for. The
-POSIX-shaped fix is a no-op for the POSIX-shaped problem.
+What differs is the escape hatch, and the difference is worse than "it does not
+work". Windows `SO_REUSEADDR` DOES let you bind over a `TIME_WAIT` — and it also
+lets you bind over a port another process is actively listening on, hijacking it.
+The two behaviors are the same option. That is why runtimes refuse to set it for
+you: libuv's Windows implementation says so directly in its bind path, because
+enabling it to solve your restart problem would let any process steal any
+listener.
 
-So the port stays unbindable until the state ages out, and there is no socket
-option that shortens the wait.
+The adjacent option is not a workaround either. `SO_EXCLUSIVEADDRUSE` exists to
+prevent that hijacking, and it makes the `TIME_WAIT` case strictly worse: a bind
+fails even for endpoints only lingering state occupies.
+
+So the honest summary is that Windows gives you a choice between a security hole
+and your current problem, and your runtime already chose for you.
 
 ## Workaround
 
@@ -1209,9 +1287,14 @@ Because of those limits, the durable answer is usually to stop needing the exact
 port on the next start: bind port 0 and publish the assigned port, or use a small
 candidate range with fallback. That turns a hard failure into a startup detail.
 
-If you do enumerate rows to find what to delete, read them structurally rather
-than by scraping `netstat` text — that output is localized, and matching English
-state words is its own trap.
+`SO_LINGER` with a zero timeout avoids creating the state in the first place, by
+sending an RST instead of a clean close — but it is a decision the CLOSING side
+makes before closing, not something you can apply to a port already stuck, and it
+discards unsent data.
+
+If you enumerate rows to find what to delete, read them structurally rather than
+by scraping `netstat` output — that text is localized, and matching English state
+words is its own trap.
 
 ---
 

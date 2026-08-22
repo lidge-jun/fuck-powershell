@@ -448,7 +448,7 @@ describe the machine) but is a testing lesson, not a Windows mechanism.
 
 - The Go port block was rejected wholesale as repo-specific after reading ten of
   them. **The follow-up round re-audited it in full and the judgment was wrong.**
-  A dispatched explorer ran `git patch-id --stable` across all 50 Go-port rows
+  A dispatched explorer ran `git patch-id --stable` across the 44 rows labeled as Go-port work
   and found they collapse to SEVEN unique patches, each repeated up to eight
   times across branches — so the original call had only seven diffs to be right
   or wrong about, and a sample of ten was mostly re-reading duplicates.

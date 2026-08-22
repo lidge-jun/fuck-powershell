@@ -9,7 +9,7 @@ wp5 rejected roughly 40 Go-port rows wholesale after reading ten, and recorded
 that as a band judgment inviting a cheap re-read. The re-read found the judgment
 backwards.
 
-A dispatched explorer ran `git patch-id --stable` across all 50 Go-port rows and
+A dispatched explorer ran `git patch-id --stable` across the 44 rows labeled as Go-port work and
 found they collapse to SEVEN unique patches, each re-landed up to eight times
 across branches. So the original sample of ten was mostly re-reading the same
 diffs, and the real question was only ever seven patches wide. Three of the seven
@@ -30,6 +30,10 @@ WinSW status greps are the same localized-output trap.
 cherry-picked or re-landed commits, sampling the block samples the BRANCHES
 rather than the patches. One `patch-id` pass before sampling would have made the
 original ten meaningful. That is now the rule for any future block judgment.
+
+The A-gate reviewer recounted the rows and found 44 labeled ones rather than 50,
+which is corrected above and in 050. The seven-patch collapse and every
+disposition that followed from it survive the recount.
 
 ## 9122d5ebe was split out
 
