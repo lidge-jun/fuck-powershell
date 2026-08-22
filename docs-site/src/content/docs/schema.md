@@ -3,12 +3,13 @@ title: Case schema
 description: The YAML frontmatter schema every case must pass.
 ---
 
-One markdown file per case in `cases/`, validated by `bun scripts/lint-cases.mjs`.
+One markdown file per case at `cases/<category>/<id>.md`, validated by
+`bun scripts/lint-cases.mjs` (folder must match the frontmatter category).
 
 ```yaml
 id: curl-alias                 # equals filename stem, unique
 title: curl silently becomes Invoke-WebRequest
-category: aliases              # aliases|args-quoting|streams|encoding|exit-codes|versions|env-paths
+category: aliases              # aliases|args-quoting|streams|encoding|exit-codes|versions|env-paths|ci-agents
 versions: "5.1"                # "5.1"|"7.x"|"both" — quoted (5.1 is a YAML float trap)
 failure: misleading-error      # silent|hard-error|misleading-error
 context: [agent, ci]           # subset of interactive|script|ci|agent

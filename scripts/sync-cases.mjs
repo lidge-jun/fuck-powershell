@@ -3,14 +3,14 @@
 // stripping custom frontmatter keys (Starlight docsSchema rejects unknown keys)
 // and rendering them as a badge table at the top of the body.
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
-import { join } from "node:path";
+import { join, basename } from "node:path";
 
 const ROOT = join(import.meta.dir, "..");
 const CASES = join(ROOT, "cases");
 const OUT = join(ROOT, "docs-site", "src", "content", "docs", "cases");
 rmSync(OUT, { recursive: true, force: true });
 
-for (const f of readdirSync(CASES).filter((f) => f.endsWith(".md"))) {
+for (const f of readdirSync(CASES, { recursive: true }).map(String).filter((f) => f.endsWith(".md"))) {
   const text = readFileSync(join(CASES, f), "utf8");
   const m = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   if (!m) continue;
@@ -52,6 +52,6 @@ for (const f of readdirSync(CASES).filter((f) => f.endsWith(".md"))) {
   ].join("\n");
   const dir = join(OUT, fm.category);
   mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, f), out);
-  console.log("synced cases/" + fm.category + "/" + f);
+  writeFileSync(join(dir, basename(f)), out);
+  console.log("synced cases/" + fm.category + "/" + basename(f));
 }

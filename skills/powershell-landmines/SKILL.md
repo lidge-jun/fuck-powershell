@@ -44,6 +44,7 @@ https://github.com/lidge-jun/fuck-powershell (live: https://lidge-jun.github.io/
 | references/args-quoting.md | oss-native-arg-quoting |
 | references/versions.md | ps51-vs-7-split |
 | references/env-paths.md | env-domain-principal |
+| references/ci-agents.md | actions-default-shell |
 
 Read the matching reference before writing code in that risk area. Each case is
 Symptom / Repro / Cause / Workaround with public commit/PR citations.

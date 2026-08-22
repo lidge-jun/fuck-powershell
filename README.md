@@ -19,8 +19,9 @@ agents can avoid them.
 
 ## Browse
 
-- **Cases**: [cases/](cases/) — one markdown file per landmine, YAML frontmatter
-  (category, affected versions, failure mode, context).
+- **Cases**: [cases/](cases/) — one markdown file per landmine, organized as
+  `cases/<category>/<id>.md`, YAML frontmatter (category, affected versions,
+  failure mode, context).
 - **Docs site**: https://lidge-jun.github.io/fuck-powershell/ (live render)
 
 ## Install the agent skill
@@ -37,9 +38,9 @@ Or just copy `skills/powershell-landmines/` into your agent's skills directory.
 ## Case schema
 
 ```yaml
-id: curl-alias                 # must equal filename stem, unique
+id: curl-alias                 # must equal filename stem, unique; file lives in cases/<category>/
 title: curl silently becomes Invoke-WebRequest
-category: aliases              # aliases|args-quoting|streams|encoding|exit-codes|versions|env-paths
+category: aliases              # aliases|args-quoting|streams|encoding|exit-codes|versions|env-paths|ci-agents (must match folder)
 versions: "5.1"                # "5.1"|"7.x"|"both" (quoted — 5.1 is a YAML float trap)
 failure: misleading-error      # silent|hard-error|misleading-error
 context: [agent, ci]           # subset of interactive|script|ci|agent

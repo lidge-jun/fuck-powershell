@@ -4,7 +4,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, basename } from "node:path";
 
 const CASES_DIR = join(import.meta.dir, "..", "cases");
-const CATEGORIES = ["aliases","args-quoting","streams","encoding","exit-codes","versions","env-paths"];
+const CATEGORIES = ["aliases","args-quoting","streams","encoding","exit-codes","versions","env-paths","ci-agents"];
 const VERSIONS = ["5.1","7.x","both"];
 const FAILURES = ["silent","hard-error","misleading-error"];
 const CONTEXTS = ["interactive","script","ci","agent"];
@@ -44,7 +44,9 @@ function parseFrontmatter(text, file) {
 
 const errors = [];
 const ids = new Set();
-const files = readdirSync(CASES_DIR).filter(f => f.endsWith(".md"));
+const files = readdirSync(CASES_DIR, { recursive: true })
+  .map(String)
+  .filter(f => f.endsWith(".md"));
 for (const f of files) {
   const text = readFileSync(join(CASES_DIR, f), "utf8");
   const fm = parseFrontmatter(text, f);
@@ -52,6 +54,9 @@ for (const f of files) {
   if (fm.error) { err(fm.error); continue; }
   const stem = basename(f, ".md");
   if (fm.id !== stem) err("id '" + fm.id + "' != filename stem '" + stem + "'");
+  const dir = f.includes("/") ? f.split("/")[0] : null;
+  if (dir && dir !== fm.category) err("folder '" + dir + "' != category '" + fm.category + "'");
+  if (!dir) err("case must live in cases/<category>/, not cases/ root");
   if (ids.has(fm.id)) err("duplicate id"); ids.add(fm.id);
   if (!fm.title) err("missing title");
   if (!CATEGORIES.includes(fm.category)) err("bad category: " + fm.category);
