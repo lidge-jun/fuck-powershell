@@ -15,7 +15,7 @@ Saw an error? Find the landmine.
 
 'X is not recognized as an internal or external command' — stale PATH snapshot or wrong-shell syntax.
 
-[npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [cmd-posix-env-prefix](/fuck-powershell/cases/ci-agents/cmd-posix-env-prefix/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/)
+[npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [cmd-posix-env-prefix](/fuck-powershell/cases/ci-agents/cmd-posix-env-prefix/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/) · [path-unmatched-quote-swallows](/fuck-powershell/cases/env-paths/path-unmatched-quote-swallows/) · [cmd-lf-drops-first-byte](/fuck-powershell/cases/encoding/cmd-lf-drops-first-byte/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/)
 
 ## eaddrinuse
 
@@ -45,7 +45,7 @@ Invalid argument from spawn — on Windows typically the .cmd/.bat hardening or 
 
 Win32 reports a path over the API ceiling as ERROR_FILENAME_EXCED_RANGE or ERROR_BUFFER_OVERFLOW; Node surfaces both as ENAMETOOLONG while Python maps the same code to ENOENT, so one wall is reported as two different problems.
 
-[max-path-260](/fuck-powershell/cases/env-paths/max-path-260/)
+[createprocess-cmdline-32767](/fuck-powershell/cases/args-quoting/createprocess-cmdline-32767/) · [max-path-260](/fuck-powershell/cases/env-paths/max-path-260/)
 
 ## enoent
 
@@ -57,7 +57,7 @@ File or command not found — on Windows often a PATHEXT/extension resolution mi
 
 Operation not permitted — including WindowsApps appExecLink spawn denials.
 
-[windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [icacls-inheritance-r-empty-dacl](/fuck-powershell/cases/env-paths/icacls-inheritance-r-empty-dacl/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+[wsl-unc-rejects-nt-acl](/fuck-powershell/cases/env-paths/wsl-unc-rejects-nt-acl/) · [windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [icacls-inheritance-r-empty-dacl](/fuck-powershell/cases/env-paths/icacls-inheritance-r-empty-dacl/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
 
 ## exit-code-leak
 
@@ -87,7 +87,7 @@ Node's ESM loader rejects a specifier whose scheme is not file, data, or node; o
 
 Corrupted text output from encoding mismatches (UTF-16/BOM/ANSI vs UTF-8).
 
-[ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [redirected-ps-output-mojibake](/fuck-powershell/cases/encoding/redirected-ps-output-mojibake/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
+[ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [redirected-ps-output-mojibake](/fuck-powershell/cases/encoding/redirected-ps-output-mojibake/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [python-subprocess-locale-encoding](/fuck-powershell/cases/encoding/python-subprocess-locale-encoding/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
 
 ## nativecommanderror
 

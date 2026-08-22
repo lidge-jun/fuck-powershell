@@ -27,6 +27,12 @@ Built-in aliases (curl, wget) and PATH shims shadow the binaries users intend to
 
 Cases: [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [curl-alias](/fuck-powershell/cases/aliases/curl-alias/)
 
+## AltGr is reported as Ctrl+Alt
+
+Windows implements right Alt as Ctrl plus Alt, so a character typed with AltGr arrives carrying both modifiers and any handler treating Ctrl as a shortcut prefix silently consumes real text, but only on layouts that need AltGr to produce it.
+
+Cases: [altgr-reports-as-ctrl-alt](/fuck-powershell/cases/parsing/altgr-reports-as-ctrl-alt/)
+
 ## appexeclink
 
 WindowsApps store aliases are zero-byte IO_REPARSE_TAG_APPEXECLINK files that pass stat probes but EPERM on spawn.
@@ -44,6 +50,12 @@ Cases: [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/)
 Bun 1.3.14 Windows spawn fails outright when powershell.exe argv contains the -WindowStyle Hidden pair.
 
 Cases: [bun-ps-windowstyle-argv](/fuck-powershell/cases/args-quoting/bun-ps-windowstyle-argv/)
+
+## case-insensitive filesystem, case-sensitive containers
+
+NTFS matches paths without regard to case while preserving the casing written, so two spellings name one file, but every ordinary string container treats them as distinct keys and the same lowercasing fix would be wrong on a case-sensitive filesystem.
+
+Cases: [path-case-sensitive-map](/fuck-powershell/cases/env-paths/path-case-sensitive-map/)
 
 ## cmd bat spawn hardening
 
@@ -63,6 +75,12 @@ PowerShell unrolls pipelines: zero items become null, one item loses its array, 
 
 Cases: [if-nativecmd-truthiness](/fuck-powershell/cases/exit-codes/if-nativecmd-truthiness/) · [get-content-scalar-collapse](/fuck-powershell/cases/collections/get-content-scalar-collapse/) · [return-does-not-mean-return](/fuck-powershell/cases/collections/return-does-not-mean-return/)
 
+## CreateProcess command line capped at 32767
+
+CreateProcess limits the whole assembled command line to 32767 characters and reports the overflow with the same Win32 code used for an over-long path, so a payload passed as an argument fails under an error that describes filenames.
+
+Cases: [createprocess-cmdline-32767](/fuck-powershell/cases/args-quoting/createprocess-cmdline-32767/)
+
 ## comparison as filter
 
 Comparison operators against a collection FILTER it (returning matching elements) instead of returning a boolean.
@@ -79,7 +97,7 @@ Cases: [windowstyle-hidden-vs-windowshide](/fuck-powershell/cases/args-quoting/w
 
 Windows tools end lines with CRLF, so splitting text on LF alone leaves a trailing CR on every line; exact comparisons and anchored patterns then fail against a character that is invisible in editors, diffs, and terminal output.
 
-Cases: [split-n-leaves-cr](/fuck-powershell/cases/encoding/split-n-leaves-cr/) · [lf-pure-transform-mixes-eol](/fuck-powershell/cases/encoding/lf-pure-transform-mixes-eol/)
+Cases: [split-n-leaves-cr](/fuck-powershell/cases/encoding/split-n-leaves-cr/) · [cmd-lf-drops-first-byte](/fuck-powershell/cases/encoding/cmd-lf-drops-first-byte/) · [lf-pure-transform-mixes-eol](/fuck-powershell/cases/encoding/lf-pure-transform-mixes-eol/)
 
 ## culture parsing
 
@@ -171,6 +189,12 @@ ConvertTo-Json defaults to -Depth 2, replacing deeper data with type names; 5.1/
 
 Cases: [convertto-json-depth-two](/fuck-powershell/cases/parsing/convertto-json-depth-two/)
 
+## locale preferred encoding is the ANSI codepage
+
+Python text mode without an explicit encoding decodes with the locale preferred encoding, which on Windows is the ANSI codepage rather than UTF-8, and UTF-8 mode changes what that function reports without changing what native children emit.
+
+Cases: [python-subprocess-locale-encoding](/fuck-powershell/cases/encoding/python-subprocess-locale-encoding/)
+
 ## localized tool output
 
 Windows built-in command-line tools translate their column headings, status words, and error messages to the system UI language, so only structure and exit codes are stable; matching English substrings tests the machine's language rather than its state.
@@ -194,6 +218,12 @@ Cases: [max-path-260](/fuck-powershell/cases/env-paths/max-path-260/)
 PowerShell historically rebuilds one command-line string for native processes, re-quoting heuristically; quotes and empty args are lost.
 
 Cases: [prose-as-unknown-flags](/fuck-powershell/cases/args-quoting/prose-as-unknown-flags/) · [oss-native-arg-quoting](/fuck-powershell/cases/args-quoting/oss-native-arg-quoting/) · [backslash-quote-ends-span](/fuck-powershell/cases/args-quoting/backslash-quote-ends-span/)
+
+## no POSIX process group
+
+Windows offers termination of one process or of a live parent-PID tree, with no group you opted into, so killing a child orphans its descendants while a tree kill sweeps up any caller that happens to descend from the target.
+
+Cases: [kill-hits-one-pid-or-the-whole-tree](/fuck-powershell/cases/exit-codes/kill-hits-one-pid-or-the-whole-tree/)
 
 ## output truthiness
 
@@ -237,6 +267,12 @@ English connectors like 'and' between commands parse as positional arguments of 
 
 Cases: [english-and-not-separator](/fuck-powershell/cases/args-quoting/english-and-not-separator/)
 
+## PATH entries may be quoted
+
+A Windows PATH entry may be wrapped in quotes so a directory name can contain a semicolon, which forces correct parsers to be quote-aware; an unmatched quote then opens a span that swallows every later entry into one fictional path.
+
+Cases: [path-unmatched-quote-swallows](/fuck-powershell/cases/env-paths/path-unmatched-quote-swallows/)
+
 ## registry env snapshot
 
 Environment variables live in the registry; a process gets a merge snapshot at creation and never sees later writes.
@@ -253,7 +289,7 @@ Cases: [file-url-encodes-backslash](/fuck-powershell/cases/env-paths/file-url-en
 
 ';' terminates a PowerShell statement; joining fragments of ONE call with ';' splits it into broken statements.
 
-Cases: [join-semicolon-splits-startprocess](/fuck-powershell/cases/args-quoting/join-semicolon-splits-startprocess/)
+Cases: [cmd-c-newline-not-separator](/fuck-powershell/cases/args-quoting/cmd-c-newline-not-separator/) · [join-semicolon-splits-startprocess](/fuck-powershell/cases/args-quoting/join-semicolon-splits-startprocess/)
 
 ## stream wrapping
 
@@ -278,6 +314,18 @@ Cases: [dollar-backslash-vars](/fuck-powershell/cases/args-quoting/dollar-backsl
 Windows retains the transmission control block for a closed socket so the endpoint stays unbindable, and its SO_REUSEADDR waives that state by also permitting an active listener to be hijacked, so runtimes refuse to set it and the POSIX escape hatch is unavailable rather than merely ineffective.
 
 Cases: [tcp-tcb-survives-listener](/fuck-powershell/cases/env-paths/tcp-tcb-survives-listener/)
+
+## a UNC path may be served by a non-NTFS provider
+
+A UNC root can be backed by a provider with entirely different semantics from NTFS, such as the WSL 9P filesystem, so operations that assume a Windows security descriptor fail with access-denied on a path that reads and lists normally.
+
+Cases: [wsl-unc-rejects-nt-acl](/fuck-powershell/cases/env-paths/wsl-unc-rejects-nt-acl/)
+
+## text-mode write translates newlines
+
+CPython text I/O applies universal newlines when writing as well as reading, so a lone line feed becomes the platform terminator wherever a TextIOWrapper sits in the path, including inside a subprocess pipe opened in text mode.
+
+Cases: [python-textio-newline-translation](/fuck-powershell/cases/encoding/python-textio-newline-translation/)
 
 ## win32 path normalization
 

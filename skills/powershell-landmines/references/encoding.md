@@ -127,6 +127,102 @@ BOM helps PowerShell 5.1 and actively breaks a batch file.
 ---
 
 
+# a batch file saved with Unix line endings makes cmd.exe eat the first byte of lines, so npm becomes pm and powershell becomes hell
+
+## Symptom
+
+A batch script fails with errors naming commands that are not in the file:
+
+```
+'pm' is not recognized as an internal or external command
+'hell' is not recognized as an internal or external command
+```
+
+The file plainly says `call npm install` and `powershell -File ...`. The first
+character of the token is gone. Nested `if` and `for` blocks silently do not run,
+loops break, and none of it is consistent — the same file can fail differently on
+different runs.
+
+There is no encoding error, no syntax error, and no mention of line endings
+anywhere in the output.
+
+## Repro
+
+Write a `.cmd` with LF-only endings, which is the default for most editors and
+every AI coding agent:
+
+```powershell
+PS> [IO.File]::WriteAllText("t.cmd", "@echo off" + [char]10 + "npm --version" + [char]10)
+PS> Format-Hex t.cmd | Select-String "0D 0A"    # nothing: no CRLF pair
+PS> cmd /c t.cmd
+'pm' is not recognized as an internal or external command
+```
+
+Rewriting the identical text with CRLF fixes it:
+
+```powershell
+PS> [IO.File]::WriteAllText("t.cmd", "@echo off" + [char]13 + [char]10 + "npm --version" + [char]13 + [char]10)
+PS> cmd /c t.cmd     # runs
+```
+
+## Cause
+
+cmd.exe's batch interpreter was built for CRLF and reads a script by seeking
+through the file as it executes rather than parsing it whole. Its line handling
+assumes a two-byte terminator, so on an LF-only file the seek arithmetic lands one
+byte off and the first character of a line is consumed as if it were the missing
+CR.
+
+That is why the failures look random: whether a given line loses its first byte
+depends on where the interpreter's file position happens to be, which depends on
+everything before it. Add a line at the top and a different line breaks. Block
+constructs — `if`, `for`, parenthesized groups — are hit hardest because the
+interpreter re-seeks to re-read them.
+
+The modern trigger is new. Batch files used to be written by Windows tools that
+emitted CRLF without being asked. Now they are written by editors defaulting to LF
+and by AI agents whose file-writing tools emit a bare line feed, so a script shape
+that worked for twenty years arrives broken from a generator that never considered
+the question.
+
+## Workaround
+
+Write `.cmd` and `.bat` files with CRLF, explicitly:
+
+```js
+const body = lines.join("\r\n") + "\r\n";
+fs.writeFileSync("run.cmd", body);        // not join("\n")
+```
+
+Pin it in `.gitattributes` so a checkout cannot undo it:
+
+```
+*.cmd text eol=crlf
+*.bat text eol=crlf
+```
+
+And scan for it, since the failure never names itself:
+
+```powershell
+Get-ChildItem -Filter *.cmd -Recurse | Where-Object {
+  -not ([IO.File]::ReadAllBytes($_.FullName) -contains 13)
+} | Select-Object FullName    # LF-only batch files
+```
+
+PowerShell scripts do not share this — `.ps1` files handle LF fine. It is
+specifically the batch interpreter.
+
+---
+
+`bomless-bat-oem-codepage` is the other way a batch file can be byte-wrong: there
+the encoding is misread, here the line terminator is. Both produce a
+"not recognized" error naming something you never wrote, which is why the pair is
+worth knowing together.
+
+
+---
+
+
 # editing one section of a CRLF file with LF-pure string code leaves a mixed-EOL file that every later diff and hash disagrees about
 
 ## Symptom
@@ -259,6 +355,185 @@ default to BOM-less UTF-8, so the same script writes different bytes per runtime
 - On 5.1, when you need BOM-less UTF-8, drop to .NET:
   `[System.IO.File]::WriteAllText($path, $text)`.
 - Lint generated artifacts for BOMs in CI.
+
+
+---
+
+
+# subprocess text=True decodes the child with the console codepage, so one CJK byte raises UnicodeDecodeError and stdout comes back empty
+
+## Symptom
+
+A command runs fine in the terminal and returns nothing through Python. Either
+the output is empty with no error, or you get a decode failure naming a codec you
+never chose:
+
+```
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x86 in position 12
+```
+
+You did not ask for GBK. On a Korean machine it says `cp949`, on a Japanese one
+`cp932`, and in a US console it never happens at all — which is why it reaches
+users rather than CI.
+
+The empty-stdout variant is worse: the reader thread dies on the decode, the
+parent sees `None` or `""`, and your code concludes the command produced no
+output.
+
+## Repro
+
+```python
+import subprocess
+r = subprocess.run(["cmd", "/c", "echo 한글"], capture_output=True, text=True)
+# on a cp949 console this decodes as cp949; a byte the codepage cannot map
+# raises UnicodeDecodeError under the default errors="strict"
+```
+
+And the fix that looks right and is also wrong:
+
+```python
+subprocess.run(cmd, capture_output=True, text=True,
+               encoding="utf-8", errors="replace")
+# native tools emit ANSI/OEM bytes; those now become U+FFFD irreversibly
+```
+
+## Cause
+
+`text=True` without an explicit `encoding=` decodes the child's bytes with
+`locale.getpreferredencoding(False)`, which on Windows is the ANSI codepage —
+cp949, cp932, cp936, cp1252 — not UTF-8. The default error handler is
+`strict`, so a single unmappable byte raises rather than substituting.
+
+Two things make this harder than it looks.
+
+First, there is no single right answer. Different children emit different
+encodings on the same machine: a Python child under UTF-8 mode emits UTF-8, while
+`schtasks` or `tasklist` emit the OEM codepage. Hardcoding `encoding="utf-8"`
+fixes one and breaks the other, and `errors="replace"` makes the breakage
+unrecoverable because the original bytes are gone.
+
+Second, `PYTHONUTF8=1` and PEP 540 UTF-8 mode change YOUR interpreter's default,
+not what the child produces. Worse, they make
+`locale.getpreferredencoding(False)` report `utf-8` while native tools keep
+emitting the ANSI codepage — so the function you would use to detect the problem
+starts lying about it.
+
+## Workaround
+
+Capture bytes and decide the decoding yourself, per child:
+
+```python
+r = subprocess.run(cmd, capture_output=True)          # no text=True
+out = r.stdout.decode("utf-8", errors="strict") if is_utf8_child \
+      else r.stdout.decode(oem_codepage(), errors="replace")
+```
+
+When you know the child, be explicit rather than relying on the locale:
+
+```python
+subprocess.run(cmd, capture_output=True, text=True, encoding="cp949")
+```
+
+For a child you control, remove the ambiguity at the source — set
+`PYTHONIOENCODING=utf-8` in its environment, or run `chcp 65001` before a
+console tool — and then decode as UTF-8 on both sides.
+
+Never combine a guessed encoding with `errors="replace"`. The replacement is
+lossy and permanent, so a wrong guess stops raising and starts silently
+corrupting, which is a worse failure than the one you were fixing.
+
+---
+
+`redirected-ps-output-mojibake` is the same wall from the PowerShell side, where
+the CHILD encodes its redirected output with the console codepage. This is the
+Python side: the parent decodes with it. Different fix — `encoding=` on the
+Popen versus base64 framing in the child — and a different reader.
+
+
+---
+
+
+# Python text mode injects carriage returns into a pipe, so the bytes that land on disk are not the string you sent
+
+## Symptom
+
+You write a string through a subprocess pipe, the child writes it to a file, and
+a verification read back does not match what you sent. Byte counts disagree by
+exactly the number of lines:
+
+```
+wrote 39 bytes, read back 42
+```
+
+A patch tool reports a false negative. A checksum never matches. A round-trip test
+that passes on CI passes on Linux and fails on the Windows runner, and diffing the
+two strings shows nothing, because the difference has no glyph.
+
+## Repro
+
+```python
+import subprocess
+p = subprocess.Popen(["cat"], stdin=subprocess.PIPE, text=True)
+p.stdin.write("a\nb\n")     # what you sent
+p.stdin.close()
+# what the child receives on Windows: b"a\r\nb\r\n"
+```
+
+And the same on a plain file:
+
+```python
+open("t.txt", "w").write("a\nb\n")
+len(open("t.txt", "rb").read())   # 6 on Windows, 4 on POSIX
+```
+
+## Cause
+
+CPython's text-mode I/O implements universal newlines in BOTH directions. Reading
+translates any line ending to `\n`, which everyone knows. Writing translates
+`\n` to `os.linesep` — `\r\n` on Windows — which is the half that surprises
+people, because nothing in `write("a\nb")` suggests the bytes will change.
+
+It applies wherever a `TextIOWrapper` sits in the path, and a subprocess pipe
+opened with `text=True` (or `encoding=`) is exactly that. So the translation
+happens INSIDE the pipe, before the child sees anything — the child is not
+misbehaving, and neither is the filesystem.
+
+That placement is what makes it expensive to debug: your string is correct, the
+child's write is correct, the file on disk is wrong, and the only wrong step is a
+pipe that both sides consider transparent.
+
+POSIX has the same API and no translation, so the bug is invisible until a
+Windows runner produces it.
+
+## Workaround
+
+Write through the binary buffer, which bypasses the wrapper entirely:
+
+```python
+p = subprocess.Popen(["cat"], stdin=subprocess.PIPE)      # no text=True
+p.stdin.write("a\nb\n".encode("utf-8"))
+```
+
+If you must keep `text=True`, pin the translation off:
+
+```python
+subprocess.Popen(cmd, stdin=PIPE, text=True, newline="")   # no translation
+open(path, "w", newline="").write(data)                    # same for files
+```
+
+`newline=""` is the specific spelling that means "write exactly what I gave you";
+`newline="\n"` also works and is clearer about intent.
+
+When you verify a round trip, normalize both sides before comparing. Even with the
+write path fixed, any other component in the chain may translate, and a comparison
+that tolerates line endings is cheaper than one more silent false negative.
+
+---
+
+`split-n-leaves-cr` is the read side of CRLF damage and
+`lf-pure-transform-mixes-eol` is the file-rewrite side. This one is upstream of
+both: the CRs were not in the file and not in your string — a pipe added them in
+transit.
 
 
 ---

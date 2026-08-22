@@ -922,6 +922,105 @@ Fix: https://github.com/lidge-jun/codexclaw/commit/5c03acb
 ---
 
 
+# the filesystem says two paths are the same file and your config map says they are two keys, so a trusted project reads as untrusted
+
+## Symptom
+
+A lookup keyed by a path misses, for a path that unambiguously exists and that
+every other part of the system resolves fine:
+
+```
+Can't verify project trust for C:\Users\me\Codex-Orchestrator
+```
+
+The entry is right there in the config:
+
+```toml
+[projects.'c:\users\me\codex-orchestrator']
+trust_level = "trusted"
+```
+
+Adding a SECOND entry with the exact casing the caller used fixes it immediately,
+and both entries coexist happily — which is the tell that this is a key
+comparison rather than a filesystem problem.
+
+Caches miss, allowlists do not match, dedupe stores the same path twice, and a
+"have I seen this before" check answers no forever.
+
+## Repro
+
+```js
+const seen = new Map();
+seen.set("c:\\users\\me\\project", true);
+seen.has("C:\\Users\\me\\Project");   // false
+
+require("fs").statSync("c:\\users\\me\\project").ino ===
+require("fs").statSync("C:\\Users\\me\\Project").ino;   // same file
+```
+
+The two spellings name one file and are two distinct strings. On Linux they would
+name two different files, so the string comparison would be right.
+
+## Cause
+
+NTFS is case-INSENSITIVE and case-PRESERVING: it stores the casing you used and
+ignores casing when matching. So the filesystem happily treats `c:\users\...` and
+`C:\Users\...` as one object, while every ordinary string container — a `Map`, a
+JSON object, a TOML table, a `Set`, a SQL unique index — treats them as two.
+
+Where the differing casing comes from is the part you cannot control:
+
+- a user hand-editing a config in lowercase
+- `%USERPROFILE%` versus a literal `C:\Users\...` from a different component
+- a short 8.3 name in `%TEMP%` for some accounts
+- a drive letter that arrives lowercase from one API and uppercase from another
+- a remote or mobile client sending the path it was shown
+
+So the collision appears when TWO components meet, which is why it survives every
+single-component test.
+
+Lowercasing everything is the obvious fix and is wrong on its own: the same code
+usually runs on Linux, where lowercasing makes two genuinely different files
+collide. The correct key depends on the platform, which means it has to be
+computed rather than assumed.
+
+## Workaround
+
+Canonicalize before using a path as a key, and make the canonicalization
+platform-aware:
+
+```js
+const { resolve, sep, posix } = require("node:path");
+
+function pathKey(p) {
+  const abs = resolve(p).split(sep).join(posix.sep);
+  return process.platform === "win32" ? abs.toLowerCase() : abs;
+}
+```
+
+Normalize the separators too, or `C:/x` and `C:\x` become the next pair of keys
+that should have matched.
+
+When the key is persisted — a config file, a database, a lock file — canonicalize
+on WRITE as well as on read, and migrate existing entries. A store that already
+holds both spellings will keep answering inconsistently no matter how correct the
+read path becomes.
+
+For a real identity check rather than a key, compare resolved paths through the
+filesystem: `realpathSync` on both sides handles casing, junctions, and symlinks
+together.
+
+---
+
+`env-path-vs-PATH-casing` is the environment-variable version — `Path` versus
+`PATH` as a variable NAME. This is the filesystem version, and the trap is
+sharper: there the two names refer to one variable by design, here two strings
+refer to one file while your data structure insists they are two.
+
+
+---
+
+
 # Joining PATH with ':' silently no-ops on Windows
 
 ## Symptom
@@ -986,6 +1085,96 @@ equivalent to prepending that repository to PATH.
   cwd (but not legitimate home-subtree entries like %AppData%\npm — the
   referenced fix threads that needle).
 - Defense in depth: resolve to absolute paths once, then spawn the absolute path.
+
+
+---
+
+
+# one stray quote in PATH makes every entry after it disappear, for your program only — the same shell still finds them
+
+## Symptom
+
+Your program cannot find a tool that is unambiguously installed and on PATH:
+
+```
+Error: failed to run git clone ...: program not found
+```
+
+From the same shell, in the same session:
+
+```
+PS> where.exe git
+C:\Users\me\AppData\Local\hermes\git\cmd\git.exe
+PS> git --version
+git version 2.54.0.windows.1
+```
+
+So the tool is there, the shell finds it, and your process says it does not
+exist. Every diagnostic you reach for agrees with the shell and against your
+program, which is why this burns an afternoon.
+
+## Repro
+
+```powershell
+PS> $env:PATH = 'C:\Program Files\PowerShell\7";' + 'C:\tools\git\cmd' + ';C:\Windows\System32'
+PS> where.exe git          # found
+PS> node -e "console.log(require('child_process').spawnSync('git',['--version']).error?.code)"
+ENOENT
+```
+
+The stray `"` after `7` is the whole bug. It is trivially easy to produce: a
+quoted PATH entry with a typo, an installer that appends without checking, or a
+hand-edited environment variable.
+
+## Cause
+
+Windows PATH entries may be QUOTED, because the separator is `;` and a directory
+name may legally contain one. So a correct PATH parser has to be quote-aware:
+inside quotes, a semicolon is data rather than a separator.
+
+That is exactly what makes an unmatched quote catastrophic. The parser opens a
+quoted span at the stray `"` and never finds its closer, so every remaining
+semicolon is swallowed as part of one enormous, nonexistent directory name. Rust's
+`std::env::split_paths` behaves this way, and it is behaving correctly.
+
+Whether you are affected depends entirely on which splitter you use:
+
+- Quote-aware splitters (`std::env::split_paths`, and anything modelling the
+  documented rules) lose every entry after the stray quote.
+- Naive `split(';')` — which most scripts and many runtimes use — is unaffected,
+  because it never opened a span.
+- `where.exe` and PowerShell's own command resolution are unaffected.
+
+So the failure is not "PATH is broken". It is "PATH is broken for the correct
+parsers only", which inverts the usual debugging instinct: the tools you trust to
+check are the ones that cannot see the problem.
+
+## Workaround
+
+Fix the PATH — but you usually cannot, because it is the user's machine. So make
+the failure legible instead:
+
+```rust
+let raw = std::env::var_os("PATH").unwrap_or_default();
+let quotes = raw.to_string_lossy().matches('"').count();
+if quotes % 2 != 0 {
+    eprintln!("PATH contains an unmatched quote; entries after it are unreadable");
+}
+```
+
+An odd number of quote characters in PATH is always a bug in the PATH, and
+checking for it costs one line. Reporting THAT instead of "program not found"
+turns a multi-hour hunt into a one-line fix for the user.
+
+If you must be tolerant, fall back to naive semicolon splitting when the
+quote-aware parse yields an entry containing `;` — that entry is fictional by
+construction.
+
+---
+
+`node-path-host-delimiter` is about the SEPARATOR being wrong (`:` versus `;`).
+This is one level deeper: the separator is right, the parse is right, and one
+character of user data makes the correct parser produce a fictional answer.
 
 
 ---
@@ -1575,6 +1764,87 @@ lidge-jun/codexclaw#33 — a trust-registration command died here on every run, 
 because the failure was in a *verification* step the tool rolled back a write that
 had actually succeeded.
 Fix: https://github.com/lidge-jun/codexclaw/commit/071eb40
+
+
+---
+
+
+# your ACL hardening fails on a WSL path because a wsl.localhost UNC root has no NTFS security descriptor to harden
+
+## Symptom
+
+A routine that locks down directories — a sandbox setting deny-write roots, an
+installer securing a config directory — fails only for users who work inside WSL:
+
+```
+\\wsl.localhost\Ubuntu\home\me\project: Access is denied.
+```
+
+The path exists. Explorer opens it. `dir` lists it. Elevation does not help, and
+neither does taking ownership, because there is nothing there to own.
+
+## Repro
+
+```
+C:\> icacls \\wsl.localhost\Ubuntu\home\me
+\\wsl.localhost\Ubuntu\home\me: Access is denied.
+
+C:\> dir \\wsl.localhost\Ubuntu\home\me
+ Directory of \\wsl.localhost\Ubuntu\home\me
+ ... lists normally ...
+```
+
+The same command against any NTFS path succeeds. All four spellings behave the
+same way: `\\wsl.localhost\`, the older `\\wsl$\`, and both under the
+extended-length `\\?\UNC\` prefix.
+
+## Cause
+
+`\\wsl.localhost\...` is a UNC path served by the WSL 9P filesystem provider, not
+by NTFS. Its backing store is a Linux filesystem with POSIX mode bits and no
+Windows security descriptors, so there is no DACL for `icacls` or
+`SetNamedSecurityInfo` to read or write. The refusal is the provider correctly
+reporting that the operation does not apply.
+
+The general rule this instance teaches: on Windows, "it is a path" does not imply
+"it supports the filesystem operations you know". A UNC path may be served by a
+provider with entirely different semantics — WSL's 9P, a WebDAV mount, a network
+redirector — and the ones that matter here fail on security operations rather
+than on reads.
+
+POSIX has no equivalent trap because a mount either supports an operation or
+returns a clear `ENOTSUP`, and permission bits exist everywhere. Here the error
+is `Access is denied`, which reads as a permissions problem and sends you toward
+elevation — the one thing that cannot possibly help.
+
+## Workaround
+
+Detect the roots that cannot carry ACLs and skip them rather than failing:
+
+```rust
+fn is_acl_unsupported_root(path: &Path) -> bool {
+    let key = canonical_path_key(path);   // lowercased, forward slashes
+    key.starts_with("//wsl.localhost/")
+        || key.starts_with("//wsl$/")
+        || key.starts_with("//?/unc/wsl.localhost/")
+        || key.starts_with("//?/unc/wsl$/")
+}
+```
+
+Canonicalize before matching — all four prefixes are the same root, and casing
+varies — and treat the skip as a REPORTED outcome rather than a silent one. A
+directory you meant to harden and could not is a security fact the caller should
+see, even though failing the whole run would be worse.
+
+Do not attempt to substitute POSIX permissions through WSL. The Windows-side
+process cannot set them meaningfully, and a `chmod` through interop introduces a
+dependency on a running distribution.
+
+---
+
+`icacls-inheritance-r-empty-dacl` is about getting the ACL sequence wrong on a
+filesystem that has ACLs. This is the case where the filesystem has none at all,
+and the tell is that elevation changes nothing.
 
 
 ---

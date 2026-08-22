@@ -149,6 +149,80 @@ windowstyle-hidden-vs-windowshide), keeping it in argv is all cost, no benefit.
 ---
 
 
+# a newline inside cmd /c does not start a second command, so the half of your script after it never runs
+
+## Symptom
+
+You build a two-line script, hand it to `cmd.exe /c`, and the second line silently
+does not run. The exit code is 0, because the first line succeeded.
+
+The version that costs you a day: line one sources an environment file and line
+two dumps the environment. The dump never happens, so you get an empty or stale
+environment back and go hunting through your parser for a bug that is not there.
+
+## Repro
+
+```js
+const { execFileSync } = require("node:child_process");
+
+execFileSync("cmd.exe", ["/c", "echo first\r\necho second"], { encoding: "utf8" });
+// "first" only — "echo second" is consumed as arguments to the first echo
+
+execFileSync("cmd.exe", ["/c", "echo first & echo second"], { encoding: "utf8" });
+// "first" and "second"
+```
+
+The POSIX habit that fails:
+
+```sh
+sh -c 'echo first
+echo second'          # both run
+```
+
+## Cause
+
+`cmd.exe /c` takes ONE command line, not a script. Everything after `/c` is a
+single line to parse, and a newline in the middle of it is just a character — it
+is not a statement terminator, so the text after it becomes more arguments to
+whatever the line already started.
+
+That is a real asymmetry inside cmd.exe itself, not a general rule about Windows:
+a `.bat` or `.cmd` FILE is a script, and newlines separate statements there
+normally. So the same text works when you write it to a file and fails when you
+pass it inline, which is what makes the behavior feel arbitrary.
+
+`sh -c` accepts a whole program, which is why the pattern gets written this way in
+cross-platform code in the first place — it is correct on the POSIX branch and the
+Windows branch inherits its shape.
+
+## Workaround
+
+Join with `&`, or `&&` when the second command should only run on success:
+
+```js
+const line = ["if exist \"%F%\" call \"%F%\" >nul 2>&1", "set"].join(" & ");
+execFileSync("cmd.exe", ["/c", line], { encoding: "utf8" });
+```
+
+Two details that bite after the fix. Redirection binds to the command it follows,
+so `>nul 2>&1` must sit before the `&` that ends its command rather than at the
+end of the whole line. And `&` inside a QUOTED argument is data, not a separator,
+so a value containing `&` will not accidentally split — which is the same
+mechanism that makes `shell: true` dangerous when the value is untrusted.
+
+When the script is genuinely long, write a `.cmd` file and run that. Then newlines
+behave the way you expected, and you get comments and labels as a bonus.
+
+---
+
+`cmd-start-ampersand-splits` is this mechanism from the other side: there an `&`
+in data splits a command you meant to keep whole. Here a newline that should have
+split one silently does not.
+
+
+---
+
+
 # argv to a .cmd shim is re-parsed by cmd.exe — untrusted text becomes commands
 
 ## Symptom
@@ -214,6 +288,92 @@ into two commands at the first ampersand.
   referenced fix does this for browser-open.
 - Better: avoid cmd — spawn rundll32 url.dll,FileProtocolHandler <url> or use
   the runtime's opener API.
+
+
+---
+
+
+# os error 206 says the filename is too long when the filename is fine — the command line hit the 32,767-character cap
+
+## Symptom
+
+A spawn fails with an error about filenames, naming a path that is nowhere near
+too long:
+
+```
+failed to launch helper: helper=C:\Program Files\app\helper.exe
+error=The filename or extension is too long. (os error 206)
+```
+
+You check the path. It is 40 characters. You check MAX_PATH, enable long paths,
+set the registry key, and nothing changes — because the path was never the
+problem.
+
+What makes it hard is the correlation: the failure appears on ONE machine and
+scales with something unrelated to your code. In the reported case it grew with
+the number of loose files in the user's profile directory, because the payload
+being passed enumerated them.
+
+## Repro
+
+```js
+const { spawnSync } = require("node:child_process");
+const payload = "x".repeat(40000);
+const r = spawnSync("cmd.exe", ["/c", "echo", payload]);
+r.error.code;      // ENAMETOOLONG  (Win32 206)
+```
+
+POSIX has a limit too — `E2BIG`, typically around 2MB on Linux — so the same code
+survives an argument size that Windows refuses.
+
+## Cause
+
+`CreateProcess` caps its `lpCommandLine` parameter at 32,767 characters, and the
+cap applies to the WHOLE assembled line: executable path, every argument, every
+quote and separator the runtime inserted.
+
+Windows reports that overflow as `ERROR_FILENAME_EXCED_RANGE` (206) — the same
+code it uses for a path exceeding MAX_PATH. Node maps 206 to `ENAMETOOLONG`, so
+two unrelated limits arrive under one name, and the name describes the one you are
+not hitting.
+
+That collision is the entire difficulty. Every search result for 206 and
+`ENAMETOOLONG` is about MAX_PATH and long-path opt-in, none of which touches the
+command-line cap. There is no registry switch and no manifest for this one; 32,767
+is the ceiling.
+
+The practical trigger is passing data as an argument: a JSON payload, a file list,
+a serialized config. Those grow with the user's environment rather than with your
+input, so they cross the line on someone else's machine.
+
+## Workaround
+
+Get the payload out of argv:
+
+```js
+// stdin — no size limit worth worrying about
+const child = spawn(helper, ["--stdin"], { stdio: ["pipe", "inherit", "inherit"] });
+child.stdin.end(JSON.stringify(payload));
+
+// or a temp file, passing only the path
+writeFileSync(tmp, JSON.stringify(payload));
+spawnSync(helper, ["--payload-file", tmp]);
+```
+
+Both are better than argv even below the limit, because argv is visible in process
+listings to every user on the machine — a payload with a token in it should never
+have been an argument.
+
+If you must keep it in argv, measure before spawning and fail with a message that
+names the real limit. `payload_len=35044` in your own log is worth more than
+os error 206 in the runtime's.
+
+---
+
+`max-path-260` owns the other meaning of error 206. The two cases exist
+separately precisely because Windows reuses the code: one is a 260-character path
+ceiling with a documented opt-in, the other is a 32,767-character command-line cap
+with none.
 
 
 ---
