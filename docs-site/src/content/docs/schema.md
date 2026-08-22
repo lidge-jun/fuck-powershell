@@ -9,7 +9,7 @@ One markdown file per case at `cases/<category>/<id>.md`, validated by
 ```yaml
 id: curl-alias                 # equals filename stem, unique
 title: curl silently becomes Invoke-WebRequest
-category: aliases              # aliases|args-quoting|streams|encoding|exit-codes|versions|env-paths|ci-agents
+category: aliases              # 10 buckets incl collections, parsing
 versions: "5.1"                # "5.1"|"7.x"|"both" — quoted (5.1 is a YAML float trap)
 failure: misleading-error      # silent|hard-error|misleading-error
 context: [agent, ci]           # subset of interactive|script|ci|agent

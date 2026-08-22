@@ -50,11 +50,13 @@ https://github.com/lidge-jun/fuck-powershell (live: https://lidge-jun.github.io/
 | references/aliases.md | command-v-noop, curl-alias, get-command-where-disagree, npm-ps1-not-comspec, spawn-npm-enoent-einval |
 | references/streams.md | dev-null-redirect, native-stderr-errorrecord, out-string-multiplies-stderr, write-host-not-success-stream |
 | references/encoding.md | bom-less-ps1-cp949, oss-outfile-bom, tee-object-utf16, utf8-bom-still-breaks-grep |
-| references/exit-codes.md | exit-code-vs-dollar-q, explorer-exits-one, if-nativecmd-truthiness, irm-iex-kills-host, pwsh-leaks-lastexitcode |
+| references/exit-codes.md | exit-code-vs-dollar-q, explorer-exits-one, if-nativecmd-truthiness, irm-iex-kills-host, pwsh-leaks-lastexitcode, start-process-no-lastexitcode |
 | references/args-quoting.md | backslash-quote-ends-span, bun-ps-windowstyle-argv, cmd-shim-reparses-argv, cmd-start-ampersand-splits, dollar-backslash-vars, dq-regex-interpolates, english-and-not-separator, join-semicolon-splits-startprocess, oss-native-arg-quoting, piped-iex-drops-params, prose-as-unknown-flags, ps-file-extension-dispatch, windowstyle-hidden-vs-windowshide |
 | references/versions.md | ps51-no-and-and, ps51-vs-7-split, strictmode-missing-property |
-| references/env-paths.md | env-domain-principal, env-path-vs-PATH-casing, envpath-pollutes-user, node-path-host-delimiter, path-colon-not-delimiter, path-dot-hijacks-bare-npm, pathext-bare-name-enoent, pathext-exe-beats-cmd, session-path-stale, windowsapps-alias-eperm |
+| references/env-paths.md | env-domain-principal, env-path-vs-PATH-casing, envpath-pollutes-user, node-path-host-delimiter, path-colon-not-delimiter, path-dot-hijacks-bare-npm, pathext-bare-name-enoent, pathext-exe-beats-cmd, session-path-stale, test-path-trailing-whitespace, windowsapps-alias-eperm |
 | references/ci-agents.md | actions-default-shell, cmd-posix-env-prefix, execution-policy-file-block |
+| references/collections.md | get-content-scalar-collapse, ne-filters-instead-of-compares, return-does-not-mean-return |
+| references/parsing.md | convertto-json-depth-two, culture-comma-decimal-cast |
 
 Read the matching reference before writing code in that risk area. Each case is
 Symptom / Repro / Cause / Workaround with public commit/PR citations.

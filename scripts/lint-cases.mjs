@@ -4,7 +4,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, basename } from "node:path";
 
 const CASES_DIR = join(import.meta.dir, "..", "cases");
-const CATEGORIES = ["aliases","args-quoting","streams","encoding","exit-codes","versions","env-paths","ci-agents"];
+const CATEGORIES = ["aliases","args-quoting","streams","encoding","exit-codes","versions","env-paths","ci-agents","collections","parsing"];
 const VERSIONS = ["5.1","7.x","both"];
 const FAILURES = ["silent","hard-error","misleading-error"];
 const CONTEXTS = ["interactive","script","ci","agent"];

@@ -7,6 +7,15 @@ import { join } from "node:path";
 const ROOT = join(import.meta.dir, "..");
 const SRC = join(ROOT, "devlog", "260824_issues_windows");
 const MAP = {
+  12: ["get-content-scalar-collapse", "collections"],
+  13: ["ne-filters-instead-of-compares", "collections"],
+  14: ["return-does-not-mean-return", "collections"],
+  15: ["convertto-json-depth-two", "parsing"],
+  16: ["test-path-trailing-whitespace", "env-paths"],
+  17: ["start-process-no-lastexitcode", "exit-codes"],
+  18: ["culture-comma-decimal-cast", "parsing"],
+};
+const OLD_MAP = {
   1:  ["spawn-npm-enoent-einval", "aliases"],
   2:  ["windowsapps-alias-eperm", "env-paths"],
   3:  ["tee-object-utf16", "encoding"],
