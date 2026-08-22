@@ -8,6 +8,7 @@ context: [interactive, script, ci]
 source: third-party
 repro: historical
 refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/51
   - https://github.com/openclaw/openclaw/commit/684a9b2e
   - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
 ontology:

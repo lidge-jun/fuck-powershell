@@ -91,5 +91,6 @@ by one specific shell, and everything that hops through that shell inherits it.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/51>
 - <https://github.com/openclaw/openclaw/commit/684a9b2e>
 - <https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd>
