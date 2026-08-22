@@ -67,11 +67,19 @@ DISPATCH-RETIRE-01; the main agent read those inventories directly. The two
 reviewer lanes both returned substantial verdicts, which is the split worth
 remembering: bounded audit tasks came back, open-ended mining tasks did not.
 
-## Open for a future round
+## Open for a future round — ALL THREE CLOSED
 
-- Reserved device names (CON, NUL, COM1-9) and MAX_PATH have no evidence in these
-  five histories. Both are real Windows mechanisms the corpus still lacks.
-- `9122d5ebe` (a known-folder lookup returning an empty string rather than an
-  error) is REFed but could reasonably be its own case with a proper repro.
-- The Go-port block in opencodex was rejected wholesale after reading ten of
-  roughly forty. Cheap to re-audit if that judgment looks wrong later.
+See `080_followup.md`. Outcome of each:
+
+- Reserved device names and MAX_PATH — WRITTEN, as third-party cases citing
+  Microsoft documentation, each with a verification note separating quoted claims
+  from inference.
+- `9122d5ebe` — SPLIT OUT as `known-folder-empty-not-error`. Re-reading showed a
+  different mechanism from the mojibake case it had been REFed to.
+- The Go-port block — RE-AUDITED, and the wholesale rejection was WRONG. The 44
+  labeled rows collapse to 7 unique patches by `patch-id`, so the original sample
+  of ten was mostly re-reading duplicates. Three of the seven became cases.
+
+That last one is the durable lesson: sampling a block of cherry-picked or
+re-landed commits samples the branches, not the patches. Deduplicate by
+`patch-id` before sampling.

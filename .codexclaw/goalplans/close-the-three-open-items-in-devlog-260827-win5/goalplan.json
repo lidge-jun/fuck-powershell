@@ -1,0 +1,149 @@
+{
+  "objective": "Close the three open items in devlog/260827_win5repo/070_closeout.md: re-audit the opencodex Go-port block in full, decide split-or-keep for 9122d5ebe, and research reserved device names plus MAX_PATH as third-party cases. Then redeploy and verify live.",
+  "slug": "close-the-three-open-items-in-devlog-260827-win5",
+  "createdAt": "2026-08-22T16:42:06.460Z",
+  "updatedAt": "2026-08-22T17:26:22.609Z",
+  "activeWorkPhaseId": null,
+  "workPhases": [
+    {
+      "id": "wp1",
+      "title": "Go-port re-audit: read every Go-port commit rather than a sample",
+      "status": "done",
+      "tasks": [
+        {
+          "id": "t1-lane",
+          "title": "Dispatch a read-only grok-4.6 explorer over the full Go-port block",
+          "status": "done"
+        },
+        {
+          "id": "t1-verify",
+          "title": "Re-read first-hand any commit the lane nominates",
+          "status": "done"
+        },
+        {
+          "id": "t1-record",
+          "title": "Amend 050 with the completed re-audit and its outcome",
+          "status": "done"
+        }
+      ],
+      "criteriaIds": [
+        "c-goport",
+        "c-gates"
+      ]
+    },
+    {
+      "id": "wp2",
+      "title": "Split-or-keep 9122d5ebe: empty-string known-folder lookup",
+      "status": "done",
+      "tasks": [
+        {
+          "id": "t2-read",
+          "title": "Re-read the commit and the mojibake case to compare mechanisms",
+          "status": "done"
+        },
+        {
+          "id": "t2-decide",
+          "title": "Write the case if distinct, or record why the REF stands",
+          "status": "done"
+        }
+      ],
+      "criteriaIds": [
+        "c-split",
+        "c-gates"
+      ]
+    },
+    {
+      "id": "wp3",
+      "title": "Reserved device names and MAX_PATH as third-party cases",
+      "status": "done",
+      "tasks": [
+        {
+          "id": "t3-research",
+          "title": "Explorer lane plus web verification against Microsoft documentation",
+          "status": "done"
+        },
+        {
+          "id": "t3-cases",
+          "title": "Write both cases with authoritative refs and stock repros",
+          "status": "done"
+        },
+        {
+          "id": "t3-ontology",
+          "title": "Add the mechanism concepts they need",
+          "status": "done"
+        }
+      ],
+      "criteriaIds": [
+        "c-research",
+        "c-gates"
+      ]
+    },
+    {
+      "id": "wp4",
+      "title": "Ship: issues, counts, push, live verification",
+      "status": "done",
+      "tasks": [
+        {
+          "id": "t4-issues",
+          "title": "Create and cross-link an issue per new case",
+          "status": "done"
+        },
+        {
+          "id": "t4-counts",
+          "title": "Sync README and site counts to the real case count",
+          "status": "done"
+        },
+        {
+          "id": "t4-live",
+          "title": "Push, confirm the Pages deploy at that SHA, fetch a new case page",
+          "status": "done"
+        }
+      ],
+      "criteriaIds": [
+        "c-ship"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "c-goport",
+      "scenario": "Every Go-port commit in the opencodex inventory has been read, not sampled, and 050 records the outcome with the count",
+      "expectedEvidence": "explorer return or main-agent reading log naming each SHA, plus the amended 050 section",
+      "capturedEvidence": "Explorer read all 44 labeled Go-port rows and ran git patch-id --stable, proving they collapse to 7 unique patches re-landed up to 8 times. The wholesale rejection was WRONG: 3 of the 7 carry uncovered mechanisms and are now cases (icacls-inheritance-r-empty-dacl, tcp-tcb-survives-listener, file-url-encodes-backslash); the other 4 correctly stayed rejected. The A-gate reviewer independently re-ran the patch-id collapse and confirmed the per-patch dispositions. Recorded in 050 and 080; row count corrected from 50 to 44.",
+      "status": "met"
+    },
+    {
+      "id": "c-split",
+      "scenario": "The 9122d5ebe mechanism is compared against redirected-ps-output-mojibake on the reader's-situation test and the decision is recorded either way",
+      "expectedEvidence": "the new case file, or the recorded reasoning in 050 keeping the REF",
+      "capturedEvidence": "9122d5ebe split out as known-folder-empty-not-error rather than remaining a REF on redirected-ps-output-mojibake. Reasoning recorded in 050: mojibake is a value destroyed in transit by a console codepage, this is an API answering an empty string instead of failing. Different fix, different reader. The disposition row was updated in place so opencodex stays at 341/341.",
+      "status": "met"
+    },
+    {
+      "id": "c-research",
+      "scenario": "Reserved device names and MAX_PATH exist as cases with authoritative Microsoft refs and repros that use nothing but stock Windows",
+      "expectedEvidence": "both case files passing lint and validate-graph, each citing a learn.microsoft.com URL",
+      "capturedEvidence": "reserved-dos-device-names and max-path-260 written as third-party cases citing learn.microsoft.com, each with a verification note enumerating quoted claims versus inference. The A-gate audit corrected the max-path repro (a 240-char directory under %TEMP% already exceeds the limit) and the lint third-party rule was widened to accept an authoritative vendor doc URL, since citing an unrelated chore commit to satisfy the old rule was worse than citing the spec.",
+      "status": "met"
+    },
+    {
+      "id": "c-gates",
+      "scenario": "After every case-writing work-phase the full chain succeeds and the five mining coverage checks stay at 100 percent",
+      "expectedEvidence": "fresh command output with exit codes, captured in a check receipt",
+      "capturedEvidence": "Final receipt at .codexclaw/evidence/01a028de-6d96-7493-9cb8-0a6539543ef4/test-receipt.json: lint 76 cases OK; build-graph 271 nodes 563 edges; validate-graph 0 warns; all five mining coverage checks still 100 percent (28/28, 63/63, 72/72, 18/18, 341/341); build-skill drift limited to the new cases; docs-site 84 pages built.",
+      "status": "met"
+    },
+    {
+      "id": "c-ship",
+      "scenario": "New cases have issues, counts agree with find cases -name '*.md' | wc -l, origin main carries the work, and the live site serves a new case page",
+      "expectedEvidence": "issue URLs, README grep, push output, deploy conclusion, and an HTTP 200 from the live case URL",
+      "capturedEvidence": "Issues 35-40 created for the six new cases, cross-linked into their refs, and closed with registration comments; issues 19-34 from the prior round also closed the same way, leaving 0 open. README synced to 76 cases and 271 nodes / 563 edges, matching find cases -name '*.md' | wc -l = 76. Pushed 6e1e5cf..c90f552 to origin main; Pages deploy for c90f552 completed success; max-path-260, reserved-dos-device-names and tcp-tcb-survives-listener all return HTTP 200 live.",
+      "status": "met"
+    }
+  ],
+  "host": {
+    "armed": false,
+    "armedAt": null,
+    "source": "none"
+  }
+}
