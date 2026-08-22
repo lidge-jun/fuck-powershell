@@ -22,20 +22,28 @@ the supervisor knew.
 
 ## Repro
 
-Register a Startup-folder autostart and then ask the same question two ways:
+A Startup-folder entry has no run-state at all:
 
 ```powershell
-PS> Copy-Item app.cmd "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\"
-PS> Test-Path "$env:APPDATA\...\Startup\app.cmd"   # True — forever, even if the app never starts
-PS> Get-Process app -ErrorAction SilentlyContinue     # nothing
+PS> $startup = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
+PS> Copy-Item app.cmd $startup
+PS> Test-Path "$startup\app.cmd"
+True                                  # true forever, whether or not it ever ran
 ```
 
-And with a scheduled task, the same shape:
+A Scheduled Task does have state, and that is the subtler half — it reports the
+TASK HOST, not the thing the host launched:
 
 ```powershell
-PS> schtasks /Query /TN MyApp /XML | Select-String "<Enabled>"
-<Enabled>true</Enabled>          # registration state, not run state
+PS> schtasks /Query /TN MyApp /FO LIST /V | Select-String "Status|Last Result"
+Status:            Ready
+Last Result:       0
 ```
+
+`Ready` means "not currently executing the action"; `Last Result: 0` means the
+action it launched returned success. Your detached server started, the launcher
+returned 0, and the task went back to Ready. That reads identically whether the
+server is serving or died ninety seconds later.
 
 ## Cause
 
@@ -43,10 +51,18 @@ launchd and systemd are supervisors: they own the process, so "is it loaded" and
 "is it running" are the same question and they answer it authoritatively.
 
 Windows autostart mechanisms are not supervisors. A Startup-folder `.cmd` is a
-file that Explorer executes once at logon and then forgets. A Scheduled Task
-records a trigger and its own last-run result, not the liveness of whatever it
-launched. Neither owns your process, so registration and execution are independent
-facts — and code ported from a supervisor platform reads one as the other.
+file Explorer executes once at logon and then forgets entirely.
+
+A Scheduled Task is closer but still not one. It tracks its own execution — the
+API exposes `TASK_STATE_RUNNING` and the CLI shows Status and Last Result — and
+that state is about the task instance. The moment your action detaches a server
+and returns, the task is done and its state stops describing your process. So the
+question "is the task registered" has an answer, "is the task running" has an
+answer, and "is my daemon alive" has none.
+
+Neither owns your process, so registration and liveness are independent facts, and
+code ported from a supervisor platform reads the one it can get as the one it
+wants.
 
 The tempting fallback makes it worse. Probing your own HTTP health endpoint is
 unattributable: if your process died and a foreign one bound the port, the health

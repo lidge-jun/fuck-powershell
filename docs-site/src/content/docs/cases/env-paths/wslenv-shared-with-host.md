@@ -1,5 +1,5 @@
 ---
-title: "WSLENV is set on the Windows side too, so the env var everyone uses to detect WSL says yes on native Windows"
+title: "WSLENV is shared with the Windows side by design, so the env var everyone reaches for to detect WSL cannot detect it"
 description: "env-paths landmine — silent (both)"
 sidebar:
   label: "wslenv shared with host"
@@ -22,26 +22,34 @@ Nothing errors. The detection function returns a confident, wrong answer.
 
 ## Repro
 
-On native Windows, after any interop session has run once:
+`WSLENV` is the variable you configure to pass other variables across the
+boundary, so on a machine where anyone has set it up, it is readable from the
+Windows side:
 
 ```powershell
-PS> $env:WSLENV
-PATH/l
+PS> setx WSLENV "MYTOOL_HOME/p"      # ordinary interop setup, done once
+PS> $env:WSLENV                       # in a new native-Windows shell
+MYTOOL_HOME/p
 ```
 
-So the common check is true where it must be false:
+And the common check is now true in the environment it was written to exclude:
 
 ```js
-const isWsl = Boolean(process.env.WSLENV);   // true on native Windows
+const isWsl = Boolean(process.env.WSLENV);   // true, on native Windows
 ```
+
+The variable is not present on every Windows box — it appears once interop is
+configured. That is exactly what makes it a bad test: it is absent on the clean
+machine you develop on and present on the user's, so the branch flips based on
+setup you never see.
 
 ## Cause
 
 `WSLENV` is not a WSL marker. It is the interop CONFIGURATION variable: it lists
-which environment variables should be translated when crossing between Windows and
-Linux, and which format each one takes. Microsoft documents it as shared in both
-directions, which is the whole point — it has to be readable from the Windows side
-to do its job.
+which environment variables are translated when crossing between Windows and
+Linux, and in which format. Microsoft documents it as shared between the two
+environments, which is the whole point — it has to be readable from the Windows
+side to do its job there.
 
 Two other habits fail for related reasons. `/proc/version` containing "microsoft"
 is a genuine Linux-side marker but is unreadable from a win32 process, so code

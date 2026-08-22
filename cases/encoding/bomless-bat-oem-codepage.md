@@ -55,12 +55,18 @@ PS> cmd /c t.cmd
 operable program or batch file.
 ```
 
+The exact garbage in front of `@ECHO` is whatever your console codepage makes of
+the three BOM bytes `EF BB BF` — `∩╗┐` on a 437 or 850 console, something else on
+949 or 932. The shape is the same everywhere: the BOM became characters, they
+fused onto the first token, and cmd.exe went looking for a command by that name.
+
 ## Cause
 
-cmd.exe reads a BOM-less batch file in the console's OEM codepage — 949 on Korean
-Windows, 932 on Japanese, 437 or 850 on Western installs — not in UTF-8. Bytes you
-wrote as UTF-8 are decoded as something else, and any non-ASCII path becomes a
-different path.
+cmd.exe reads a BOM-less batch file in the console's OEM codepage — 437 or 850 on
+Western installs, 949 on Korean, 932 on Japanese — not in UTF-8. Bytes you wrote
+as UTF-8 are decoded as something else, and any non-ASCII path becomes a different
+path. Which mojibake you get depends on the console, which is why the same file
+"works" for you and not for the next person.
 
 A BOM does not opt you into UTF-8. cmd.exe has no BOM handling for batch files, so
 the three BOM bytes are simply the first three characters of the first line. They
@@ -72,17 +78,18 @@ that means "your program is missing", and neither mentions encoding.
 
 ## Workaround
 
-Write the file BOM-less and make the first executable line switch the codepage,
-before any line that carries a non-ASCII path:
+Write the file BOM-less and switch the codepage before any line that carries
+non-ASCII text:
 
 ```bat
 @ECHO OFF
 chcp 65001 >nul
-REM every line below is now read as UTF-8
+REM every line below is read as UTF-8
 ```
 
-Order matters more than it looks: `chcp` must precede even comments that contain
-paths, because `REM` lines are still decoded as they are read.
+Put `chcp` first, above comments as well as commands. Keeping the whole preamble
+ASCII costs nothing, and it removes the question of exactly when each line is
+decoded — a detail that is easy to get wrong and hard to verify.
 
 The alternative, when you control the content, is to keep the file pure ASCII —
 resolve paths at runtime through `%LOCALAPPDATA%` and friends instead of baking

@@ -134,30 +134,47 @@ notices.
 ## Repro
 
 ```json
-{ "scripts": { "build": "FOO=\"$(echo hi)\" node -p process.env.FOO" } }
+{ "scripts": { "build": "node $(node -p \"'app.js'\")" } }
 ```
 
 ```
 PS> npm run build
-'FOO' is not recognized as an internal or external command,
-operable program or batch file.
+Error: Cannot find module 'D:\proj\$(node'
 ```
 
 ```
-$ npm run build     # macOS / Linux
-hi
+$ npm run build     # macOS / Linux — runs app.js
 ```
+
+The substitution is neither expanded nor rejected: its literal text becomes an
+argument. That is what makes the real-world version confusing, because the
+complaint comes from whatever program received the text:
+
+```
+PYTHON: cannot open file D:\a\proj\proj\electron\=$(bash ../scripts/pick-python.sh)
+```
+
+There `PYTHON="$(bash ...)"` was meant as an environment prefix. Nothing expanded,
+so `PYTHON` resolved through PATHEXT to `python.exe` and the remainder of the line
+arrived as a filename to open.
 
 ## Cause
 
 npm does not run scripts in a shell of your choosing. On POSIX it uses `/bin/sh`;
-on Windows it uses `%ComSpec%`, which is cmd.exe. Three POSIX shell features you
-use without thinking are simply absent there:
+on Windows it uses cmd.exe. POSIX shell features you use without thinking are
+simply absent there:
 
 - `$(...)` command substitution — not expanded, passed through as text.
-- `VAR=value cmd` inline environment prefixes — cmd.exe reads `VAR=value` as the
-  command name to run.
 - single quotes as a quoting mechanism — cmd.exe treats them as literal characters.
+- `VAR=value cmd` inline environment prefixes — that one has its own case,
+  `cmd-posix-env-prefix`. It compounds with this one: a prefix whose value is a
+  substitution fails on both counts at once, which is exactly the release-lane
+  failure above.
+
+Which interpreter you get is npm's `script-shell` config, and its Windows default
+is cmd.exe specifically — not `%ComSpec%`. Repointing ComSpec at PowerShell does
+not change `npm run`; only `script-shell` does. Node's own `shell: true` is the
+one that follows ComSpec, which is a different trap in the same neighborhood.
 
 What makes this a release-killer rather than an annoyance is where it lands. The
 failing script is usually a per-platform `dist:win` entry that only executes on

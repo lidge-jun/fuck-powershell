@@ -95,7 +95,7 @@ shell-integration ground that this residue does not re-evidence.
 | 3037f98c2 | REJECT repo-specific (require() in an ESM module; not Windows-native) |
 | 3d41b3f9a | REJECT repo-specific (CI trigger matrix) |
 | b9a24d191 | REF envpath-pollutes-user (persistent User PATH via bootstrap) |
-| 017065e23 | REJECT repo-specific (autostart backend wiring; mechanism captured by startup-artifact-is-not-a-process) |
+| 017065e23 | REF startup-artifact-is-not-a-process (adds the Startup-folder and Scheduled Task backend the case is about) |
 | 516e19d2d | REF shell-true-fallback-injects (spawn-site gating, same mechanism) |
 | 052660382 | REJECT docs-only |
 | 6e385bf9a | REJECT docs-only (structure doc sync for the same change) |
@@ -120,7 +120,7 @@ shell-integration ground that this residue does not re-evidence.
 | 034ed93e2 | REJECT docs-only |
 | c94bcd9c9 | REJECT docs-only |
 | 9f7429d80 | REJECT docs-only |
-| 09245ec87 | REJECT docs-only |
+| 09245ec87 | REJECT repo-specific (changes the runtime prompt template and adds a skill contract test, not only docs) |
 | 7f413890c | REJECT repo-specific (Computer Use window-scoped API) |
 | bd0b4c205 | REF ps-file-extension-dispatch (launching JS through node rather than the shim) |
 | 998dfe48a | REF ps-file-extension-dispatch (same fix, earlier branch) |
@@ -129,18 +129,18 @@ shell-integration ground that this residue does not re-evidence.
 | 4eb4455e3 | REF pathext-exe-beats-cmd (narrowing the Windows extension allowlist) |
 | 18d6260e1 | REJECT refactor (merge commit) |
 | b357532a4 | REF get-command-where-disagree (real where.exe cases in the Windows lane) |
-| 36795a449 | NEW wslenv-shared-with-host (separating the Windows-native lane from the WSL lane) |
+| 36795a449 | REF wslenv-shared-with-host (consumer of the classifier; same mechanism) |
 | beb1142f6 | REF pathext-exe-beats-cmd (a bun .exe outranking every npm .cmd) |
-| b90caa70c | REJECT test-only (host-independent fixtures) |
+| b90caa70c | REJECT refactor (production browser-open.ts moves from existsSync to an injected probe; behavior unchanged) |
 | 4a2bbefd2 | NEW wslenv-shared-with-host |
 | ddb347bf1 | NEW npm-script-runs-under-cmd |
 | 69248a5a2 | REF spawn-npm-enoent-einval (win32 .cmd shell spawn) |
 | 332b8027c | REF spawn-npm-enoent-einval (app server cmd shims) |
 | c35b70c5d | REJECT repo-specific (runner pinning) |
 | 4e5efd210 | REJECT repo-specific (rsync absent in Git Bash; a toolchain availability fact, not a platform semantic) |
-| 600ab263b | REF wslenv-shared-with-host (rejecting Windows HOME inside WSL) |
-| bf9c3785b | REF wslenv-shared-with-host (same fix, second branch) |
-| 2fa5c2444 | NEW wslenv-shared-with-host (postinstall detection made platform-independent) |
+| 600ab263b | REJECT repo-specific (rejects a Windows HOME and Windows fnm/nvm paths inside WSL — an inherited-environment problem, not the WSLENV mechanism) |
+| bf9c3785b | REJECT repo-specific (same fix, second branch) |
+| 2fa5c2444 | REF wslenv-shared-with-host (originating evidence: the commit that put WSLENV into the detection predicate) |
 | a20dd9219 | REF wslenv-shared-with-host (same fix, second branch) |
 | 71e25c286 | REJECT no-windows-mechanism (gemini quota time windows; matched the grep on the word "windows") |
 | da074ceba | REJECT no-windows-mechanism (same) |
@@ -159,9 +159,23 @@ shell-integration ground that this residue does not re-evidence.
   supplies the input domain that makes it reachable. Under the generalizability
   bar that is a runtime fact, not a Windows one. Recorded here because a future
   round may reasonably disagree.
-- `4e5efd210` (rsync missing in Git Bash) is the same shape as a missing-binary
-  problem, not a platform semantic. `command-v-noop` already owns "the POSIX tool
-  you assumed is not there".
+- `4e5efd210` (rsync missing in Git Bash) is a packaging fact: the tool really is
+  absent from that environment. It is NOT `command-v-noop`, which is the opposite
+  situation — a tool that IS installed looks missing because `command -v` is a
+  no-op in PowerShell. Rejected on its own terms with no case cited.
+- The wslenv rows were re-dispositioned during the A-gate audit. Only
+  `4a2bbefd2` — the canonical classifier that names WSLENV as the deliberately
+  excluded signal — is NEW. `2fa5c2444` introduced the false positive and
+  `36795a449` consumes the classifier, so both are REF evidence for the same
+  mechanism. The two `install-wsl.sh` commits reject a Windows HOME and Windows
+  node paths inside WSL, which is an inherited-environment problem with a
+  different sentence, so they lost their REF and became repo-specific.
+- `017065e23` was initially REJECTed as repo-specific while its own decade doc
+  said the mechanism was captured by `startup-artifact-is-not-a-process`. If the
+  mechanism is captured, the verb is REF. Corrected.
+- `09245ec87` and `b90caa70c` had wrong REJECT reasons: the first changes a
+  runtime prompt template and adds a contract test, the second changes production
+  source. Both remain rejections, with reasons that match their diffs.
 - Four rows matched the grep on the English word "windows" (quota windows, search
   windows). They are dispositioned rather than silently dropped, which is the
   point of a frozen inventory.

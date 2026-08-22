@@ -29,14 +29,22 @@ rather than luck.
 const { spawnSync } = require("node:child_process");
 const userText = "summarize this & calc";
 
-spawnSync("mytool.cmd", ["--prompt", userText], { shell: true, stdio: "inherit" });
-// cmd.exe sees:  mytool.cmd --prompt summarize this & calc
-// and runs calc.exe as a separate command
+// shell-less: one argument, exactly as written
+spawnSync("mytool.exe", ["--prompt", userText], { stdio: "inherit" });
+
+// with the shell: cmd.exe sees
+//   mytool.exe --prompt summarize this & calc
+// and runs calc.exe as a second command
+spawnSync("mytool.exe", ["--prompt", userText], { shell: true, stdio: "inherit" });
 ```
 
-Without `shell: true` the same argv arrives as one argument. With it, cmd.exe
-re-parses the assembled line and `&`, `|`, `<`, `>`, `^`, and `%VAR%` all become
-syntax.
+With a `.cmd` target the contrast is starker still, because there is no working
+shell-less version to compare against: shell-less it is `EINVAL`, and with the
+shell it is injectable. The fix for the first problem is the second problem.
+
+Node joins argv with spaces, escapes nothing, and hands the result to
+`cmd.exe /d /s /c "<joined>"`. Inside that line `&`, `|`, `<`, `>`, `^`, `%VAR%`,
+and a raw newline are all syntax.
 
 ## Cause
 
@@ -71,10 +79,15 @@ Gate the refusal on argv CONTENT, not on a per-tool allowlist. An allowlist says
 "this caller is safe", which stops being true the day someone adds a positional
 prompt to it; inspecting the values cannot go stale that way.
 
-When you scan for separators, do not include `(`, `)`, or `"`. cmd.exe treats them
-as syntax, but they appear in ordinary paths — `C:\Program Files (x86)` is the
-obvious one — so refusing on them breaks normal installs. Refuse on the subset
-that can actually start a second command: `& | < > ^ % !`.
+Refuse on the characters that can actually start a second command:
+`& | < > ^ % !`, plus CR and LF, which cmd.exe treats as command boundaries.
+
+Parentheses are the one deliberate omission: cmd.exe treats them as grouping
+syntax, but they appear in ordinary paths — `C:\Program Files (x86)` — so
+refusing on them breaks normal installs on a compatibility path whose purpose is
+to keep unusual installs working. Double quotes are NOT in that category. They do
+not appear in ordinary paths, and they terminate the wrapper quoting Node puts
+around the joined line, so keep them in the refusal set.
 
 Best of all, pass user text on stdin. A value that never enters argv cannot be
 re-parsed by anything.
@@ -82,8 +95,14 @@ re-parsed by anything.
 ---
 
 `oss-native-arg-quoting` is the PowerShell-side wound: argv rebuilt on the way to
-a native command. This is the cmd.exe side, and the specific trap is that the fix
-for two well-known Windows spawn errors IS the vulnerability.
+a native command. `cmd-shim-reparses-argv` is the same cmd.exe re-parse reached by
+spawning a shim on purpose, and `spawn-npm-enoent-einval` is where the two errors
+that push you here come from — it names `shell: true` as its unsafe fix, and this
+case is what that fix costs.
+
+The distinct reader here is the one who already applied the fix: it worked, the
+error went away, and nothing since has told them that one argument in that call
+is now interpreted rather than passed.
 
 ## Refs
 
