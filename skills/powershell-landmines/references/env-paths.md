@@ -1,4 +1,83 @@
 
+# dynamic import of an absolute path works on POSIX and throws ERR_UNSUPPORTED_ESM_URL_SCHEME on Windows, because C: reads as a protocol
+
+## Symptom
+
+Code that loads a module computed at runtime — a plugin, a generated file, a test
+fixture — runs everywhere and dies only on Windows:
+
+```
+TypeError [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in:
+file, data, and node are supported by the default ESM loader.
+On Windows, absolute paths must be valid file:// URLs.
+Received protocol 'd:'
+```
+
+The message is unusually good — it tells you the fix — but it arrives at runtime,
+in whatever code path builds the specifier, which is often a rarely exercised one.
+
+## Repro
+
+```js
+import { resolve } from "node:path";
+const file = resolve("plugin.mjs");
+await import(file);
+```
+
+```
+PS> node load.mjs
+TypeError [ERR_UNSUPPORTED_ESM_URL_SCHEME]: ... Received protocol 'd:'
+```
+
+```
+$ node load.mjs      # macOS / Linux — loads fine
+```
+
+## Cause
+
+`import()` takes a URL, not a path. It accepts a bare relative specifier, and it
+accepts a `file:` URL. An absolute POSIX path happens to work as a third case
+because `/home/u/x.mjs` parses as a root-relative URL.
+
+An absolute Windows path does not get that coincidence. `D:\work\x.mjs` parses as
+a URL whose scheme is `d:`, and the ESM loader supports `file:`, `data:`, and
+`node:` only. The drive letter, the thing that makes the path absolute, is exactly
+what makes it an unsupported protocol.
+
+Two adjacent traps in the same family:
+
+- `require()` accepts absolute paths on both platforms, so code converted from
+  CommonJS to ESM acquires this bug at the moment of conversion.
+- A cache-busting query string (`${file}?v=${Date.now()}`) makes the specifier
+  even more URL-shaped without fixing the scheme, so it fails identically.
+
+## Workaround
+
+Convert with the function built for it:
+
+```js
+import { pathToFileURL } from "node:url";
+await import(pathToFileURL(file).href);
+```
+
+`pathToFileURL` also percent-encodes characters that are legal in a path and
+special in a URL — `#`, `?`, and spaces — which manual `"file://" + path` string
+building silently gets wrong. Never hand-build the URL; the three-slash form,
+the drive letter, and the encoding all have to be right at once.
+
+If you keep a cache-buster, append it to the `href`, after the conversion.
+
+---
+
+`esm-is-main-file-url` is this trap's mirror image: there, code builds a URL from
+a path by concatenation and the comparison silently fails. Here, code passes a
+path where a URL is required and the loader refuses loudly. Same underlying
+confusion, opposite failure mode.
+
+
+---
+
+
 # $env:USERDOMAIN is not your identity
 
 ## Symptom
@@ -553,6 +632,104 @@ and vanishing in the next.
 ## Environment
 
 `$PSVersionTable`: `5.1.26100.7705`, Edition `Desktop`, Windows 11, Node 22.14.
+
+
+---
+
+
+# npm update fails with EBUSY because your server exited hours ago but its child process still holds the file
+
+## Symptom
+
+A routine operation on a directory fails, and the error blames the filesystem for
+something you did not do:
+
+```
+npm error code EBUSY
+npm error syscall rename
+npm error EBUSY: resource busy or locked
+```
+
+Deleting a build directory, replacing a binary, updating a global package,
+cleaning a temp folder — all of them hit it. Rebooting fixes it, which tells you
+it is a lock and tells you nothing about whose.
+
+The usual culprit is a process you believe is dead. You pressed Ctrl+C on the
+parent; the parent exited; a child it spawned is still running and still has the
+file open.
+
+## Repro
+
+```powershell
+PS> $f = [IO.File]::Open("$PWD\held.txt", 'Create', 'Write', 'None')
+PS> Remove-Item held.txt
+Remove-Item : The process cannot access the file 'held.txt' because it is being used by another process.
+PS> $f.Close()          # now it deletes
+```
+
+On Linux or macOS the same sequence succeeds: the directory entry disappears
+immediately and the bytes stay alive for the holder until it closes.
+
+To find the holder:
+
+```powershell
+PS> Get-Process | Where-Object { $_.Modules.FileName -like "*held*" }
+# or, for handles rather than modules, Sysinternals handle.exe -a held.txt
+```
+
+## Cause
+
+POSIX unlink removes a name, not a file. The inode survives until the last
+descriptor closes, so a running process never blocks a delete or a rename.
+
+Windows file locking is MANDATORY, not advisory. A handle opened without
+`FILE_SHARE_DELETE` — which is the default in every high-level runtime API,
+including Node's `fs.open` and .NET's `File.Open` — makes the OS refuse deletes
+and renames for as long as that handle lives. The refusal comes back as `EBUSY`
+for a rename and `EPERM` for an unlink, neither of which names the holder.
+
+Two things make it worse than a plain "close your files" problem:
+
+1. A signal handler that calls `process.exit()` synchronously does not give
+   sockets, database handles, or child processes time to close. The parent
+   vanishes; the handles do not.
+2. Windows has no process groups in the POSIX sense, so killing a parent does not
+   kill what it spawned. `Ctrl+C` reaches the console group; a detached child does
+   not get it, and an orphaned grandchild never does.
+
+That second point is why the lock outlives everything you can see in a task list
+you skim.
+
+## Workaround
+
+Make shutdown release handles before the process leaves, and kill the whole tree:
+
+```js
+const GRACE_MS = 3000;
+for (const sig of ["SIGINT", "SIGTERM", ...(isWin ? ["SIGBREAK"] : ["SIGHUP"])]) {
+  process.on(sig, async () => {
+    const force = setTimeout(() => process.exit(0), GRACE_MS).unref?.();
+    await server.close();          // drain connections
+    await db.close();              // release the sqlite handle
+    killProcessTree(child.pid);    // taskkill /PID <pid> /T /F on Windows
+    process.exit(0);
+  });
+}
+```
+
+`SIGBREAK` matters: Ctrl+Break is a distinct signal on Windows, and a handler
+registered only for `SIGINT` leaves the server orphaned when a user presses it.
+
+When you must delete a path that something may hold, retry with backoff rather
+than failing on the first `EBUSY` — antivirus and the search indexer take
+transient handles on files you just wrote, and those clear on their own within a
+second or two.
+
+---
+
+This is the file-lifetime half of the Windows process model.
+`startup-artifact-is-not-a-process` is the liveness half: no supervisor owns your
+process. Here, no unlink semantics free your file.
 
 
 ---

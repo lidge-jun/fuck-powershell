@@ -17,6 +17,12 @@ Saw an error? Find the landmine.
 
 [npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [cmd-posix-env-prefix](/fuck-powershell/cases/ci-agents/cmd-posix-env-prefix/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/)
 
+## ebusy
+
+Node reports EBUSY when Windows refuses a rename or delete because another handle holds the file without FILE_SHARE_DELETE; the error names neither the holder nor the reason.
+
+[unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+
 ## eftype
 
 Wrong file type for execution — e.g. attempting to CreateProcess a .ps1 script.
@@ -39,7 +45,7 @@ File or command not found — on Windows often a PATHEXT/extension resolution mi
 
 Operation not permitted — including WindowsApps appExecLink spawn denials.
 
-[windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/)
+[windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
 
 ## exit-code-leak
 
@@ -47,11 +53,23 @@ A handled or meaningless exit code propagates into step/process failure.
 
 [pwsh-leaks-lastexitcode](/fuck-powershell/cases/exit-codes/pwsh-leaks-lastexitcode/) · [explorer-exits-one](/fuck-powershell/cases/exit-codes/explorer-exits-one/)
 
+## fastfail
+
+Windows reports a runtime that aborted itself with the fastfail code 0xC0000409, whose documented meaning is stack buffer overrun; a libuv assertion during teardown surfaces this way and misdescribes the cause.
+
+[process-exit-fastfail-0xc0000409](/fuck-powershell/cases/exit-codes/process-exit-fastfail-0xc0000409/)
+
 ## invalid-json
 
 Downstream JSON parse failure after the shell shredded quoted arguments.
 
 [backslash-quote-ends-span](/fuck-powershell/cases/args-quoting/backslash-quote-ends-span/)
+
+## invalid-url-scheme
+
+Node's ESM loader rejects a specifier whose scheme is not file, data, or node; on Windows an absolute path supplies its drive letter as the scheme.
+
+[dynamic-import-needs-file-url](/fuck-powershell/cases/env-paths/dynamic-import-needs-file-url/)
 
 ## mojibake
 

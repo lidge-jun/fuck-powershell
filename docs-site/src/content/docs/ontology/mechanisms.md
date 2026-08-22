@@ -87,6 +87,12 @@ CI runners pick a default shell per OS (pwsh on windows-latest); unmarked run: s
 
 Cases: [npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/)
 
+## drive letter parses as a URL scheme
+
+A Windows absolute path begins with a drive letter and colon, so any API that parses its input as a URL reads that letter as the protocol, while an absolute POSIX path coincidentally parses as root-relative and works.
+
+Cases: [dynamic-import-needs-file-url](/fuck-powershell/cases/env-paths/dynamic-import-needs-file-url/)
+
 ## env casing
 
 Windows env names are case-insensitive but JS objects are not; Path and PATH can coexist and fight.
@@ -123,6 +129,12 @@ powershell/pwsh -File dispatches on filename extension; non-.ps1 files are rejec
 
 Cases: [ps-file-extension-dispatch](/fuck-powershell/cases/args-quoting/ps-file-extension-dispatch/)
 
+## exit races a closing handle
+
+An immediate process exit tears the runtime down without waiting for libuv to finish closing handles; a handle still in the closing state trips an assertion, which Windows surfaces as a fastfail while POSIX teardown absorbs the same race silently.
+
+Cases: [process-exit-fastfail-0xc0000409](/fuck-powershell/cases/exit-codes/process-exit-fastfail-0xc0000409/)
+
 ## host vs pipeline
 
 Write-Host and return semantics: host output bypasses the success pipeline, and functions emit every uncaptured value.
@@ -140,6 +152,12 @@ Cases: [piped-iex-drops-params](/fuck-powershell/cases/args-quoting/piped-iex-dr
 ConvertTo-Json defaults to -Depth 2, replacing deeper data with type names; 5.1/7.0 truncate silently, 7.1+ warn.
 
 Cases: [convertto-json-depth-two](/fuck-powershell/cases/parsing/convertto-json-depth-two/)
+
+## mandatory file locking
+
+Windows enforces file locks at the OS level: a handle opened without FILE_SHARE_DELETE blocks deletes and renames until it closes, where POSIX unlink only removes a name and lets the data outlive its last reference.
+
+Cases: [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
 
 ## native argv rebuild
 
@@ -223,5 +241,5 @@ Cases: [dollar-backslash-vars](/fuck-powershell/cases/args-quoting/dollar-backsl
 
 Win32 trims trailing dots/spaces from paths at the API boundary; different runtimes normalize differently, so existence checks disagree.
 
-Cases: [esm-is-main-file-url](/fuck-powershell/cases/env-paths/esm-is-main-file-url/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/)
+Cases: [esm-is-main-file-url](/fuck-powershell/cases/env-paths/esm-is-main-file-url/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [zip-entry-drive-letter-escapes](/fuck-powershell/cases/parsing/zip-entry-drive-letter-escapes/)
 
