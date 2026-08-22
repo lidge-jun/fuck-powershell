@@ -1,0 +1,72 @@
+f732653022fffee9bf30dcdb8a1290b179de0a72	2026-08-19	docs(devlog): record the live v2.17.6 measurement of the tree-identity fast path
+c5784b86c598ba4f8e13e975bf79dd6a3fadd208	2026-08-19	ci(release): create-github-release must tolerate the skipped Windows matrix
+932ef4e6542bbc683e31271a921d66fa6e3d1b1f	2026-08-19	ci(release): stop re-running the Windows matrix on the stable lane
+a092e5a1cdf737ebbb53015d3fbc804cea05df62	2026-08-18	docs(devlog): platform contracts closeout roadmap (#151 consumers, #150 atlascloud, release)
+9830cdde139adcfbcf2f0ae7b6c1dfa4696c58ba	2026-08-16	ci: take Windows off the release path and survive transient gate lookups
+a866994dc5eeaf0d9b921c792a9b31f48d02cd89	2026-08-15	docs(devlog): register the 260815 open-issues platform lane
+58cb1a10bffd10597685dce0ad9201632dc9b3cd	2026-08-14	chore(dependabot): stop proposing majors that break the release path
+e0c4f8c3c84ccb534b663a1a949b75a8bf514dc4	2026-08-14	chore(dependabot): stop proposing majors that break the release path
+f6cdb8bca62bd9f0769b4fdaa07b21626abcf3c0	2026-08-14	fix(tests): give MCP job recovery room on slow Windows runners
+588f5a7d2b68045a3c6217a06510c57d486c2625	2026-08-14	fix(ci): unblock release gates for Windows paths, E2E, Playwright
+0d2b78f558072927459bd383162b88664c0cd6ef	2026-07-26	test: make audit-gate e2e and glyph policy Windows-safe
+720073ed2a1cb316b016b3d6b60e09584b6e532f	2026-07-26	devlog: archival sweep — 8 completed units to _fin (260718_runway, 260719_node22, 260719_windows, 260722_higgsfield, 260723_docker, 260723_release-train, 260724_node-mode, 260725_structured_filename)
+fdc875930eeac67a9c745ca04bb6c6fc810bbd2e	2026-07-19	fix(cli): exit via exitCode + marker unwind instead of process.exit — Windows Node 24 libuv UV_HANDLE_CLOSING fastfail after undici activity
+d066ab30df5e53451b8d8b1103f7356bb059f06a	2026-07-19	fix(cli): manual abort timers cleared after fetch — lingering AbortSignal.timeout handle raced process.exit on Windows Node 24; temp-ref test uses async realpath both sides
+35a703b0d0fafc5d42db6c4e7c0bb516c8a305a6	2026-07-19	fix(cli): connection close on CLI fetches — process.exit raced undici keep-alive on Windows (libuv UV_HANDLE_CLOSING assert 0xC0000409)
+9f3a54947c50d6ebcdde3fa14b0096534ffaed6d	2026-07-19	test(ci): surface child stderr in Windows-failing CLI assertions; realpath both sides of temp-ref compare
+778336c959ed478c845c24eec59407096f766453	2026-07-19	fix(ci): Windows matrix repair — flush-before-exit CLI, POSIX/path test guards
+c6624ceea1b35ad6a3ea13069138ffdb5197644a	2026-07-19	fix(node): Socrates round 3 — GPT notes path, variant ref limit, detail race, prestart cli
+8f779d3222cb9ba62895128c8670406a1974b38b	2026-07-19	feat(elements): mention chips + IME/Escape + missing-block integration (higgsfield 110)
+a301602c79eb5b036862cca15664fef676240365	2026-07-19	feat(quota): read Grok weekly credits
+1a9a395f97cbe323e192d67dadb8148ca4e409b7	2026-07-13	chore: sync test inventory after install-windows-contract addition
+61a6dd2ebc6a6b9865867d8cf596f93d72171905	2026-07-13	fix(installer): Windows npm handling — PS 5.1 Join-Path + ErrorActionPreference (#111)
+48a110cdf0029fab14a7d26c2daa8c5e650f54d9	2026-07-12	refactor(ui): merge usage quota into provider cards
+dfb9df27b45ffcf976bdb6b17e4f4c33b451f060	2026-07-11	fix(skill install): require --dir <path> — agent determines its own skill path
+fa2f2d3e2148a7f7337c93c7cb808c7662ccdd77	2026-07-10	[agent] fix: restore Windows OAuth after global updates
+c5b1972889e9f91dd8b8e4e727011a41d420cb34	2026-07-10	[agent] fix: publish tested tarball by local path
+b0ea15ff0dfa2da1885f3cd8eee4e1f83ddd3958	2026-06-24	fix(agy): harden artifact fallback — symlink guard + test coverage
+f490a80b3b4eee35f97d78b0a46ed6958507311a	2026-06-24	Fix agy binary resolution for server PATH
+51503f4b9b01eb46e70ffb506a456c96cae9ce02	2026-06-03	Fix AGY Windows pipe + artifact cleanup + prompt structuring
+e2baad2fb269ee8675ebeb8935a9aa2c413a610a	2026-06-03	Fix Gemini API aspect ratio: use string values, enable Vertex path
+4b718270ef37ad81981b4764b28e190498ffd0b0	2026-06-02	feat: show $used/$limit on Grok QuotaCard header
+1473b7027d092c91de80797a5399bf8d28c15861	2026-06-02	feat: add Grok billing to /api/quota + QuotaCard bar
+513eab41eed463844cb099bc61c9f230a710a630	2026-06-02	fix: Windows SIGBREAK handler + exclude .ts from npm package
+8ae70bd3a077bc64ac605b19ff2d7b323e9acfcb	2026-06-02	ci: skip SIGINT graceful shutdown test on Windows
+8afd872942371c6fba1cbb4369d01f7eba2bcd6c	2026-06-02	fix: deep audit — path traversal, fetch timeout, atomic sidecar writes
+1d9fd3550cd0996f79cc053b80b2c0672181e356	2026-06-02	fix(ui): clear existing refs and prompt before continue-from-item, zero-pad quota reset hours
+1a7e6ccbe95ce40db2751bd2c435fcd39c358840	2026-06-02	fix: cross-platform audit — 5 issues patched
+ce22786aa925299d807f8a9c93cfc28cd4e53488	2026-06-02	fix(ui): add provider SVG icons to quota cards, show full date+time on reset labels
+177a932639920f1621e308767310d09a2a9a492a	2026-06-02	feat: cross-platform install scripts + CI graceful shutdown test
+19c7335b23af3d8de8ebae96c1577e0a085a7153	2026-06-02	fix: graceful shutdown releases file handles on Windows (EBUSY fix)
+df970ccf60c9eb2b6cc87c5708dbaa7b34ac7ad1	2026-06-02	feat(ui): add Codex quota bars and Grok usage link to settings
+e8240ff3503310e93d5bc14a095214fe9887212c	2026-06-01	test: make grok proxy auth fixture windows-safe
+89ffbc8547e02ebca07c5061b9f093124e51c0a7	2026-06-01	test: allow Windows Node 24 video CLI fatal exit
+a852692617cb6e77ceb97fbcf8bf01f968853271	2026-05-31	fix(grok): default to --manual-paste for login (most reliable cross-platform)
+21c2831929eb5f7e036532ed3e6e7f577befec34	2026-05-31	fix(windows): remove device-code auto-fallback that invalidates user's code
+8e7e0f5e362a96cb52d5de90a8bd12754c4bc5d6	2026-05-31	fix(node-video): use sourceFilename instead of URL path for parent I2V
+5b79e04cdcb5de8837857080c5c8e49c6a7f2424	2026-05-31	ci: add video --help + capabilities smoke tests on all platforms
+4b09f90f7b13e0ce524df6231c27c6320bdea927	2026-05-31	ci: limit package-install smoke to ubuntu (prepack needs unix shell)
+92bb04b81e300046b24f6af7dd3e72f768b7a024	2026-05-31	fix: Windows grokProxyLauncher rootDir + test regex alignment
+cf152b8434c4fc3f03998c07cd63a7db69b09553	2026-05-31	fix: video phase persisted server-side + Windows grok login quoting fix
+2984c08dba6c78c44d0c8d80fd74c20461cb7ce1	2026-05-30	docs(site): re-ground developer docs to code — Agent Mode, capabilities, multimode path
+bc573d7edde0a02e9951fbe3489c27d5b3c5a272	2026-05-29	feat(site): add developer docs site shell + English pages
+bc8631ffbb5be620729468a6e5aa72dccf70b3d1	2026-05-26	docs: note SecretDNS Windows network interference
+5fc1e5655fc7c5b9ffe4517f7baf1a73acd44ddb	2026-05-15	[agent] feat: add classic workspace history shell
+76fd5277d49e80e00298a1a5de240814feeb7339	2026-05-07	fix(test): resolve recovery contract paths on Windows
+fb31dbb7b6e377796d3da551889234b79b4577ef	2026-05-06	fix(storage): open windows gallery folder path
+781d25aa2041ab46305e8e6020ff2cf56449c9ca	2026-05-02	ci: simplify matrix to ubuntu+windows, Node 22 only
+0a18d552a55fce4b96ab6a9b68eb5ca756716948	2026-04-30	fix(tests): use pathToFileURL for dynamic import on Windows
+edbcc4885e4cf108c239685e926f3c41499dbf20	2026-04-29	fix(canvas): prevent duplicate escape close
+505a4656bdd61aa2dbc86f6f6d8dc99296b7c8d8	2026-04-29	fix(ts): inject tsx loader into config.test.js spawnSync child
+d8c43c11c59c293d521c3ccd0ded64dfbfdc459f	2026-04-29	test(canvas): make cleanup contract windows-safe
+549ad8fcc78a654c04dd78591cd44ee3094c937e	2026-04-28	feat(mobile): add mobile UI shell with app bar, compose sheet, and settings toggle
+d6ea1ccc5fef65c901b8cb973b654da082594904	2026-04-27	test: support windows line endings in controls contract
+2b32f9a1de2f95ec16dacd746b91196024cfd971	2026-04-27	fix(openDirectory): Windows explorer.exe folder open (v1.1.5)
+b210f105b8865ccfbd57cba9b4ba32b2df47b03d	2026-04-25	test: harden windows CI smoke paths
+e67f0d6b662d8225f8e5f1fee24c30ec0d818cd0	2026-04-24	fix(storage): broaden legacy generated path discovery
+d2d158142832c32eef12b1ebdc075fa976f51e05	2026-04-24	fix(ci): use platform path in config storage test
+d4e9068ea350b912457200cdab02c2a63620d156	2026-04-23	fix: handle Windows npx spawn EINVAL
+362b9ba5e7a084de9897f8548f7bf6bf541e7a3d	2026-04-23	test(health): skip external-kill cleanup assertion on windows
+6818d06d0e2f7712a900da11f5d64a0641e32b46	2026-04-23	ci: fix windows hang + drop node 18 (unsupported by deps)
+160b27b5ff9d7cd8d767951fd7080023acfbb79f	2026-04-23	0.09.2: cross-platform (Windows/Linux) support
+d21fc42548667600c657137f0525a6c049bfd0a3	2026-04-22	0.09.1(cli): argv parser + http client + fs helpers + output

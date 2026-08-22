@@ -1,0 +1,18 @@
+f1d8b1e740362febdb5d8eeade9c5023b8cd353b	2026-08-08	test(web-ai): cover Chat Power work-marker path
+0ec3abb1c48ad8907d870bf8d2ed1ace16180718	2026-08-08	test(web-ai): cover Chat Power work-marker path
+3b26afb4b2c361fc4f211c3a57fe2bca254650ff	2026-08-08	docs(devlog): prove authenticated symlink boundary
+059885d9aeed9b45314c79252ddcc5e85a7debaf	2026-08-08	docs(devlog): plan authenticated symlink closure
+80fc59d7658441ba2a530bea525069f2258a09cc	2026-08-08	fix(web-ai): support the Chat Power picker shell
+a2171c32a3b79ee072cfb75ccfc95e32aa13d56e	2026-08-08	fix(web-ai): support the Chat Power picker shell
+982ef8cbe83e2beb71e2006206195893cbcaad38	2026-08-01	fix(web-ai): keep the deadline path off the blocking store lock (#88)
+4624f5da8a2adeca6cf01809b05f4775a6b51bbe	2026-08-01	fix(web-ai): close the last three ways a poll escaped its deadline (#88)
+6697e6a3f6e607df304b82d03f0ed5531ccf91dd	2026-08-01	test(web-ai): cover the half of the orphan path a filesystem can reach
+89357fd0b1f618ab49b7d4098d0a0b1a48f5a0f0	2026-08-01	fix(web-ai): bound every resume path by the stored deadline, not just ChatGPT (#88)
+21e229c9c5a488a1149b273395951c40d9c9ed69	2026-07-31	test(web-ai): isolate the copy route and the per-path activity records (#88)
+286e9982a30e1f93fd6dd713776e96857220376e	2026-07-31	docs(devlog): map all 22 stall boundaries in the ChatGPT poll path
+f59d963668738f377bdd1239acd8baa35e355ac5	2026-07-26	feat(web-ai): recognize Grok and Gemini empty shells behind a hydration grace (G13c)
+817356e7b5e0dc26ace51d7bf61e74a19000fd61	2026-07-23	test(web-ai): realpath tmpdirs in repomix context tests (macOS /var symlink)
+4a5e096134d7d152ffcc3ad7c79568066dc7b3fd	2026-06-21	ci(release): install chromium headless shell
+a5519f3a516c4064b8211da107d148889cf1a86b	2026-05-07	fix(context-pack): reject any raw .. segment and Windows drive letters in zip entry names
+b21aae833b4b38269d4d4db813333762f346c0e8	2026-05-07	fix(context-pack): normalize zip entry paths with path.posix to block nested traversal
+b9024a6afbddd2c60341133e03bb3bd7daaa82bb	2026-05-01	feat(web-ai): phase 5 adoption hardening — profile lock, churn log, adoption docs

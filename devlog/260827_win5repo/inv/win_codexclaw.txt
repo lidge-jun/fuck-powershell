@@ -1,0 +1,28 @@
+b751b3dbdca47c89d67596f2b9c4aff129edc1eb	2026-08-18	fix(subagent): deliver the skill body on the v1 spawn surface too
+543a40289b50ee4cf1f5be23fbc32506aa5cf853	2026-08-17	fix(pabcd): record a reviewer verdict on the v1 spawn surface
+e70c8456e8662be4a76980c3177803323739beb1	2026-08-16	feat(pabcd): require an exit code at C>D, not just pasted text
+ef06fa0e21ce7f3d7fcd3fd8a2349a8398e9aaeb	2026-08-15	fix(test): await EventLog.close() so the temp dir outlives the drain
+0090d6729a5dd59efdbf4a034362cc86a3ff40f0	2026-08-15	docs(release-train): close round-4 blockers (release prep, install identity, PATH-free release lane)
+e1f48dc9c004d08b89c005d609053434b453ebe7	2026-08-14	feat(runtime): centralize capability resolution for spawn/search/concurrency (#7)
+c1558c7dcf0b51c9b5a25700ca13571dc3e6511a	2026-08-14	feat(port): add upstream provenance manifest with path integrity tests (#8)
+503c2bb7017a19854bd9527adda035791c6f2070	2026-08-05	docs(devlog): audit round-2 fixes — stale move/version lines, checkoutRoot null fallback, full grammar activation coverage, path.delimiter roots (260804)
+c8df16478923fc3f39c3ac4f113d63c6112925f3	2026-07-26	feat(subagent-config): final gate prerequisite guard on spawn (WP12/040)
+364730bb8281424c56168a38acff910a7af28d09	2026-07-26	docs(dev-code-reviewer): REVIEW-GUARD-REMOVAL-01 — exercise the deleted path (WP3/061)
+dd92b90af9f414944e2ae6932a5bb37bde4bdb70	2026-07-23	docs(devlog): 260723 deploy-path research + README/docs-site optimization roadmap (WP1)
+850b434357259c6b8bb8d165dd88a5c7af883550	2026-07-14	refactor(hooks): merge edit-path PreToolUse hooks into one registration (15→14)
+f17ae702b21c26b7ddf18852337d704ebcf2e667	2026-07-10	fix(parity): live-smoke corrections — native V2 encrypts spawn messages; hook trust recovery
+aa227ffc594374742d4863ccdb4160c6eb5c5d2b	2026-07-10	feat(parity): v1/v2 spawn-surface behavioral parity — hook-level skill inlining, model+effort routing, leaf guard on both surfaces
+2c3801a1bf2a72aa83cdbf15a71fd0fbf224de25	2026-07-10	fix(subagent-config): normalize $cxc skill mentions at spawn time
+d0a31c7b3753a5a2d75091fbd09328b94e9f81a8	2026-07-07	fix(ci): platform-aware uninstallService assertion for linux runners
+319371421bb9034756f68f99a406f85cd2694dda	2026-07-07	fix(hooks): realpath direct-exec guards -- symlinked installs silently skipped main()
+52f174dc9646bbea6489de26263e40a3938f4e58	2026-07-06	skills(pabcd): C-ACTIVATION-GROUNDING-01 — generic conditional-path activation evidence at P/A/C (generalizes LOOP-MECHANISM-PROOF beyond optimization loops)
+a279cd444b140650d5a185127330163cfbf11f4f	2026-07-01	feat(lazygap-080): friction ledger + path-hint + seed ontology
+3d905edf4efbd3529e3329817030a3d023a4f219	2026-07-01	docs(lazygap-080): friction ledger + workspace path-hint + seed ontology impl plan (jawdev)
+e6ccfc45a6bbccd04b0a511803b88c748ed62908	2026-07-01	docs(L20-WP19): reconcile live canonical prose (L14-L19 shipped; chat path = applyHumanTransition)
+b246f4480c9229aeeba62bed58a787c87234204c	2026-07-01	docs(L20-WP18): correct residual transition() chat-path refs (010 forward-ref, 030 L3b note)
+05136868591400f3315570232b4735215aced6cb	2026-07-01	fix(L20-WP7): manifest-path hook e2e (G19) + residue cleanup (G22,G23); close L20
+a1c6e2b6ab514bb50fac5b37497eae158f36da22	2026-06-30	feat(subagent-config): production spawn-wrapper consuming resolveSpawnConfig (mvp_hard L9.1)
+9c405c180b3b466fa782de95b7a931c4c6ebd030	2026-06-30	feat(pabcd): L4 cxc orchestrate terminal CLI (agent-gated path)
+bdf0996992cb917299cd62c0e28ef68b413a6fbc	2026-06-30	chore(dev): add dev-symlink.sh for live local plugin dogfooding
+ddfadb7b3043a9735bad86e3add9bfee3091ce9d	2026-06-30	docs(100): skill-hub grep-path 실측 — allow_implicit_invocation 2-경로 분리 확정
+3579b9d1683aa5b3bce67867bb9001e5ef7fac57	2026-06-29	record verified request_user_input selector path; decide interview + iPABCD use it (flag default_mode_request_user_input); MCP elicitation fallback

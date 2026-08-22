@@ -1,0 +1,63 @@
+22bff5292d9ba3bfc8e072335c9fa6e8da1472f2	2026-08-19	fix(release): run npm via npm-cli.js in sync-electron-version so native-Windows releases work
+75e8e75cbce43bc6c56cbe31b9c3ab455905ee8d	2026-08-19	fix(release): run npm via npm-cli.js in sync-electron-version so native-Windows releases work
+ea5bc3136d1d309221530dc78df168fb37347139	2026-08-18	docs: sync str_func.md line counts after Windows optimization fixes
+8081a7294b625cac5916befa8c45b5e93ad0f782	2026-08-18	chore: update devlog ref (Windows optimization program unit)
+e7b5f9a0a00ab75f13fa51753ade61a6b70d7144	2026-08-18	ci(windows): add informational platform-aggregate, a windows-unit lane on every code PR, and optional native-Windows evidence plumbing (#384)
+955d2b3f7bbac00874a73a07d130bc09bcf0ec93	2026-08-18	fix(service): honest Windows lifecycle - loaded means running (pidfile ownership), chcp-safe wrapper, verified startup, no fake stop success (#380)
+3037f98c213e01bd7e34e869d7ecdbae0158b815	2026-08-18	fix(service): resurrect Windows autostart - drop require() from ESM windows-service, add windows branch to jaw service (#379)
+3d41b3f9a1b373701309d517d1e24c4b724e7c73	2026-08-16	ci(windows): register new sources and suites in the Windows CI trigger matrix (#371)
+b9a24d19109e0b2cef24fc5cc3861d45003affd6	2026-08-16	feat(windows): make bootstrap default-on with embedded manifest and persistent User PATH (#369)
+017065e23b93d854d4e84d9e597b891e178ababe	2026-08-16	feat(windows): add registered autostart backend via Startup folder + optional Scheduled Task (#370)
+516e19d2d8755090c14546ee226257ec18186496	2026-08-15	security(windows): gate every remaining spawn site and check command names (#367)
+0526603823add8272ed32d83da23454ea3c34fe1	2026-08-15	chore: update devlog ref (stage-2 windows roadmap)
+6e385bf9a995db3ea7f2b1440636cb3a38326e4d	2026-08-15	security(windows): refuse the cmd.exe fallback when argv carries untrusted text (#367)
+8f294b449a99acee7c0e0f7057898008fef9f441	2026-08-15	feat(windows): gate the shell fallback on argv content at every spawn site (#367)
+b8204d5ab25847c90060983f4ee95c7629b4b681	2026-08-15	fix(windows): carry envDelta through every migrated spawn site (#367)
+f6884c23d174030de076fe8b59a5903b65077756	2026-08-15	feat(windows): route every remaining spawn site through the resolver (#367)
+9901e6a5903fa4f64945f1c9ec1055ff2eed1f2c	2026-08-15	test(ci): make the Windows coverage contract check structure, not substrings
+a9ac34c24a873f9f5eb64b89b9bae7ed991f34b2	2026-08-15	fix(core): hash UTF-16 code units so lone surrogates cannot collide (#370)
+4211080b867c90e8a79244777e489c604441a5d2	2026-08-15	chore: update devlog ref (260815 windows audit closeout roadmap)
+56381201a3d5511534c2d0cba8ccb0b0a9601a89	2026-08-15	test(windows): prove the recursion bound and mark WLS-018 source-shape (#367)
+095b9a0571addc432b0197084f0200c6ffca0cc4	2026-08-15	test(windows): mark WLS-013 transitional pending the stage-2 fail-closed switch
+663b27ca50524852924bc8b8b89183efbf355bca	2026-08-15	fix(windows): discover bare shebang interpreters too (#367)
+43713c32d2140a607d72bac059e8968af4276b7a	2026-08-15	feat(windows): route the standard spawn path through the shell-free resolver (#367)
+eb6449f325cb575a1e75f4a6ba713b92b0ba9240	2026-08-15	feat(windows): shell-free launch resolver for .cmd shims (#367, partial)
+16b9dfc391ae4032d4223ea61e9aa6a78a22c194	2026-08-13	fix: registry fallback for PS execution policy probe
+43d4953ca529e724867672420a307c86805ffb34	2026-08-13	fix: diagnose blocked Windows installs
+38e728fdb3ac9344f9ad2d892e056d0ceb36d6f0	2026-08-13	docs: explain append-safe Windows serve logs
+14b6f4e469e17ece46f51b739159fab67f956605	2026-08-13	feat(windows): #326 supported ssh invocation doc + Windows-native regression gate
+4cf98685d127e00e1d85b120592ced126cf2b498	2026-08-12	test(install): scope native Windows README guard
+8fbfa94ba8ca6f6f0cc67a889105aee8c0a46a2d	2026-08-12	docs: document native Windows log ownership (#324)
+c6a979622e384a4404848d62bbfadb8f3d650856	2026-08-12	docs: harden Windows log lifecycle examples
+034ed93e2bb765cb4f56b4d3379b45ce412277e4	2026-08-12	docs: explain native Windows log ownership
+c94bcd9c95b9d7b5e8572f9d1c9dfae4235f6aa4	2026-08-12	chore: update devlog ref for the WP15 Windows shell plan
+9f7429d80a5d4e2190ca4d03a04ea5482180b714	2026-08-12	chore: update devlog ref for the Windows Computer Use plan (#308)
+09245ec87ae830746cef4a34fb05499aa23ddc8b	2026-08-12	docs(control): carry the Windows Computer Use contract into skills and docs (#308)
+7f413890c77aeaff66c8463dd3c1c0199f424ed5	2026-08-12	fix(control): allow Computer Use on Windows with the window-scoped API (#308)
+bd0b4c20539ee1dbc82d2a8826b531b93974d2bc	2026-08-12	fix(manager): launch JS instances through Node on Windows (#318)
+998dfe48a459a07ad6c9641ea1ea527d75ec6a5e	2026-08-12	fix(manager): launch JS instances through Node on Windows
+5d417edb8b71c99e41856979eeecda33e0fecff8	2026-08-11	fix(build): ship bun-shim.mjs in dist and degrade gracefully on Windows (#275)
+460b4f74cc384cc68ede00fcfd665749fef53833	2026-08-05	Merge pull request #271 from lidge-jun/codex/windows-native-detect
+4eb4455e37c3b1e0f8840e19dfd8bf151d1980ff	2026-08-05	fix(cli-detect): keep the Windows extension allowlist narrow
+18d6260e1b2fd310f7898e257d9d8b368732475a	2026-08-05	Merge dev into codex/windows-native-detect
+b357532a4d945a9015ce4393eb46a0c26137016d	2026-08-05	fix(ci): drop the POSIX-only suite from the Windows lane, add real where.exe cases
+36795a44954f29ed0a35c29f3fbe6f781cdedcb4	2026-08-05	fix(doctor,postinstall): separate the Windows-native lane from the WSL lane
+beb1142f6806eb44c5d96ef1d6f1067885f2ade8	2026-08-05	fix(cli-detect): keep bun de-prioritization on Windows
+b90caa70c5ef32c9e4e62b39028a1946348f41ac	2026-08-05	fix(browser): inject the cmd.exe path probe so WSL fixtures are host-independent
+4a2bbefd2ca71328dab787e6fad88776d1b9381f	2026-08-05	feat(platform): canonical windows-native vs WSL resolver
+ddb347bf1421bff6f5ea7591d8582a83d264929a	2026-08-04	fix(electron): stop passing POSIX command substitution to cmd.exe
+69248a5a242975dcb04e25e30da05ac8600ad61a	2026-08-02	fix(pi): win32 .cmd shell spawn
+332b8027c7ecaa3ba50f6aaabf9ad54f1d5af9ba	2026-08-02	fix(codex-app): shell-spawn app server cmd shims on Windows
+c35b70c5dcc2f412393537f4d5dd841ec3e817b6	2026-06-22	fix(release): pin windows desktop packaging runner
+4e5efd210cd8d51bd5fa07f2cda6f3ed0a887c87	2026-06-10	fix(build): replace rsync with cp -R for Windows Git Bash compat
+600ab263b4a4b192ff8551216dc8c340dd12fa5f	2026-05-18	fix(wsl): reject Windows HOME, validate fnm/nvm paths before use
+bf9c3785bf4daa7ff04275be8a3762b7ec6be60a	2026-05-18	fix(wsl): reject Windows HOME, validate fnm/nvm paths before use
+2fa5c24448261072f8d0d811bdd0e381f7e8b63d	2026-05-18	fix(wsl): reject Windows Node/npm in installer, improve WSL detection
+a20dd9219fdab4b5f3ae9356ac3f22a04d3b9b81	2026-05-18	fix(wsl): reject Windows Node/npm in installer, improve WSL detection
+71e25c2864ce9cce4fb166167f847af689d6ba41	2026-04-26	fix: show live gemini quota windows
+da074ceba013d4b2ecd34eee55bf0838dafeb726	2026-04-26	fix: show live gemini quota windows
+50774f2bb4b0690d3449e1b62ead00fe7a985c99	2026-04-17	[agent] fix: remove claude-opus-4-6 from legacy map and widen EG search windows
+c2ea82099b031848bc076e78118d58d7777a2c75	2026-04-17	[agent] fix: remove claude-opus-4-6 from legacy map and widen EG search windows
+33340274b5582ffcd763d5c65dfb44d157dcfe5a	2026-02-27	docs: add AI engine auth instructions to windows setup guide
+1c3a4f86a762f7ac5460dcb1fc6741576f18ebc0	2026-02-27	feat: wsl one-click installer for windows users
+91197a9eb51f9388adba2aac1b19907c30e853ec	2026-02-26	docs: add cross-platform compatibility plan (WSL/Linux/Windows)

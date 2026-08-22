@@ -1,0 +1,341 @@
+84ee2e2844efd1dd4f3740920b7c8cb6fed59a62	2026-08-22	Merge pull request #2382 from lidge-jun/codex/wp4-windows-picker
+a3bbcdb03c9e92a19f46d1ab98432d6190669e94	2026-08-22	feat(cli): add an opt-in Windows desktop-app restart for a stale model picker
+174f03b60fdb832a0ba4e85bba4aa0b2622b4bec	2026-08-22	docs(lifecycle): sync Windows bare-service fail-closed caveat across all 7 locales
+c0cbe494e3c48c945f4dd0a38fc4f3582ba5aab4	2026-08-21	Merge pull request #2293 from lidge-jun/codex/windows-restart-helper
+4430742f6e648ff1b5f28422e9efe49ecdf0d49e	2026-08-21	scripts: add Windows Codex desktop full-restart helper
+96f288d595ee6a14d27bf2eacd3e1f983c704f27	2026-08-20	Merge pull request #2182 from lidge-jun/codex/windows-shard-truncation-and-budgets
+3204d4371a9ca53776a08cecba78ba1fc7b52445	2026-08-20	Merge pull request #2178 from lidge-jun/codex/fix-windows-ci-shards
+8f04c9a526b3542e71141139f58419485e09946b	2026-08-20	fix(ci): give the Windows leg the budgets and the crash retry it never had
+2e1c211e96bcf7fd7edfcd2c96799a37ef5dbb88	2026-08-20	fix(ci): give the Windows leg the budgets and the crash retry it never had
+b394b035bfac14b0aac2b9ca439cd7f51b75dea2	2026-08-20	fix(claude): remove a CRLF hook block instead of reporting a false success
+31ee7a683d034030b251b67758380d2c2d178dfc	2026-08-20	Merge pull request #2129 from ntdatt812/fix/ws-relay-eager-marker-win32
+9a9c090727c5785e35f2e9df841b506a4107a442	2026-08-20	test(ws-upstream): hold the eager-relay marker to the win32 rule, not to a constant
+caf20353fa87bf14c5fef078e5d8b0692dd7c92d	2026-08-20	Merge pull request #2158 from lidge-jun/codex/windows-verification-2270
+94ecc29b832aae705fbf2a9ec55701abea79186a	2026-08-20	docs(devlog): record the local Windows verification behind the 2.27.0 promotion
+70e8bab4259645ecfc0bc37f37e06932957d685b	2026-08-20	Merge pull request #2153 from lidge-jun/docs/windows-known-issues
+030818f6cf1253169e5f69551869f9b9495b0462	2026-08-20	docs(devlog): record release readiness for 2.27.0 and the Windows gate decision
+3fa40535676ee33cb6e2f70c535aa29f2443777a	2026-08-20	docs(devlog): record the Windows leg, and the pre-existing verdict that was wrong
+fe8fc6fe8f4cc332fa80442157638be718e445dc	2026-08-20	ci(windows): give the Windows shards the timeout every other leg already has
+cd8f9b8ab8e13dc80ae6e1d9a298d216db939075	2026-08-20	Merge pull request #2139 from lidge-jun/fix/windows-mode-assertions
+75251bb038a037091b5abd7c9542f6149b2fb49d	2026-08-20	test(service): pin the file mode on POSIX only, not on Windows
+360b66b3c9edf93e4b05acb4871f8a4aa7399fe4	2026-08-20	fix(service): fail closed on the Windows ACL when a definition holds a credential
+a71d81adbb0ea466076db8a2c624cfd699f2b5fc	2026-08-19	test(windows): pin request catalog cache boundaries
+b2563de1526c42f2dc1c76e51801f1c66778fff4	2026-08-18	test(windows): pin request catalog cache boundaries
+ca32042a2a1a0c139f9ecb09ec7d1823a4c9e058	2026-08-18	Merge pull request #1949 from lidge-jun/codex/windows-stability-program
+c5c6644d73bb27966d1e4dc5648da4e6f9fabc1c	2026-08-18	refactor(windows): share the atomic-replace retry instead of one writer owning it
+fcc9e50226184c4c69895e0fadb9ed7ef41617f7	2026-08-18	feat(windows): count atomic-replace retries so the envelope can be argued from evidence
+a3169db770ea44054175ba8578cb35b418ae9324	2026-08-18	fix(windows): one scheduler-wrapper killer, scoped to one installation
+497b6433803f10754ef3544ae024d13bda4422d8	2026-08-17	test(windows): pin every field the snapshot parser returns
+038fbad633b656c20c5e8b89e51f93e0de97aacf	2026-08-17	devlog: close the r5 blockers on the Windows unit
+39fcb1a28ed276bc7b9d8488349fa4996f77820e	2026-08-17	devlog: close the r2 blockers on the Windows unit
+9fa762c568d4d72db3e7da200b428ed2a01d139d	2026-08-17	devlog: fold the r1 plan audit back into the Windows unit
+d8bf2bcb7228447952d1145f99aaf43d08259152	2026-08-17	Merge dev into main: Windows suite green
+6a23ea98e9aef7b0c254ad256f9d4555b0b7e543	2026-08-17	Merge dev into preview: Windows suite green
+bb984ad472d1912ac9aa469ff1579976366f2596	2026-08-17	Merge pull request #1881 from lidge-jun/fix/windows-icacls-trusted-path
+f3a612054cdc58e39a5c8ffd539631bff6b8db7d	2026-08-17	fix(windows): mark the Unix-only and symlink-only preflight cases
+0f4b95bee1954b94207a1fd8cc90110f7b30e2c7	2026-08-17	test(windows): budget the two-server lifecycle case
+a6de95a679b5b515bf9ed294ae812001730ac450	2026-08-17	fix(windows): skip the file-symlink cases and survive one more teardown race
+51857c9f0363d87b0a12360ffc03091517325e06	2026-08-17	fix(windows): three more cases that described the machine, not the code
+71f69edd7a8c27b9c510fb8d43f425bd7701d949	2026-08-17	test(windows): budget the non-loopback refusal case
+e2f96707e542333de4d16dd999062cdbfe3d2f67	2026-08-17	fix(tests): never fail a finished test on a Windows teardown race
+079f417c6194b164f81f991707118c9b10b085bb	2026-08-17	test(windows): budget the thread-affinity LRU cases
+c3882214f48fb99a53ed10644ef3756ac688f893	2026-08-17	fix(windows): restore the core/Lab boundary guard and two platform-bound fixtures
+dad534889e5ed3d56eb06733a192441a76e911b7	2026-08-17	fix(windows): stop three v2-gate cases reporting the machine instead of the code
+5a4d968e6cf96316f5b3db5bba593421b3794a9e	2026-08-17	fix(windows): keep git, platform and path assumptions honest under test isolation
+9122d5ebee7e0d1521cdf8bbb86654fd14d7faa9	2026-08-17	fix(windows): resolve LocalAppData independently of USERPROFILE
+1828cb150e729010975b2cdfe19e97a87fd8cea4	2026-08-17	fix(windows): keep icacls spawn stdio types inferred
+01b212579f4704a82c96a507c95ae8bc139bc15a	2026-08-17	Merge pull request #1877 from lidge-jun/ingw/fix-windows-service-missing-install-1849
+d09c75299939352cd9bb3d1290cb1c2c8a2d5fa1	2026-08-17	fix(windows): stop service loop on missing install
+16bffe235f4d928b8207cae64ad4d95dec78a8a8	2026-08-16	Merge pull request #1805 from ntdatt812/fix/windows-test-sandbox-known-folders
+1da366eaef483b0f2266ca3c69a6347688c99d20	2026-08-15	feat(codex): give Windows a real termination path for app-servers
+1e816ee81bb00fe95b1020be3f9fc0eacd833abe	2026-08-15	fix(errors): classify Windows ACL hardening failures as 503 not 401 (#1296)
+f642a7b1f5bdfe3d3914a78df72552310221fbbc	2026-08-14	fix(windows): preserve localized profile paths
+42650711c4a181c3d8d966ed4b71c5695bb68da3	2026-08-14	fix(usage): align 7d and 30d range windows to start-of-day calendar boundaries (#1580)
+3a749a201dbf35c6489ffdf87050e89cc299b5b2	2026-08-14	docs: correct Windows CI trigger guidance
+b96cc1d8eaf0684d829bebd627818207f36da835	2026-08-13	docs: address CodeRabbit feedback on video bridge, opencode caution, windows memory table, and frontier strings
+ee043e75c588f974e7d0a79f3696325ce2226e3a	2026-08-13	docs: clarify Windows CI matrix trigger in Turkish PR quality docs
+1085b20d438f9b279c820f7fcc69722e4469950e	2026-08-13	fix(windows): remove native service in fresh scheduler install
+7bdc8f86cd546b90f6aec6472d44a7ed75a979cf	2026-08-13	Merge dev: add source install instructions (curl) for macOS/Linux and Windows
+d1c37dc5c7a4d855bb0734b938b0ab0ed8072323	2026-08-13	fix(windows): fail closed on principal resolver errors
+872c5268a5802da19be5d48298a08304514c701b	2026-08-13	docs(readme): add source install instructions for macOS/Linux and Windows
+b310d1826a2793c7cb1b9338f985c8c553e723b3	2026-08-12	fix(providers): keep hand-edited context windows through a POST overwrite (#1535)
+fcb337a1805a801c74cf3ddce86b8ad85b50fb24	2026-08-11	fix(windows): preserve ARM64 ACL identity lookup
+6312aef8324247d78a4965a3d36d20f8ed87930a	2026-08-11	fix(windows): prove rollback task ownership or report residual state
+1fa020a908f3d52df8fe7522960e774d752a41e4	2026-08-11	fix(windows): preflight scheduler registration before teardown
+fc149b1f5fc92b542411e2ec0135baa3e8b32966	2026-08-11	test(windows): await proxy teardown before cleanup (#1414)
+6b83aa3a762a0ee015764838191c25681e290450	2026-08-11	docs(fabric): record local dogfood blocked on Windows sandbox
+c4207551901de252e69bea2413b08e3d3f49062a	2026-08-11	test(windows): await proxy teardown before cleanup
+6d4924411374289647cc30a78e832fb592b5b8ed	2026-08-09	docs(windows): reference internal popup issue 1278
+0735739665e52cde9d1a0d6e47bef2b4771397ed	2026-08-09	test(windows): assert the exact 8s identity-lookup timeout
+dd020296c6cda4cb19df13031fd38cb6f7500829	2026-08-09	fix(windows): hide npm launcher proxy child
+3c40df209278cddfefb6d233d649f8b1e9192f89	2026-08-09	test(ci): bind the Windows shard assertion to an executable command (#1185) (#1301)
+66ef8993f9e4cb99fe6b4333f4d48a1b97a2ff94	2026-08-08	Merge pull request #1216 from lidge-jun/codex/260807-windows-acl-token-sid
+fca2cd71277fef1af373881692823b4f496da6c4	2026-08-08	fix(windows): make the ACL identity boundary testable and machine-readable
+972ed0ed38242d4275c6f9e1a1af676143bd79b3	2026-08-08	fix(windows): grant secret ACLs to effective token SID
+4e34ad2adaead822bf41e7a161714a745d50fa91	2026-08-07	fix(update): scope Windows restart cleanup
+20cff4c3d4cffb79daef561fe3ae37022a1a4ac6	2026-08-07	fix(config): fail closed on Windows ACL hardening
+41bce86feb8fc615789af72fa4861ddb80ed08b7	2026-08-07	ci: keep Windows jobs on hosted runners
+bff31d1e0e9fe4bab9acb1e93c6bfa053ffcd93c	2026-08-07	test(ci): pin Windows test command with shard
+df6989c178238f11f4c405e3d87f4026058cb05b	2026-08-07	fix(windows): grant secret ACLs to effective token SID
+aa28493365f30a3be4de0767d8ff7a0534233405	2026-08-07	test(ci): pin Windows test command with shard
+1fc24f03999a309737a9f01b214b7b8c1fa9ca85	2026-08-07	Merge pull request #1154 from Wibias/fix/windows-ownership-probe
+3fc24da7c590f21bd86363bd1ce9b8ad79b060b4	2026-08-07	fix(probe): preserve Windows probe compatibility
+00f13cec21012301cdcc0cfd11a9058b187d207b	2026-08-07	fix(probe): harden Windows ownership evidence
+aa0e221216ad3c1159439b2b6b72025051b6e0b1	2026-08-07	fix(probe): harden Windows ownership evidence
+06ee2745e6a11f8b258a14c93eb78412037e5b46	2026-08-07	test(probe): cover Windows ownership hardening gaps
+ca9618af612e00b18480329dbb750aa6233949d7	2026-08-07	fix(probe): address bot review findings on the Windows service probe
+c4fb80ba72397f659b48e3ddaf4c82722622fe63	2026-08-06	fix(probe): address Codex review findings on the Windows chain walk
+ca015f74796c3f82c823b93be739fb5b14a149df	2026-08-06	fix(probe): treat only definitive "not found" as absent in Windows task probe
+153f8aab603d85d12a1caf29d56a131f1e929514	2026-08-06	fix(probe): walk the Windows service definition chain for ownership
+3a3323b3dd0ff01f07c7a41c64efce67da024aaf	2026-08-06	fix(codex): re-stat rollout pathname, scan lines once, and preserve BOM
+b5452a0a5996d9e403019461f6dbb2929ac631fa	2026-08-06	fix(codex): re-stat rollout pathname, scan lines once, and preserve BOM
+77002f142ab8c5716f75c2af23941905fe5ef656	2026-08-06	docs(devlog): measure the Windows suite instead of restating the plan
+b63e86a8b1272d9e9516024f7afec0cf1af52521	2026-08-06	test(codex): #1090 regression — CRLF external-provider config survives inject byte-for-byte
+68af8f97c1b4bd0a8add528d61e9e753e25c217f	2026-08-05	fix(ci): align platform-windows pin with sharded 15m legs
+eba52e37b678a650a80a84aa9f8f273dd4841f06	2026-08-05	docs(devlog): close the Windows-gate removal and 2.10.1 release unit
+7f18569eaad5ee1c4aa6e3d71eeec596f7d93fb6	2026-08-05	fix(ci): drop the Windows leg from the release gate
+416ad2ff7af2fb091031a0519091da0f9c23f33a	2026-08-05	fix(ci): align platform-windows pin with sharded 15m legs
+4c46e00b53d40a0f8b624bec5647a43759633e8c	2026-08-05	fix(test): the CI shape test pins the Windows shard it now has
+53f8da7a0879e91d89b86ed6abb25c4271a43b28	2026-08-05	fix(ci): align platform-windows pin with sharded 15m legs
+25e2415728ad2704510c3d6554beda6aad44ef97	2026-08-05	fix(ci): pin platform-windows timeout pin to 40m
+8034cd7c0627324e2998f58de7011ed0d8281b5f	2026-08-05	fix(ci): shard the Windows leg like the Linux legs
+712c493d847c454bad81cc88e444c4a0fdc5dfbd	2026-08-05	fix(ci): the Windows leg was killed mid-cleanup, past a green suite
+ea5c5a8e3f87651174055f3e140d0ce347ba7fda	2026-08-05	docs(codex): F4 closes at NEAR-PASS; widen the Windows gate and stop overstating one mutation
+cc48263c5148f058b389c0fec8b1d58e0689877c	2026-08-04	test(ci): cover valid CRLF maintainers heading
+6b03796900d9040150c5dbc10792101d36dbf1c3	2026-08-03	ci: make the aggregate gate refuse a silently skipped windows leg
+80c49cfbf3bc92c8830d02ee6fe9b3b699759407	2026-08-03	test(storage): budget the two cleanup-mode tests on loaded Windows runners
+f5586bcf090787bb7d9b0f8f4ee90b6a4488d887	2026-08-03	fix(codex): name the salvage backup directory correctly on Windows
+fd5ca50fa21e1975d2432bed75033b57dd00bf19	2026-08-03	ci: close the Windows gap the release gate could still walk through
+850affb64650e7b21e66c67dce12e40f9fdf77d7	2026-08-03	ci: shard the suite on Linux and move Windows to the shipping boundary
+f7f5b1bda835f48a06b2cba89f6b6b494756bff8	2026-08-02	fix(windows): gate the migration memo release on both residual classes
+d5b88632a10d17bb2acc8a9a04527081388d77c3	2026-08-02	fix(windows): close the three residual ACL lifecycle edges
+1c55ca83fbe9b8783e0fb17bc5cc4eeebddb9caf	2026-08-02	test(windows): pin ACL release contracts directly; prompt-journal uses the platform seam
+a26b379e955d043cd74e9d4af4a974f9242c5fe8	2026-08-02	fix(windows): scope ephemeral ACL release to temps, keep stable-path memos
+c8ee26074b9644045ba9bca2cfefdbfe84b67ac2	2026-08-02	fix(windows): release ephemeral ACL memos and key timeouts by destination
+2c2c113574beeabe354da9e17b08252c0acb2a2f	2026-08-02	docs(plan): record UTF-16 key framing as the final antigravity design
+0b30283b6db205a17b09682632d2f731ac1f1e14	2026-08-02	fix(providers): give Claude 4.6/4.7 their 1M context windows; authoritative [1m] in generated profiles
+09b29b9ac806b46bbc13d40c6d8d1760fb3d7823	2026-08-02	fix(service): confirm serving on Windows too, for both backends
+9d271d091db37f5989e97dbb7267e997321ca15b	2026-08-02	fix(server): route win32 rewrite traffic through the eager relay (#864)
+9e7cc304f184ed2edb399b1dba2b2363bf23360a	2026-08-01	test(storage): budget multi-satellite quarantine restore on Windows
+4d7ee28b283b9211b961b076e6136261a2c03f0d	2026-08-01	fix(storage): lengthen Windows Worker OS-join settle under isolate
+8ddf196fef351580e4271398abdcd0ae519bbc15	2026-08-01	test(storage): budget satellite restore-failure cleanup on Windows
+d0b44e7a674a753082b9c3cb6197281a1e947f8d	2026-08-01	merge(dev): sync tip Windows budgets and management-auth fixtures
+aae9426ea6c88b6ca04b959673fcac91a978a5ca	2026-08-02	test(ci): budget the server-bind and tsc-spawn cases the windows runner measured over 5s
+7279a6f8490d66e1da015c59c50c87e15d32291b	2026-08-01	ci: correct the security claim in the windows routing comment
+f1fa46435e782ffb06637f0ca268f596735b27f2	2026-08-01	fix(test): narrow management-auth icacls stubs for real win32
+649fdf91a1e6c8c169743e95a927563fd4c470e5	2026-08-01	test(ci): budget OAuth CAS and translator typecheck under windows load
+1ace71adc90537b9d59a2db90461fb3bb7e62503	2026-08-01	test(ci): count the windows runner-selector job in the bounded-jobs gate
+aeb74231da0ea79987719b981bd5f4b61e7fc35b	2026-08-01	ci: route the windows leg to a self-hosted runner on trusted events only
+f27ed583b8559068f98762a08a5bdb80be09d2fa	2026-08-01	fix(test): skip isolate Worker hammers off Windows
+ed929181ff6f5160ed9c85ff514dceda67bba68f	2026-08-01	fix(responses): record dir-fsync after best-effort attempt on Windows
+b6c39ac844fc7925d33922c27fef313d6d461d16	2026-08-01	revert(ci): keep Windows Cross-platform job at 30m
+60be0c50b5bdd253c46631bfab86c9e0753925ed	2026-08-01	fix(oauth): keep short mutation wait timers ref'd on Windows
+675eb6ac7567e1b998f5a902963018cd8a82f454	2026-08-01	test(ci): stop the OAuth queue tests from stalling the Windows runner
+584d3810dc278b25501dd65e3fac23aaab42b869	2026-08-01	ci: raise Windows Cross-platform job timeout to 45m
+54a13e1503c674b0b4d06aac17b9b48ca5bb0281	2026-08-01	test(ci): budget Anthropic messages e2e for windows-latest
+30bd1f2d68f931e5774c48c22b30787d830497a9	2026-08-01	test(ci): expect 30-minute Cross-platform Windows job timeout
+85030c7deaef0555d09707639d510c1f41acfa59	2026-08-01	ci: raise Windows Cross-platform job timeout to 30m
+1ce6a2cfcf0cc11b15907f61e6edb09871128f02	2026-08-01	test(subagent): clarify Windows ACL hook timeout comment
+1029e37cddf73502f9f7be0394c1a910ec4add87	2026-08-01	test(subagent): raise fallback suite budget for Windows ACL hooks
+fa5780d597a330a2568df278fb2dd639e48e6304	2026-08-01	test(ci): budget the 128-mutation OAuth tail case for windows-latest
+2b80061da46ac2c3a9ed1a128f06aa4e8cd7aa12	2026-08-01	fix(update): spawn Windows GUI worker without inheriting LISTEN socket
+de87f495708198f5cb10d2ed2c380c8b818175f3	2026-08-01	fix(update): stop Windows service wrapper respawn from blocking port reclaim
+3a5658952bcf77e1d8236695ae01b17e5d197a79	2026-08-01	fix(update): reclaim leftover ocx listeners after Windows self-update
+7b6f4f4eca7fb72d02fce7b99d20398e2458ff08	2026-08-01	Merge pull request #813 from Wibias/fix/ci-windows-no-isolate
+81518016b5f6330ff28fc309704d373be76aab20	2026-07-31	fix(ci): soft-fail OpenAI-tier backup ACL harden on Windows
+0a051501ff5813e0643f3f94f7dc14affd89e5bd	2026-07-31	fix(test): widen aborted/invalid JSON 400 auth budgets on Windows
+13bbe72df6a6faca3c60696938d530b35fb5c100	2026-07-31	test(storage): shorten non-Windows worker churn under isolate
+6621ac961223510ae169b39d6aa607efe37bec79	2026-07-31	fix(storage): await Worker exit before isolate reclaim on Windows
+77eeb81844f74385c12ad051f8fbbdf901bf4c03	2026-07-31	fix(test): budget ocx provider CLI spawns for Windows CI
+2c83d623217a29271121af6afc82654aea86280b	2026-07-31	merge(dev): sync CI Windows isolate workaround onto tip
+b57c062663cb17e56694d7dd1d17d35fe34ed274	2026-07-31	fix(ci): skip bun --isolate on Windows runners
+045fe42520dfd96264fbd4bc33fda00e4f81a54d	2026-07-31	test(storage): budget early cleanup SQLite setup on Windows CI
+208cbe0f91975bc9315ae4640034068d766944df	2026-07-31	test(storage): budget spawn-edge cleanup under Windows CI load
+20d72015d84e74a94d0cc66ba325753a916b7a0e	2026-07-31	fix(service): propagate ACL opt-in into Windows service env
+9cdb0da2ee3d78835df1f1ae5388e82b3924f5dd	2026-07-31	test: set USERNAME in win32 ACL opt-in test on CI
+33caf336408bbbd5b6c41c16edbb8d7b6e96cc08	2026-07-31	test(windows): retry one transient CIM timeout (#801)
+2eb7499434d857cd80099e7539014756e35225b2	2026-07-31	docs(plan): separate the Windows CI red into three failure modes
+993e39a82dfad50fa156b79b3d64a1e29e40f376	2026-07-31	docs(plan): adopt two corrections from the parallel Windows investigation
+1b532c4e0e524a4f5c19eca3b5b27b7e5c52ee1f	2026-07-31	test(windows): retry one transient CIM timeout
+217db042625395ceda031a4a7afdaa44b8df80d8	2026-07-31	fix(test): raise Windows timeout for CLI spawn smoke tests
+3e95ba33f45936eec4c2b3ade71167d598b913f5	2026-07-31	test(storage): raise cleanup suite timeout for Windows CI load
+98d2576774bb01566cd8ed705e7acf4c41432847	2026-07-31	docs(plan): the Windows red was Bun crashing, not our tests
+de60ea5a34d85ef9b354488bd8cd7fab272a9d1d	2026-07-31	fix(test): stop Windows star-route hangs and raise trash restore timeout
+ef84c3ef0842ba9bea0810cccfae605ddba09b75	2026-07-31	merge(dev): sync before windows flake re-run
+2c385d0c4cf315275868a2d400ebb34669350721	2026-07-31	merge: take the #780 Windows service-stop work onto preview
+12eae74ec2572c5dbca160bec23fb6998a8d6bbd	2026-07-31	Merge pull request #780 from lidge-jun/fix/764-windows-service-stop
+1df9c82c5ac761af2f1480c3ba0075215eb244dc	2026-07-31	Merge remote-tracking branch 'upstream/dev' into fix/764-windows-service-stop
+51d9c56210f73c4c3069f7e5c5fa7ef308900144	2026-07-31	fix(test): set Path on Windows so release shims win
+0af17fbfdee0ce74ffa6dbdec2b6413b05b6ec89	2026-07-31	fix(windows): route every gh and release command through the shared launcher
+3569242637389d79635889b051be49bb6a666b8e	2026-07-31	fix(ci): repair the three failures the Windows panic was hiding
+bb95d8c8877f12b262515d755e93e863641be552	2026-07-31	fix(service): harden Windows stop and verified PID kills
+ccc4d40a956fe00c8b5ecbf51107a1fc230f7b8d	2026-07-31	fix(service): propagate ACL opt-in into Windows service env
+e0bae5392125c569ccf9d87605481f2093aead95	2026-07-31	fix(tray): harden Windows VBS launcher install on review feedback
+2ca83754dd7129dbd15ff08d2f1be93e732a48f5	2026-07-31	fix(tray): isolate Windows tray host from proxy sockets
+e4280587475167fb3c40901b07a607776bea7674	2026-07-31	docs(cli): describe Windows service status
+1d9e196e7d17bbe9589660e0c3fd3e283d9d346f	2026-07-31	fix(service): make Windows status locale independent
+a35450e0b8e7793d1796f87b221a71ed0d02e756	2026-07-31	test: set USERNAME in win32 ACL opt-in test on CI
+c809af0308f9e64cb2db17707d153791ef6e8e8b	2026-07-30	test: allow Windows credential IO headroom
+93c84917ffecb625c92fb3c49a1fedaa74ec9589	2026-07-30	test: allow Windows usage debug IO headroom
+256ed1a90272e6ef060f0d5d6a37c7739ed77ef3	2026-07-30	fix(tray): isolate Windows tray host from proxy sockets
+7a98372e2fab741c0956efe40a058b674dd51c78	2026-07-30	docs(cli): describe Windows service status
+2cc2ee31d392baebac7165e05a683fb333041d8d	2026-07-30	fix(service): make Windows status locale independent
+5bf66df26291edb1923c4f60a07d9e6643d58569	2026-07-30	ci: give the Windows test job real timeout headroom (#717)
+9e4d034d9894e5cca6ad7bf10a8fbfb14209631e	2026-07-30	Merge dev: silent loopback dashboard session renewal, effort restoration hardening, Windows scheduler fixes
+e3fd0db242ca35a4e5fab1c679c0d5c061be3c04	2026-07-29	test(usage): allow Windows log rotation budget
+438b8dcf43598688cb86e6f327a1af51e8c799d7	2026-07-29	fix(windows): compare scheduler action values, not their encodings (#608)
+34688f641a364514b99fb556c3cc1bb897ef13c1	2026-07-29	docs(windows): spell out scheduler create predicate
+93385503e0436f28c4d7dd07d52d27e27b5965ae	2026-07-29	docs(windows): clarify scheduler fallback scope
+b9ae6592dac0705613f7df56f33e123eacff9d91	2026-07-29	fix(windows): tighten scheduler elevation boundary
+cdc16e5a789ba772cd072b0aaa6f66ae6a2c37d3	2026-07-29	fix(windows): classify localized scheduler denial
+b7c678c0d7e509ee3593d2a9376727821251a928	2026-07-29	fix(windows): carry async ACL harden onto dig2-go (#645)
+341d4863a5914bc776ed9e545c698daca0b264ff	2026-07-29	fix(windows): async ACL harden for response-state writes (#645)
+0e78e4d59b3df0d06e44def819d6842fe3c2515c	2026-07-29	feat(go): port apiKeyTransport and fix the Windows ACL step order
+ddc597f4eda219a54bf927be8aef580c52faea97	2026-07-29	feat(go): expose Windows service backend selection
+b1713b574fea949300ff477dd3ea48fda0ada814	2026-07-29	feat(go): reclaim Windows listener TCP state safely
+c266124def7b98e78eb575c5bf60be582d7875ba	2026-07-29	feat(go): harden Windows services and runtime diagnostics
+3ab6c631402af2a5d3d43389a1da9afd68237b45	2026-07-29	fix(go): harden Windows task XML validation
+753c3231ad196b8499866feae8ccd7811177246c	2026-07-29	fix(go): skip Unix permission checks on Windows + fix SQLite readonly test
+3c904f9fc9e2a48f462b1be300630f99d7c162e6	2026-07-29	feat(go): WP23 Windows tray + system-env + startup helpers
+93685c11da4e1f5e6bfea35b232a335595c9d94b	2026-07-29	feat(go): port apiKeyTransport and fix the Windows ACL step order
+31e065f98a738a5de2221424cf2e9705b2a57313	2026-07-29	feat(go): expose Windows service backend selection
+9e39c32705418ac97e2968555c487b2c8b4b6432	2026-07-29	feat(go): reclaim Windows listener TCP state safely
+5efbba0f34816a933dd7748e7034217f9bfe532c	2026-07-29	feat(go): harden Windows services and runtime diagnostics
+7a0810d1f80266dc2693db6a003bcb1819db9d36	2026-07-29	fix(go): harden Windows task XML validation
+f84622f35a307041acbe40a913ec1a0fd857acdd	2026-07-29	fix(go): skip Unix permission checks on Windows + fix SQLite readonly test
+447652a3fe57cbc8cda5b200f5f006ccde604f62	2026-07-29	feat(go): WP23 Windows tray + system-env + startup helpers
+7813eb76ad9ecb6dbb59f5f0f921cd7f902eb954	2026-07-29	feat(go): port apiKeyTransport and fix the Windows ACL step order
+e479434cfe159d83fccf33dd17d9853dd3b13b78	2026-07-29	feat(go): expose Windows service backend selection
+25ae44f3ff79a81e3edcbce3a2a28a73717e6b35	2026-07-29	feat(go): reclaim Windows listener TCP state safely
+b657e33932501626eff01ce4a81dfebc470245d2	2026-07-29	feat(go): harden Windows services and runtime diagnostics
+55bc334d8ef517fe2ec590901b4d27babf81664c	2026-07-29	fix(go): harden Windows task XML validation
+92122bf0f8f3d502d868ea20a7e9b9f42d02e672	2026-07-29	fix(go): skip Unix permission checks on Windows + fix SQLite readonly test
+26686a9f7765e67e1fd00611877699dfd7f68f0e	2026-07-29	feat(go): WP23 Windows tray + system-env + startup helpers
+955ca0334c3fcf4d5e353e7b130f199712d7c9fd	2026-07-29	feat(go): port apiKeyTransport and fix the Windows ACL step order
+07fab277a262eb6533a3f3585bc0ef25a53675ec	2026-07-29	feat(go): expose Windows service backend selection
+58540fcb0d8d77dd3fe3952c98e9f546d0315d6e	2026-07-29	feat(go): reclaim Windows listener TCP state safely
+fa4ed8e1ad6e021625050d30209da61e52798113	2026-07-29	feat(go): harden Windows services and runtime diagnostics
+fbb0f9b7cc41e7e20f61809ae4f271b6ef9c8c67	2026-07-29	fix(go): harden Windows task XML validation
+e3e0ca2b039cc67c456d50e895dde4c18f017a9f	2026-07-29	fix(go): skip Unix permission checks on Windows + fix SQLite readonly test
+faaeebba872adb6a5e789c1868b4e77d574b7733	2026-07-29	feat(go): WP23 Windows tray + system-env + startup helpers
+000ddd0024b7aeaeefdd3075afcc79939aede273	2026-07-29	fix(windows): avoid false unhealthy task diagnostics
+fe146fee88ad15ddc3566a4b7cc8806e32751859	2026-07-29	fix(windows): align service and tray with Codex home
+74e27476507e5a00e3f520f909c73d3139255054	2026-07-29	fix(windows): follow active Codex home for tray listener
+2a508251280c05aab1e92b0e65eb934147001a69	2026-07-29	feat(go): port apiKeyTransport and fix the Windows ACL step order
+c48a6eee3812a002f5cae6caa891c23a46f0a0e7	2026-07-28	test(usage): give the rolling-file bound test room on Windows (#614)
+0cb977666e5cd138b1ac13bc5dd9abc0315bf0f4	2026-07-28	fix(windows): prevent update cwd command hijacking
+f9c5ceb4221a29f903bc3844ce3ee8b6889fc462	2026-07-28	feat(go): expose Windows service backend selection
+475c3478f7a8ad5914c37f3e999ae7fb5a592e46	2026-07-28	feat(go): reclaim Windows listener TCP state safely
+762c7e5e8282e6c33eec7830e7e15f0b3f5cfc5b	2026-07-28	feat(go): harden Windows services and runtime diagnostics
+e95d72914dadbe557245401028f423fb1ddbdf42	2026-07-28	fix(go): harden Windows task XML validation
+19c5a720ff7986a35ed37d0517b639380f605abf	2026-07-28	fix(go): skip Unix permission checks on Windows + fix SQLite readonly test
+fda202cd942845dc46e7b5bf45cbe398d2e9b87c	2026-07-28	feat(go): WP23 Windows tray + system-env + startup helpers
+d482086bf361c84d3107b057f9ba9cc6897f0ee3	2026-07-28	fix(windows): grant owner ACE before ACL inheritance removal (#601)
+8c3c349748c78124730cee431a706ee8bf504cc0	2026-07-27	fix(storage): avoid Windows CI timeouts in cleanup/policy tests
+261abb7ff7826f82713e0ae033ab930cb78923f7	2026-07-27	fix(memory): observe external Windows retention
+5172faf8cd4a9715058762bfed04a72073407c52	2026-07-27	feat(go): expose Windows service backend selection
+585188070c84ea242d73483db1ccd5aee7d2ca26	2026-07-27	feat(go): reclaim Windows listener TCP state safely
+8a0086b8cdddd009229ea5ac37cb3764e619bac6	2026-07-27	feat(go): harden Windows services and runtime diagnostics
+d48fd7df69bc53a2d6680deb9b6cfbf002a68193	2026-07-27	fix(go): harden Windows task XML validation
+6cc5b51a308243b2c1a02538b702eeb145670edd	2026-07-27	fix(go): skip Unix permission checks on Windows + fix SQLite readonly test
+9e7d78b31e16ed201d87d91471faa509c35e9303	2026-07-27	feat(go): WP23 Windows tray + system-env + startup helpers
+45bf88cbc221135ff6bfd9566df78edaedbcc4d4	2026-07-26	test(proxy): raise Windows CI budgets for OpenAI auth matrix
+629b6767a248f6e768858d3e006df2dcc466f9d3	2026-07-27	docs(wp21): audit round 3 — state the Windows hash limit precisely
+5ff20dc00f0ce05fc354d649d79a42022bfc9774	2026-07-27	fix(grok): adopt our own pre-fence model entries so context windows are honoured
+6577b81ad70823efed8fd083c8e1967eae758ba4	2026-07-27	test(go/tray): free the Windows capability report and the launch argv guard
+26d6a70ab895d6817392c6caea13459667b8b548	2026-07-27	fix(go/cli): stop telling macOS and Linux users the tray is Windows-only
+262a900d9ee15c77140541783f8f89ae99c15793	2026-07-26	fix(ci): preserve literal backslashes when repairing translation JSON
+78562d1ca04b019b363b6b379543cc48348c6447	2026-07-26	fix(go/tray): stop asserting a Windows session we never probed
+b0e40b8bba57ecfd9eacb4c2b837dd28e51d34a8	2026-07-26	test(go/tray): execute the stub and the Windows registrar instead of asserting around them
+1f3eddac32b7883a8f5d17899b397ebeaeaeb278	2026-07-26	ci: allow Windows suite to finish
+11a3ba04920772ed1b605759f4af4ba8976b2c12	2026-07-26	refactor(go/tray): make -tags notray mean the same thing on Windows
+fe16017912b8efeca1986cfbcafa619112a4c6e4	2026-07-26	test(go/tray): pin the Windows registry argv round trip
+ceba779788ab34d7500f2c863b116c1faefdb1ac	2026-07-26	refactor(go/tray): put Windows on the shared core
+ba0194b040afce7485821ecb43cf9493063a33ab	2026-07-26	test(go/tray): cover the lifecycle off Windows for the first time
+857a4d57518654c52cc57ea8904cf4a88aa7f576	2026-07-26	refactor(go/tray): move the shared state record out of the Windows file
+911373dbbef0985129eb6b5bbf4b6d3fd289135c	2026-07-26	test(grok): resolve the writer-boundary paths cross-platform for Windows CI
+e733fbb5fd7c684b7cfb99448adc203868b09295	2026-07-26	fix(gui,claude): show 1M contexts and real native windows on Desktop and Grok
+3ba899b361b293cbbd7560eec1ca3c02d8e481f6	2026-07-26	feat(go): expose Windows service backend selection
+81a6a9560c472f89d42b8046f3a1b668c4860c44	2026-07-26	fix(grok): send native context windows so Sol stops reporting 200k
+a7e0feca3d017527df2e5cb6ef7688bccd8cde1c	2026-07-26	feat(go): reclaim Windows listener TCP state safely
+0b9cefe2c724cea87861a53d812427fa18f6cb99	2026-07-26	feat(go): harden Windows services and runtime diagnostics
+29645921a15ed55c89395d624ab7f8688277c704	2026-07-26	fix(go): harden Windows task XML validation
+dca6ed98334fbe04adf94ff8a7cad3ae181d81b4	2026-07-26	fix(go): skip Unix permission checks on Windows + fix SQLite readonly test
+96511892c07b547fcde94d1cd3f24174e1ba4b6a	2026-07-26	feat(go): WP23 Windows tray + system-env + startup helpers
+13a870a7a669e75bbd9f4f3e4d2b416d5d343f56	2026-07-26	fix(service): address CodeRabbit Windows elevation review follow-ups
+68b8c6918def95a507f63c1ce496fcee4be9dc61	2026-07-26	test: raise Windows timeout for multi-agent boolean/inline migration
+96700e6a31e056f59a2c3060766b09e2518dde2b	2026-07-26	fix(go): harden Windows task XML validation
+efa8fd9add68bd09d9e7fff9b498f28ac4ccd377	2026-07-26	fix(go): skip Unix permission checks on Windows + fix SQLite readonly test
+ba5f8c78086559521b7ac0613714b9cc5da08dc4	2026-07-26	feat(go): WP23 Windows tray + system-env + startup helpers
+cacd6c365bce9f4cdf7932e521f1f93b278fce2b	2026-07-25	fix(service): address Windows elevation review feedback
+59bc0b7b2de53fe79976d8c3027dec3c9ec360c0	2026-07-25	fix(service): retry Windows background install with UAC elevation
+61b18541f3ae95c1461d2877287249b21746a553	2026-07-24	Merge pull request #362 from lidge-jun/fix/windows-mgmt-test-timeouts
+75af635c74ce52507703fe13804a3189de94a708	2026-07-24	fix(tests): widen management-server suite timeouts for Windows full-suite load
+df1480d80b1f8e47cf7e5741d4abdd4051c2c191	2026-07-24	docs: Windows memory troubleshooting page + structure SoT sync (#314 WP5)
+dc52f1ffb325574231eeebcb849d0b57593b3d81	2026-07-23	feat(windows): add tray controls and restart-safety diagnostics
+5f4d837ae6688a207bba4b112ce9c6f67d4ddcd2	2026-07-23	feat(windows): add branded tray icons
+2ad1130f95edf205979a5db1cc4a19286ee3c3b5	2026-07-23	fix(windows): distinguish missing tray registry keys
+d5432d5a9fab3758720f4181c6f81fadbf28cade	2026-07-23	fix(windows): fail closed on stale lifecycle state
+c1ecbe1b54df024170f6f13063083aa1d0004569	2026-07-23	feat(windows): add restart-safe tray controls
+a2c8cd35da8b221cc46a16aec111b0d6665763fa	2026-07-23	feat(windows): add branded tray icons
+4e0d67356002b6b5136fcc9927a32d762a6816a5	2026-07-23	fix(codex): classify monthly WHAM windows
+eb81a26ce3cdce3fea664ce0f4cbef81d6788165	2026-07-23	fix(windows): distinguish missing tray registry keys
+f5d8c00df99266b161801a4c3503b4c300737a91	2026-07-23	fix(windows): fail closed on stale lifecycle state
+b4d22f10de7d1a5d066c1d0d0e951a8d58c76315	2026-07-23	feat(windows): add restart-safe tray controls
+6d4cf859485c4652acc2c25c59de0456f22d5195	2026-07-22	test(storage): give fixture-home scanner tests an explicit 15s timeout (Windows CI flake)
+e246b9d10b22f268fd0b45b0a9900d4519b2bd95	2026-07-21	fix(test): clean WAL/SHM residue in storage-scanner fixture + remove Windows-illegal ? from URI test path
+0a8e1c6628ff91d50d6318d5f87f6650e85c0edb	2026-07-20	chore(devlog): archive 260720 windows-service + claude-authmode plans to _fin
+dd40e318180e6377e36bece7b3475657d2d40e85	2026-07-20	feat(service): opt-in native Windows service backend via WinSW (--native) (#166)
+77b966ca6c665cd8000f8747f9bba0ea02d4c65a	2026-07-20	fix(service): launch Windows service wrapper hidden via wscript VBS launcher (#165)
+b4963702177ba0fccece8e8fa9ee17f18f532cf2	2026-07-20	docs(devlog): windows service implementation roadmap (040-070) after sol audit round 1
+bef8c40d3498a8b857ef9370bafbeab91d07d307	2026-07-20	docs(devlog): windows service console-window investigation + issues #165/#166
+b5f81ac4b945cbb65acd977130dc00a87604e930	2026-07-19	fix(tests): widen kiro sqlite suite timeout for Windows CI cold runners
+3183a990c91c27500e9d521d4ec2c273baa1ed2b	2026-07-19	fix(windows): honest timeout diagnostics, bounded retry, and configurable ACL budget
+a676f80b50ed3d9d3e039631041074dff3d31a9d	2026-07-19	fix(windows): timeout-only ACL soft-fail with honest error codes and shared deadline
+5605c6e20c03e500eee538705ca807d633cadcbe	2026-07-19	test: update Windows restart source contract for pinned --port startArgs
+d25f023605e0c40da60621c342dfba03d47c5274	2026-07-18	fix(ci): widen web-search heartbeat test timing margin for windows runners
+088a4174d8238cd85783545b016f39b611c8cd2d	2026-07-18	fix(ci): make windows test paths and platform assertions cross-platform
+b5f627550cd77a95a1faff08fc0f487f58a3c949	2026-07-15	test: make v2 mode CLI fixture accept Windows codex.cmd enable args
+d4680905fd2711a99f5218d00f42f63072ddc272	2026-07-15	test: update TicketBadge i18n expectation and soft-skip Windows symlink EPERM
+fe1a5ea2cc552f4f46ddfc515d03ea5ac0ab1b3a	2026-07-15	fix(claude): elide blocked-skill bundles on Windows paths — normalize backslashes before basename split
+cac1192506a4d2e3a1aafe0a7764ab8d65789abc	2026-07-15	tooling(pr130-stack): hooks-dir via git rev-parse, backup-then-install policy, prepush single source + privacy:scan, visible EPERM skip, BOM/claim cleanup
+fbb2fce71ee43704fe41afb3d6b02c5478abf113	2026-07-14	test: skip symlink test on Windows without elevated symlink rights (EPERM)
+32593510f232615c6081bf0d2e32b80a88b78aed	2026-07-14	test: skip symlink test on Windows without elevated symlink rights (EPERM)
+1f55000b3a3b3b8b18b7c374d650fe094d633d5d	2026-07-14	test: skip symlink test on Windows without elevated symlink rights (EPERM)
+47072be35c93c7fbb11b3e2ab81b6010671f4d35	2026-07-12	Merge pull request #102 from Wibias/codex/retry-windows-atomic-rename
+464fd7d43bccc99a7c6573f50d027817e15b72fd	2026-07-12	Merge pull request #100 from Wibias/codex/stabilize-windows-fixtures
+21e58b09e100e884b6508d7e25d2275b4f773434	2026-07-12	fix: retry transient Windows atomic renames
+84d601f9343654445f6360711473e65dc1418bf0	2026-07-12	test: stabilize Windows integration fixtures
+484fb71755fc9a115db047043270b960b1ccc73f	2026-07-07	fix(tests): timeout headroom for install-scripts on slow Windows runners
+810fa1152d0b9f0dcd1890b5331e4b147dbca94a	2026-07-07	fix(tests): explicit timeouts for Windows-CI-slow sqlite and child-spawn suites
+22561a4598bb75e7b254474c1f998f025dda7a58	2026-07-06	fix: Windows/Linux hardening - readonly steady-state history gate + CRLF-preserving injection
+ad5c1d9bfd3c4d15abbfb15eb6bd97065e16e007	2026-07-03	Merge dev into preview — issue #44 cancel finalization + windows-deploy close-out
+9b15ec1910fa25a4882ea9221287602985431049	2026-07-03	Merge dev into main — issue #44 request-log cancel finalization + windows-deploy close-out fixes
+6b5daee0d0a7d1347a9771a4f7f224432ceeba1a	2026-07-03	fix(deploy): close windows-deploy-stability audit — restart EINVAL, systemd SSH, localhost bind
+5b8e9e284a82a3cfe7f0aa0781f38b7d05350dea	2026-07-02	fix(platform): loop 7 — OAuth ::1 conflict fallback, bind-race retry, Windows service write order
+d9ba82e9c17583299b358b02bb6b982604e9b5f1	2026-06-29	test(codex-plugins): cover stale/healthy/non-Windows + CRLF and inline comments
+bb3826e5ffeb17157aae85891674a54d836653d4	2026-06-28	feat(kiro): add per-model context windows from official Kiro catalog
+3ba754df721068b354b42d9b35ba14d7141c238d	2026-06-28	fix(test): skip file permission checks on Windows
+b2921e82d2607b4cf21aa09bc9fb3f25de9d470c	2026-06-28	fix(windows): clean stale service pid files
+b4f7f30a1223fe47390d863e42e5e3761cf716f8	2026-06-28	fix(windows): expose bun runtime diagnostics
+1dfff9b007b96f35719f10ccd15fb3f6c732ee35	2026-06-28	fix(windows): set websocket idle policy
+a728bcb4725437fbafd2ed4ff2f4e4855df0c17a	2026-06-28	fix(windows): install scheduler task from xml
+3f448e58aaebbdc355a2d712dcc04ca80a52896b	2026-06-28	fix(windows): keep passthrough sse body native
+e875dd797a8fe33932b1b635d531ee664e8e26a8	2026-06-27	fix(windows): harden scheduler task args
+f2deaa092e16dc248123dd9b0aa3190654367d99	2026-06-27	fix(windows): expose service diagnostics
+4f76160923502966311ba0346a582b287ac2731b	2026-06-27	fix(windows): log service wrapper startup
+8fdd5fbb94df3ea28ee0f6a92e1999608562cce5	2026-06-27	fix(windows): record responses close reasons
+5e514ee015374aac19e2de5cb27abc79ab4ce246	2026-06-27	fix(windows): avoid passthrough stream rewrap
+f65de982a1008be7a6d8443cb3dbdda135f57cdf	2026-06-27	fix(windows): disable responses request timeout
+aac6ce7840a59318ad158514d7088411d2db0a90	2026-06-27	fix: add windowsHide to detached proxy spawns
+45861703c307909fd7d32d82bc7160927f665cf9	2026-06-27	fix: add process.on(exit) handler for Windows SIGTERM gap
+14c2a55d4d2f9dcfb567979d5fef16d31a8e3e23	2026-06-26	fix: add windowsHide to detached proxy spawns
+d83f10ebfe7b7e5fa653751123d51990d1afa18f	2026-06-26	fix: add process.on(exit) handler for Windows SIGTERM gap
+34f1a008465b8a0269ac51dd01bd51d5f36360cb	2026-06-21	Skip Unix shim execution test on Windows
+fdf4ba4bd14dbe926120ad129928c3c9105fa9c9	2026-06-21	fix: use rundll32 on Windows and add URL scheme guard in openUrl
+63cac58218c8992d6d3e2df755d4fef2f1728dae	2026-06-21	fix: repair Codex shim after ocx update on Windows
+88050b44760d51f16a0c7aad0b4727aa78179bdb	2026-06-20	[agent] fix: center-align README tagline + fix Windows CI schtasks query exit code
+34a19a5985ead7d8a969a1a4c2a5e32a49c2fd1a	2026-06-20	Fix Windows proxy stop verification
+62edb7b66516ac9621b18ca8d1366ed26449b215	2026-06-20	Harden Windows service Codex home handling
+a9dd24f086036e295fc1e341c41f837c1ff90335	2026-06-19	feat(70): Windows/Linux use own OAuth storage, drop secret-tool detection
+91f0875960493a5d131e15bd2146781af2c51d08	2026-06-19	feat(70): extract cross-platform openUrl() utility — Windows + Linux browser open

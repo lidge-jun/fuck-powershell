@@ -63,6 +63,12 @@ Console-subsystem binaries get a new console at CreateProcess when the parent ha
 
 Cases: [windowstyle-hidden-vs-windowshide](/fuck-powershell/cases/args-quoting/windowstyle-hidden-vs-windowshide/)
 
+## CRLF residue after LF-only splitting
+
+Windows tools end lines with CRLF, so splitting text on LF alone leaves a trailing CR on every line; exact comparisons and anchored patterns then fail against a character that is invisible in editors, diffs, and terminal output.
+
+Cases: [split-n-leaves-cr](/fuck-powershell/cases/encoding/split-n-leaves-cr/)
+
 ## culture parsing
 
 Numeric/date casts honor the host culture; comma-decimal locales parse differently than invariant culture.
@@ -217,5 +223,5 @@ Cases: [dollar-backslash-vars](/fuck-powershell/cases/args-quoting/dollar-backsl
 
 Win32 trims trailing dots/spaces from paths at the API boundary; different runtimes normalize differently, so existence checks disagree.
 
-Cases: [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/)
+Cases: [esm-is-main-file-url](/fuck-powershell/cases/env-paths/esm-is-main-file-url/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/)
 
