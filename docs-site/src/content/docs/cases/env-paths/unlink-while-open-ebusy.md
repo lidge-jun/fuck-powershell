@@ -105,5 +105,6 @@ process. Here, no unlink semantics free your file.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/26>
 - <https://github.com/lidge-jun/ima2-gen/commit/19c7335b2>
 - <https://github.com/lidge-jun/ima2-gen/commit/513eab41e>

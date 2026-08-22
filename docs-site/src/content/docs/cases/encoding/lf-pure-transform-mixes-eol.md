@@ -107,5 +107,6 @@ becomes inconsistent.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/30>
 - <https://github.com/lidge-jun/opencodex/commit/22561a4598bb75e7b254474c1f998f025dda7a58>
 - <https://github.com/lidge-jun/opencodex/commit/b394b035b>

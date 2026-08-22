@@ -96,4 +96,5 @@ supervisor to ask, so any code that assumes one invents an answer.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/25>
 - <https://github.com/lidge-jun/cli-jaw/commit/955d2b3f7bbac00874a73a07d130bc09bcf0ec93>

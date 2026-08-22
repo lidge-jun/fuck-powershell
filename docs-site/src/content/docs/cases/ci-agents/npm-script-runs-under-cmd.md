@@ -103,4 +103,5 @@ different interpreter based on the host, and `npm run` never says so.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/23>
 - <https://github.com/lidge-jun/cli-jaw/commit/ddb347bf1421bff6f5ea7591d8582a83d264929a>

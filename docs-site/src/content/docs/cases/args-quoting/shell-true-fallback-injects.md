@@ -106,4 +106,5 @@ is now interpreted rather than passed.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/21>
 - <https://github.com/lidge-jun/cli-jaw/commit/8f294b449a99acee7c0e0f7057898008fef9f441>

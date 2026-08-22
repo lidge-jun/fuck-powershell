@@ -94,6 +94,7 @@ report success is what makes the process report corruption.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/28>
 - <https://github.com/lidge-jun/ima2-gen/commit/fdc875930>
 - <https://github.com/lidge-jun/ima2-gen/commit/35a703b0d>
 - <https://github.com/lidge-jun/ima2-gen/commit/d066ab30d>

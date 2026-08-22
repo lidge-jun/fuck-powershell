@@ -89,4 +89,5 @@ the system, genuinely related to WSL, and still the wrong thing to test.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/24>
 - <https://github.com/lidge-jun/cli-jaw/commit/4a2bbefd2ca71328dab787e6fad88776d1b9381f>

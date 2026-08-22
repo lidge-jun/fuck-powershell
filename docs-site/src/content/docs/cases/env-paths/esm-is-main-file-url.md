@@ -110,4 +110,5 @@ separator, `pathext-bare-name-enoent` is extension resolution. This one is about
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/19>
 - <https://github.com/lidge-jun/codexclaw/commit/319371421bb9034756f68f99a406f85cd2694dda>

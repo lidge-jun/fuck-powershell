@@ -8,6 +8,7 @@ context: [script, ci, agent]
 source: first-party
 repro: historical
 refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/22
   - https://github.com/lidge-jun/cli-jaw/commit/955d2b3f7bbac00874a73a07d130bc09bcf0ec93
 ontology:
   affects: [shell-cmd, env-windows, env-korean-codepage]

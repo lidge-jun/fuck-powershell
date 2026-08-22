@@ -8,6 +8,7 @@ context: [script, agent, ci]
 source: first-party
 repro: historical
 refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/34
   - https://github.com/lidge-jun/opencodex/commit/1d9e196e7
   - https://github.com/lidge-jun/opencodex/commit/cdc16e5a7
   - https://github.com/lidge-jun/opencodex/commit/438b8dcf4

@@ -8,6 +8,7 @@ context: [interactive, script, agent]
 source: first-party
 repro: historical
 refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/26
   - https://github.com/lidge-jun/ima2-gen/commit/19c7335b2
   - https://github.com/lidge-jun/ima2-gen/commit/513eab41e
 ontology:

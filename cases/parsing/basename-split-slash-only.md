@@ -8,6 +8,7 @@ context: [agent, script, ci]
 source: first-party
 repro: historical
 refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/31
   - https://github.com/lidge-jun/opencodex/commit/fe1a5ea2cc552f4f46ddfc515d03ea5ac0ab1b3a
 ontology:
   affects: [env-windows, runtime-node]

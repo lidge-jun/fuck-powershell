@@ -95,4 +95,5 @@ BOM helps PowerShell 5.1 and actively breaks a batch file.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/22>
 - <https://github.com/lidge-jun/cli-jaw/commit/955d2b3f7bbac00874a73a07d130bc09bcf0ec93>

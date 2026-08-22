@@ -86,4 +86,5 @@ confusion, opposite failure mode.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/27>
 - <https://github.com/lidge-jun/ima2-gen/commit/0a18d552a>

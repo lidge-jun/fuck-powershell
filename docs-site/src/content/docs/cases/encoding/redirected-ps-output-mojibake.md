@@ -96,4 +96,5 @@ it dies.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/32>
 - <https://github.com/lidge-jun/opencodex/commit/f642a7b1f>

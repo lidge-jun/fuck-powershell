@@ -90,4 +90,5 @@ fine, the file is valid, and one invisible byte per line breaks equality.
 
 ## Refs
 
+- <https://github.com/lidge-jun/fuck-powershell/issues/20>
 - <https://github.com/lidge-jun/codexclaw/commit/2c3801a1bf2a72aa83cdbf15a71fd0fbf224de25>
