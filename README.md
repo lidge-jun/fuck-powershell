@@ -1,8 +1,11 @@
 # fuck-powershell
 
-A reproducible-case archive of PowerShell landmines: the places where POSIX
-assumptions, innocent-looking aliases, and Windows PowerShell 5.1 legacy behavior
-quietly (or loudly) destroy cross-platform scripts, CI pipelines, and coding agents.
+A reproducible-case archive of Windows shell & process landmines: the places
+where POSIX assumptions, innocent-looking aliases, spawn semantics, and Windows
+PowerShell 5.1 legacy behavior quietly (or loudly) destroy cross-platform
+scripts, CI pipelines, and coding agents. PowerShell is the brand; the corpus
+covers cmd.exe, Node/Bun spawn, PATH/PATHEXT, encodings, Win32 paths, and CI
+runners too.
 
 The name is the mood. The content is serious: every case is a real failure with a
 **Symptom / Repro / Cause / Workaround** writeup and a citation to a real public
@@ -23,6 +26,22 @@ agents can avoid them.
   `cases/<category>/<id>.md`, YAML frontmatter (category, affected versions,
   failure mode, context).
 - **Docs site**: https://lidge-jun.github.io/fuck-powershell/ (live render)
+- **Ontology**: every case carries typed edges (mechanism, error signature,
+  safe/unsafe workarounds). Browse it live under /ontology/, or build locally:
+  `bun scripts/build-graph.mjs && bun scripts/validate-graph.mjs`.
+
+## Query before you patch (fp)
+
+```
+git clone https://github.com/lidge-jun/fuck-powershell ~/.fuck-powershell
+bun ~/.fuck-powershell/scripts/fp.mjs preflight --runtime node --operation spawn --target npm
+bun ~/.fuck-powershell/scripts/fp.mjs errors einval
+bun ~/.fuck-powershell/scripts/fp.mjs search "iex exit terminal"
+```
+
+`fp preflight` walks the landmine graph and returns ranked cases + constraints
+as JSON (`--json`) — wire it into your agent's pre-patch hook. The bundled
+skill (below) documents the full retrieval policy.
 
 ## Install the agent skill
 
