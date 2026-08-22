@@ -1,0 +1,46 @@
+0757b10e8f|2026-08-09|Merge pull request #1347 from wade19990814-hue/fix/windows-popup-hidden-spawn
+0a90477616|2026-08-14|fix(windows): avoid PowerShell WindowStyle argv under Bun
+0deda7caff|2026-07-25|fix(service): use one UAC for create+run and fail closed on /run
+12d0c34d2e|2026-08-15|feat(gui): surface Codex staleness on the models tab
+13a76a38a9|2026-07-31|fix(tray): keep the Windows autostart Run entry under 260 characters (#696)
+18cf8435f7|2026-07-07|fix(wsl): guard against WSL+Windows dual Codex installs
+19afd9e37b|2026-08-18|fix(cursor): keep native-exec recovery guidance host-shell-neutral
+2435836dd0|2026-07-18|fix: keep configured port after update restart and stop Windows console flashes
+2ade543633|2026-08-02|fix(codex): scope the Bun provenance marker to the ensure call
+355640da90|2026-08-07|docs(devlog): reuse the existing trusted System32 resolver in the #1149 plan
+356ae7b0a7|2026-08-03|fix(ready): keep readiness discovery free of killable-pid OS verification
+393d72a779|2026-08-18|fix(windows): stop the service wrapper killer using the argv Bun rejects
+39b0eeedaa|2026-08-17|devlog: open the Windows stability program unit
+4368bb3520|2026-08-11|fix(windows): type ARM64 principal fallback failure
+4ff8456e4a|2026-08-19|test(windows): give the async catalog enumeration a real oracle
+627eecf6ef|2026-08-17|fix(windows): resolve icacls from trusted System32 path
+6ec6ffc755|2026-08-03|test(app-server): tolerate a thrown CIM deadline in the live enumeration test
+751dd8e4f7|2026-08-01|fix(update): backend-aware Windows stop and safer restart edges
+760b287bc5|2026-07-31|fix(kiro): give Windows users an install command they can run
+76a81b060b|2026-08-10|fix(fab08a): cycle-4 selectedSkillId on-wire + auth retry coverage
+81f3f689af|2026-07-31|test(tray): budget the socket-inheritance proof for what it actually does
+8946a10261|2026-08-15|fix(tests): give the Windows test sandbox a real profile shape
+93406f66fb|2026-06-19|feat(70): platform compat patches, install scripts, README platform table
+93a083d1fc|2026-08-09|fix(windows): stop console popups from proxy-internal PowerShell lookups (#1236)
+960c7a934e|2026-08-17|perf(windows): memoize the per-process identity lookups
+9a6e20e6a1|2026-07-18|docs(install): correct bun postinstall recovery command across install surfaces
+9d1bb14606|2026-07-26|Merge pull request #505 from lidge-jun/agent/fix-orca-powershell-separator
+a00f1a4618|2026-07-26|fix(cli): separate PowerShell recovery commands
+a18acd6ad1|2026-07-31|test: stop two suites from waiting on the Windows runner
+ac8c0d2dfd|2026-08-17|fix(windows): preserve scheduled-task elevation launcher arguments (#1860)
+af1229de8e|2026-08-18|Merge pull request #1944 from lidge-jun/codex/win-010-powershell-argv
+afb011f1cf|2026-07-10|fix(win): skip non-executable shim backups in codex probe candidates
+b7b34a9ff4|2026-08-20|fix(windows): widen the identity-lookup budget on CI runners only
+bcb9aaa3b8|2026-08-10|fix(fab08a): cycle-4 selectedSkillId on-wire + auth retry coverage
+c55db9d9ff|2026-07-25|fix(service): resolve elevated Windows binaries via GetSystemDirectoryW
+ca7923a59b|2026-08-19|test(windows): make the #1852 oracles portable and timing-free
+d0b5989b79|2026-06-20|fix(ci): reset exit code in windows schtasks uninstall step
+d435ce3854|2026-07-25|fix(service): harden elevation scripts and timeout reconciliation
+d44e567352|2026-07-29|fix(cursor): steer Windows bridge shell away from PS 5.1 syntax loops (#627)
+d55bc920db|2026-08-19|test(windows): guard all three async wirings behind #1852
+dcaede6e58|2026-07-29|fix(cursor): steer Windows bridge shell away from PS 5.1 syntax loops (#627)
+e78fff1dc9|2026-07-31|test: give slow-work budgets one home and one rule
+ebd4cdf027|2026-07-31|docs(plan): record why Windows CI was red three different ways
+ed0d5af35f|2026-08-17|docs(devlog): record the WP3 outcome, including two self-inflicted defects
+ee7c252fcb|2026-07-31|docs(plan): finish the flake taxonomy — four classes, two opposite fixes
+ff6916abcd|2026-07-02|fix(platform): Windows/Linux deploy stability — encoding, graceful stop, loopback, spawn hardening

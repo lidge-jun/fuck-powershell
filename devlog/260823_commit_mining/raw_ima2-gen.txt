@@ -1,0 +1,10 @@
+1442bd1f|2026-04-26|feat(pages): add FAQ detail page + one-click install scripts
+208f7590|2026-04-26|fix(pages): render inline code in FAQ answers
+43a935f9|2026-08-14|fix(ci): pin the dispatched-SHA assertion to bash
+5cfb9cbb|2026-04-23|fix(ci,pkg): ship lib/ in npm, cross-platform test runner, rollup optional deps
+a14cdd7f|2026-05-31|fix(windows): use shell:true for OAuth proxy spawn (same fix as grok)
+b248b333|2026-04-26|fix(pages): connect FAQ from header + render code blocks properly
+b968cc58|2026-05-31|fix(windows): use absolute path to progrok binary instead of PATH lookup
+e1828b43|2026-06-03|docs: AGY Windows cross-platform research and inventory
+e59b6549|2026-04-23|0.09.2: address codex audit follow-ups (W2/L1/T1)
+f7a0c9d8|2026-04-26|chore(scripts): drop duplicate installers from image_gen

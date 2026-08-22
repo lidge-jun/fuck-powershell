@@ -1,0 +1,46 @@
+00c171e15|2026-08-05|docs,ci: document the platform resolver and run detection tests on real Windows
+0e576b2ce|2026-08-15|test(windows): make the #368 guards mutation-resistant and run the missing paths
+0efd755ed|2026-08-12|fix(windows): give the spawned agent a PATH it can actually use
+19cbb01ef|2026-08-15|test(windows): pin the install.ps1 hardening contract in the default suite (#368)
+1f500fe5b|2026-08-15|feat(windows): wire the opt-in bootstrap into install.ps1 (#369)
+222b83a10|2026-08-14|fix(release): the publish gate reads the installer surface it does not own
+2e83b632a|2026-08-12|chore: update officecli for PowerShell batch diagnostics (#313)
+322ac1801|2026-08-04|test(install): contract suites, 3-OS scriptless CI smoke, install-integrity gate
+380e26346|2026-08-05|feat(cli-detect): Windows-native shim resolution and spawnability
+3d198e2b8|2026-08-15|test(windows): assert what the PATH guidance must CONTAIN, not only what it must not
+3e4cf7f17|2026-08-15|chore: promote v2.17.0 (#374)
+4f7d8ad0f|2026-05-19|docs: move safe install above normal install, add PowerShell variant
+514f9a9cd|2026-08-15|fix(windows): harden the native PowerShell installer
+51afe8434|2026-08-15|fix(test): normalize install-ps1-contract.ps1 to canonical CRLF
+58e60031a|2026-08-15|docs(i18n): make policy fields drive visible prose, not just metadata (#373)
+5fe703a73|2026-08-18|fix(install): strict-mode-safe install.ps1 manifest reads + PATH persistence; run tsc/tsx JS entries through node instead of .bin shims (#381)
+6b4e26f96|2026-08-15|feat(windows): pinned, hash-verified bootstrap planning for #369 (opt-in subset)
+6cf7c09ee|2026-08-04|test(install): align legacy contracts with the hardened install surface
+7052c0c37|2026-08-19|chore: promote v2.17.6 (#392)
+766bdb38e|2026-02-26|feat: cross-platform support for WSL, Linux, and Windows
+767132683|2026-08-15|fix(test): repair a PowerShell regex that would fail the Windows lane (#368)
+771531124|2026-08-12|fix(officecli): fail the installer with the reason instead of a 404 (#280)
+7f0c655be|2026-08-12|fix(windows): stop shipping BOM-less PowerShell and tell agents the shell rules (#302, #310)
+8c72d7568|2026-08-15|fix(test): relax ErrorActionPreference around the expected -File failure
+98bd4aa4b|2026-08-12|feat(core): Windows shell taxonomy with pwsh/PowerShell/GitBash/cmd detection
+9c54064c9|2026-04-13|[agent] feat: officecli global postinstall integration and PowerShell installer
+a01d3b04f|2026-08-12|chore: update skills_ref for the Windows officecli probe (#298)
+a09dc4ab6|2026-08-05|fix(cli-detect): keep PATH precedence and PATHEXT-launchable candidates
+a5d9aa927|2026-08-15|docs(i18n): sync native Windows guidance across all four READMEs (#373)
+a967f0ba4|2026-04-13|[agent] feat: officecli global postinstall integration and PowerShell installer
+b1b2a8efc|2026-08-12|chore: update officecli for PowerShell batch diagnostics
+b3bd71f24|2026-08-11|fix(install): launch npm.cmd through cmd.exe, not execFile (#274)
+ba1c15795|2026-08-12|docs: record the three Windows shell hazards agents keep hitting (#302, #298, #296)
+beeff7cd9|2026-02-26|fix(postinstall): add scripts/ to files, Windows .cmd shim, execFileSync
+c38c3f527|2026-08-16|Merge remote-tracking branch 'origin/main' into dev
+c689c444a|2026-08-19|fix(windows): make the release gates and their mirror tests run on a native-Windows checkout
+c7f128491|2026-08-19|chore: promote v2.17.5 (#389)
+cb9a4b999|2026-08-15|fix(windows): restrict direct launch to real executables; repair a false-positive test (#367)
+d106d4278|2026-08-19|fix(windows): make the release gates and their mirror tests run on a native-Windows checkout
+dccabcd05|2026-08-15|ci(windows): run the Windows-critical suites on a real Windows runner (#371)
+e07b8eecd|2026-08-19|fix(ci): make the windows-unit and install.ps1 lanes pass on windows-latest
+e9d977964|2026-08-15|docs(i18n): generate the Windows block instead of linting prose (#373)
+eeb2a466d|2026-08-12|test(officecli): gate PowerShell cases to Windows
+ef37baf6e|2026-05-19|docs: move safe install above normal install, add PowerShell variant
+f0020c663|2026-08-04|feat(install): user surfaces — allow-scripts in installers, Windows beta ps1, README recovery rows
+fd15f93b7|2026-08-15|test(windows): close three fail-open gaps in the #368 guards

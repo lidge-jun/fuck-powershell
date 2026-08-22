@@ -1,0 +1,1 @@
+58fca581|2026-07-12|docs(skills): add Windows/Linux cross-platform alternatives to 9 skill files
