@@ -1,0 +1,27 @@
+{
+  "phase": "IDLE",
+  "sessionId": "01a028de-6d96-7493-9cb8-0a6539543ef4",
+  "slug": "extend-the-fuck-powershell-corpus-with-non-dupli",
+  "updatedAt": "2026-08-22T16:12:46.996Z",
+  "flags": {
+    "interview": false,
+    "auditPassed": false,
+    "checkPassed": false
+  },
+  "supersededBy": null,
+  "injectedTurns": [],
+  "lastInjectedPhase": null,
+  "orchestrationActive": false,
+  "interview": null,
+  "stopBlockPhase": null,
+  "stopBlockCount": 0,
+  "stopBlockWorkPhaseId": null,
+  "stopMetricCursor": 0,
+  "stopBlockTotal": 0,
+  "loopArmSeen": false,
+  "idleEditNudges": 0,
+  "phaseEntrySource": null,
+  "planUnit": null,
+  "planEpoch": null,
+  "checkEpoch": null
+}

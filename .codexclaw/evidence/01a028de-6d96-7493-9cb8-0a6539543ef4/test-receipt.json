@@ -1,0 +1,14 @@
+{
+  "kind": "test",
+  "sourceIdentity": {
+    "kind": "resolved",
+    "commitSha": "9930036e4c4f57ef9fb9969b7ad7d65a9c0aa63a",
+    "dirty": false,
+    "capturedAt": "2026-08-22T16:12:46.782Z"
+  },
+  "command": "bash -c bun scripts/lint-cases.mjs && bun scripts/build-graph.mjs && bun scripts/validate-graph.mjs && for r in codexclaw cli-jaw ima2-gen agbrowse opencodex; do bun scripts/check-coverage.mjs $r; done",
+  "exitCode": 0,
+  "createdAt": "2026-08-22T16:12:46.794Z",
+  "ownerSessionId": "01a028de-6d96-7493-9cb8-0a6539543ef4",
+  "checkEpoch": "c-20260822160954-7aae50"
+}

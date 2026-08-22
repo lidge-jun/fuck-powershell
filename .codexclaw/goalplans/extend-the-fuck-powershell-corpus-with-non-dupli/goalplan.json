@@ -2,8 +2,8 @@
   "objective": "Extend the fuck-powershell corpus with non-duplicate Windows/PowerShell failure cases mined from codexclaw, cli-jaw, ima2-gen, agbrowse, opencodex — one repo per PABCD work-phase in that order, docs-first, with 100% SHA disposition coverage, ontology+skill+site+README+issues kept consistent, and pushed public.",
   "slug": "extend-the-fuck-powershell-corpus-with-non-dupli",
   "createdAt": "2026-08-22T14:30:31.226Z",
-  "updatedAt": "2026-08-22T15:19:15.842Z",
-  "activeWorkPhaseId": "wp2",
+  "updatedAt": "2026-08-22T16:12:46.997Z",
+  "activeWorkPhaseId": null,
   "workPhases": [
     {
       "id": "wp0",
