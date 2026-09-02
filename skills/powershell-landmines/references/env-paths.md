@@ -682,6 +682,140 @@ refused, the conversion succeeds, and the separators simply become data.
 ---
 
 
+# new URL(...).pathname of a file: URL is '/D:/a/...' on Windows, so bun and node cannot open the script you just resolved
+
+## Symptom
+
+A test that spawns a sibling CLI script exits 1 on Windows only, and the assertion that catches
+it says nothing useful:
+
+```
+(fail) dev version bump rule > the CLI rewrites only the version line
+error: expect(received).toBe(expected)
+Expected: 0
+Received: 1
+```
+
+Worse, the case that expected a nonzero exit for malformed input stayed green: it read the
+load failure as a correct rejection. Three real cases red, one false green, no message.
+
+## Repro
+
+```js
+// tests/x.test.ts
+const CLI = new URL("../scripts/tool.ts", import.meta.url).pathname;
+console.log(CLI);
+Bun.spawnSync(["bun", CLI]).exitCode;   // 1 on Windows
+```
+
+```powershell
+PS> bun test x.test.ts
+/D:/a/repo/scripts/tool.ts
+```
+
+`node` behaves the same: `error: Cannot find module '/D:/a/repo/scripts/tool.ts'`.
+
+## Cause
+
+A `file:` URL on Windows is `file:///D:/a/repo/scripts/tool.ts`. The URL's `pathname` is
+everything after the authority, so it starts with a slash and the drive letter is just the
+first path segment: `/D:/a/repo/...`. That is a valid URL path and an invalid Windows path.
+On POSIX the two representations coincide, which is why the shortcut survives every other
+platform.
+
+`import.meta.url`, `import.meta.resolve`, and `new URL(specifier, base)` all produce URLs;
+they are not paths. Only `fileURLToPath` performs the conversion, and it also decodes
+percent-escapes (`%20`) that `pathname` would leave in place.
+
+## Workaround
+
+```ts
+import { fileURLToPath } from "node:url";
+const CLI = fileURLToPath(new URL("../scripts/tool.ts", import.meta.url));
+Bun.spawnSync([process.execPath, CLI, ...args]);
+```
+
+Two habits close the false-green gap too: include the child's stderr in the assertion message
+so an exit code comes with its reason, and assert the specific rejection text in negative
+cases rather than "any nonzero exit".
+
+Sibling cases: `file-url-encodes-backslash` (the reverse conversion), `esm-is-main-file-url`
+and `dynamic-import-needs-file-url` (where a path must become a URL).
+
+
+
+---
+
+
+# fsyncSync on a handle opened with 'r' throws EPERM on Windows, so a durable write that reopens read-only to flush fails only there
+
+## Symptom
+
+A write-then-flush routine that is correct on Linux and macOS dies on Windows at the flush:
+
+```
+error: EPERM: operation not permitted, fsync
+    at fsyncRegularFile (src/lib/service-secrets.ts:70)
+    at writeTokenBackup (src/lib/service-secrets.ts:81)
+```
+
+The file is fully written. Nothing is locked. The same code has run for months on POSIX
+runners. Every caller of the routine — token backup, replace, restore, and a child process
+that calls it on startup — fails identically, which reads like a permissions problem on the
+directory until you look at the flags.
+
+## Repro
+
+```js
+import { closeSync, fsyncSync, openSync, writeFileSync } from "node:fs";
+writeFileSync("probe", "x");
+const fd = openSync("probe", "r");
+fsyncSync(fd);      // Linux/macOS: fine. Windows: EPERM
+closeSync(fd);
+```
+
+```powershell
+PS> node repro.mjs
+node:fs:...  Error: EPERM: operation not permitted, fsync
+```
+
+Open with `"r+"` and the same call succeeds.
+
+## Cause
+
+`fsync` on Windows is `FlushFileBuffers`, and `FlushFileBuffers` requires a handle with
+`GENERIC_WRITE` access. A handle opened for reading only does not have it, so the kernel
+refuses with `ERROR_ACCESS_DENIED`, which libuv maps to `EPERM`.
+
+POSIX `fsync(2)` has no such rule: any descriptor for the file will do, because the flush is
+about the file's dirty pages, not the descriptor's mode. That asymmetry is why "open read-only,
+fsync, close" is a common idiom in code that separates the write from the durability step —
+the write helper closes its own descriptor, and a later step reopens the path just to flush.
+
+## Workaround
+
+Open the flush handle with write access:
+
+```ts
+function fsyncRegularFile(path: string): void {
+  const fd = openSync(path, "r+");   // not "r"
+  try { fsyncSync(fd); } finally { closeSync(fd); }
+}
+```
+
+`"r+"` fails if the file does not exist, which is the right behaviour for a flush of something
+you just wrote. If the file may be read-only on disk, `O_RDWR` will fail too; in that case
+flush through the descriptor the write used before closing it, which is also cheaper.
+
+Pin it with a test that spies on `openSync` and asserts no `"r"` reaches the flush path; the
+contract is invisible on POSIX otherwise. Directory handles are a separate story — Windows
+cannot fsync them at all, and that path should be best-effort.
+
+
+
+---
+
+
 # icacls /inheritance:r before the grant leaves a file with no ACEs at all, so an interrupted hardening script locks every consumer out of a file that still says you own it
 
 ## Symptom

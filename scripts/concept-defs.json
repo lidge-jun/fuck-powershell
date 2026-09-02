@@ -488,5 +488,17 @@
   "workaround-retry-transient-remove": {
     "d": "Retry rmSync on EPERM, EBUSY and ENOTEMPTY with a short bounded backoff to ride out antivirus and indexer handles on freshly written files.",
     "u": "As the primary fix it masks an unowned child: the retry budget is a guess, the child still runs, and outside the test the same handle blocks an uninstaller or a home move."
+  },
+  "mechanism-flush-needs-write-access": {
+    "d": "On Windows fsync is FlushFileBuffers, which requires a handle opened with GENERIC_WRITE; a read-only handle is refused with ERROR_ACCESS_DENIED (EPERM), where POSIX fsync accepts any descriptor for the file."
+  },
+  "workaround-fsync-on-rdwr-handle": {
+    "d": "Open the handle used for fsync with \"r+\"/O_RDWR, or flush through the descriptor the write used before closing it; never reopen read-only just to flush."
+  },
+  "mechanism-file-url-scheme-path": {
+    "d": "A file: URL's pathname keeps the leading slash and treats the drive letter as the first segment (/D:/a/...), which is a valid URL path but not a Windows filesystem path; only fileURLToPath converts and decodes it."
+  },
+  "workaround-file-url-to-path": {
+    "d": "Convert import.meta.url-derived URLs with fileURLToPath before handing them to spawn, fs, or a runtime CLI; pathname is never a filesystem path on Windows."
   }
 }
