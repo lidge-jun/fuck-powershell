@@ -9,6 +9,8 @@ source: first-party
 repro: verified
 refs:
   - https://github.com/lidge-jun/opencodex/actions/runs/33590540220
+  - https://github.com/lidge-jun/opencodex/actions/runs/33941712300
+  - https://github.com/lidge-jun/opencodex/pull/3610
 ontology:
   affects: [env-windows, runtime-node, runtime-bun]
   manifests_as: [error-enoent, error-exit-code-leak]
@@ -76,3 +78,17 @@ cases rather than "any nonzero exit".
 Sibling cases: `file-url-encodes-backslash` (the reverse conversion), `esm-is-main-file-url`
 and `dynamic-import-needs-file-url` (where a path must become a URL).
 
+## Repeated occurrence: quota-reset child probes
+
+OpenCodex's post-merge Windows run 33941712300 repeated this in two new tests:
+`quota-reset-seen-store.test.ts` generated a dynamic import from `.pathname`
+(empty stdout, expected `true`), while `quota-reset-observation.test.ts` passed
+`.pathname` as the child script argument (exit 1). Neither assertion exposed
+the child's stderr. The final passing Windows verification is separate from
+that baseline; PR #3610 carries the correction and its verification status.
+
+The two consumers require different representations: preserve `new URL(...).href`
+for `import()`, but use `fileURLToPath` for the spawn script argument. Do not
+repair both by stripping the leading slash or by turning the import URL into a
+drive-prefixed specifier. Use `process.execPath` and consume stdout, stderr, and
+the exit promise together; assert exit zero before interpreting stdout.

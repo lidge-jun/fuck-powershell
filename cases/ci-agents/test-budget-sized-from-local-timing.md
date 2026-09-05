@@ -8,6 +8,8 @@ context: [ci, agent]
 source: first-party
 repro: verified
 refs:
+  - https://github.com/lidge-jun/opencodex/actions/runs/33941712300
+  - https://github.com/lidge-jun/opencodex/pull/3610
   - https://github.com/lidge-jun/opencodex/actions/runs/33920624827
   - https://github.com/lidge-jun/opencodex/actions/runs/33923803071
   - https://github.com/lidge-jun/opencodex/actions/runs/33926041666
@@ -117,3 +119,21 @@ rejection that fires between the race settling and a later `catch` is already un
 
 Raising only the one failing case is the unsafe fix: on a runner with 2× variance the next
 case is simply the next one over the line, and each round costs a 25-minute CI cycle.
+
+## Counterexample: expensive setup is not an intrinsic wait
+
+The quota-reset claim-ceiling test in Windows run 33941712300 took 99.26 seconds
+against a 60-second budget. Its loop attempted 2,000 claims, but the assertion
+was about a map cap of 1,024, not about a thousand successful durable writes.
+Precisely 1,024 successful insertions persist during that setup; later
+furthest-deadline newcomers are evicted before persistence. The writer performs
+synchronous atomic persistence and Windows ACL work. Do not call this measured
+fsync overhead without a trace identifying fsync.
+
+PR #3610 seeds 1,023 valid live records, then performs real insertions that reach
+and exceed the cap. It checks exact count, eviction victim, persisted contents,
+rehydration, and rejection of a furthest-deadline newcomer. Only two production
+writes remain. Removing insertion pruning makes this fixture fail with 1,025
+instead of 1,024; restoring it passes. No cap, timeout, durability, or ACL policy
+is weakened. Seed ordinary setup, but still cross the behavior's boundary through
+the public operation, and prove the test fails when that behavior is removed.
