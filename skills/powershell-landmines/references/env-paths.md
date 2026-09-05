@@ -1,4 +1,102 @@
 
+# rmSync hits EPERM right after a clean server.stop() because a fire-and-forget icacls.exe still holds the directory
+
+## Symptom
+
+A test suite that starts a server, stops it with `await server.stop(true)`, and then removes its
+scratch home fails in the teardown, not in the test:
+
+```
+error: EPERM: operation not permitted, rm 'D:\a\opencodex\opencodex\tests\.tmp-codex-accounts-test'
+error: EBUSY: resource busy or locked, rm 'C:\Users\RUNNER~1\AppData\Local\Temp\ocx-api-usage-esM6Go'
+```
+
+Four Windows CI shards went red on every branch, including the released `main`, for three days.
+Linux and macOS stayed green on the same commits. Individual test bodies passed; the
+`afterEach` hook failed, and when the hook shared one fixed directory across cases, the first
+failure poisoned every later case in the file (49 of 49 errors in one file, 377 in another were
+hooks, not assertions).
+
+## Repro
+
+```js
+// child.mjs — any child that touches the directory and outlives its parent's "done"
+import { spawn } from "node:child_process";
+import { mkdirSync, rmSync } from "node:fs";
+
+mkdirSync("scratch", { recursive: true });
+// icacls holds the directory handle for the duration of the ACL rewrite
+spawn("icacls.exe", ["scratch", "/inheritance:r", "/grant:r", "*S-1-5-32-544:(OI)(CI)F"], { stdio: "ignore" });
+// "shutdown" that forgot about the child
+rmSync("scratch", { recursive: true, force: true });
+// → EPERM on Windows; silently fine on Linux/macOS
+```
+
+```powershell
+PS> node child.mjs
+node:fs:...  Error: EPERM: operation not permitted, rm 'scratch'
+```
+
+## Cause
+
+Two Windows facts combine:
+
+1. File locking is mandatory. A handle opened without `FILE_SHARE_DELETE` — which is what every
+   ordinary process, including `icacls.exe`, holds while it works on a directory — makes the
+   kernel refuse `unlink` (`EPERM`) and `rename` (`EBUSY`) until the handle closes. POSIX only
+   removes the name; the data lives until the last descriptor goes away, so the same code never
+   notices there.
+2. Nothing ties a child's lifetime to its parent's notion of "finished". A `spawn` whose promise
+   is dropped keeps running. `server.stop()` awaited listeners, background jobs and lifecycle
+   hooks — everything the server started on purpose — but not the ACL flight a config read
+   kicked off as an optimisation (`hardenConfigDir()` → `hardenSecretDirAsync()`, unawaited,
+   introduced to stop the event loop from blocking on a slow `icacls`).
+
+The regression was invisible on the machines developers use, and the CI signal was gated behind
+`workflow_dispatch`, so it was attributed to "the hosted runner" for three days. It was the
+product: the same suites had passed on the same `windows-latest` image before the async change.
+
+## Workaround
+
+The shutdown contract has to own every child the process started. Scope the flight to the
+directory it works on and await it where you await everything else:
+
+```ts
+// paths.ts
+const flights = new Map<string, Promise<void>>();
+export async function flushConfigDirHardening(dir: string): Promise<void> {
+  const flight = flights.get(dir);
+  if (flight) await flight;
+}
+
+// server.ts
+const configDir = getConfigDir();            // capture BEFORE the flight starts
+server.stop = async () => {
+  await closeListeners();
+  await backgroundLifecycle.release();
+  await flushConfigDirHardening(configDir);  // now rm after stop() is safe
+};
+```
+
+Prove it with a test that holds the child on a promise and asserts `stop()` stays pending until
+the promise resolves; drive it red once by commenting the await out.
+
+Retrying `rmSync` on `EPERM`/`EBUSY` (50 × 50 ms) is a legitimate belt-and-braces for antivirus
+and search-indexer handles, and this repo keeps one for fixtures. It is an unsafe *primary* fix
+here: it hides the unowned child, the retry budget is a guess, and in production the same
+child would still be holding a directory the uninstaller or a home move is about to touch.
+
+---
+
+This is the "who owns the child" half of the file-lifetime story. `unlink-while-open-ebusy`
+is the "who owns the file" half; `kill-hits-one-pid-or-the-whole-tree` is what happens when the
+parent leaves without either.
+
+
+
+---
+
+
 # your atomic write fails intermittently on Windows because antivirus opened the file you are replacing, milliseconds ago
 
 ## Symptom
@@ -579,6 +677,140 @@ next year in a different language.
 a loader refuses a path outright because the drive letter reads as a protocol.
 This is the quiet version, and a different mechanism underneath: nothing is
 refused, the conversion succeeds, and the separators simply become data.
+
+
+---
+
+
+# new URL(...).pathname of a file: URL is '/D:/a/...' on Windows, so bun and node cannot open the script you just resolved
+
+## Symptom
+
+A test that spawns a sibling CLI script exits 1 on Windows only, and the assertion that catches
+it says nothing useful:
+
+```
+(fail) dev version bump rule > the CLI rewrites only the version line
+error: expect(received).toBe(expected)
+Expected: 0
+Received: 1
+```
+
+Worse, the case that expected a nonzero exit for malformed input stayed green: it read the
+load failure as a correct rejection. Three real cases red, one false green, no message.
+
+## Repro
+
+```js
+// tests/x.test.ts
+const CLI = new URL("../scripts/tool.ts", import.meta.url).pathname;
+console.log(CLI);
+Bun.spawnSync(["bun", CLI]).exitCode;   // 1 on Windows
+```
+
+```powershell
+PS> bun test x.test.ts
+/D:/a/repo/scripts/tool.ts
+```
+
+`node` behaves the same: `error: Cannot find module '/D:/a/repo/scripts/tool.ts'`.
+
+## Cause
+
+A `file:` URL on Windows is `file:///D:/a/repo/scripts/tool.ts`. The URL's `pathname` is
+everything after the authority, so it starts with a slash and the drive letter is just the
+first path segment: `/D:/a/repo/...`. That is a valid URL path and an invalid Windows path.
+On POSIX the two representations coincide, which is why the shortcut survives every other
+platform.
+
+`import.meta.url`, `import.meta.resolve`, and `new URL(specifier, base)` all produce URLs;
+they are not paths. Only `fileURLToPath` performs the conversion, and it also decodes
+percent-escapes (`%20`) that `pathname` would leave in place.
+
+## Workaround
+
+```ts
+import { fileURLToPath } from "node:url";
+const CLI = fileURLToPath(new URL("../scripts/tool.ts", import.meta.url));
+Bun.spawnSync([process.execPath, CLI, ...args]);
+```
+
+Two habits close the false-green gap too: include the child's stderr in the assertion message
+so an exit code comes with its reason, and assert the specific rejection text in negative
+cases rather than "any nonzero exit".
+
+Sibling cases: `file-url-encodes-backslash` (the reverse conversion), `esm-is-main-file-url`
+and `dynamic-import-needs-file-url` (where a path must become a URL).
+
+
+
+---
+
+
+# fsyncSync on a handle opened with 'r' throws EPERM on Windows, so a durable write that reopens read-only to flush fails only there
+
+## Symptom
+
+A write-then-flush routine that is correct on Linux and macOS dies on Windows at the flush:
+
+```
+error: EPERM: operation not permitted, fsync
+    at fsyncRegularFile (src/lib/service-secrets.ts:70)
+    at writeTokenBackup (src/lib/service-secrets.ts:81)
+```
+
+The file is fully written. Nothing is locked. The same code has run for months on POSIX
+runners. Every caller of the routine — token backup, replace, restore, and a child process
+that calls it on startup — fails identically, which reads like a permissions problem on the
+directory until you look at the flags.
+
+## Repro
+
+```js
+import { closeSync, fsyncSync, openSync, writeFileSync } from "node:fs";
+writeFileSync("probe", "x");
+const fd = openSync("probe", "r");
+fsyncSync(fd);      // Linux/macOS: fine. Windows: EPERM
+closeSync(fd);
+```
+
+```powershell
+PS> node repro.mjs
+node:fs:...  Error: EPERM: operation not permitted, fsync
+```
+
+Open with `"r+"` and the same call succeeds.
+
+## Cause
+
+`fsync` on Windows is `FlushFileBuffers`, and `FlushFileBuffers` requires a handle with
+`GENERIC_WRITE` access. A handle opened for reading only does not have it, so the kernel
+refuses with `ERROR_ACCESS_DENIED`, which libuv maps to `EPERM`.
+
+POSIX `fsync(2)` has no such rule: any descriptor for the file will do, because the flush is
+about the file's dirty pages, not the descriptor's mode. That asymmetry is why "open read-only,
+fsync, close" is a common idiom in code that separates the write from the durability step —
+the write helper closes its own descriptor, and a later step reopens the path just to flush.
+
+## Workaround
+
+Open the flush handle with write access:
+
+```ts
+function fsyncRegularFile(path: string): void {
+  const fd = openSync(path, "r+");   // not "r"
+  try { fsyncSync(fd); } finally { closeSync(fd); }
+}
+```
+
+`"r+"` fails if the file does not exist, which is the right behaviour for a flush of something
+you just wrote. If the file may be read-only on disk, `O_RDWR` will fail too; in that case
+flush through the descriptor the write used before closing it, which is also cheaper.
+
+Pin it with a test that spies on `openSync` and asserts no `"r"` reaches the flush path; the
+contract is invisible on POSIX otherwise. Directory handles are a separate story — Windows
+cannot fsync them at all, and that path should be best-effort.
+
 
 
 ---

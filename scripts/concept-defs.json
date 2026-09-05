@@ -1,1 +1,504 @@
-{"runtime-node":{"d":"Node.js runtime: child_process spawn semantics, path module, env handling on Windows."},"runtime-bun":{"d":"Bun runtime: Bun.spawn and Node-compat process APIs, with its own Windows spawn quirks."},"runtime-python":{"d":"Python runtime as a downstream consumer of files/streams produced by Windows shells."},"shell-powershell-51":{"d":"Windows PowerShell 5.1 (.NET Framework): legacy encodings, aliases, stream wrapping, no pipeline chain operators."},"shell-pwsh-7":{"d":"PowerShell 7.x (.NET): UTF-8 defaults, && and || support, changed native argument passing (7.3+)."},"shell-cmd":{"d":"cmd.exe: line re-parsing with & | < > ^ % metacharacters, PATH/PATHEXT resolution, .cmd/.bat host."},"shell-gitbash":{"d":"Git Bash (MSYS) on Windows: POSIX-style shell whose path and argv conventions differ from native shells."},"env-windows":{"d":"Windows OS environment: registry-backed env vars, case-insensitive names, Win32 process creation."},"env-actions-runner":{"d":"GitHub Actions Windows runner: default pwsh shell, per-step shell selection, step exit-code semantics."},"env-korean-codepage":{"d":"Korean-locale Windows host where the ANSI code page is CP949, making BOM-less files decode as EUC-KR."},"env-win32-api":{"d":"Win32 API layer: CreateProcess, path normalization, reparse points, console allocation."},"mechanism-pathext-resolution":{"d":"Windows resolves extensionless command names by walking PATH entries and PATHEXT extensions in order; results differ from POSIX execvp and between resolvers."},"mechanism-cmd-reparse":{"d":"Any command line routed through cmd.exe is re-tokenized; metacharacters and newlines inside arguments become command syntax."},"mechanism-registry-env-snapshot":{"d":"Environment variables live in the registry; a process gets a merge snapshot at creation and never sees later writes."},"mechanism-bom-sniffing":{"d":"Windows PowerShell 5.1 decides a script file's encoding by BOM presence; no BOM means the legacy ANSI code page."},"mechanism-default-encoding":{"d":"5.1 cmdlets default to UTF-16LE or ANSI when writing; 7 defaults to BOM-less UTF-8 — same code, different bytes."},"mechanism-stream-wrapping":{"d":"5.1 wraps redirected native stderr lines in ErrorRecord objects, converting output into error-stream objects."},"mechanism-exit-code-propagation":{"d":"Exit codes cross process/host boundaries by convention, not guarantee: hosts, wrappers, and CI steps each apply their own rule."},"mechanism-native-argv-rebuild":{"d":"PowerShell historically rebuilds one command-line string for native processes, re-quoting heuristically; quotes and empty args are lost."},"mechanism-collection-unrolling":{"d":"PowerShell unrolls pipelines: zero items become null, one item loses its array, many become Object[] — types change with count."},"mechanism-execution-policy-gate":{"d":"Execution policy gates script FILES (.ps1, -File) while in-memory command text bypasses it."},"mechanism-alias-shadowing":{"d":"Built-in aliases (curl, wget) and PATH shims shadow the binaries users intend to run."},"mechanism-strictmode-contract":{"d":"Set-StrictMode changes property access on missing members from returning null to throwing."},"mechanism-string-interpolation":{"d":"Double-quoted PowerShell strings interpolate $tokens; backslash is not an escape — backtick is."},"mechanism-culture-parsing":{"d":"Numeric/date casts honor the host culture; comma-decimal locales parse differently than invariant culture."},"mechanism-host-vs-pipeline":{"d":"Write-Host and return semantics: host output bypasses the success pipeline, and functions emit every uncaptured value."},"mechanism-path-delimiter":{"d":"PATH list separator is host-dependent (';' Windows, ':' POSIX); colon-joined lists corrupt drive-letter entries."},"mechanism-env-casing":{"d":"Windows env names are case-insensitive but JS objects are not; Path and PATH can coexist and fight."},"mechanism-appexeclink":{"d":"WindowsApps store aliases are zero-byte IO_REPARSE_TAG_APPEXECLINK files that pass stat probes but EPERM on spawn."},"mechanism-console-allocation":{"d":"Console-subsystem binaries get a new console at CreateProcess when the parent has none — before any flag is parsed."},"mechanism-iex-session":{"d":"Invoke-Expression runs text in the CURRENT session: exit kills the caller's host, and parameters cannot be forwarded."},"mechanism-absent-builtin-noop":{"d":"POSIX builtins absent in PowerShell (command -v) parse as argument noise and fail silently instead of erroring."},"mechanism-cmd-bat-spawn-hardening":{"d":"Node CVE-2024-27980 hardening: spawning .bat/.cmd without shell errors EINVAL (18.20.2/20.12.2/21.7.3+)."},"mechanism-bun-windowstyle-argv-reject":{"d":"Bun 1.3.14 Windows spawn fails outright when powershell.exe argv contains the -WindowStyle Hidden pair."},"mechanism-output-truthiness":{"d":"A native command in a PowerShell expression evaluates to its captured OUTPUT; if() branches on output presence, not exit code."},"mechanism-json-depth-default":{"d":"ConvertTo-Json defaults to -Depth 2, replacing deeper data with type names; 5.1/7.0 truncate silently, 7.1+ warn."},"mechanism-posix-dev-null":{"d":"/dev/null is a POSIX device path; Windows treats it as a relative file path under the current drive."},"mechanism-posix-inline-env":{"d":"VAR=value cmd per-command environment is POSIX shell syntax; cmd.exe executes the literal token instead."},"mechanism-prose-as-argument":{"d":"English connectors like 'and' between commands parse as positional arguments of the first command."},"mechanism-statement-terminator":{"d":"';' terminates a PowerShell statement; joining fragments of ONE call with ';' splits it into broken statements."},"mechanism-comparison-as-filter":{"d":"Comparison operators against a collection FILTER it (returning matching elements) instead of returning a boolean."},"mechanism-errorrecord-format":{"d":"Formatting an ErrorRecord (Out-String) renders multi-line error views including position/script text, multiplying one line into many."},"mechanism-default-shell-selection":{"d":"CI runners pick a default shell per OS (pwsh on windows-latest); unmarked run: steps inherit it."},"mechanism-env-derived-identity":{"d":"USERDOMAIN/USERNAME env vars are writable, unreliable identity sources; workgroup machines put the computer name in USERDOMAIN."},"mechanism-extension-dispatch":{"d":"powershell/pwsh -File dispatches on filename extension; non-.ps1 files are rejected before parsing."},"mechanism-pipeline-chain-ops":{"d":"&& and || are PowerShell 7.0+ pipeline chain operators; 5.1 treats them as parser errors."},"mechanism-win32-path-normalization":{"d":"Win32 trims trailing dots/spaces from paths at the API boundary; different runtimes normalize differently, so existence checks disagree."},"error-enoent":{"d":"File or command not found — on Windows often a PATHEXT/extension resolution miss, not a missing file."},"error-einval":{"d":"Invalid argument from spawn — on Windows typically the .cmd/.bat hardening or malformed argv."},"error-eperm":{"d":"Operation not permitted — including WindowsApps appExecLink spawn denials."},"error-eftype":{"d":"Wrong file type for execution — e.g. attempting to CreateProcess a .ps1 script."},"error-nativecommanderror":{"d":"PS 5.1 wrapper around native stderr lines when redirected under strict error preference."},"error-pssecurityexception":{"d":"Execution policy refused to run a script file."},"error-parsererror":{"d":"PowerShell parser rejection — e.g. && on 5.1."},"error-parameterbinding":{"d":"Parameter binding failure — often an alias hijack or interpolated/mangled arguments."},"error-propertynotfound":{"d":"StrictMode throw on missing property access."},"error-mojibake":{"d":"Corrupted text output from encoding mismatches (UTF-16/BOM/ANSI vs UTF-8)."},"error-exit-code-leak":{"d":"A handled or meaningless exit code propagates into step/process failure."},"error-terminal-killed":{"d":"The user's interactive session terminates because script text ran in-session (iex + exit)."},"error-account-sid-mapping":{"d":"'No mapping between account names and security IDs' from icacls/ACL calls with unresolvable principals."},"error-command-not-recognized":{"d":"'X is not recognized as an internal or external command' — stale PATH snapshot or wrong-shell syntax."},"error-invalid-json":{"d":"Downstream JSON parse failure after the shell shredded quoted arguments."},"error-unknown-arguments":{"d":"A CLI reports prose words as unknown flags because the shell split one argument into many."},"error-unset-variable":{"d":"StrictMode 'variable cannot be retrieved' from unintended string interpolation."},"error-not-a-powershell-script":{"d":"-File refused a file lacking the .ps1 extension."},"workaround-comspec-dispatch":{"d":"Launch .cmd/.bat via ComSpec /d /s /c with verbatim arguments instead of direct spawn."},"workaround-lastexitcode-gate":{"d":"Run natives as statements and branch on $LASTEXITCODE on the next line."},"workaround-utf8-bom":{"d":"Save .ps1 files as UTF-8 WITH BOM whenever 5.1 might run them."},"workaround-sid-principal":{"d":"Use the current token's SID (*S-1-5-21-...) as the ACL principal instead of env-derived names."},"workaround-get-command":{"d":"Probe tools with Get-Command -ErrorAction SilentlyContinue (optionally -CommandType Application)."},"workaround-curl-exe":{"d":"Call curl.exe explicitly (the .exe suffix bypasses alias resolution) or use Invoke-RestMethod deliberately."},"workaround-throw-not-exit":{"d":"Fail installers with throw (survivable under iex, still non-zero under -File), never exit."},"workaround-scope-read-path":{"d":"Read the specific PATH scope ([Environment]::GetEnvironmentVariable('Path','User')), append only the missing entry."},"workaround-env-remerge":{"d":"Re-merge $env:Path from Machine+User registry scopes after installers; overwrite the existing env key case-insensitively."},"workaround-stdin-payload":{"d":"Put untrusted payloads on stdin, never argv, when a .cmd shim might reparse them."},"workaround-explicit-exit-zero":{"d":"End expected-failure branches of shell: pwsh CI steps with explicit exit 0."},"workaround-single-quote-regex":{"d":"Write regexes and literals containing $ or \\ in SINGLE quotes so nothing interpolates."},"workaround-psobject-probe":{"d":"Probe $obj.PSObject.Properties.Name -contains 'key' before dereferencing optional fields under StrictMode."},"workaround-set-content-utf8nobom":{"d":"Use Set-Content -Encoding utf8NoBOM on pwsh 7 for POSIX-consumable files."},"workaround-array-force":{"d":"Wrap ambiguous outputs in @(...) so types stop depending on element count."},"workaround-shell-true":{"d":"Pass shell:true to spawn so cmd.exe resolves the shim.","u":"Node does not escape cmd metacharacters for you: any untrusted text in argv becomes command injection (& | newline). CVE-2024-27980's fix exists precisely because this path is dangerous. Use ComSpec dispatch with controlled quoting instead."},"workaround-escape-more-quotes":{"d":"Add more backslashes/quotes until the string appears to survive.","u":"Backslash is not a PowerShell escape; layered quoting differs per hop (PS→cmd→CRT argv). It breaks on the next payload. Move data to files/stdin or use single-quoted literals."},"workaround-out-file-utf8":{"d":"Out-File -Encoding utf8 to force UTF-8 on 5.1.","u":"On 5.1 this writes UTF-8 WITH BOM, which still breaks anchored grep, hashbangs, and JSON parsers. utf8NoBOM does not exist on 5.1 — drop to [IO.File]::WriteAllText."},"workaround-machine-execution-policy":{"d":"Set-ExecutionPolicy Unrestricted at machine scope.","u":"Permanently weakens the machine's script gate for one install. Scope the override to a single process with -ExecutionPolicy Bypass instead."},"workaround-windowstyle-hidden":{"d":"Pass -WindowStyle Hidden to hide the console.","u":"The console is allocated by Win32 BEFORE PowerShell parses the flag, so it still flashes; on Bun 1.3.14 the argv pair even breaks spawn. Use CREATE_NO_WINDOW (windowsHide)."},"workaround-gt-null":{"d":"Redirect function body output with > $null to silence pipeline pollution.","u":"Blanket-redirecting hides legitimate return values and errors too; capture or Out-Null the SPECIFIC side-effect calls instead."},"workaround-create-no-window":{"d":"Set windowsHide/CREATE_NO_WINDOW at spawn time to suppress console windows."},"workaround-file-payload":{"d":"Pass complex payloads (JSON) via files or stdin instead of inline arguments."},"workaround-ps-native-argument-passing":{"d":"Pin $PSNativeCommandArgumentPassing = 'Standard' on pwsh 7.2+ (Windows default is 'Windows' with legacy carve-outs)."},"workaround-download-then-file":{"d":"Download the script then run powershell -File with parameters (mind execution policy)."},"workaround-semicolon-separator":{"d":"Separate statements with ';' or gate with if ($?) — never English words."},"workaround-space-join-params":{"d":"Join parameter tokens of one call with spaces; place ';' only between complete statements."},"workaround-caret-escape-cmd":{"d":"Escape cmd metacharacters (& ^ | < > %) with ^ before interpolating into cmd lines."},"workaround-runtime-opener":{"d":"Use the runtime's opener API or rundll32 url.dll,FileProtocolHandler instead of cmd /c start."},"workaround-strip-cmd-separators":{"d":"Reject or strip cmd separator bytes (including CR/LF) before any ComSpec fallback."},"workaround-shell-matching-suffix":{"d":"Choose temp-file suffixes by target shell: .ps1 for PowerShell, .sh for POSIX."},"workaround-explicit-shell":{"d":"Declare shell: bash or shell: pwsh per CI step explicitly; never rely on the OS default."},"workaround-node-env-wrapper":{"d":"Set per-command env via a small Node wrapper or cross-env; keep package.json scripts shell-neutral."},"workaround-irm-iex":{"d":"Distribute install entrypoints as irm URL | iex to bypass file execution policy (script must throw, not exit)."},"workaround-process-executionpolicy-bypass":{"d":"powershell -ExecutionPolicy Bypass -File scopes the policy override to one process."},"workaround-contains-membership":{"d":"Use -contains/-notcontains (or -in) for membership tests against collections."},"workaround-out-null":{"d":"Pipe side-effect cmdlet output to Out-Null at the call site to keep function returns clean."},"workaround-dotnet-writealltext":{"d":"[IO.File]::WriteAllText writes BOM-less UTF-8 on every PowerShell version."},"workaround-pin-ps-version":{"d":"Declare #Requires and run both 5.1 and 7 lanes in CI when both must be supported."},"workaround-path-win32-delimiter":{"d":"Split/join PATH with path.delimiter (Node) or [IO.Path]::PathSeparator (PS); use path.win32 for cross-platform determinism."},"workaround-skip-relative-path-entries":{"d":"Skip '.' and relative PATH entries when resolving commands for spawn."},"workaround-absolute-spawn":{"d":"Resolve commands to absolute paths once, then spawn the absolute path."},"workaround-pathext-extension-shim":{"d":"Ship .cmd/.exe siblings for any extensionless POSIX shim when Windows is a target."},"workaround-shim-all-siblings":{"d":"Shim or refresh ALL launchable siblings (.exe and .cmd); re-resolve after install to verify the shim won."},"workaround-trim-path":{"d":"Trim trailing whitespace/dots from user-supplied paths before existence checks and IO."},"workaround-skip-windowsapps":{"d":"Skip WindowsApps appExecLink aliases during command resolution; prefer real installs."},"workaround-ignore-handoff-exit":{"d":"Treat Windows shell-handoff binaries (explorer, start) as fire-and-forget; never encode success as exit 0."},"workaround-passthru-exitcode":{"d":"Use Start-Process -PassThru -Wait and read .ExitCode; $LASTEXITCODE is not set by Start-Process."},"workaround-explicit-json-depth":{"d":"Always pass -Depth explicitly to ConvertTo-Json for nested data (5.1/7.0 truncate silently; 7.1+ warn)."},"workaround-numberstyles-float":{"d":"Parse numerics with [double]::Parse($s, [Globalization.CultureInfo]::InvariantCulture) or explicit NumberStyles."},"workaround-dollar-null-redirect":{"d":"Redirect to $null (2>$null, *> $null) or pipe to Out-Null instead of /dev/null."},"workaround-continue-eap":{"d":"Temporarily set $ErrorActionPreference='Continue' around native calls on 5.1, then check $LASTEXITCODE."},"workaround-stringify-errorrecord":{"d":"Capture native stderr as strings (.ToString() per record or 2>&1 | ForEach-Object ToString) before logging."},"workaround-write-output":{"d":"Use Write-Output for capturable content; reserve Write-Host for human-only chrome."},"workaround-transcript":{"d":"Wrap runs in Start-Transcript/Stop-Transcript to observe host output that pipelines cannot capture."},"command-npm":{"d":"npm CLI — ships as npm/npm.cmd/npm.ps1 shims on Windows."},"command-curl":{"d":"curl — a 5.1 alias for Invoke-WebRequest AND a real curl.exe binary."},"command-git":{"d":"git CLI — native command whose stderr and exit codes cross PS boundaries."},"command-node":{"d":"node binary and node -e one-liners used in repros."},"command-iex":{"d":"Invoke-Expression — evaluates text in the current session."},"command-irm":{"d":"Invoke-RestMethod — downloads script text for the iex install pattern."},"command-get-command":{"d":"Get-Command — PowerShell's command resolver/probe."},"command-where":{"d":"where.exe — cmd-world PATH resolver; disagrees with Get-Command."},"command-out-file":{"d":"Out-File — 5.1 default UTF-16LE writer; also the > redirect operator."},"command-set-content":{"d":"Set-Content — file writer with version-dependent encodings."},"command-tee-object":{"d":"Tee-Object — writes UTF-16 on 5.1 while teeing output."},"command-get-content":{"d":"Get-Content — returns String for one line, Object[] for many."},"command-out-string":{"d":"Out-String — renders objects (incl ErrorRecords) into formatted text."},"command-write-host":{"d":"Write-Host — writes to the host, not the success stream."},"command-start-process":{"d":"Start-Process — launches processes; does not set $LASTEXITCODE."},"command-explorer":{"d":"explorer.exe — shell handoff binary that exits 1 on success."},"command-schtasks":{"d":"schtasks.exe — task scheduler CLI with meaningful non-zero exits."},"command-icacls":{"d":"icacls.exe — ACL editor requiring resolvable principals."},"command-test-path":{"d":"Test-Path — existence probe with Win32 normalization semantics."},"command-convertto-json":{"d":"ConvertTo-Json — JSON serializer with -Depth 2 default."},"command-convertfrom-json":{"d":"ConvertFrom-Json — produces PSCustomObjects whose missing members throw under StrictMode."},"command-set-strictmode":{"d":"Set-StrictMode — changes member-access and variable contracts."},"command-ne":{"d":"-ne operator — filters when the left side is a collection."},"command-return":{"d":"return keyword — appends to the output stream; does not suppress prior pipeline output."},"command-new-item":{"d":"New-Item — returns the created item object (a classic pipeline polluter)."},"command-match":{"d":"-match operator — regex comparison whose double-quoted patterns interpolate."},"command-remove-item":{"d":"Remove-Item — deletion cmdlet featured in the 'and' separator trap."},"command-powershell":{"d":"powershell.exe / pwsh — the shells themselves as spawn targets."},"command-cmd":{"d":"cmd.exe — invoked directly or implicitly via .cmd shims."},"command-start":{"d":"start builtin of cmd.exe — re-parses its command line."},"command-export":{"d":"POSIX export builtin — nonexistent in cmd/pwsh."},"command-winget":{"d":"winget — installer that writes registry PATH."},"command-uv":{"d":"uv — Python tool whose stderr progress triggers 5.1 wrapping."},"command-gh":{"d":"gh CLI — repro vehicle for shredded-argument prose flags."},"command-invoke-webrequest":{"d":"Invoke-WebRequest — the cmdlet hiding behind curl/wget aliases on 5.1."},"command-setenvironmentvariable":{"d":"[Environment]::SetEnvironmentVariable — scope-targeted registry env writer."},"command-numeric-cast":{"d":"[double]/[decimal] cast operators — culture-sensitive numeric parsing."},"command-command":{"d":"POSIX 'command' builtin — absent in PowerShell, fails silently."}}
+{
+  "runtime-node": {
+    "d": "Node.js runtime: child_process spawn semantics, path module, env handling on Windows."
+  },
+  "runtime-bun": {
+    "d": "Bun runtime: Bun.spawn and Node-compat process APIs, with its own Windows spawn quirks."
+  },
+  "runtime-python": {
+    "d": "Python runtime as a downstream consumer of files/streams produced by Windows shells."
+  },
+  "shell-powershell-51": {
+    "d": "Windows PowerShell 5.1 (.NET Framework): legacy encodings, aliases, stream wrapping, no pipeline chain operators."
+  },
+  "shell-pwsh-7": {
+    "d": "PowerShell 7.x (.NET): UTF-8 defaults, && and || support, changed native argument passing (7.3+)."
+  },
+  "shell-cmd": {
+    "d": "cmd.exe: line re-parsing with & | < > ^ % metacharacters, PATH/PATHEXT resolution, .cmd/.bat host."
+  },
+  "shell-gitbash": {
+    "d": "Git Bash (MSYS) on Windows: POSIX-style shell whose path and argv conventions differ from native shells."
+  },
+  "env-windows": {
+    "d": "Windows OS environment: registry-backed env vars, case-insensitive names, Win32 process creation."
+  },
+  "env-actions-runner": {
+    "d": "GitHub Actions Windows runner: default pwsh shell, per-step shell selection, step exit-code semantics."
+  },
+  "env-korean-codepage": {
+    "d": "Korean-locale Windows host where the ANSI code page is CP949, making BOM-less files decode as EUC-KR."
+  },
+  "env-win32-api": {
+    "d": "Win32 API layer: CreateProcess, path normalization, reparse points, console allocation."
+  },
+  "mechanism-pathext-resolution": {
+    "d": "Windows resolves extensionless command names by walking PATH entries and PATHEXT extensions in order; results differ from POSIX execvp and between resolvers."
+  },
+  "mechanism-cmd-reparse": {
+    "d": "Any command line routed through cmd.exe is re-tokenized; metacharacters and newlines inside arguments become command syntax."
+  },
+  "mechanism-registry-env-snapshot": {
+    "d": "Environment variables live in the registry; a process gets a merge snapshot at creation and never sees later writes."
+  },
+  "mechanism-bom-sniffing": {
+    "d": "Windows PowerShell 5.1 decides a script file's encoding by BOM presence; no BOM means the legacy ANSI code page."
+  },
+  "mechanism-default-encoding": {
+    "d": "5.1 cmdlets default to UTF-16LE or ANSI when writing; 7 defaults to BOM-less UTF-8 — same code, different bytes."
+  },
+  "mechanism-stream-wrapping": {
+    "d": "5.1 wraps redirected native stderr lines in ErrorRecord objects, converting output into error-stream objects."
+  },
+  "mechanism-exit-code-propagation": {
+    "d": "Exit codes cross process/host boundaries by convention, not guarantee: hosts, wrappers, and CI steps each apply their own rule."
+  },
+  "mechanism-native-argv-rebuild": {
+    "d": "PowerShell historically rebuilds one command-line string for native processes, re-quoting heuristically; quotes and empty args are lost."
+  },
+  "mechanism-collection-unrolling": {
+    "d": "PowerShell unrolls pipelines: zero items become null, one item loses its array, many become Object[] — types change with count."
+  },
+  "mechanism-execution-policy-gate": {
+    "d": "Execution policy gates script FILES (.ps1, -File) while in-memory command text bypasses it."
+  },
+  "mechanism-alias-shadowing": {
+    "d": "Built-in aliases (curl, wget) and PATH shims shadow the binaries users intend to run."
+  },
+  "mechanism-strictmode-contract": {
+    "d": "Set-StrictMode changes property access on missing members from returning null to throwing."
+  },
+  "mechanism-string-interpolation": {
+    "d": "Double-quoted PowerShell strings interpolate $tokens; backslash is not an escape — backtick is."
+  },
+  "mechanism-culture-parsing": {
+    "d": "Numeric/date casts honor the host culture; comma-decimal locales parse differently than invariant culture."
+  },
+  "mechanism-host-vs-pipeline": {
+    "d": "Write-Host and return semantics: host output bypasses the success pipeline, and functions emit every uncaptured value."
+  },
+  "mechanism-path-delimiter": {
+    "d": "PATH list separator is host-dependent (';' Windows, ':' POSIX); colon-joined lists corrupt drive-letter entries."
+  },
+  "mechanism-env-casing": {
+    "d": "Windows env names are case-insensitive but JS objects are not; Path and PATH can coexist and fight."
+  },
+  "mechanism-appexeclink": {
+    "d": "WindowsApps store aliases are zero-byte IO_REPARSE_TAG_APPEXECLINK files that pass stat probes but EPERM on spawn."
+  },
+  "mechanism-console-allocation": {
+    "d": "Console-subsystem binaries get a new console at CreateProcess when the parent has none — before any flag is parsed."
+  },
+  "mechanism-iex-session": {
+    "d": "Invoke-Expression runs text in the CURRENT session: exit kills the caller's host, and parameters cannot be forwarded."
+  },
+  "mechanism-absent-builtin-noop": {
+    "d": "POSIX builtins absent in PowerShell (command -v) parse as argument noise and fail silently instead of erroring."
+  },
+  "mechanism-cmd-bat-spawn-hardening": {
+    "d": "Node CVE-2024-27980 hardening: spawning .bat/.cmd without shell errors EINVAL (18.20.2/20.12.2/21.7.3+)."
+  },
+  "mechanism-bun-windowstyle-argv-reject": {
+    "d": "Bun 1.3.14 Windows spawn fails outright when powershell.exe argv contains the -WindowStyle Hidden pair."
+  },
+  "mechanism-output-truthiness": {
+    "d": "A native command in a PowerShell expression evaluates to its captured OUTPUT; if() branches on output presence, not exit code."
+  },
+  "mechanism-json-depth-default": {
+    "d": "ConvertTo-Json defaults to -Depth 2, replacing deeper data with type names; 5.1/7.0 truncate silently, 7.1+ warn."
+  },
+  "mechanism-posix-dev-null": {
+    "d": "/dev/null is a POSIX device path; Windows treats it as a relative file path under the current drive."
+  },
+  "mechanism-posix-inline-env": {
+    "d": "VAR=value cmd per-command environment is POSIX shell syntax; cmd.exe executes the literal token instead."
+  },
+  "mechanism-prose-as-argument": {
+    "d": "English connectors like 'and' between commands parse as positional arguments of the first command."
+  },
+  "mechanism-statement-terminator": {
+    "d": "';' terminates a PowerShell statement; joining fragments of ONE call with ';' splits it into broken statements."
+  },
+  "mechanism-comparison-as-filter": {
+    "d": "Comparison operators against a collection FILTER it (returning matching elements) instead of returning a boolean."
+  },
+  "mechanism-errorrecord-format": {
+    "d": "Formatting an ErrorRecord (Out-String) renders multi-line error views including position/script text, multiplying one line into many."
+  },
+  "mechanism-default-shell-selection": {
+    "d": "CI runners pick a default shell per OS (pwsh on windows-latest); unmarked run: steps inherit it."
+  },
+  "mechanism-env-derived-identity": {
+    "d": "USERDOMAIN/USERNAME env vars are writable, unreliable identity sources; workgroup machines put the computer name in USERDOMAIN."
+  },
+  "mechanism-extension-dispatch": {
+    "d": "powershell/pwsh -File dispatches on filename extension; non-.ps1 files are rejected before parsing."
+  },
+  "mechanism-pipeline-chain-ops": {
+    "d": "&& and || are PowerShell 7.0+ pipeline chain operators; 5.1 treats them as parser errors."
+  },
+  "mechanism-win32-path-normalization": {
+    "d": "Win32 trims trailing dots/spaces from paths at the API boundary; different runtimes normalize differently, so existence checks disagree."
+  },
+  "error-enoent": {
+    "d": "File or command not found — on Windows often a PATHEXT/extension resolution miss, not a missing file."
+  },
+  "error-einval": {
+    "d": "Invalid argument from spawn — on Windows typically the .cmd/.bat hardening or malformed argv."
+  },
+  "error-eperm": {
+    "d": "Operation not permitted — including WindowsApps appExecLink spawn denials."
+  },
+  "error-eftype": {
+    "d": "Wrong file type for execution — e.g. attempting to CreateProcess a .ps1 script."
+  },
+  "error-nativecommanderror": {
+    "d": "PS 5.1 wrapper around native stderr lines when redirected under strict error preference."
+  },
+  "error-pssecurityexception": {
+    "d": "Execution policy refused to run a script file."
+  },
+  "error-parsererror": {
+    "d": "PowerShell parser rejection — e.g. && on 5.1."
+  },
+  "error-parameterbinding": {
+    "d": "Parameter binding failure — often an alias hijack or interpolated/mangled arguments."
+  },
+  "error-propertynotfound": {
+    "d": "StrictMode throw on missing property access."
+  },
+  "error-mojibake": {
+    "d": "Corrupted text output from encoding mismatches (UTF-16/BOM/ANSI vs UTF-8)."
+  },
+  "error-exit-code-leak": {
+    "d": "A handled or meaningless exit code propagates into step/process failure."
+  },
+  "error-terminal-killed": {
+    "d": "The user's interactive session terminates because script text ran in-session (iex + exit)."
+  },
+  "error-account-sid-mapping": {
+    "d": "'No mapping between account names and security IDs' from icacls/ACL calls with unresolvable principals."
+  },
+  "error-command-not-recognized": {
+    "d": "'X is not recognized as an internal or external command' — stale PATH snapshot or wrong-shell syntax."
+  },
+  "error-invalid-json": {
+    "d": "Downstream JSON parse failure after the shell shredded quoted arguments."
+  },
+  "error-unknown-arguments": {
+    "d": "A CLI reports prose words as unknown flags because the shell split one argument into many."
+  },
+  "error-unset-variable": {
+    "d": "StrictMode 'variable cannot be retrieved' from unintended string interpolation."
+  },
+  "error-not-a-powershell-script": {
+    "d": "-File refused a file lacking the .ps1 extension."
+  },
+  "workaround-comspec-dispatch": {
+    "d": "Launch .cmd/.bat via ComSpec /d /s /c with verbatim arguments instead of direct spawn."
+  },
+  "workaround-lastexitcode-gate": {
+    "d": "Run natives as statements and branch on $LASTEXITCODE on the next line."
+  },
+  "workaround-utf8-bom": {
+    "d": "Save .ps1 files as UTF-8 WITH BOM whenever 5.1 might run them."
+  },
+  "workaround-sid-principal": {
+    "d": "Use the current token's SID (*S-1-5-21-...) as the ACL principal instead of env-derived names."
+  },
+  "workaround-get-command": {
+    "d": "Probe tools with Get-Command -ErrorAction SilentlyContinue (optionally -CommandType Application)."
+  },
+  "workaround-curl-exe": {
+    "d": "Call curl.exe explicitly (the .exe suffix bypasses alias resolution) or use Invoke-RestMethod deliberately."
+  },
+  "workaround-throw-not-exit": {
+    "d": "Fail installers with throw (survivable under iex, still non-zero under -File), never exit."
+  },
+  "workaround-scope-read-path": {
+    "d": "Read the specific PATH scope ([Environment]::GetEnvironmentVariable('Path','User')), append only the missing entry."
+  },
+  "workaround-env-remerge": {
+    "d": "Re-merge $env:Path from Machine+User registry scopes after installers; overwrite the existing env key case-insensitively."
+  },
+  "workaround-stdin-payload": {
+    "d": "Put untrusted payloads on stdin, never argv, when a .cmd shim might reparse them."
+  },
+  "workaround-explicit-exit-zero": {
+    "d": "End expected-failure branches of shell: pwsh CI steps with explicit exit 0."
+  },
+  "workaround-single-quote-regex": {
+    "d": "Write regexes and literals containing $ or \\ in SINGLE quotes so nothing interpolates."
+  },
+  "workaround-psobject-probe": {
+    "d": "Probe $obj.PSObject.Properties.Name -contains 'key' before dereferencing optional fields under StrictMode."
+  },
+  "workaround-set-content-utf8nobom": {
+    "d": "Use Set-Content -Encoding utf8NoBOM on pwsh 7 for POSIX-consumable files."
+  },
+  "workaround-array-force": {
+    "d": "Wrap ambiguous outputs in @(...) so types stop depending on element count."
+  },
+  "workaround-shell-true": {
+    "d": "Pass shell:true to spawn so cmd.exe resolves the shim.",
+    "u": "Node does not escape cmd metacharacters for you: any untrusted text in argv becomes command injection (& | newline). CVE-2024-27980's fix exists precisely because this path is dangerous. Use ComSpec dispatch with controlled quoting instead."
+  },
+  "workaround-escape-more-quotes": {
+    "d": "Add more backslashes/quotes until the string appears to survive.",
+    "u": "Backslash is not a PowerShell escape; layered quoting differs per hop (PS→cmd→CRT argv). It breaks on the next payload. Move data to files/stdin or use single-quoted literals."
+  },
+  "workaround-out-file-utf8": {
+    "d": "Out-File -Encoding utf8 to force UTF-8 on 5.1.",
+    "u": "On 5.1 this writes UTF-8 WITH BOM, which still breaks anchored grep, hashbangs, and JSON parsers. utf8NoBOM does not exist on 5.1 — drop to [IO.File]::WriteAllText."
+  },
+  "workaround-machine-execution-policy": {
+    "d": "Set-ExecutionPolicy Unrestricted at machine scope.",
+    "u": "Permanently weakens the machine's script gate for one install. Scope the override to a single process with -ExecutionPolicy Bypass instead."
+  },
+  "workaround-windowstyle-hidden": {
+    "d": "Pass -WindowStyle Hidden to hide the console.",
+    "u": "The console is allocated by Win32 BEFORE PowerShell parses the flag, so it still flashes; on Bun 1.3.14 the argv pair even breaks spawn. Use CREATE_NO_WINDOW (windowsHide)."
+  },
+  "workaround-gt-null": {
+    "d": "Redirect function body output with > $null to silence pipeline pollution.",
+    "u": "Blanket-redirecting hides legitimate return values and errors too; capture or Out-Null the SPECIFIC side-effect calls instead."
+  },
+  "workaround-create-no-window": {
+    "d": "Set windowsHide/CREATE_NO_WINDOW at spawn time to suppress console windows."
+  },
+  "workaround-file-payload": {
+    "d": "Pass complex payloads (JSON) via files or stdin instead of inline arguments."
+  },
+  "workaround-ps-native-argument-passing": {
+    "d": "Pin $PSNativeCommandArgumentPassing = 'Standard' on pwsh 7.2+ (Windows default is 'Windows' with legacy carve-outs)."
+  },
+  "workaround-download-then-file": {
+    "d": "Download the script then run powershell -File with parameters (mind execution policy)."
+  },
+  "workaround-semicolon-separator": {
+    "d": "Separate statements with ';' or gate with if ($?) — never English words."
+  },
+  "workaround-space-join-params": {
+    "d": "Join parameter tokens of one call with spaces; place ';' only between complete statements."
+  },
+  "workaround-caret-escape-cmd": {
+    "d": "Escape cmd metacharacters (& ^ | < > %) with ^ before interpolating into cmd lines."
+  },
+  "workaround-runtime-opener": {
+    "d": "Use the runtime's opener API or rundll32 url.dll,FileProtocolHandler instead of cmd /c start."
+  },
+  "workaround-strip-cmd-separators": {
+    "d": "Reject or strip cmd separator bytes (including CR/LF) before any ComSpec fallback."
+  },
+  "workaround-shell-matching-suffix": {
+    "d": "Choose temp-file suffixes by target shell: .ps1 for PowerShell, .sh for POSIX."
+  },
+  "workaround-explicit-shell": {
+    "d": "Declare shell: bash or shell: pwsh per CI step explicitly; never rely on the OS default."
+  },
+  "workaround-node-env-wrapper": {
+    "d": "Set per-command env via a small Node wrapper or cross-env; keep package.json scripts shell-neutral."
+  },
+  "workaround-irm-iex": {
+    "d": "Distribute install entrypoints as irm URL | iex to bypass file execution policy (script must throw, not exit)."
+  },
+  "workaround-process-executionpolicy-bypass": {
+    "d": "powershell -ExecutionPolicy Bypass -File scopes the policy override to one process."
+  },
+  "workaround-contains-membership": {
+    "d": "Use -contains/-notcontains (or -in) for membership tests against collections."
+  },
+  "workaround-out-null": {
+    "d": "Pipe side-effect cmdlet output to Out-Null at the call site to keep function returns clean."
+  },
+  "workaround-dotnet-writealltext": {
+    "d": "[IO.File]::WriteAllText writes BOM-less UTF-8 on every PowerShell version."
+  },
+  "workaround-pin-ps-version": {
+    "d": "Declare #Requires and run both 5.1 and 7 lanes in CI when both must be supported."
+  },
+  "workaround-path-win32-delimiter": {
+    "d": "Split/join PATH with path.delimiter (Node) or [IO.Path]::PathSeparator (PS); use path.win32 for cross-platform determinism."
+  },
+  "workaround-skip-relative-path-entries": {
+    "d": "Skip '.' and relative PATH entries when resolving commands for spawn."
+  },
+  "workaround-absolute-spawn": {
+    "d": "Resolve commands to absolute paths once, then spawn the absolute path."
+  },
+  "workaround-pathext-extension-shim": {
+    "d": "Ship .cmd/.exe siblings for any extensionless POSIX shim when Windows is a target."
+  },
+  "workaround-shim-all-siblings": {
+    "d": "Shim or refresh ALL launchable siblings (.exe and .cmd); re-resolve after install to verify the shim won."
+  },
+  "workaround-trim-path": {
+    "d": "Trim trailing whitespace/dots from user-supplied paths before existence checks and IO."
+  },
+  "workaround-skip-windowsapps": {
+    "d": "Skip WindowsApps appExecLink aliases during command resolution; prefer real installs."
+  },
+  "workaround-ignore-handoff-exit": {
+    "d": "Treat Windows shell-handoff binaries (explorer, start) as fire-and-forget; never encode success as exit 0."
+  },
+  "workaround-passthru-exitcode": {
+    "d": "Use Start-Process -PassThru -Wait and read .ExitCode; $LASTEXITCODE is not set by Start-Process."
+  },
+  "workaround-explicit-json-depth": {
+    "d": "Always pass -Depth explicitly to ConvertTo-Json for nested data (5.1/7.0 truncate silently; 7.1+ warn)."
+  },
+  "workaround-numberstyles-float": {
+    "d": "Parse numerics with [double]::Parse($s, [Globalization.CultureInfo]::InvariantCulture) or explicit NumberStyles."
+  },
+  "workaround-dollar-null-redirect": {
+    "d": "Redirect to $null (2>$null, *> $null) or pipe to Out-Null instead of /dev/null."
+  },
+  "workaround-continue-eap": {
+    "d": "Temporarily set $ErrorActionPreference='Continue' around native calls on 5.1, then check $LASTEXITCODE."
+  },
+  "workaround-stringify-errorrecord": {
+    "d": "Capture native stderr as strings (.ToString() per record or 2>&1 | ForEach-Object ToString) before logging."
+  },
+  "workaround-write-output": {
+    "d": "Use Write-Output for capturable content; reserve Write-Host for human-only chrome."
+  },
+  "workaround-transcript": {
+    "d": "Wrap runs in Start-Transcript/Stop-Transcript to observe host output that pipelines cannot capture."
+  },
+  "command-npm": {
+    "d": "npm CLI — ships as npm/npm.cmd/npm.ps1 shims on Windows."
+  },
+  "command-curl": {
+    "d": "curl — a 5.1 alias for Invoke-WebRequest AND a real curl.exe binary."
+  },
+  "command-git": {
+    "d": "git CLI — native command whose stderr and exit codes cross PS boundaries."
+  },
+  "command-node": {
+    "d": "node binary and node -e one-liners used in repros."
+  },
+  "command-iex": {
+    "d": "Invoke-Expression — evaluates text in the current session."
+  },
+  "command-irm": {
+    "d": "Invoke-RestMethod — downloads script text for the iex install pattern."
+  },
+  "command-get-command": {
+    "d": "Get-Command — PowerShell's command resolver/probe."
+  },
+  "command-where": {
+    "d": "where.exe — cmd-world PATH resolver; disagrees with Get-Command."
+  },
+  "command-out-file": {
+    "d": "Out-File — 5.1 default UTF-16LE writer; also the > redirect operator."
+  },
+  "command-set-content": {
+    "d": "Set-Content — file writer with version-dependent encodings."
+  },
+  "command-tee-object": {
+    "d": "Tee-Object — writes UTF-16 on 5.1 while teeing output."
+  },
+  "command-get-content": {
+    "d": "Get-Content — returns String for one line, Object[] for many."
+  },
+  "command-out-string": {
+    "d": "Out-String — renders objects (incl ErrorRecords) into formatted text."
+  },
+  "command-write-host": {
+    "d": "Write-Host — writes to the host, not the success stream."
+  },
+  "command-start-process": {
+    "d": "Start-Process — launches processes; does not set $LASTEXITCODE."
+  },
+  "command-explorer": {
+    "d": "explorer.exe — shell handoff binary that exits 1 on success."
+  },
+  "command-schtasks": {
+    "d": "schtasks.exe — task scheduler CLI with meaningful non-zero exits."
+  },
+  "command-icacls": {
+    "d": "icacls.exe — ACL editor requiring resolvable principals."
+  },
+  "command-test-path": {
+    "d": "Test-Path — existence probe with Win32 normalization semantics."
+  },
+  "command-convertto-json": {
+    "d": "ConvertTo-Json — JSON serializer with -Depth 2 default."
+  },
+  "command-convertfrom-json": {
+    "d": "ConvertFrom-Json — produces PSCustomObjects whose missing members throw under StrictMode."
+  },
+  "command-set-strictmode": {
+    "d": "Set-StrictMode — changes member-access and variable contracts."
+  },
+  "command-ne": {
+    "d": "-ne operator — filters when the left side is a collection."
+  },
+  "command-return": {
+    "d": "return keyword — appends to the output stream; does not suppress prior pipeline output."
+  },
+  "command-new-item": {
+    "d": "New-Item — returns the created item object (a classic pipeline polluter)."
+  },
+  "command-match": {
+    "d": "-match operator — regex comparison whose double-quoted patterns interpolate."
+  },
+  "command-remove-item": {
+    "d": "Remove-Item — deletion cmdlet featured in the 'and' separator trap."
+  },
+  "command-powershell": {
+    "d": "powershell.exe / pwsh — the shells themselves as spawn targets."
+  },
+  "command-cmd": {
+    "d": "cmd.exe — invoked directly or implicitly via .cmd shims."
+  },
+  "command-start": {
+    "d": "start builtin of cmd.exe — re-parses its command line."
+  },
+  "command-export": {
+    "d": "POSIX export builtin — nonexistent in cmd/pwsh."
+  },
+  "command-winget": {
+    "d": "winget — installer that writes registry PATH."
+  },
+  "command-uv": {
+    "d": "uv — Python tool whose stderr progress triggers 5.1 wrapping."
+  },
+  "command-gh": {
+    "d": "gh CLI — repro vehicle for shredded-argument prose flags."
+  },
+  "command-invoke-webrequest": {
+    "d": "Invoke-WebRequest — the cmdlet hiding behind curl/wget aliases on 5.1."
+  },
+  "command-setenvironmentvariable": {
+    "d": "[Environment]::SetEnvironmentVariable — scope-targeted registry env writer."
+  },
+  "command-numeric-cast": {
+    "d": "[double]/[decimal] cast operators — culture-sensitive numeric parsing."
+  },
+  "command-command": {
+    "d": "POSIX 'command' builtin — absent in PowerShell, fails silently."
+  },
+  "mechanism-unowned-child-lifetime": {
+    "d": "A spawned child whose promise or handle is dropped keeps running after its parent decides it is finished; Windows has no process group to tie the two, so the child's open handles outlive every shutdown step the parent awaited."
+  },
+  "workaround-shutdown-owns-children": {
+    "d": "Track every background child the process starts, keyed by the resource it touches, and await it inside the same shutdown routine that closes listeners and releases lifecycle hooks, so nothing holds a handle after stop() resolves."
+  },
+  "workaround-retry-transient-remove": {
+    "d": "Retry rmSync on EPERM, EBUSY and ENOTEMPTY with a short bounded backoff to ride out antivirus and indexer handles on freshly written files.",
+    "u": "As the primary fix it masks an unowned child: the retry budget is a guess, the child still runs, and outside the test the same handle blocks an uninstaller or a home move."
+  },
+  "mechanism-flush-needs-write-access": {
+    "d": "On Windows fsync is FlushFileBuffers, which requires a handle opened with GENERIC_WRITE; a read-only handle is refused with ERROR_ACCESS_DENIED (EPERM), where POSIX fsync accepts any descriptor for the file."
+  },
+  "workaround-fsync-on-rdwr-handle": {
+    "d": "Open the handle used for fsync with \"r+\"/O_RDWR, or flush through the descriptor the write used before closing it; never reopen read-only just to flush."
+  },
+  "mechanism-file-url-scheme-path": {
+    "d": "A file: URL's pathname keeps the leading slash and treats the drive letter as the first segment (/D:/a/...), which is a valid URL path but not a Windows filesystem path; only fileURLToPath converts and decodes it."
+  },
+  "workaround-file-url-to-path": {
+    "d": "Convert import.meta.url-derived URLs with fileURLToPath before handing them to spawn, fs, or a runtime CLI; pathname is never a filesystem path on Windows."
+  }
+}
