@@ -8,6 +8,8 @@ context: [ci, agent]
 source: first-party
 repro: verified
 refs:
+  - https://github.com/lidge-jun/opencodex/actions/runs/33945431119
+  - https://github.com/lidge-jun/opencodex/pull/3629
   - https://github.com/lidge-jun/opencodex/actions/runs/33941712300
   - https://github.com/lidge-jun/opencodex/pull/3610
   - https://github.com/lidge-jun/opencodex/actions/runs/33920624827
@@ -137,3 +139,29 @@ writes remain. Removing insertion pruning makes this fixture fail with 1,025
 instead of 1,024; restoring it passes. No cap, timeout, durability, or ACL policy
 is weakened. Seed ordinary setup, but still cross the behavior's boundary through
 the public operation, and prove the test fails when that behavior is removed.
+
+## An outer budget cannot repair a shorter readiness deadline
+
+OpenCodex's native-profile startup fixture documented10–18second Windows child
+boots but used a15-second generic deadline while waiting for the real port.
+Twelve fresh process scenarios also shared one120-second test. Run33945431119
+failed readiness before that aggregate test budget was exhausted.
+
+A controlled local fault delayed port publication16seconds. The old waiter
+failed at15.0seconds with the child still running; cleanup observed a healthy
+exit0 and port publication at16.2seconds. Using the existing intrinsic spawn
+budget passed the same fault and all admission/convergence assertions. This is
+a test-harness boundary proof, not a claim that an unexplained Windows kernel
+stall was reproduced locally.
+
+PR #3629 makes each scenario an independently budgeted test, retains the whole
+scenario matrix, drains both child streams immediately, detects early exit,
+and retains primary plus cleanup errors. A forced early failure is reported
+in0.26seconds instead of masquerading as a45-second readiness timeout. A forced
+shutdown stall is killed/joined within its10-second cleanup bound; the combined
+readiness/cleanup fault retains both errors. Disabling the actual native-main
+gate still turns the pre-recovery request into200 and fails the assertion.
+
+Use operation-specific bounds, preserve their ordering, and measure the stage
+that expired. Never assume that a generous outer test timeout can compensate
+for an inner deadline that rejects a healthy child first.
