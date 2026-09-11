@@ -45,7 +45,7 @@ Node reports EBUSY when Windows refuses a rename or delete because another handl
 
 Wrong file type for execution — e.g. attempting to CreateProcess a .ps1 script.
 
-[get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
+[get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/) · [dot-sh-association-exits-zero](/fuck-powershell/cases/env-paths/dot-sh-association-exits-zero/)
 
 ## einval
 

@@ -12,12 +12,12 @@ safe or tempting-but-unsafe. The graph powers the [fp lookup engine](/fuck-power
 | Command | 39 |
 | Environment | 4 |
 | ErrorSignature | 33 |
-| Mechanism | 73 |
+| Mechanism | 74 |
 | Runtime | 3 |
 | Shell | 3 |
-| Workaround | 117 |
-| Case | 108 |
+| Workaround | 118 |
+| Case | 109 |
 
-Total: 380 nodes, 794 edges. Generated from case
+Total: 383 nodes, 804 edges. Generated from case
 frontmatter — see [Mechanisms](/fuck-powershell/ontology/mechanisms/) and
 [Error signatures](/fuck-powershell/ontology/errors/).

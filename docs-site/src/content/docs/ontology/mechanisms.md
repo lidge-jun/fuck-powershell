@@ -231,6 +231,12 @@ Invoke-Expression runs text in the CURRENT session: exit kills the caller's host
 
 Cases: [piped-iex-drops-params](/fuck-powershell/cases/args-quoting/piped-iex-drops-params/) · [irm-iex-kills-host](/fuck-powershell/cases/exit-codes/irm-iex-kills-host/)
 
+## inert file association
+
+A file extension is registered but its association carries no executing verb, so shell-level dispatchers resolve it, do nothing and return success, while CreateProcess refuses the same file outright.
+
+Cases: [dot-sh-association-exits-zero](/fuck-powershell/cases/env-paths/dot-sh-association-exits-zero/)
+
 ## json depth default
 
 ConvertTo-Json defaults to -Depth 2, replacing deeper data with type names; 5.1/7.0 truncate silently, 7.1+ warn.
