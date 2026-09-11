@@ -1,20 +1,3 @@
----
-id: altgr-reports-as-ctrl-alt
-title: "backslashes vanish from typed paths on German keyboards, because the terminal reports AltGr as Ctrl+Alt and your keybinding ate it"
-category: parsing
-versions: "both"
-failure: silent
-context: [interactive, agent]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/46
-  - https://github.com/openai/codex/commit/702238f0
-ontology:
-  affects: [env-windows]
-  caused_by: [mechanism-altgr-chord]
-  mitigated_by: [workaround-treat-ctrl-alt-as-literal]
----
 
 # backslashes vanish from typed paths on German keyboards, because the terminal reports AltGr as Ctrl+Alt and your keybinding ate it
 
@@ -107,23 +90,6 @@ modifier convention that is safe on POSIX terminals is not safe on Windows.
 
 ---
 
----
-id: basename-split-slash-only
-title: "your allowlist matches on a basename computed with split slash, so every Windows client silently bypasses it"
-category: parsing
-versions: "both"
-failure: silent
-context: [agent, script, ci]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/31
-  - https://github.com/lidge-jun/opencodex/commit/fe1a5ea2cc552f4f46ddfc515d03ea5ac0ab1b3a
-ontology:
-  affects: [env-windows, runtime-node]
-  caused_by: [mechanism-win32-path-normalization]
-  mitigated_by: [workaround-normalize-separators-first]
----
 
 # your allowlist matches on a basename computed with split slash, so every Windows client silently bypasses it
 
@@ -203,23 +169,178 @@ Windows API will happily honor.
 
 ---
 
+
+# REM suppresses the command, not the substitution: & and | and quotes inside a comment are inert, and a %~ modifier in one kills the script
+
+## Symptom
+
+You documented a working `.bat` and broke it. The only change was a comment. The
+script now dies immediately, exit 255, with an error about batch parameter
+substitution that suggests you read `CALL /?` or `FOR /?`:
+
+```
+The following usage of the path operator in batch-parameter
+substitution is invalid: %~$PATH:I modifier
+For valid formats type CALL /? or FOR /?
+```
+
+Nothing after the comment runs.
+
+## Repro
+
+The table is the case. Each row is one `.cmd` whose only difference is the comment
+line, followed by `echo MARKER_OK`:
+
+| comment line | result |
+|---|---|
+| `REM use %TEMP%\foo & echo PWNED` | exit 0, `MARKER_OK`, and no `PWNED` |
+| `REM redirect 2>nul here` | exit 0 |
+| `REM an unbalanced " quote` | exit 0 |
+| `REM piping a \| b here` | exit 0 |
+| `REM path is %TEMP%` | exit 0 |
+| `REM dir is %~dp0` | exit 0 |
+| `REM see the %~$PATH:I modifier` | **exit 255, fatal** |
+| `:: see the %~$PATH:I modifier` | **exit 255, fatal** |
+
+Measured on Windows 11. Note which rows are green: the operators everyone warns
+about are genuinely inert, and so is an ordinary environment variable.
+
+## Cause
+
+The usual folklore — "cmd.exe still parses `&` and `|` inside a `REM`" — is
+wrong, and the measurements above say so. `REM` does suppress command parsing.
+
+What it does not suppress is **batch parameter substitution**, which happens
+earlier in the line's life. A well-formed substitution expands harmlessly:
+`%~dp0` inside a comment just becomes a directory nobody looks at. A `%~` form the
+parser cannot resolve is not skipped and not warned about — it aborts the script.
+
+`::` is not an escape hatch. It is a label, and labels are substituted too, so it
+fails identically.
+
+This is a nasty shape for a documentation habit: the more precisely you describe
+what the next line does, the more likely you are to write the token that kills the
+file. win-hooks has the rule in its own dispatcher, for exactly this reason —
+"Never name that modifier in a REM: cmd.exe expands it there too and the comment
+breaks."
+
+## Workaround
+
+Keep prose that names a `%~` form out of the batch file. If the explanation has to
+live next to the code, break the token so it cannot parse as a substitution:
+
+```bat
+REM resolved by the FOR path-search modifier (see FOR /? - do not spell it here)
+for %%I in (node.exe) do set "WH_NODE=%%~$PATH:I"
+```
+
+The working line still contains the modifier, because there it is inside a `FOR`
+that defines `%%I` and resolves correctly. Only the comment, which defines nothing,
+cannot resolve it.
+
+Two more things worth knowing before you reach for a comment form you trust less:
+
+- `::` inside a parenthesised block is a syntax error in its own right, so it is
+  not a safer default than `REM`.
+- A `REM` at the end of a line continued with `^` still swallows the continuation,
+  which is a different way to lose the line after your comment.
+
+## What this does not mean
+
+It does not mean batch comments are dangerous in general. Six of the eight rows
+above are green, including the ones with `&`, `|`, `>` and an unbalanced quote.
+The rule is narrow and worth memorising exactly as narrow: a `%~` that cannot
+resolve is fatal wherever it appears, and a comment is not a place cmd.exe stops
+looking.
+
+
+
 ---
-id: convertto-json-depth-two
-title: "ConvertTo-Json defaults to -Depth 2 and replaces your data with the string System.Collections.Hashtable"
-category: parsing
-versions: "both"
-failure: silent
-context: [ci, script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/15
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7]
-  invokes: [command-convertto-json]
-  caused_by: [mechanism-json-depth-default]
-  mitigated_by: [workaround-explicit-json-depth]
+
+
+# the strict parser is the one that saves you: a Windows path in a loose config string loses every separator and fails much later under a filename nobody wrote
+
+## Symptom
+
+```
+Cannot find module 'C:Userssmsmesrc\index.js'
+```
+
+The path in the error is not the path in the config file. The separators are gone
+and the words have run together. Nobody typed that string, so the natural
+conclusion is that the tool which *wrote* the config has a bug — win-hooks records
+that this was misdiagnosed exactly that way, as a plugin defect, before the real
+cause was found.
+
+## Repro
+
+The same bytes through three layers:
+
+```
+source                : {"p": "C:\Users\smsme\src"}
+
+strict JSON.parse     -> THROWS  Bad escaped character in JSON at position 10
+JS string literal     -> "C:Userssmsmesrc"
+re-escaped, then JSON -> "C:\Users\smsme\src"
+
+import of the mangled value
+  -> ERR_MODULE_NOT_FOUND: Cannot find module 'C:Userssmsmesrc\index.js'
+```
+
+Measured on Node 24. The interesting row is the first one.
+
+## Cause
+
+`\U` and `\s` are not valid escapes.
+
+A **strict** JSON parser refuses the whole document and tells you at load time.
+That is the good outcome, and it is why "JSON ate my path" is the wrong way round:
+JSON is the layer that catches this.
+
+A **loose** layer — a JavaScript string literal, JSON5, a hand-rolled config
+reader, a templating step that interpolates before parsing — drops the backslash
+and keeps the letter. No error, no warning, and a value that still looks like a
+path. The failure surfaces much later, in a module loader or a file open, under a
+name that appears in no source file.
+
+The Windows-specific part is which letters get eaten. `\n`, `\t` and `\b` are
+famous; the ones that actually bite are `\U` in `\Users`, `\s` in `\src`, `\D` in
+`\Documents` and whatever your username starts with. Those are ordinary directory
+names, so every Windows path is a candidate and every POSIX path is safe — which is
+why this never shows up until somebody runs your tool on Windows.
+
+## Workaround
+
+Write drive-letter paths with forward slashes in configuration:
+
+```json
+{ "entry": "C:/Users/smsme/src/index.js" }
+```
+
+Scope that advice honestly: the loaders that consume configs like this — Node,
+Python, `CreateFile` — all accept forward slashes. `cd` in cmd.exe, some
+installers and some schema validators do not, so this is a rule about config
+strings, not a claim that Windows accepts forward slashes everywhere.
+
+If backslashes must survive, double them where the value is **generated**, not
+where it fails. A repair applied downstream cannot distinguish a path that lost a
+separator from a path that never had one.
+
+And prefer the strict parser. A config format that throws on an invalid escape is
+doing you a favour; swapping it for a lenient one to "make the error go away"
+converts a load-time failure into a runtime one.
+
+## Related
+
+`git-merge-driver-sh-escapes` is the same class one layer down: there it is git's
+`sh` that treats the backslash as an escape, `C:\Users\me` becomes `C:Usersme`,
+and the merge driver that never ran looks like a conflict. Same mechanism,
+different consumer, different error text.
+
+
+
 ---
+
 
 # ConvertTo-Json defaults to -Depth 2 and replaces your data with the string System.Collections.Hashtable
 
@@ -329,23 +450,6 @@ where the field is present in memory and destroyed on the way out.
 
 ---
 
----
-id: culture-comma-decimal-cast
-title: "casting a comma-decimal string gives a number 100x too large, with no error"
-category: parsing
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/18
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7]
-  invokes: [command-numeric-cast]
-  caused_by: [mechanism-culture-parsing]
-  mitigated_by: [workaround-numberstyles-float]
----
 
 # casting a comma-decimal string gives a number 100x too large, with no error
 
@@ -439,26 +543,6 @@ host mangles comma-decimal data exactly as shown above.
 
 ---
 
----
-id: localized-cli-output-parsing
-title: "parsing schtasks or sc output works until the machine is not English, because Windows tools translate their column headings and status words"
-category: parsing
-versions: "both"
-failure: silent
-context: [script, agent, ci]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/34
-  - https://github.com/lidge-jun/opencodex/commit/1d9e196e7
-  - https://github.com/lidge-jun/opencodex/commit/cdc16e5a7
-  - https://github.com/lidge-jun/opencodex/commit/438b8dcf4
-ontology:
-  affects: [env-windows, shell-cmd, env-korean-codepage]
-  invokes: [command-schtasks]
-  caused_by: [mechanism-localized-output]
-  mitigated_by: [workaround-structured-output-not-text]
----
 
 # parsing schtasks or sc output works until the machine is not English, because Windows tools translate their column headings and status words
 
@@ -548,24 +632,6 @@ output version — trusting a tool's prose instead of its structure.
 
 ---
 
----
-id: zip-entry-drive-letter-escapes
-title: "your zip extractor rejects ../ and still writes to C:/Windows, because a drive letter is absolute without a leading slash"
-category: parsing
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/29
-  - https://github.com/lidge-jun/agbrowse/commit/a5519f3a516c4064b8211da107d148889cf1a86b
-  - https://github.com/lidge-jun/agbrowse/commit/b21aae8332
-ontology:
-  affects: [env-windows, runtime-node, env-win32-api]
-  caused_by: [mechanism-win32-path-normalization]
-  mitigated_by: [workaround-reject-drive-and-raw-dotdot]
----
 
 # your zip extractor rejects ../ and still writes to C:/Windows, because a drive letter is absolute without a leading slash
 

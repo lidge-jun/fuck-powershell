@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">python, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">universal newline write</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">write through buffer</span></span></div></div>
 
+# Python text mode injects carriage returns into a pipe, so the bytes that land on disk are not the string you sent
+
 ## Symptom
 
 You write a string through a subprocess pipe, the child writes it to a file, and

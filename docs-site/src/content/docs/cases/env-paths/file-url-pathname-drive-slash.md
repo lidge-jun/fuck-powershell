@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, bun</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENOENT, EXIT CODE LEAK</span></div><div class="row"><span class="k">Mechanism</span><span class="v">file url scheme path</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">file url to path</span></span></div></div>
 
+# new URL(...).pathname of a file: URL is '/D:/a/...' on Windows, so bun and node cannot open the script you just resolved
+
 ## Symptom
 
 A test that spawns a sibling CLI script exits 1 on Windows only, and the assertion that catches
@@ -69,6 +71,23 @@ cases rather than "any nonzero exit".
 Sibling cases: `file-url-encodes-backslash` (the reverse conversion), `esm-is-main-file-url`
 and `dynamic-import-needs-file-url` (where a path must become a URL).
 
+## Repeated occurrence: quota-reset child probes
+
+OpenCodex's post-merge Windows run 33941712300 repeated this in two new tests:
+`quota-reset-seen-store.test.ts` generated a dynamic import from `.pathname`
+(empty stdout, expected `true`), while `quota-reset-observation.test.ts` passed
+`.pathname` as the child script argument (exit 1). Neither assertion exposed
+the child's stderr. The final passing Windows verification is separate from
+that baseline; PR #3610 carries the correction and its verification status.
+
+The two consumers require different representations: preserve `new URL(...).href`
+for `import()`, but use `fileURLToPath` for the spawn script argument. Do not
+repair both by stripping the leading slash or by turning the import URL into a
+drive-prefixed specifier. Use `process.execPath` and consume stdout, stderr, and
+the exit promise together; assert exit zero before interpreting stdout.
+
 ## Refs
 
 - <https://github.com/lidge-jun/opencodex/actions/runs/33590540220>
+- <https://github.com/lidge-jun/opencodex/actions/runs/33941712300>
+- <https://github.com/lidge-jun/opencodex/pull/3610>

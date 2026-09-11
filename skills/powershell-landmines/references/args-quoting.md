@@ -1,22 +1,3 @@
----
-id: backslash-quote-ends-span
-title: "escaping a quote ENDS the quoted span, so one JSON argument silently becomes several"
-category: args-quoting
-versions: "5.1"
-failure: misleading-error
-context: [agent, script, ci]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/6
-ontology:
-  affects: [runtime-node, shell-powershell-51, env-windows]
-  invokes: [command-node, command-convertto-json]
-  manifests_as: [error-invalid-json]
-  caused_by: [mechanism-native-argv-rebuild]
-  mitigated_by: [workaround-file-payload]
-  unsafe_fix: [workaround-escape-more-quotes]
----
 
 # escaping a quote ENDS the quoted span, so one JSON argument silently becomes several
 
@@ -131,24 +112,6 @@ workaround is not recorded anywhere in the archive.
 
 ---
 
----
-id: bun-ps-windowstyle-argv
-title: "Bun rejects powershell.exe argv containing -WindowStyle Hidden"
-category: args-quoting
-versions: "both"
-failure: silent
-context: [script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/0a904776160ea2954fbad1276b112f2c06ddfbae
-  - https://github.com/lidge-jun/opencodex/commit/393d72a779e92b3116b854d714916704756d8110
-ontology:
-  affects: [runtime-bun, shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-powershell]
-  caused_by: [mechanism-bun-windowstyle-argv-reject]
-  mitigated_by: [workaround-create-no-window]
----
 
 # Bun rejects powershell.exe argv containing -WindowStyle Hidden
 
@@ -185,24 +148,6 @@ windowstyle-hidden-vs-windowshide), keeping it in argv is all cost, no benefit.
 
 ---
 
----
-id: cmd-c-newline-not-separator
-title: "a newline inside cmd /c does not start a second command, so the half of your script after it never runs"
-category: args-quoting
-versions: "both"
-failure: silent
-context: [script, agent, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/45
-  - https://github.com/openai/codex/commit/1f0fe5b8
-ontology:
-  affects: [shell-cmd, env-windows]
-  invokes: [command-cmd]
-  caused_by: [mechanism-statement-terminator]
-  mitigated_by: [workaround-ampersand-separator]
----
 
 # a newline inside cmd /c does not start a second command, so the half of your script after it never runs
 
@@ -278,24 +223,6 @@ split one silently does not.
 
 ---
 
----
-id: cmd-shim-reparses-argv
-title: "argv to a .cmd shim is re-parsed by cmd.exe — untrusted text becomes commands"
-category: args-quoting
-versions: "both"
-failure: silent
-context: [agent, script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/e8c9c53ca118cd6ef7eb43a8a672a9588581aa2d
-  - https://github.com/lidge-jun/cli-jaw/commit/f363a71c043c5dc986081968e3f138a1c94203d0
-ontology:
-  affects: [runtime-node, shell-cmd, env-windows]
-  invokes: [command-cmd]
-  caused_by: [mechanism-cmd-reparse]
-  mitigated_by: [workaround-stdin-payload, workaround-strip-cmd-separators]
----
 
 # argv to a .cmd shim is re-parsed by cmd.exe — untrusted text becomes commands
 
@@ -335,23 +262,90 @@ ComSpec re-open it.
 
 ---
 
+
+# shift renumbers %1 and leaves %* alone, so a batch wrapper cannot drop its own first argument and forward the rest
+
+## Symptom
+
+Nothing, for a long time. A `.cmd` shim that takes a name and forwards everything
+after it works for months. Then a caller passes nine arguments and the ninth is
+missing from the child. No error, no truncation notice, no clue in the log — the
+argument is simply not there.
+
+## Repro
+
+```bat
+@echo off
+echo BEFORE_STAR=[%*]
+shift
+echo AFTER_STAR=[%*]
+echo AFTER_1=[%1]
+```
+
+```
+> wrapper.cmd one two three
+BEFORE_STAR=[one two three]
+AFTER_STAR=[one two three]
+AFTER_1=[two]
+```
+
+`shift` did its job: `%1` moved from `one` to `two`. `%*` did not move at all.
+
+## Cause
+
+`%*` is not built from the numbered parameters. It is the command tail exactly as
+it arrived, and `shift` only renumbers `%1` through `%9`. The two are different
+views of the same invocation, and only one of them is shiftable.
+
+So a wrapper that must consume its first argument and forward the rest has no
+correct expansion available. What it reaches for instead is
+
+```bat
+child.exe %2 %3 %4 %5 %6 %7 %8 %9
+```
+
+and that is where the famous eight-argument ceiling comes from. Be precise about
+this, because it is usually reported backwards: **cmd.exe does not limit you to
+eight arguments.** The ceiling belongs to the workaround, and it appears only
+because `%*` was unavailable.
+
+## Workaround
+
+Do not consume the argument in batch at all. Forward `%*` untouched and let the
+program you dispatch read its own leading token:
+
+```bat
+REM the hook name stays in the line; run.mjs reads argv[2] itself
+"%WH_NODE%" "%~dp0run.mjs" %*
+```
+
+Nothing shifts, so `%*` is still correct, and the ceiling never exists. This is
+the shape win-hooks settled on after the positional version capped its hooks at
+eight arguments.
+
+If you must keep the positional form, quote every one of them:
+
+```bat
+child.exe "%~2" "%~3" "%~4" "%~5" "%~6" "%~7" "%~8" "%~9"
+```
+
+`%~n` strips surrounding quotes, and re-quoting puts exactly one layer back, so an
+argument containing a space survives instead of splitting into two. Unquoted
+`%2 %3` loses that argument boundary silently, which is the same failure mode as
+the missing ninth argument and just as hard to see.
+
+## Why it stays invisible
+
+Both halves of this fail quietly. A dropped ninth argument and a split third
+argument produce a child that runs successfully with the wrong input, so the exit
+code is 0 and the log looks normal. Nothing in the batch language will tell you;
+the only way to see it is to have the child print its own argv, which is also the
+repro above.
+
+
+
 ---
-id: cmd-start-ampersand-splits
-title: "cmd /c start truncates your URL at the first &"
-category: args-quoting
-versions: "both"
-failure: silent
-context: [script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/0c20c014e4a9940f12a36d9e624e325e4d2fc2a8
-ontology:
-  affects: [shell-cmd, env-windows]
-  invokes: [command-cmd, command-start]
-  caused_by: [mechanism-cmd-reparse]
-  mitigated_by: [workaround-caret-escape-cmd, workaround-runtime-opener]
----
+
 
 # cmd /c start truncates your URL at the first &
 
@@ -383,25 +377,6 @@ into two commands at the first ampersand.
 
 ---
 
----
-id: createprocess-cmdline-32767
-title: "os error 206 says the filename is too long when the filename is fine — the command line hit the 32,767-character cap"
-category: args-quoting
-versions: "both"
-failure: misleading-error
-context: [agent, script, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/44
-  - https://github.com/openai/codex/issues/38985
-  - https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessw
-ontology:
-  affects: [env-windows, env-win32-api, runtime-node]
-  manifests_as: [error-enametoolong]
-  caused_by: [mechanism-command-line-cap]
-  mitigated_by: [workaround-payload-off-argv]
----
 
 # os error 206 says the filename is too long when the filename is fine — the command line hit the 32,767-character cap
 
@@ -488,23 +463,6 @@ with none.
 
 ---
 
----
-id: dollar-backslash-vars
-title: "\ and \ are real variable names, so sed backreferences and price ranges are deleted en route to the child"
-category: args-quoting
-versions: "both"
-failure: silent
-context: [agent, script, ci]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/10
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-node]
-  caused_by: [mechanism-string-interpolation]
-  mitigated_by: [workaround-single-quote-regex]
----
 
 # \ and \ are real variable names, so sed backreferences and price ranges are deleted en route to the child
 
@@ -607,25 +565,6 @@ get hit in practice.
 
 ---
 
----
-id: dq-regex-interpolates
-title: "Double-quoted regex interpolates $vars — and backslash won't save you"
-category: args-quoting
-versions: "both"
-failure: misleading-error
-context: [script, ci]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/3d198e2b80ddb13d02ce63b65e5c88a25b428009
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-match, command-set-strictmode]
-  manifests_as: [error-unset-variable]
-  caused_by: [mechanism-string-interpolation]
-  mitigated_by: [workaround-single-quote-regex]
-  unsafe_fix: [workaround-escape-more-quotes]
----
 
 # Double-quoted regex interpolates \$vars — and backslash won't save you
 
@@ -662,24 +601,6 @@ anything.
 
 ---
 
----
-id: english-and-not-separator
-title: "The English word 'and' is not a statement separator"
-category: args-quoting
-versions: "both"
-failure: misleading-error
-context: [interactive, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/a00f1a4618c683e173af1e17ee06e4a25e0434a1
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-remove-item]
-  manifests_as: [error-parameterbinding]
-  caused_by: [mechanism-prose-as-argument]
-  mitigated_by: [workaround-semicolon-separator]
----
 
 # The English word 'and' is not a statement separator
 
@@ -842,24 +763,6 @@ sentence on stdout that a merge driver treats as its output.
 
 ---
 
----
-id: join-semicolon-splits-startprocess
-title: "Joining command fragments with '; ' splits Start-Process mid-call"
-category: args-quoting
-versions: "both"
-failure: silent
-context: [script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/ac8c0d2dfdae12904d6ed818763bc069cdb84764
-  - https://github.com/lidge-jun/opencodex/commit/ebf947ec579a4750b261e3247aabd7a5675b3764
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-start-process]
-  caused_by: [mechanism-statement-terminator]
-  mitigated_by: [workaround-space-join-params]
----
 
 # Joining command fragments with '; ' splits Start-Process mid-call
 
@@ -897,25 +800,78 @@ at worst.
 
 ---
 
+
+# Git Bash rewrites /c into C:/ before the child sees it, so the cmd hop that fixed PowerShell breaks the moment bash is in the chain
+
+## Symptom
+
+You added `cmd /c` in front of a command to make it survive PowerShell
+(`ps-quoted-path-is-expression`). It works. Then the same line runs somewhere with
+Git Bash in the chain, and cmd.exe reports a command it has never heard of — or
+starts interpreting your first real argument as a switch. The `/c` never arrived.
+
+## Repro
+
+Give a child something that prints its own argv, and look at what it received:
+
+```bash
+# argv.js is: console.log('ARGV=' + JSON.stringify(process.argv.slice(2)))
+bash -c 'node argv.js /c /tmp/x //c'
+#   -> ARGV=["C:/","C:/Users/you/AppData/Local/Temp/x","/c"]
+
+MSYS_NO_PATHCONV=1 bash -c 'node argv.js /c /tmp/x //c'
+#   -> ARGV=["/c","/tmp/x","//c"]
+```
+
+One line shows all three behaviours at once. `/c` becomes `C:/`. A genuine POSIX
+path is translated to its Windows equivalent, which is the feature this exists for.
+And `//c` — the documented escape — arrives as `/c`, which is what you wanted.
+
+Measured with `C:\Program Files\Git\bin\bash.exe`.
+
+## Cause
+
+MSYS2, which Git for Windows is built on, converts arguments that look like POSIX
+paths when it launches a child that is not itself an MSYS program. The conversion
+is correct and necessary for `/tmp/x`; the trouble is that a lone `/c` is
+indistinguishable from an absolute path whose root is one character long.
+
+The conversion happens in the launcher, before the child's command line is built,
+so no amount of quoting *inside* the command reaches it. Single quotes, double
+quotes, backslashes — all of them are consumed by bash first and the surviving
+argument is still a POSIX-shaped path.
+
+## Workaround
+
+Either tell MSYS not to convert, or write the argument in the form it leaves alone:
+
+```bash
+MSYS_NO_PATHCONV=1 cmd /c "C:/tool.cmd" sessionstart   # disable conversion
+cmd //c "C:/tool.cmd" sessionstart                      # the // escape
+```
+
+Both are measured above. `MSYS_NO_PATHCONV=1` is a blunt instrument — it disables
+conversion for every argument in that invocation, including the ones you wanted
+converted — so prefer it when you control the whole command and `//c` when you do not.
+
+The better fix is one level up: stop emitting a single line and hoping. Decide the
+prefix per dispatcher. win-hooks does exactly this — its Codex hook reference
+carries `cmd /c` because Codex hands the command to a PowerShell, and its Claude
+hook reference deliberately does not, because Claude's chain can include Git Bash.
+Two consumers, two strings, one rule written down next to each.
+
+## Why this is worth a case of its own
+
+The two fixes point in opposite directions. `ps-quoted-path-is-expression` says add
+`cmd /c`; this case says a `cmd /c` is destroyed by a bash hop. Neither is wrong,
+and an agent that has read only one of them will apply it everywhere and break the
+other half of the matrix. If you are emitting a command that a host will dispatch,
+you need both facts at the same time.
+
+
+
 ---
-id: oss-native-arg-quoting
-title: Embedded quotes and empty args vanish before native commands see them
-category: args-quoting
-versions: "both"
-failure: silent
-context: [script, agent]
-source: third-party
-repro: verified
-refs:
-  - https://github.com/PowerShell/PowerShell/pull/14692
-  - https://github.com/lidge-jun/cli-jaw/commit/77153112420acaadd961defc6a2b9a170ee70d43
-  - https://github.com/PowerShell/PowerShell/pull/15408
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-node]
-  caused_by: [mechanism-native-argv-rebuild]
-  mitigated_by: [workaround-ps-native-argument-passing, workaround-file-payload]
----
+
 
 # Embedded quotes and empty args vanish before native commands see them
 
@@ -953,24 +909,6 @@ depended on the broken behavior. The trap is version- and platform-dependent.
 
 ---
 
----
-id: piped-iex-drops-params
-title: "irm | iex cannot pass parameters — your -Switch goes to iex, not the script"
-category: args-quoting
-versions: "both"
-failure: silent
-context: [interactive, script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/0851921ae0b3ab382c2546b24e5aa67b0d163b37
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-iex, command-irm]
-  manifests_as: [error-parameterbinding]
-  caused_by: [mechanism-iex-session]
-  mitigated_by: [workaround-download-then-file]
----
 
 # irm | iex cannot pass parameters — your -Switch goes to iex, not the script
 
@@ -1006,24 +944,6 @@ itself. The pipe-to-iex distribution form structurally cannot accept options.
 
 ---
 
----
-id: prose-as-unknown-flags
-title: "when a CLI reports your prose as unknown flags, PowerShell shredded the argument - not the CLI"
-category: args-quoting
-versions: "both"
-failure: misleading-error
-context: [agent, ci, interactive]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/4
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-gh, command-node]
-  manifests_as: [error-unknown-arguments]
-  caused_by: [mechanism-native-argv-rebuild, mechanism-string-interpolation]
-  mitigated_by: [workaround-file-payload, workaround-ps-native-argument-passing]
----
 
 # when a CLI reports your prose as unknown flags, PowerShell shredded the argument - not the CLI
 
@@ -1094,25 +1014,6 @@ create --body "$text"` shredded the markdown into flags. Switching to
 
 ---
 
----
-id: ps-file-extension-dispatch
-title: "powershell -File refuses scripts that aren't named .ps1"
-category: args-quoting
-versions: "both"
-failure: hard-error
-context: [script, ci]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/0efd755ed938e13bb527105fd83500ad1001d0e6
-  - https://github.com/lidge-jun/opencodex/commit/b63f5c80fa4bff17e8dc7ad7c8ed666faaf3d29e
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-powershell]
-  manifests_as: [error-not-a-powershell-script]
-  caused_by: [mechanism-extension-dispatch]
-  mitigated_by: [workaround-shell-matching-suffix]
----
 
 # powershell -File refuses scripts that aren't named .ps1
 
@@ -1147,25 +1048,91 @@ Windows branch.
 
 ---
 
+
+# a quoted path at the start of a line is an expression, not a command, so the line your tool emits runs under cmd.exe and dies under both PowerShells
+
+## Symptom
+
+Every hook your tool patched fails at once. Exit 1, no output, nothing in the log.
+The line it emitted looks unimpeachable:
+
+```
+"C:\Users\me\plugin\_hooks\run-hook.cmd" sessionstart
+```
+
+Paste it into cmd.exe and it runs. Under Windows PowerShell 5.1 and pwsh 7 it is a
+ParserError, and the error blames the *argument*:
+
+```
+Unexpected token 'sessionstart' in expression or statement.
+FullyQualifiedErrorId : UnexpectedToken
+```
+
+The path is fine. The file is there. Nothing is wrong with either.
+
+## Repro
+
+Point a `.cmd` at `echo GOT=[%1]` and send the same line through all three:
+
+| line | powershell 5.1 | pwsh 7 | cmd.exe |
+|---|---|---|---|
+| `"<path>" sessionstart` | ParserError, exit 1 | ParserError, exit 1 | `GOT=[sessionstart]`, exit 0 |
+| `cmd /c "<path>" sessionstart` | exit 0 | exit 0 | exit 0 |
+| `& "<path>" sessionstart` | exit 0 | exit 0 | n/a |
+
+Measure the cmd.exe row from **inside a `.cmd` file**. Handing the line to
+`spawnSync` as an argv puts another quoting layer in front of it and produces a
+false negative — that happened while measuring this case, and it is the easy way
+to get the wrong answer.
+
+## Cause
+
+PowerShell decides how to read a line from its first token. A leading quoted
+string selects *expression* mode: the string is a value, and a bare word cannot
+follow a value. The parser never gets as far as asking whether the path is
+executable — the opening quote already settled the question.
+
+The instance is small. The class is not: **you do not choose the shell that runs
+what you emit.** A tool that writes a command into a config file is writing for
+whatever the host decides to dispatch through, and hosts differ — one hands the
+line to cmd.exe, another to the session shell. The two PowerShell editions install
+side by side and parse this identically, so the useful question is never *which*
+edition the user drives, only whether *a* PowerShell is anywhere in the chain.
+
+## Workaround
+
+Two fixes, for two different amounts of knowledge.
+
+```powershell
+& "C:\path with spaces\tool.cmd" sessionstart      # you know PowerShell parses this
+cmd /c "C:\path with spaces\tool.cmd" sessionstart # you do not know who parses this
+```
+
+`&` is the call operator: it forces command mode. Use it when the line is yours.
+
+`cmd /c` is the one that survives an unknown dispatcher, because `cmd` is a
+command in all three shells and hands the quoted path to the cmd.exe you wanted in
+the first place. It is not free: read `msys-rewrites-slash-args` before you reach
+for it, because a Git Bash hop rewrites that `/c` into `C:/` and the fix becomes
+the next bug.
+
+Test it across every shell that could be in the chain, not the first one that
+works. 5.1 is always present, so it is always worth running; pwsh only when
+installed. A matrix that stops at its first green row passes on your machine and
+fails on the machine of anyone driving the shell it never reached.
+
+## What not to do
+
+Do not try to escape your way out of it. The quotes are not the problem — they are
+load-bearing, because the path contains spaces. Stripping them to dodge expression
+mode trades this failure for a path that tokenizes at the first space. An 8.3 short
+path also removes the quotes and works, right up until it meets a volume with 8.3
+name generation disabled or a directory that has no short name.
+
+
+
 ---
-id: shell-true-fallback-injects
-title: "the shell:true fallback you added to fix a spawn error turns any user text in argv into a second command"
-category: args-quoting
-versions: "both"
-failure: silent
-context: [agent, script, ci]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/21
-  - https://github.com/lidge-jun/cli-jaw/commit/8f294b449a99acee7c0e0f7057898008fef9f441
-ontology:
-  affects: [shell-cmd, env-windows, runtime-node]
-  invokes: [command-cmd]
-  caused_by: [mechanism-cmd-reparse]
-  mitigated_by: [workaround-refuse-shell-on-untrusted-argv]
-  unsafe_fix: [workaround-shell-true]
----
+
 
 # the shell:true fallback you added to fix a spawn error turns any user text in argv into a second command
 
@@ -1265,25 +1232,6 @@ is now interpreted rather than passed.
 
 ---
 
----
-id: windowstyle-hidden-vs-windowshide
-title: "-WindowStyle Hidden still flashes a console window"
-category: args-quoting
-versions: "both"
-failure: silent
-context: [script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/93a083d1fc0a28853dc3eb385bf55e16af9e5b7f
-  - https://github.com/lidge-jun/opencodex/commit/26dc5aa2b78bf902b8b27a122d6ada1bd2184906
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7, env-windows, env-win32-api]
-  invokes: [command-powershell]
-  caused_by: [mechanism-console-allocation]
-  mitigated_by: [workaround-create-no-window]
-  unsafe_fix: [workaround-windowstyle-hidden]
----
 
 # -WindowStyle Hidden still flashes a console window
 

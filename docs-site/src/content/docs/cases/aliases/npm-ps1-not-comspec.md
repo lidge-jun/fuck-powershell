@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, cmd, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">PSSECURITYEXCEPTION</span></div><div class="row"><span class="k">Mechanism</span><span class="v">pathext resolution, execution policy gate</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">get command</span></span></div></div>
 
+# npm's .ps1 shim wins the PATH race and nothing can run it
+
 ## Symptom
 
 Tool detection finds "npm" but every attempt to execute it fails: cmd.exe says

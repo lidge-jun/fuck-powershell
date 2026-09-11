@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">UNSET VARIABLE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">string interpolation</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">single quote regex</span></span></div></div>
 
+# Double-quoted regex interpolates \$vars — and backslash won't save you
+
 ## Symptom
 
 A test asserts against a regex like `"SetEnvironmentVariable\(\$entries..."` in a

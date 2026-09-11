@@ -1,20 +1,3 @@
----
-id: ps51-no-and-and
-title: "PowerShell 5.1 has no && or || — agents loop on parser errors"
-category: versions
-versions: "5.1"
-failure: hard-error
-context: [agent, interactive, script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/d44e5673529e25118f2dd4fef6f396b5612f140d
-ontology:
-  affects: [shell-powershell-51]
-  manifests_as: [error-parsererror]
-  caused_by: [mechanism-pipeline-chain-ops]
-  mitigated_by: [workaround-lastexitcode-gate]
----
 
 # PowerShell 5.1 has no && or || — agents loop on parser errors
 
@@ -53,27 +36,6 @@ like `cd /d` or heredocs also die in PS.
 
 ---
 
----
-id: ps51-vs-7-split
-title: powershell.exe and pwsh are different languages wearing one syntax
-category: versions
-versions: "both"
-failure: silent
-context: [script, ci]
-source: third-party
-repro: verified
-refs:
-  - https://github.com/parsaesmaili038/ticketing-v1/commit/d5a4d513e34d557f345b41d9e1b9fdd2806d4a04
-  - https://github.com/lidge-jun/cli-jaw/commit/322ac1801a5f7422792e690c5f8dcec87425a50b
-  - https://github.com/lidge-jun/cli-jaw/commit/dccabcd055a6a8d258487ae01512ad508161dd63
-  - https://github.com/lidge-jun/cli-jaw/blob/main/scripts/install.ps1
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7, env-actions-runner, env-windows, env-korean-codepage]
-  invokes: [command-set-content]
-  manifests_as: [error-parameterbinding, error-mojibake]
-  caused_by: [mechanism-default-encoding, mechanism-alias-shadowing]
-  mitigated_by: [workaround-set-content-utf8nobom, workaround-pin-ps-version]
----
 
 # powershell.exe and pwsh are different languages wearing one syntax
 
@@ -113,24 +75,6 @@ pinning a version target two runtimes at once.
 
 ---
 
----
-id: strictmode-missing-property
-title: "Set-StrictMode turns missing JSON fields into crashes"
-category: versions
-versions: "both"
-failure: hard-error
-context: [script, ci]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/5fe703a73b78eab4a0e0bff1b9c0368d0d6018ad
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7]
-  invokes: [command-set-strictmode, command-convertfrom-json]
-  manifests_as: [error-propertynotfound]
-  caused_by: [mechanism-strictmode-contract]
-  mitigated_by: [workaround-psobject-probe]
----
 
 # Set-StrictMode turns missing JSON fields into crashes
 

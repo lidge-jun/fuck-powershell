@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENOENT</span></div><div class="row"><span class="k">Mechanism</span><span class="v">posix dev null</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">dollar null redirect</span></span></div></div>
 
+# > /dev/null creates a literal file (or kills CI) on Windows
+
 ## Symptom
 
 A cross-platform script silences output with `> /dev/null 2>&1`. On Windows the

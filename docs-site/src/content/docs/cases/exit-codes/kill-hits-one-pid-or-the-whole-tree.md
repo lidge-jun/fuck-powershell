@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">no process group</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">job object or scoped tree kill</span></span></div></div>
 
+# killing a child leaves its grandchildren running, and the fix for that kills the process asking for it
+
 ## Symptom
 
 Two failures that look unrelated and are the same missing abstraction.

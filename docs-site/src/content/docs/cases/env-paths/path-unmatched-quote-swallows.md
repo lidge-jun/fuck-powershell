@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">COMMAND NOT RECOGNIZED</span></div><div class="row"><span class="k">Mechanism</span><span class="v">quoted path entry</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">split path on semicolon</span></span></div></div>
 
+# one stray quote in PATH makes every entry after it disappear, for your program only — the same shell still finds them
+
 ## Symptom
 
 Your program cannot find a tool that is unambiguously installed and on PATH:

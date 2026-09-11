@@ -1,23 +1,87 @@
+
+# your Windows checkout writes CRLF into the shebang, Git Bash runs it anyway, and the Linux runner reports an interpreter that plainly exists as missing
+
+## Symptom
+
+```
+bash: ./script.sh: /bin/bash^M: bad interpreter: No such file or directory
+```
+
+On a machine where `/bin/bash` exists and runs. Most terminals swallow the `^M`,
+so what you usually see is "No such file or directory" pointing at a file that is
+visibly right there — or at an interpreter you can invoke by hand in the next line
+of the same shell.
+
+It appears on the CI runner, in the container, or under WSL. It never appears on
+the Windows machine that produced it, and that asymmetry is the real subject here.
+
+## Repro
+
+Two halves, and only one of them is reproducible from Windows.
+
+The half that reproduces:
+
+```
+git config --get core.autocrlf     # true
+# write #!/bin/bash + echo MARKER_OK with CRLF endings, then:
+bash script.sh                     # MARKER_OK, exit 0
+./script.sh                        # MARKER_OK, exit 0
+```
+
+Measured with `C:\Program Files\Git\bin\bash.exe`. **Git for Windows tolerates the
+carriage return**, both by direct execution and via an explicit `bash`.
+
+The half that does not reproduce here: the same file on a Linux runner, in a
+container, or under WSL, where the exec layer does not tolerate it. Clone the
+repository with `core.autocrlf=true` and with `false` and compare
+`od -c script.sh | head -1` to see the `\r` that gets shipped.
+
+## Cause
+
+A shebang is read by whatever POSIX exec layer runs the file, and it takes
+everything after `#!` up to the newline. With CRLF endings the carriage return
+falls inside the interpreter *name*, so the lookup is for a binary literally called
+`bash\r`, which does not exist. Hence "no such file" about a file that exists.
+
+Two things make this specifically a Windows-authored bug that fails somewhere else:
+
+- `core.autocrlf=true` converts on **checkout**. The bytes committed to the
+  repository are correct; only the working tree is wrong. Code review cannot see it.
+- Nothing on the authoring machine complains. The Windows loader never reads a
+  shebang at all, and Git for Windows' own bash tolerates the `\r` — measured
+  above. So the last local signal is gone too.
+
+The failure is deferred to the first real POSIX exec, which is usually CI.
+
+## Verification note
+
+The Git Bash tolerance is measured on this host. The `bad interpreter` failure
+itself is not reproducible here and is attributed to the cited sources. That
+asymmetry is not a gap in the case — it is what the case is about.
+
+## Workaround
+
+Pin the line endings in the repository rather than trusting each contributor's
+git config:
+
+```gitattributes
+* text=auto eol=lf
+hooks/run-hook.cmd -text
+```
+
+The second line is the part people forget, and it matters: a polyglot `.cmd`
+dispatched by cmd.exe wants CRLF. A blanket `eol=lf` trades this failure for
+`cmd-lf-drops-first-byte`, where cmd.exe's line-seek arithmetic starts eating the
+first byte of lines and `npm` becomes `pm`. Both rules are right; they just apply
+to different files, so the exceptions have to be written down.
+
+If you cannot change `.gitattributes`, normalizing at the consumer (`sed -i 's/\r$//'`
+in the CI step) works but is a patch on every pipeline instead of one on the repo.
+
+
+
 ---
-id: bom-less-ps1-cp949
-title: A BOM-less .ps1 is read as ANSI — non-ASCII corrupts before execution
-category: encoding
-versions: "5.1"
-failure: silent
-context: [script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/blob/main/src/prompt/templates/a1-system.md
-  - https://github.com/lidge-jun/cli-jaw/commit/7f0c655beb9eb3b3a426a3a155c88af232f12ff7
-  - https://github.com/lidge-jun/opencodex/commit/ff6916abcde01de60a1b1ac4ce7adb4c8efad6de
-  - https://github.com/lidge-jun/opencodex/commit/22e156e25aed5bc06fc73a6e9c1fa00eb38049b3
-ontology:
-  affects: [shell-powershell-51, env-windows, env-korean-codepage]
-  manifests_as: [error-mojibake]
-  caused_by: [mechanism-bom-sniffing, mechanism-default-encoding]
-  mitigated_by: [workaround-utf8-bom]
----
+
 
 # A BOM-less .ps1 is read as ANSI — non-ASCII corrupts before execution
 
@@ -58,25 +122,6 @@ PowerShell 7 assumes UTF-8 by default, which is why the bug is invisible in
 
 ---
 
----
-id: bomless-bat-oem-codepage
-title: "a batch file with a non-ASCII path dies with 9009, and adding a BOM to fix it fuses onto the first line and kills it differently"
-category: encoding
-versions: "both"
-failure: misleading-error
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/22
-  - https://github.com/lidge-jun/cli-jaw/commit/955d2b3f7bbac00874a73a07d130bc09bcf0ec93
-ontology:
-  affects: [shell-cmd, env-windows, env-korean-codepage]
-  invokes: [command-cmd]
-  manifests_as: [error-command-not-recognized, error-mojibake]
-  caused_by: [mechanism-default-encoding]
-  mitigated_by: [workaround-chcp-first-line]
----
 
 # a batch file with a non-ASCII path dies with 9009, and adding a BOM to fix it fuses onto the first line and kills it differently
 
@@ -165,25 +210,95 @@ BOM helps PowerShell 5.1 and actively breaks a batch file.
 
 ---
 
+
+# a BOM is not whitespace, so it turns a batch label into a command and the next token is read as redirection
+
+## Symptom
+
+A `.cmd` file that is deliberately both valid batch and valid bash — the
+`: << 'BLOCK'` polyglot that lets one file be dispatched either way — stops working
+after somebody edits it. cmd.exe reports:
+
+```
+<< was unexpected at this time.
+```
+
+On a Korean install the same thing arrives as `<<은(는) 예상되지 않았습니다`, which is
+worth knowing because it is what actually gets pasted into a search box.
+
+The file looks identical in every editor. `git diff` shows nothing, or shows a
+whole-file change with no visible difference.
+
+## Repro
+
+Four copies of the same first line, `: << 'CMDBLOCK'`, followed by
+`@echo off` / `echo MARKER_OK` / `exit /b 0` / `CMDBLOCK`:
+
+| file | result |
+|---|---|
+| no BOM | `MARKER_OK`, exit 0 |
+| UTF-8 BOM (`EF BB BF`) | exit 255, `<<` unexpected |
+| one leading space | `MARKER_OK`, exit 0 |
+| one leading tab | `MARKER_OK`, exit 0 |
+
+The whitespace rows are the point. They are what proves the rule is about the BOM
+specifically, and not about indentation — which is the wrong lesson to take away,
+and the one most write-ups take.
+
+A second measured variant shows the same mechanism without the polyglot: put a BOM
+in front of an ordinary `:tgt` label and the script keeps running, but reports
+`'<BOM>tgt' is not recognized as an internal or external command`. The label became
+a command. A `goto tgt` aimed at it can no longer find it.
+
+Measured on Windows 11.
+
+## Cause
+
+Two rules meet.
+
+A batch label is recognised when its colon is the first **non-whitespace**
+character on the line. Leading spaces and tabs are tolerated, which is why the
+whitespace rows above are green. A BOM is not whitespace — it is three ordinary
+bytes as far as cmd.exe is concerned, and cmd.exe does not strip it — so the line
+stops being a label and becomes a command to parse.
+
+What is left to parse is `<< 'CMDBLOCK'`. `<<` is bash's here-doc opener and has
+no meaning in batch, so cmd.exe reads it as a doubled input redirection with
+nothing to redirect, and gives up.
+
+The error names the redirection. It never names the three invisible bytes that
+caused it, which is why this reads as a corrupt script rather than an encoding
+problem, and why the first instinct is to rewrite the working line.
+
+## Workaround
+
+Do not emit a BOM:
+
+```powershell
+Set-Content -Encoding utf8NoBOM -Path run-hook.cmd -Value $text   # 7.x
+[IO.File]::WriteAllText($path, $text, [Text.UTF8Encoding]::new($false))  # 5.1
+```
+
+`utf8NoBOM` does not exist on Windows PowerShell 5.1, and `Out-File -Encoding utf8`
+there writes a BOM — that is the trap this inherits from `utf8-bom-still-breaks-grep`.
+
+Better, make it structural rather than a rule people have to remember: strip a BOM
+on every read and emit none on every write. A file that picks one up from an editor
+is then repaired the next time anything touches it, instead of waiting to be
+diagnosed. If you also ship a `.gitattributes`, note that a polyglot `.cmd` needs
+its own entry — see `autocrlf-shebang-cr` for the line-ending half of the same problem.
+
+## The other half of this trap
+
+`bomless-bat-oem-codepage` is the same three bytes with a different consequence:
+there the BOM fuses onto `@ECHO OFF` and the error is a mangled command name and
+exit 9009. Same cause, different grammar, completely different search terms. If you
+arrived here from `<<`, read that one too — and vice versa.
+
+
+
 ---
-id: cmd-lf-drops-first-byte
-title: "a batch file saved with Unix line endings makes cmd.exe eat the first byte of lines, so npm becomes pm and powershell becomes hell"
-category: encoding
-versions: "both"
-failure: misleading-error
-context: [script, agent, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/49
-  - https://github.com/openclaw/openclaw/issues/119484
-ontology:
-  affects: [shell-cmd, env-windows]
-  invokes: [command-cmd]
-  manifests_as: [error-command-not-recognized]
-  caused_by: [mechanism-crlf-residue]
-  mitigated_by: [workaround-write-bat-crlf]
----
+
 
 # a batch file saved with Unix line endings makes cmd.exe eat the first byte of lines, so npm becomes pm and powershell becomes hell
 
@@ -300,24 +415,6 @@ worth knowing together.
 
 ---
 
----
-id: lf-pure-transform-mixes-eol
-title: "editing one section of a CRLF file with LF-pure string code leaves a mixed-EOL file that every later diff and hash disagrees about"
-category: encoding
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/30
-  - https://github.com/lidge-jun/opencodex/commit/22561a4598bb75e7b254474c1f998f025dda7a58
-  - https://github.com/lidge-jun/opencodex/commit/b394b035b
-ontology:
-  affects: [runtime-node, runtime-bun, env-windows]
-  caused_by: [mechanism-crlf-residue]
-  mitigated_by: [workaround-eol-boundary-normalization]
----
 
 # editing one section of a CRLF file with LF-pure string code leaves a mixed-EOL file that every later diff and hash disagrees about
 
@@ -418,25 +515,6 @@ becomes inconsistent.
 
 ---
 
----
-id: oss-outfile-bom
-title: Out-File writes UTF-16; your POSIX tools read garbage
-category: encoding
-versions: "5.1"
-failure: silent
-context: [ci, script]
-source: third-party
-repro: verified
-refs:
-  - https://github.com/parsaesmaili038/ticketing-v1/commit/d5a4d513e34d557f345b41d9e1b9fdd2806d4a04
-ontology:
-  affects: [shell-powershell-51, runtime-node, runtime-python, env-windows, env-actions-runner]
-  invokes: [command-out-file]
-  manifests_as: [error-mojibake]
-  caused_by: [mechanism-default-encoding]
-  mitigated_by: [workaround-set-content-utf8nobom, workaround-dotnet-writealltext]
-  unsafe_fix: [workaround-out-file-utf8]
----
 
 # Out-File writes UTF-16; your POSIX tools read garbage
 
@@ -474,26 +552,6 @@ default to BOM-less UTF-8, so the same script writes different bytes per runtime
 
 ---
 
----
-id: python-subprocess-locale-encoding
-title: "subprocess text=True decodes the child with the ANSI codepage under strict errors, so one unmappable byte raises UnicodeDecodeError instead of returning output"
-category: encoding
-versions: "both"
-failure: hard-error
-context: [script, agent, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/47
-  - https://github.com/NousResearch/hermes-agent/commit/5b5b5e8d
-  - https://github.com/NousResearch/hermes-agent/issues/83767
-  - https://github.com/NousResearch/hermes-agent/issues/89442
-ontology:
-  affects: [runtime-python, env-windows, env-korean-codepage]
-  manifests_as: [error-mojibake]
-  caused_by: [mechanism-locale-preferred-encoding]
-  mitigated_by: [workaround-explicit-subprocess-encoding]
----
 
 # subprocess text=True decodes the child with the ANSI codepage under strict errors, so one unmappable byte raises UnicodeDecodeError instead of returning output
 
@@ -597,23 +655,6 @@ Popen versus base64 framing in the child — and a different reader.
 
 ---
 
----
-id: python-textio-newline-translation
-title: "Python text mode injects carriage returns into a pipe, so the bytes that land on disk are not the string you sent"
-category: encoding
-versions: "both"
-failure: silent
-context: [script, agent, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/48
-  - https://github.com/NousResearch/hermes-agent/commit/8f91d7bf
-ontology:
-  affects: [runtime-python, env-windows]
-  caused_by: [mechanism-universal-newline-write]
-  mitigated_by: [workaround-write-through-buffer]
----
 
 # Python text mode injects carriage returns into a pipe, so the bytes that land on disk are not the string you sent
 
@@ -701,25 +742,6 @@ transit.
 
 ---
 
----
-id: redirected-ps-output-mojibake
-title: "capturing PowerShell output from another program mangles every non-ASCII character, because redirected output is encoded in the console codepage"
-category: encoding
-versions: "5.1"
-failure: silent
-context: [script, agent, ci]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/32
-  - https://github.com/lidge-jun/opencodex/commit/f642a7b1f
-ontology:
-  affects: [shell-powershell-51, env-windows, env-korean-codepage, runtime-node]
-  invokes: [command-powershell]
-  manifests_as: [error-mojibake]
-  caused_by: [mechanism-default-encoding]
-  mitigated_by: [workaround-base64-utf16-payload]
----
 
 # capturing PowerShell output from another program mangles every non-ASCII character, because redirected output is encoded in the console codepage
 
@@ -809,23 +831,6 @@ it dies.
 
 ---
 
----
-id: split-n-leaves-cr
-title: "splitting on newline leaves an invisible carriage return, so the line that closes your parser never matches"
-category: encoding
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/20
-  - https://github.com/lidge-jun/codexclaw/commit/2c3801a1bf2a72aa83cdbf15a71fd0fbf224de25
-ontology:
-  affects: [runtime-node, runtime-bun, runtime-python, env-windows]
-  caused_by: [mechanism-crlf-residue]
-  mitigated_by: [workaround-crlf-tolerant-split]
----
 
 # splitting on newline leaves an invisible carriage return, so the line that closes your parser never matches
 
@@ -909,25 +914,6 @@ fine, the file is valid, and one invisible byte per line breaks equality.
 
 ---
 
----
-id: tee-object-utf16
-title: "Tee-Object writes UTF-16, so grepping your own log returns zero matches twice over"
-category: encoding
-versions: "5.1"
-failure: silent
-context: [ci, script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/3
-ontology:
-  affects: [shell-powershell-51, runtime-node, env-windows, env-actions-runner]
-  invokes: [command-tee-object]
-  manifests_as: [error-mojibake]
-  caused_by: [mechanism-default-encoding]
-  mitigated_by: [workaround-set-content-utf8nobom, workaround-dotnet-writealltext]
-  unsafe_fix: [workaround-out-file-utf8]
----
 
 # Tee-Object writes UTF-16, so grepping your own log returns zero matches twice over
 
@@ -993,25 +979,6 @@ produced no output at all.
 
 ---
 
----
-id: utf8-bom-still-breaks-grep
-title: "the recommended fix still breaks anchored grep - Out-File -Encoding utf8 writes a BOM, and utf8NoBOM does not exist on 5.1"
-category: encoding
-versions: "5.1"
-failure: silent
-context: [ci, script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/7
-ontology:
-  affects: [shell-powershell-51, env-windows, env-actions-runner]
-  invokes: [command-out-file, command-set-content]
-  manifests_as: [error-parameterbinding]
-  caused_by: [mechanism-default-encoding]
-  mitigated_by: [workaround-dotnet-writealltext]
-  unsafe_fix: [workaround-out-file-utf8, workaround-set-content-utf8nobom]
----
 
 # the recommended fix still breaks anchored grep - Out-File -Encoding utf8 writes a BOM, and utf8NoBOM does not exist on 5.1
 

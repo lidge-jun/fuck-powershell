@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">cmd, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENOENT</span></div><div class="row"><span class="k">Mechanism</span><span class="v">unc cwd unsupported</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">run shims from local dir</span></span></div></div>
 
+# cmd.exe refuses a UNC working directory, so every .cmd shim breaks when your terminal is opened inside a WSL or network path
+
 ## Symptom
 
 An install or a build fails before it does anything, with a warning about the

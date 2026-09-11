@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">host vs pipeline</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">write output</span></span></div></div>
 
+# Write-Host output is invisible to 2>&1 | Out-String
+
 ## Symptom
 
 A test captures "everything" with 2>&1 | Out-String — and the capture is EMPTY,

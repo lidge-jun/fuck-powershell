@@ -9,7 +9,9 @@ sidebar:
 
 <div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-context">ci</span><span class="badge badge-meta">third-party</span><span class="badge badge-meta">repro: historical</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#case-insensitive-filesystem">case-insensitive-filesystem</a></div>
 
-<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">case insensitive filesystem</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">canonical path key</span></span></div></div>
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, bun</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">case insensitive filesystem</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">canonical path key</span></span></div></div>
+
+# the filesystem says two paths are the same file and your config map says they are two keys, so a trusted project reads as untrusted
 
 ## Symptom
 
@@ -97,9 +99,26 @@ on WRITE as well as on read, and migrate existing entries. A store that already
 holds both spellings will keep answering inconsistently no matter how correct the
 read path becomes.
 
-For a real identity check rather than a key, compare resolved paths through the
-filesystem: `realpathSync` on both sides handles casing, junctions, and symlinks
-together.
+For an identity check on existing paths, use filesystem resolution on both sides.
+With Bun's Windows compatibility APIs, prefer `realpathSync.native`: ordinary
+`realpathSync` and its native variant need not expand short names identically.
+If the final file may not exist, resolve its existing parent directory and append
+the expected literal filename; do not turn an absent-file case into an ENOENT test.
+
+## First-party Bun occurrence: test fixture versus effective home
+
+OpenCodex Windows run33945431119 failed the native Codex status-path assertion:
+the fixture expected a temporary root under RUNNER~1, while the API returned the
+same uniquely named fixture under runneradmin. The fixture used ordinary
+realpathSync; the effective-home resolver used realpathSync.native. Lowercasing
+cannot reconcile those two spellings.
+
+PR #3629 canonicalizes the fixture's existing root with the native operation and
+keeps the exact status-path assertion. An additional test switches from one real
+home to a directory alias of a distinct second home while both config files are
+absent. Returning the unresolved alias makes that test fail. No suffix-only or
+casefolded assertion is substituted. Full Windows verification is tracked in
+the PR; the historical trust-map report above is not being relabeled as a new repro.
 
 ---
 
@@ -110,6 +129,8 @@ refer to one file while your data structure insists they are two.
 
 ## Refs
 
+- <https://github.com/lidge-jun/opencodex/actions/runs/33945431119>
+- <https://github.com/lidge-jun/opencodex/pull/3629>
 - <https://github.com/lidge-jun/fuck-powershell/issues/43>
 - <https://github.com/openai/codex/issues/40002>
 - <https://learn.microsoft.com/en-us/windows/wsl/case-sensitivity>

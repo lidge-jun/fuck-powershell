@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, bun, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">crlf residue</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">eol boundary normalization</span></span></div></div>
 
+# editing one section of a CRLF file with LF-pure string code leaves a mixed-EOL file that every later diff and hash disagrees about
+
 ## Symptom
 
 Your tool edits a config file — injects a section, removes a block, rewrites a

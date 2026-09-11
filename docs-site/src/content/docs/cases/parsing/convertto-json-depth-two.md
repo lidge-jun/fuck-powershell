@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">json depth default</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">explicit json depth</span></span></div></div>
 
+# ConvertTo-Json defaults to -Depth 2 and replaces your data with the string System.Collections.Hashtable
+
 ## Symptom
 
 You serialize a config and ship it. The JSON is well-formed, every consumer

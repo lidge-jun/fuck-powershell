@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, powershell 51, node</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">absent folder empty result</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">known folder api</span></span></div></div>
 
+# the folder API you use to find AppData returns an empty string instead of failing, so a redirected profile silently gives you the filesystem root
+
 ## Symptom
 
 Code that asks Windows where the user's data directory is gets `""` back. Not an

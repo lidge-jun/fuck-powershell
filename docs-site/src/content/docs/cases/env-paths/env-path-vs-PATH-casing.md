@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">env casing</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">env remerge</span></span></div></div>
 
+# Spreading {...env, PATH} leaves the old Path sitting next to it
+
 ## Symptom
 
 JS code overrides PATH for a child process: `{...process.env, PATH: shimDir}`.

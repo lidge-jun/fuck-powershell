@@ -1,23 +1,3 @@
----
-id: async-child-holds-dir-after-stop
-title: "rmSync hits EPERM right after a clean server.stop() because a fire-and-forget icacls.exe still holds the directory"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/actions/runs/33590540220
-  - https://github.com/lidge-jun/opencodex/actions/runs/33290817128
-  - https://github.com/lidge-jun/opencodex/commit/e5d588669
-ontology:
-  affects: [env-windows, runtime-bun, runtime-node, env-actions-runner]
-  manifests_as: [error-eperm, error-ebusy]
-  caused_by: [mechanism-mandatory-file-locking, mechanism-unowned-child-lifetime]
-  mitigated_by: [workaround-shutdown-owns-children, workaround-retry-transient-remove]
-  unsafe_fix: [workaround-retry-transient-remove]
----
 
 # rmSync hits EPERM right after a clean server.stop() because a fire-and-forget icacls.exe still holds the directory
 
@@ -116,25 +96,6 @@ parent leaves without either.
 
 ---
 
----
-id: atomic-rename-loses-to-scanner
-title: "your atomic write fails intermittently on Windows because antivirus opened the file you are replacing, milliseconds ago"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, agent, ci]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/33
-  - https://github.com/lidge-jun/opencodex/commit/c5c6644d7
-  - https://github.com/lidge-jun/opencodex/commit/fcc9e5022
-ontology:
-  affects: [env-windows, runtime-node, env-win32-api]
-  manifests_as: [error-ebusy, error-eperm]
-  caused_by: [mechanism-mandatory-file-locking]
-  mitigated_by: [workaround-bounded-rename-retry]
----
 
 # your atomic write fails intermittently on Windows because antivirus opened the file you are replacing, milliseconds ago
 
@@ -230,26 +191,104 @@ than cleanup.
 
 ---
 
+
+# the caller picks the interpreter and never reads your shebang, so a bash script handed to node dies as a SyntaxError in a language it was never written in
+
+## Symptom
+
+A `SyntaxError` in a file whose first line is `#!/bin/bash`. The interpreter
+points into a shell script as though it were JavaScript or Python, and the caret
+lands on a perfectly ordinary shell statement.
+
+```
+C:\...\hook.py:2
+exit 0
+     ^
+SyntaxError: Unexpected number
+```
+
+## Repro
+
+Save two bash lines as `hook.py` and hand the file to node:
+
+```
+#!/bin/bash
+exit 0
+```
+```
+node hook.py   -> SyntaxError: Unexpected number, exit 1
+```
+
+Measured on Node 24. The shebang line survives, because `#` happens to start a
+comment in several languages. The second line is where the impersonation ends.
+
+## Cause
+
+`#!` is a Unix kernel convention. Nothing in the Windows dispatch path implements
+it, and it is worth separating the three paths rather than blurring them into
+"Windows ignores shebangs":
+
+1. **An explicit interpreter.** `node x`, `python x`, `bash x`. The caller has
+   already chosen; the file's contents are never consulted. This is the measured
+   case and by far the most common in agent and plugin tooling, where a config
+   entry says `python3 <script>` and nobody re-checks what the script is.
+2. **File association / ShellExecute.** A suffix is mapped to a program. Also
+   contents-blind, and it is the mechanism behind double-clicking.
+3. **PATHEXT.** Governs which extensions an *extensionless* PATH lookup will try.
+   A different question again, and the one covered by `pathext-bare-name-enoent`.
+
+Windows is not shebang-free in general — `py.exe`, Git Bash and WSL all honour
+`#!`. But none of them is in the chain when a tool spawns `python <file>`. So a
+file can be simultaneously a valid bash script and, to everything that actually
+runs it, Python.
+
+In practice this happens when a plugin ships a `.py` that is really bash, or when
+an upstream update overwrites the real script and leaves the filename behind.
+
+## Workaround
+
+Dispatch on the interpreter the file **declares**, not the one its name or its
+caller implies: read the shebang yourself and spawn that, or record the interpreter
+in a descriptor next to the file so the decision is data rather than a guess.
+
+The second half matters if you are writing a repair. When you need a file that is
+an inert no-op under an interpreter you cannot predict, the obvious body is wrong:
+
+```sh
+#!/bin/bash
+exit 0        # SyntaxError under node (measured) and under python
+```
+
+```sh
+#!/bin/sh
+              # exits 0 under node (measured), and under bash and python
+```
+
+A lone `#!/bin/sh` line and nothing else is read as a comment by all three, so it
+exits 0 whoever runs it. Scope that to those three: it says nothing about
+PowerShell or cmd.exe, where `#` is not a comment introducer in the same way.
+
+win-hooks arrived at the same body the hard way — its first repair used the bash
+shebang plus `exit 0`, and the repaired hook kept failing with the very message it
+had been repaired for.
+
+## Verification note
+
+The python half of both results above is attributed rather than measured: this
+host has no real CPython, only the Microsoft Store alias, which is its own case
+(`windowsapps-python3-stub-needs-probe`). The node half is measured.
+
+## Contrast
+
+`ps-file-extension-dispatch` is the same family with the opposite outcome:
+`powershell -File` **refuses** a script that is not named `.ps1` instead of running
+it wrongly. One dispatcher checks the suffix and declines; the others do not check
+anything and proceed. Knowing which kind you are talking to is the whole skill.
+
+
+
 ---
-id: cmd-unc-cwd-not-supported
-title: "cmd.exe refuses a UNC working directory, so every .cmd shim breaks when your terminal is opened inside a WSL or network path"
-category: env-paths
-versions: "both"
-failure: misleading-error
-context: [interactive, script, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/51
-  - https://github.com/openclaw/openclaw/commit/684a9b2e
-  - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
-ontology:
-  affects: [shell-cmd, env-windows]
-  invokes: [command-cmd]
-  manifests_as: [error-enoent]
-  caused_by: [mechanism-unc-cwd-unsupported]
-  mitigated_by: [workaround-run-shims-from-local-dir]
----
+
 
 # cmd.exe refuses a UNC working directory, so every .cmd shim breaks when your terminal is opened inside a WSL or network path
 
@@ -334,25 +373,6 @@ by one specific shell, and everything that hops through that shell inherits it.
 
 ---
 
----
-id: cwd-locked-cannot-unlink
-title: "A test that chdir()s into a temp dir and deletes it cannot exist on Windows: the process's own cwd is locked"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/actions/runs/33920624827
-  - https://github.com/lidge-jun/opencodex/commit/9e6656641
-ontology:
-  affects: [env-windows, runtime-bun, runtime-node]
-  manifests_as: [error-ebusy]
-  caused_by: [mechanism-mandatory-file-locking, mechanism-cwd-handle-held]
-  mitigated_by: [workaround-platform-skip-with-reason]
-  unsafe_fix: [workaround-chdir-away-before-delete, workaround-retry-transient-remove]
----
 
 # A test that chdir()s into a temp dir and deletes it cannot exist on Windows: the process's own cwd is locked
 
@@ -423,25 +443,6 @@ that injects the throw directly.
 
 ---
 
----
-id: dynamic-import-needs-file-url
-title: "dynamic import of an absolute path works on POSIX and throws ERR_UNSUPPORTED_ESM_URL_SCHEME on Windows, because C: reads as a protocol"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/27
-  - https://github.com/lidge-jun/ima2-gen/commit/0a18d552a
-ontology:
-  affects: [runtime-node, runtime-bun, env-windows]
-  invokes: [command-node]
-  manifests_as: [error-invalid-url-scheme]
-  caused_by: [mechanism-drive-letter-as-scheme]
-  mitigated_by: [workaround-pathtofileurl]
----
 
 # dynamic import of an absolute path works on POSIX and throws ERR_UNSUPPORTED_ESM_URL_SCHEME on Windows, because C: reads as a protocol
 
@@ -521,24 +522,6 @@ confusion, opposite failure mode.
 
 ---
 
----
-id: env-domain-principal
-title: "$env:USERDOMAIN is not your identity"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/blob/main/src/lib/windows-secret-acl.ts
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-icacls]
-  manifests_as: [error-account-sid-mapping]
-  caused_by: [mechanism-env-derived-identity]
-  mitigated_by: [workaround-sid-principal]
----
 
 # $env:USERDOMAIN is not your identity
 
@@ -583,22 +566,6 @@ token's SID for exactly the failure modes above.
 
 ---
 
----
-id: env-path-vs-PATH-casing
-title: "Spreading {...env, PATH} leaves the old Path sitting next to it"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/371aa579d61c5772a26c55ecfb907ca4541a5320
-ontology:
-  affects: [runtime-node, env-windows, env-win32-api]
-  caused_by: [mechanism-env-casing]
-  mitigated_by: [workaround-env-remerge]
----
 
 # Spreading {...env, PATH} leaves the old Path sitting next to it
 
@@ -635,24 +602,6 @@ CreateProcess dedupes one way, Node libraries another.
 
 ---
 
----
-id: envpath-pollutes-user
-title: "Appending to $env:Path and saving to User PATH copies Machine PATH in"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/f0020c663e8fe8e828053851a034377b8d0ff825
-  - https://github.com/lidge-jun/cli-jaw/commit/514f9a9cd0f3d40e37578fa641c33dec9aadff37
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-setenvironmentvariable]
-  caused_by: [mechanism-registry-env-snapshot]
-  mitigated_by: [workaround-scope-read-path]
----
 
 # Appending to $env:Path and saving to User PATH copies Machine PATH in
 
@@ -691,23 +640,6 @@ replaced the merged-view guidance with exactly this scope-read pattern.
 
 ---
 
----
-id: esm-is-main-file-url
-title: "the is-main guard built by concatenating file:// with argv[1] can never be true on Windows, so your CLI exits 0 doing nothing"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/19
-  - https://github.com/lidge-jun/codexclaw/commit/319371421bb9034756f68f99a406f85cd2694dda
-ontology:
-  affects: [runtime-node, runtime-bun, env-windows]
-  caused_by: [mechanism-win32-path-normalization]
-  mitigated_by: [workaround-realpath-both-sides]
----
 
 # the is-main guard built by concatenating file:// with argv[1] can never be true on Windows, so your CLI exits 0 doing nothing
 
@@ -811,24 +743,6 @@ separator, `pathext-bare-name-enoent` is extension resolution. This one is about
 
 ---
 
----
-id: file-url-encodes-backslash
-title: "building a file URL with a URL library percent-encodes the backslashes, so the database that exists cannot be opened"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/38
-  - https://github.com/lidge-jun/opencodex/commit/753c3231ad196b8499866feae8ccd7811177246c
-ontology:
-  affects: [env-windows, runtime-node, runtime-python]
-  manifests_as: [error-enoent]
-  caused_by: [mechanism-separator-as-url-data]
-  mitigated_by: [workaround-normalize-before-url]
----
 
 # building a file URL with a URL library percent-encodes the backslashes, so the database that exists cannot be opened
 
@@ -935,25 +849,6 @@ refused, the conversion succeeds, and the separators simply become data.
 
 ---
 
----
-id: file-url-pathname-drive-slash
-title: "new URL(...).pathname of a file: URL is '/D:/a/...' on Windows, so bun and node cannot open the script you just resolved"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/actions/runs/33590540220
-  - https://github.com/lidge-jun/opencodex/actions/runs/33941712300
-  - https://github.com/lidge-jun/opencodex/pull/3610
-ontology:
-  affects: [env-windows, runtime-node, runtime-bun]
-  manifests_as: [error-enoent, error-exit-code-leak]
-  caused_by: [mechanism-file-url-scheme-path]
-  mitigated_by: [workaround-file-url-to-path]
----
 
 # new URL(...).pathname of a file: URL is '/D:/a/...' on Windows, so bun and node cannot open the script you just resolved
 
@@ -1033,24 +928,6 @@ the exit promise together; assert exit zero before interpreting stdout.
 
 ---
 
----
-id: fsync-readonly-handle-eperm
-title: "fsyncSync on a handle opened with 'r' throws EPERM on Windows, so a durable write that reopens read-only to flush fails only there"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/actions/runs/33590540220
-  - https://github.com/lidge-jun/opencodex/blob/dev/tests/codex-transition-state-adoption.test.ts
-ontology:
-  affects: [env-windows, runtime-node, runtime-bun, env-win32-api]
-  manifests_as: [error-eperm]
-  caused_by: [mechanism-flush-needs-write-access]
-  mitigated_by: [workaround-fsync-on-rdwr-handle]
----
 
 # fsyncSync on a handle opened with 'r' throws EPERM on Windows, so a durable write that reopens read-only to flush fails only there
 
@@ -1120,25 +997,6 @@ cannot fsync them at all, and that path should be best-effort.
 
 ---
 
----
-id: icacls-inheritance-r-empty-dacl
-title: "icacls /inheritance:r before the grant leaves a file with no ACEs at all, so an interrupted hardening script locks every consumer out of a file that still says you own it"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/36
-  - https://github.com/lidge-jun/opencodex/commit/0e78e4d59b3df0d06e44def819d6842fe3c2515c
-ontology:
-  affects: [env-windows, shell-powershell-51]
-  invokes: [command-icacls]
-  manifests_as: [error-eperm]
-  caused_by: [mechanism-acl-step-order]
-  mitigated_by: [workaround-grant-before-restrict]
----
 
 # icacls /inheritance:r before the grant leaves a file with no ACEs at all, so an interrupted hardening script locks every consumer out of a file that still says you own it
 
@@ -1373,24 +1231,6 @@ entry wins; this one is about an entry that silently contains nothing.
 
 ---
 
----
-id: known-folder-empty-not-error
-title: "the folder API you use to find AppData returns an empty string instead of failing, so a redirected profile silently gives you the filesystem root"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/35
-  - https://github.com/lidge-jun/opencodex/commit/9122d5ebee7e0d1521cdf8bbb86654fd14d7faa9
-ontology:
-  affects: [env-windows, shell-powershell-51, runtime-node]
-  invokes: [command-powershell]
-  caused_by: [mechanism-absent-folder-empty-result]
-  mitigated_by: [workaround-known-folder-api]
----
 
 # the folder API you use to find AppData returns an empty string instead of failing, so a redirected profile silently gives you the filesystem root
 
@@ -1510,26 +1350,6 @@ that the folder being absent does. `repro: historical`; no Windows host was used
 
 ---
 
----
-id: max-path-260
-title: "the 260-character path limit is still there, the registry switch alone does not lift it, and the tree you created may be one nothing can delete"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, ci, agent]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/40
-  - https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
-  - https://learn.microsoft.com/en-us/windows/win32/sbscs/application-manifests
-  - https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
-ontology:
-  affects: [env-windows, runtime-node, runtime-python, env-win32-api]
-  manifests_as: [error-enametoolong]
-  caused_by: [mechanism-max-path-ceiling]
-  mitigated_by: [workaround-long-path-optin]
----
 
 # the 260-character path limit is still there, the registry switch alone does not lift it, and the tree you created may be one nothing can delete
 
@@ -1665,23 +1485,6 @@ than the create.
 
 ---
 
----
-id: node-path-host-delimiter
-title: "node:path delimiter follows the HOST, so win32 PATH logic resolves nothing when tested from Linux"
-category: env-paths
-versions: "both"
-failure: silent
-context: [ci, script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/5
-  - https://github.com/lidge-jun/cli-jaw/commit/80b3d4ab039b9fc9e6d7029734c7cdd573e335e8
-ontology:
-  affects: [runtime-node, env-windows, env-actions-runner]
-  caused_by: [mechanism-path-delimiter]
-  mitigated_by: [workaround-path-win32-delimiter]
----
 
 # node:path delimiter follows the HOST, so win32 PATH logic resolves nothing when tested from Linux
 
@@ -1744,26 +1547,6 @@ Fix: https://github.com/lidge-jun/codexclaw/commit/5c03acb
 
 ---
 
----
-id: ntfs-atime-disabled-by-default
-title: "A test that proves 'the file was read' by watching atime move cannot see the read on Windows: NTFS last-access updates are disabled by default"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/actions/runs/33929916059
-  - https://github.com/lidge-jun/opencodex/pull/3555
-  - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-behavior
-ontology:
-  affects: [env-windows, env-actions-runner, runtime-bun, runtime-node]
-  manifests_as: [error-vacuous-pass, error-assertion-mismatch]
-  caused_by: [mechanism-ntfs-last-access-disabled]
-  mitigated_by: [workaround-spy-the-syscall-not-the-metadata]
-  unsafe_fix: [workaround-enable-last-access-on-runner]
----
 
 # A test that proves 'the file was read' by watching atime move cannot see the read on Windows: NTFS last-access updates are disabled by default
 
@@ -1855,26 +1638,6 @@ leaves the test asserting on a filesystem policy instead of on the read.
 
 ---
 
----
-id: path-case-sensitive-map
-title: "the filesystem says two paths are the same file and your config map says they are two keys, so a trusted project reads as untrusted"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, agent, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/opencodex/actions/runs/33945431119
-  - https://github.com/lidge-jun/opencodex/pull/3629
-  - https://github.com/lidge-jun/fuck-powershell/issues/43
-  - https://github.com/openai/codex/issues/40002
-  - https://learn.microsoft.com/en-us/windows/wsl/case-sensitivity
-ontology:
-  affects: [env-windows, runtime-node, runtime-bun]
-  caused_by: [mechanism-case-insensitive-filesystem]
-  mitigated_by: [workaround-canonical-path-key]
----
 
 # the filesystem says two paths are the same file and your config map says they are two keys, so a trusted project reads as untrusted
 
@@ -1995,22 +1758,6 @@ refer to one file while your data structure insists they are two.
 
 ---
 
----
-id: path-colon-not-delimiter
-title: "Joining PATH with ':' silently no-ops on Windows"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/codexclaw/commit/23e2fee29e735a06246846aa2a26605a0022514b
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
-  caused_by: [mechanism-path-delimiter]
-  mitigated_by: [workaround-path-win32-delimiter]
----
 
 # Joining PATH with ':' silently no-ops on Windows
 
@@ -2046,23 +1793,6 @@ PowerShell as \$env:Path = "\$bin:\$env:Path".
 
 ---
 
----
-id: path-dot-hijacks-bare-npm
-title: "A '.' entry on PATH lets the repo you just opened execute its own npm"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/79f923dc5d3751054a0ca59838289409b2520622
-ontology:
-  affects: [runtime-node, shell-cmd, env-windows, env-win32-api]
-  invokes: [command-npm]
-  caused_by: [mechanism-pathext-resolution]
-  mitigated_by: [workaround-skip-relative-path-entries, workaround-absolute-spawn]
----
 
 # A '.' entry on PATH lets the repo you just opened execute its own npm
 
@@ -2097,24 +1827,6 @@ equivalent to prepending that repository to PATH.
 
 ---
 
----
-id: path-unmatched-quote-swallows
-title: "one stray quote in PATH makes every entry after it disappear, for your program only — the same shell still finds them"
-category: env-paths
-versions: "both"
-failure: misleading-error
-context: [script, agent, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/42
-  - https://github.com/openai/codex/issues/38421
-ontology:
-  affects: [env-windows]
-  manifests_as: [error-command-not-recognized]
-  caused_by: [mechanism-quoted-path-entry]
-  mitigated_by: [workaround-split-path-on-semicolon]
----
 
 # one stray quote in PATH makes every entry after it disappear, for your program only — the same shell still finds them
 
@@ -2227,23 +1939,6 @@ the looser ones carry on.
 
 ---
 
----
-id: pathext-bare-name-enoent
-title: "An extensionless shim on PATH is invisible to Windows spawn — ENOENT with the file right there"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/codexclaw/commit/b4be8c171f14e1fdbeec006f0fe5496a7e2caeac
-ontology:
-  affects: [runtime-node, env-windows, env-win32-api]
-  manifests_as: [error-enoent]
-  caused_by: [mechanism-pathext-resolution]
-  mitigated_by: [workaround-pathext-extension-shim]
----
 
 # An extensionless shim on PATH is invisible to Windows spawn — ENOENT with the file right there
 
@@ -2278,22 +1973,6 @@ Distinct from npm-ps1-not-comspec (a WRONG shim wins) and pathext-exe-beats-cmd
 
 ---
 
----
-id: pathext-exe-beats-cmd
-title: "A sibling .exe silently beats your .cmd shim — PATHEXT rank order"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/1b626e4f8120d47ba40ded812ca300acb9ac1a94
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows, env-win32-api]
-  caused_by: [mechanism-pathext-resolution]
-  mitigated_by: [workaround-shim-all-siblings, workaround-get-command]
----
 
 # A sibling .exe silently beats your .cmd shim — PATHEXT rank order
 
@@ -2326,25 +2005,6 @@ only owns the `.cmd` name is one updater run away from being invisible.
 
 ---
 
----
-id: reserved-dos-device-names
-title: "writing to nul.txt succeeds and creates nothing, because a handful of MS-DOS device names are still reserved in every directory"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/39
-  - https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file
-  - https://learn.microsoft.com/en-us/dotnet/standard/io/file-path-formats
-  - https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
-ontology:
-  affects: [env-windows, shell-cmd, runtime-node, env-win32-api]
-  caused_by: [mechanism-dos-device-namespace]
-  mitigated_by: [workaround-reject-device-names]
----
 
 # writing to nul.txt succeeds and creates nothing, because a handful of MS-DOS device names are still reserved in every directory
 
@@ -2463,24 +2123,6 @@ whole name is redirected to a device.
 
 ---
 
----
-id: session-path-stale
-title: "Installed a tool, still 'not found' — your session's PATH is a snapshot"
-category: env-paths
-versions: "both"
-failure: misleading-error
-context: [script, interactive, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/ima2-gen/commit/1442bd1fa555ebda0db9b2a4a86f48ab504fd122
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-winget, command-node]
-  manifests_as: [error-command-not-recognized]
-  caused_by: [mechanism-registry-env-snapshot]
-  mitigated_by: [workaround-env-remerge, workaround-scope-read-path]
----
 
 # Installed a tool, still 'not found' — your session's PATH is a snapshot
 
@@ -2519,24 +2161,6 @@ per envpath-pollutes-user — the two traps are mirror images.
 
 ---
 
----
-id: tcp-tcb-survives-listener
-title: "the port is still busy after your server exited, because Windows keeps TCP state the dead socket left behind and SO_REUSEADDR does not clear it"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, agent, ci]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/37
-  - https://github.com/lidge-jun/opencodex/commit/b1713b574fea949300ff477dd3ea48fda0ada814
-ontology:
-  affects: [env-windows, runtime-node, env-win32-api]
-  manifests_as: [error-eaddrinuse]
-  caused_by: [mechanism-tcb-retention]
-  mitigated_by: [workaround-delete-tcb-entry]
----
 
 # the port is still busy after your server exited, because Windows keeps TCP state the dead socket left behind and SO_REUSEADDR does not clear it
 
@@ -2631,24 +2255,6 @@ the file case does nothing here.
 
 ---
 
----
-id: test-path-trailing-whitespace
-title: "Test-Path says True for a path with trailing whitespace that Node cannot open"
-category: env-paths
-versions: "both"
-failure: misleading-error
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/16
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows, env-win32-api]
-  invokes: [command-test-path, command-node]
-  manifests_as: [error-enoent]
-  caused_by: [mechanism-win32-path-normalization]
-  mitigated_by: [workaround-trim-path]
----
 
 # Test-Path says True for a path with trailing whitespace that Node cannot open
 
@@ -2752,25 +2358,6 @@ and vanishing in the next.
 
 ---
 
----
-id: unlink-while-open-ebusy
-title: "npm update fails with EBUSY because your server exited hours ago but its child process still holds the file"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [interactive, script, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/26
-  - https://github.com/lidge-jun/ima2-gen/commit/19c7335b2
-  - https://github.com/lidge-jun/ima2-gen/commit/513eab41e
-ontology:
-  affects: [env-windows, runtime-node, env-win32-api]
-  manifests_as: [error-ebusy, error-eperm]
-  caused_by: [mechanism-mandatory-file-locking]
-  mitigated_by: [workaround-kill-process-tree]
----
 
 # npm update fails with EBUSY because your server exited hours ago but its child process still holds the file
 
@@ -2869,24 +2456,6 @@ process. Here, no unlink semantics free your file.
 
 ---
 
----
-id: windowsapps-alias-eperm
-title: "a WindowsApps alias on PATH spawns EPERM while passing every readability and reparse-point probe"
-category: env-paths
-versions: "both"
-failure: misleading-error
-context: [agent, script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/2
-ontology:
-  affects: [runtime-node, shell-cmd, env-windows, env-win32-api]
-  invokes: [command-node]
-  manifests_as: [error-eperm]
-  caused_by: [mechanism-appexeclink]
-  mitigated_by: [workaround-skip-windowsapps, workaround-comspec-dispatch]
----
 
 # a WindowsApps alias on PATH spawns EPERM while passing every readability and reparse-point probe
 
@@ -2959,25 +2528,107 @@ Fix: https://github.com/lidge-jun/codexclaw/commit/071eb40
 
 ---
 
+
+# where.exe finds python3 and running it offers to install Python: the alias that satisfies every presence check is not an interpreter, and the path test that catches it also rejects the real thing
+
+## Symptom
+
+A tool that calls `python3` fails, and every check you run says Python is
+installed. `where python3` prints a path. The file is there. Running it prints a
+*sentence*:
+
+```
+Python was not found; run without arguments to install from the Microsoft Store,
+or disable this shortcut from Settings > Apps > Advanced app settings >
+App execution aliases.
+```
+
+That is not an error message from your program. It is an advertisement, and your
+program received exit code 9009.
+
+## Repro
+
+Measured on Windows 11 with the Store aliases enabled:
+
+```
+> where python3
+C:\Users\you\AppData\Local\Microsoft\WindowsApps\python3.exe
+> where python
+C:\Users\you\AppData\Local\Microsoft\WindowsApps\python.exe
+
+> python3 -c ""
+exit 9009, the Store message above
+> python -c ""
+exit 9009, identical
+```
+
+Two things there break the workaround you were about to write.
+
+The exit code is **9009**, a normal failed process — not `ENOENT`, not `EPERM`.
+Anything that classifies interpreter availability by spawn error sees a program
+that started and failed, which is the same shape as a real Python with a bad flag.
+
+And on this machine **both names** are stubs, so the usual "if `python3` is
+missing, fall back to `python`" resolves to a second alias and fails identically.
+
+Worth adding: the dispatcher matters too. The cmd.exe that runs a hook need not
+resolve the same interpreter as the interactive shell you tested in by hand, so
+"it works when I type it" does not transfer.
+
+## Cause
+
+An App Execution Alias is a real file at a real path whose entire purpose is to
+advertise a Store package. Name-based identity is the trap: the bare name resolves,
+so every presence check passes — `where`, `exists`, a PATH walk, an `access` probe
+— and only execution reveals there is no interpreter behind it.
+
+Do not file this under the same mechanism as `windowsapps-alias-eperm`. That case
+is a packaged binary `CreateProcess` **refuses**; this one starts, prints, and
+exits. Same directory, opposite behaviour, and the difference is exactly what makes
+the next section necessary.
+
+## Workaround
+
+Resolve functionally, once, and keep the answer:
+
+```js
+// first candidate whose ABSOLUTE path actually executes a trivial program
+const resolvePython = () =>
+  ['python3', 'python', 'py']
+    .flatMap(absoluteCandidates)
+    .find(exe => spawnSync(exe, ['-c', ''], { windowsHide: true }).status === 0)
+    ?? null;
+```
+
+Bake the absolute path that passed into whatever you emit. Resolving at setup time
+rather than per invocation also keeps a hot path from paying an interpreter start
+on every call.
+
+If nothing passes, there is no Python. Say so and disable the work, rather than
+emitting a command that will fail identically forever.
+
+## Why the WindowsApps filter is the unsafe fix, and why the corpus says both
+
+Skipping anything under a `WindowsApps` path segment does catch this stub. It also
+rejects a legitimate Microsoft Store Python, which lives in exactly the same
+directory.
+
+This is the precise point where this case and `windowsapps-alias-eperm` disagree,
+and the disagreement is real rather than a contradiction:
+
+| question | right test |
+|---|---|
+| will `CreateProcess` refuse this binary? | the `WindowsApps` path segment — it is the only discriminator that works, and that case measured every alternative failing |
+| is this a working interpreter? | run it — the probe is available and decisive, and the path tells you nothing |
+
+So the graph lists the same workaround as a mitigation of one case and an unsafe
+fix for the other. That is not an inconsistency to clean up; it is the finding.
+Pick the test that matches the question you are actually asking.
+
+
+
 ---
-id: wsl-unc-rejects-nt-acl
-title: "your ACL hardening fails on a WSL path because a wsl.localhost UNC root has no NTFS security descriptor to harden"
-category: env-paths
-versions: "both"
-failure: hard-error
-context: [script, agent, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/41
-  - https://github.com/openai/codex/commit/8a2bc6d9
-ontology:
-  affects: [env-windows, env-win32-api]
-  invokes: [command-icacls]
-  manifests_as: [error-eperm]
-  caused_by: [mechanism-unc-provider-semantics]
-  mitigated_by: [workaround-skip-acl-unsupported-roots]
----
+
 
 # your ACL hardening fails on a WSL path because a wsl.localhost UNC root has no NTFS security descriptor to harden
 
@@ -3071,23 +2722,6 @@ and the tell is that elevation changes nothing.
 
 ---
 
----
-id: wslenv-shared-with-host
-title: "WSLENV is shared with the Windows side by design, so the env var everyone reaches for to detect WSL cannot detect it"
-category: env-paths
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/24
-  - https://github.com/lidge-jun/cli-jaw/commit/4a2bbefd2ca71328dab787e6fad88776d1b9381f
-ontology:
-  affects: [env-windows, runtime-node]
-  caused_by: [mechanism-env-derived-identity]
-  mitigated_by: [workaround-platform-first-classification]
----
 
 # WSLENV is shared with the Windows side by design, so the env var everyone reaches for to detect WSL cannot detect it
 

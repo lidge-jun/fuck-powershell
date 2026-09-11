@@ -16,7 +16,9 @@ for (const f of readdirSync(CASES, { recursive: true }).map(String).filter(f => 
   (byCat[cat] ??= []).push(text);
 }
 for (const [cat, texts] of Object.entries(byCat)) {
-  const body = texts.map(t => t.replace(/^---\n[\s\S]*?\n---\n/, "")).join("\n\n---\n\n");
+  // CRLF-tolerant: an \n-only anchor leaves the whole YAML block in place on a Windows
+  // checkout, so every reference file shipped the frontmatter it was meant to strip.
+  const body = texts.map(t => t.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")).join("\n\n---\n\n");
   writeFileSync(join(OUT, cat + ".md"), body);
   console.log("wrote references/" + cat + ".md (" + texts.length + " cases)");
 }

@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7</span></div><div class="row"><span class="k">Fails as</span><span class="v">PROPERTYNOTFOUND</span></div><div class="row"><span class="k">Mechanism</span><span class="v">strictmode contract</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">psobject probe</span></span></div></div>
 
+# Set-StrictMode turns missing JSON fields into crashes
+
 ## Symptom
 
 A script parses a JSON manifest and reads optional fields (`$entry.tag`,

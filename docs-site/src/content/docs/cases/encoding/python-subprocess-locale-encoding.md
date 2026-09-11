@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">python, windows, korean codepage</span></div><div class="row"><span class="k">Fails as</span><span class="v">MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">locale preferred encoding</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">explicit subprocess encoding</span></span></div></div>
 
+# subprocess text=True decodes the child with the ANSI codepage under strict errors, so one unmappable byte raises UnicodeDecodeError instead of returning output
+
 ## Symptom
 
 A command runs fine in the terminal and blows up through Python, with a decode

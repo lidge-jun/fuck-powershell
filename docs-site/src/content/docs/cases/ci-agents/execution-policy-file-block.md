@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">PSSECURITYEXCEPTION</span></div><div class="row"><span class="k">Mechanism</span><span class="v">execution policy gate</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">irm iex</span></span></div></div>
 
+# Execution policy blocks your downloaded installer
+
 ## Symptom
 
 A user downloads `install.ps1` and runs it. Windows PowerShell refuses:

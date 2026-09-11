@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, cmd, korean codepage</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">localized output</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">structured output not text</span></span></div></div>
 
+# parsing schtasks or sc output works until the machine is not English, because Windows tools translate their column headings and status words
+
 ## Symptom
 
 A status check that reads a built-in Windows tool's output reports the wrong
