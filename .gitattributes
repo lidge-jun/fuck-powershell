@@ -1,0 +1,16 @@
+# The corpus is authored on macOS and Windows. Without this, a Windows checkout
+# with core.autocrlf=true produces a CRLF worktree, and every \n-anchored parser
+# in scripts/ reports a corrupt corpus instead of a line-ending problem.
+* text=auto eol=lf
+*.mjs text eol=lf
+*.md  text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.ps1 text eol=lf
+
+# Binary assets keep their bytes.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary

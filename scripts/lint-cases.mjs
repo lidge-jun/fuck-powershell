@@ -13,11 +13,14 @@ const REPROS = ["verified","historical"];
 const SECTIONS = ["## Symptom","## Repro","## Cause","## Workaround"];
 
 function parseFrontmatter(text, file) {
-  const m = text.match(/^---\n([\s\S]*?)\n---/);
+  // CRLF-tolerant: a Windows checkout with core.autocrlf=true hands us \r\n, and a
+  // \n-only anchor here reported every case as "missing frontmatter" — a vacuous
+  // global failure that looked like a corrupt corpus.
+  const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!m) return { error: "missing frontmatter" };
   const fm = {};
   let currentKey = null;
-  for (const line of m[1].split("\n")) {
+  for (const line of m[1].split(/\r?\n/)) {
     const item = line.match(/^\s+-\s+(.+)$/);
     if (item && currentKey) {
       if (!Array.isArray(fm[currentKey])) fm[currentKey] = [];
@@ -54,7 +57,11 @@ for (const f of files) {
   if (fm.error) { err(fm.error); continue; }
   const stem = basename(f, ".md");
   if (fm.id !== stem) err("id '" + fm.id + "' != filename stem '" + stem + "'");
-  const dir = f.includes("/") ? f.split("/")[0] : null;
+  // readdirSync({recursive:true}) yields the host separator, so on Windows this is
+  // "parsing\\x.md". Normalize before any path reasoning or every case reads as
+  // sitting in the cases/ root.
+  const rel = f.split("\\").join("/");
+  const dir = rel.includes("/") ? rel.split("/")[0] : null;
   if (dir && dir !== fm.category) err("folder '" + dir + "' != category '" + fm.category + "'");
   if (!dir) err("case must live in cases/<category>/, not cases/ root");
   if (ids.has(fm.id)) err("duplicate id"); ids.add(fm.id);
