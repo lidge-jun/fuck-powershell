@@ -2,7 +2,8 @@
 // config loader actually does to a Windows path.
 import { mkdtempSync, writeFileSync, rmSync, existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
 
 const ROOT = mkdtempSync(join(tmpdir(), "fp-probe3-"));
@@ -23,7 +24,11 @@ if (BASH) {
   show("LF shebang",   run(BASH, ["-c", "chmod +x '" + p(lf)   + "'; '" + p(lf)   + "'"]));
   show("CRLF shebang", run(BASH, ["-c", "chmod +x '" + p(crlf) + "'; '" + p(crlf) + "'"]));
   show("CRLF via explicit bash", run(BASH, ["-c", "bash '" + p(crlf) + "'"]));
-  show("git config core.autocrlf", run("git", ["config", "--get", "core.autocrlf"], { cwd: "C:/Users/you/Developers/fuck-powershell" }));
+  // Repo-relative, so the rig runs from any checkout rather than only the one it was
+  // written on. fileURLToPath rather than import.meta.dir, which is Bun-only and is
+  // undefined under node - the rig has to run under both.
+  const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
+  show("git config core.autocrlf", run("git", ["config", "--get", "core.autocrlf"], { cwd: REPO }));
 }
 
 console.log("\n=== a Windows path through three config layers ===");
@@ -47,4 +52,3 @@ try { await import("file:///" + asJsLiteral.replace(/\\/g, "/") + "/index.js"); 
 catch (e) { console.log("  -> " + e.code + ": " + String(e.message).split("\n")[0].slice(0, 150)); }
 
 try { rmSync(ROOT, { recursive: true, force: true }); } catch {}
-

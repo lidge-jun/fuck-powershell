@@ -160,4 +160,3 @@ Recorded so the cases can say so rather than imply otherwise.
 - The `bad interpreter: ^M` failure itself, as opposed to Git Bash tolerating it.
 - `#!/bin/bash` + `exit 0` under a real CPython.
 - Whether `fp preflight` surfaces the new cases usefully — that is wp5's check, not a claim.
-
