@@ -1,3 +1,20 @@
+---
+id: altgr-reports-as-ctrl-alt
+title: "backslashes vanish from typed paths on German keyboards, because the terminal reports AltGr as Ctrl+Alt and your keybinding ate it"
+category: parsing
+versions: "both"
+failure: silent
+context: [interactive, agent]
+source: third-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/46
+  - https://github.com/openai/codex/commit/702238f0
+ontology:
+  affects: [env-windows]
+  caused_by: [mechanism-altgr-chord]
+  mitigated_by: [workaround-treat-ctrl-alt-as-literal]
+---
 
 # backslashes vanish from typed paths on German keyboards, because the terminal reports AltGr as Ctrl+Alt and your keybinding ate it
 
@@ -90,6 +107,23 @@ modifier convention that is safe on POSIX terminals is not safe on Windows.
 
 ---
 
+---
+id: basename-split-slash-only
+title: "your allowlist matches on a basename computed with split slash, so every Windows client silently bypasses it"
+category: parsing
+versions: "both"
+failure: silent
+context: [agent, script, ci]
+source: first-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/31
+  - https://github.com/lidge-jun/opencodex/commit/fe1a5ea2cc552f4f46ddfc515d03ea5ac0ab1b3a
+ontology:
+  affects: [env-windows, runtime-node]
+  caused_by: [mechanism-win32-path-normalization]
+  mitigated_by: [workaround-normalize-separators-first]
+---
 
 # your allowlist matches on a basename computed with split slash, so every Windows client silently bypasses it
 
@@ -169,6 +203,23 @@ Windows API will happily honor.
 
 ---
 
+---
+id: convertto-json-depth-two
+title: "ConvertTo-Json defaults to -Depth 2 and replaces your data with the string System.Collections.Hashtable"
+category: parsing
+versions: "both"
+failure: silent
+context: [ci, script, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/15
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7]
+  invokes: [command-convertto-json]
+  caused_by: [mechanism-json-depth-default]
+  mitigated_by: [workaround-explicit-json-depth]
+---
 
 # ConvertTo-Json defaults to -Depth 2 and replaces your data with the string System.Collections.Hashtable
 
@@ -278,6 +329,23 @@ where the field is present in memory and destroyed on the way out.
 
 ---
 
+---
+id: culture-comma-decimal-cast
+title: "casting a comma-decimal string gives a number 100x too large, with no error"
+category: parsing
+versions: "both"
+failure: silent
+context: [script, ci, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/18
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7]
+  invokes: [command-numeric-cast]
+  caused_by: [mechanism-culture-parsing]
+  mitigated_by: [workaround-numberstyles-float]
+---
 
 # casting a comma-decimal string gives a number 100x too large, with no error
 
@@ -371,6 +439,26 @@ host mangles comma-decimal data exactly as shown above.
 
 ---
 
+---
+id: localized-cli-output-parsing
+title: "parsing schtasks or sc output works until the machine is not English, because Windows tools translate their column headings and status words"
+category: parsing
+versions: "both"
+failure: silent
+context: [script, agent, ci]
+source: first-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/34
+  - https://github.com/lidge-jun/opencodex/commit/1d9e196e7
+  - https://github.com/lidge-jun/opencodex/commit/cdc16e5a7
+  - https://github.com/lidge-jun/opencodex/commit/438b8dcf4
+ontology:
+  affects: [env-windows, shell-cmd, env-korean-codepage]
+  invokes: [command-schtasks]
+  caused_by: [mechanism-localized-output]
+  mitigated_by: [workaround-structured-output-not-text]
+---
 
 # parsing schtasks or sc output works until the machine is not English, because Windows tools translate their column headings and status words
 
@@ -460,6 +548,24 @@ output version — trusting a tool's prose instead of its structure.
 
 ---
 
+---
+id: zip-entry-drive-letter-escapes
+title: "your zip extractor rejects ../ and still writes to C:/Windows, because a drive letter is absolute without a leading slash"
+category: parsing
+versions: "both"
+failure: silent
+context: [script, ci, agent]
+source: first-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/29
+  - https://github.com/lidge-jun/agbrowse/commit/a5519f3a516c4064b8211da107d148889cf1a86b
+  - https://github.com/lidge-jun/agbrowse/commit/b21aae8332
+ontology:
+  affects: [env-windows, runtime-node, env-win32-api]
+  caused_by: [mechanism-win32-path-normalization]
+  mitigated_by: [workaround-reject-drive-and-raw-dotdot]
+---
 
 # your zip extractor rejects ../ and still writes to C:/Windows, because a drive letter is absolute without a leading slash
 

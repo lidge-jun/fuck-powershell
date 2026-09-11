@@ -1,3 +1,22 @@
+---
+id: backslash-quote-ends-span
+title: "escaping a quote ENDS the quoted span, so one JSON argument silently becomes several"
+category: args-quoting
+versions: "5.1"
+failure: misleading-error
+context: [agent, script, ci]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/6
+ontology:
+  affects: [runtime-node, shell-powershell-51, env-windows]
+  invokes: [command-node, command-convertto-json]
+  manifests_as: [error-invalid-json]
+  caused_by: [mechanism-native-argv-rebuild]
+  mitigated_by: [workaround-file-payload]
+  unsafe_fix: [workaround-escape-more-quotes]
+---
 
 # escaping a quote ENDS the quoted span, so one JSON argument silently becomes several
 
@@ -112,6 +131,24 @@ workaround is not recorded anywhere in the archive.
 
 ---
 
+---
+id: bun-ps-windowstyle-argv
+title: "Bun rejects powershell.exe argv containing -WindowStyle Hidden"
+category: args-quoting
+versions: "both"
+failure: silent
+context: [script, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/opencodex/commit/0a904776160ea2954fbad1276b112f2c06ddfbae
+  - https://github.com/lidge-jun/opencodex/commit/393d72a779e92b3116b854d714916704756d8110
+ontology:
+  affects: [runtime-bun, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-powershell]
+  caused_by: [mechanism-bun-windowstyle-argv-reject]
+  mitigated_by: [workaround-create-no-window]
+---
 
 # Bun rejects powershell.exe argv containing -WindowStyle Hidden
 
@@ -148,6 +185,24 @@ windowstyle-hidden-vs-windowshide), keeping it in argv is all cost, no benefit.
 
 ---
 
+---
+id: cmd-c-newline-not-separator
+title: "a newline inside cmd /c does not start a second command, so the half of your script after it never runs"
+category: args-quoting
+versions: "both"
+failure: silent
+context: [script, agent, ci]
+source: third-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/45
+  - https://github.com/openai/codex/commit/1f0fe5b8
+ontology:
+  affects: [shell-cmd, env-windows]
+  invokes: [command-cmd]
+  caused_by: [mechanism-statement-terminator]
+  mitigated_by: [workaround-ampersand-separator]
+---
 
 # a newline inside cmd /c does not start a second command, so the half of your script after it never runs
 
@@ -223,6 +278,24 @@ split one silently does not.
 
 ---
 
+---
+id: cmd-shim-reparses-argv
+title: "argv to a .cmd shim is re-parsed by cmd.exe — untrusted text becomes commands"
+category: args-quoting
+versions: "both"
+failure: silent
+context: [agent, script]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/cli-jaw/commit/e8c9c53ca118cd6ef7eb43a8a672a9588581aa2d
+  - https://github.com/lidge-jun/cli-jaw/commit/f363a71c043c5dc986081968e3f138a1c94203d0
+ontology:
+  affects: [runtime-node, shell-cmd, env-windows]
+  invokes: [command-cmd]
+  caused_by: [mechanism-cmd-reparse]
+  mitigated_by: [workaround-stdin-payload, workaround-strip-cmd-separators]
+---
 
 # argv to a .cmd shim is re-parsed by cmd.exe — untrusted text becomes commands
 
@@ -262,6 +335,23 @@ ComSpec re-open it.
 
 ---
 
+---
+id: cmd-start-ampersand-splits
+title: "cmd /c start truncates your URL at the first &"
+category: args-quoting
+versions: "both"
+failure: silent
+context: [script, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/cli-jaw/commit/0c20c014e4a9940f12a36d9e624e325e4d2fc2a8
+ontology:
+  affects: [shell-cmd, env-windows]
+  invokes: [command-cmd, command-start]
+  caused_by: [mechanism-cmd-reparse]
+  mitigated_by: [workaround-caret-escape-cmd, workaround-runtime-opener]
+---
 
 # cmd /c start truncates your URL at the first &
 
@@ -293,6 +383,25 @@ into two commands at the first ampersand.
 
 ---
 
+---
+id: createprocess-cmdline-32767
+title: "os error 206 says the filename is too long when the filename is fine — the command line hit the 32,767-character cap"
+category: args-quoting
+versions: "both"
+failure: misleading-error
+context: [agent, script, ci]
+source: third-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/44
+  - https://github.com/openai/codex/issues/38985
+  - https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessw
+ontology:
+  affects: [env-windows, env-win32-api, runtime-node]
+  manifests_as: [error-enametoolong]
+  caused_by: [mechanism-command-line-cap]
+  mitigated_by: [workaround-payload-off-argv]
+---
 
 # os error 206 says the filename is too long when the filename is fine — the command line hit the 32,767-character cap
 
@@ -379,6 +488,23 @@ with none.
 
 ---
 
+---
+id: dollar-backslash-vars
+title: "\ and \ are real variable names, so sed backreferences and price ranges are deleted en route to the child"
+category: args-quoting
+versions: "both"
+failure: silent
+context: [agent, script, ci]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/10
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-node]
+  caused_by: [mechanism-string-interpolation]
+  mitigated_by: [workaround-single-quote-regex]
+---
 
 # \ and \ are real variable names, so sed backreferences and price ranges are deleted en route to the child
 
@@ -481,6 +607,25 @@ get hit in practice.
 
 ---
 
+---
+id: dq-regex-interpolates
+title: "Double-quoted regex interpolates $vars — and backslash won't save you"
+category: args-quoting
+versions: "both"
+failure: misleading-error
+context: [script, ci]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/cli-jaw/commit/3d198e2b80ddb13d02ce63b65e5c88a25b428009
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-match, command-set-strictmode]
+  manifests_as: [error-unset-variable]
+  caused_by: [mechanism-string-interpolation]
+  mitigated_by: [workaround-single-quote-regex]
+  unsafe_fix: [workaround-escape-more-quotes]
+---
 
 # Double-quoted regex interpolates \$vars — and backslash won't save you
 
@@ -517,6 +662,24 @@ anything.
 
 ---
 
+---
+id: english-and-not-separator
+title: "The English word 'and' is not a statement separator"
+category: args-quoting
+versions: "both"
+failure: misleading-error
+context: [interactive, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/opencodex/commit/a00f1a4618c683e173af1e17ee06e4a25e0434a1
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-remove-item]
+  manifests_as: [error-parameterbinding]
+  caused_by: [mechanism-prose-as-argument]
+  mitigated_by: [workaround-semicolon-separator]
+---
 
 # The English word 'and' is not a statement separator
 
@@ -552,6 +715,151 @@ chaining parses as one statement. Documentation and agent prompts that render
 
 ---
 
+
+# git hands merge.<name>.driver to sh, which eats the backslashes, and the driver that never ran looks like a conflict
+
+## Symptom
+
+You register a custom merge driver so that a structured file merges by rule instead
+of by line:
+
+```
+git config merge.mine.driver "/path/to/mydriver %O %A %B %P"
+```
+
+and `.gitattributes` binds it with `*.md merge=mine`. On Windows the merge comes
+back as an ordinary conflict:
+
+```
+Auto-merging f.md
+CONFLICT (content): Merge conflict in f.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+Exit 1, conflict markers in the file, nothing that says a driver was involved. The
+reasonable reading is that the driver ran and could not resolve it. The driver never
+ran at all. Above the CONFLICT line — easy to miss, and gone once a tool captures
+only the last lines — is a shell error about a command that does not exist.
+
+## Repro
+
+Full script: `devlog/260911_windows-round/repro-merge-driver.ps1`. Three registrations
+of the *same working driver*, same repository, same conflict.
+
+**A — a Windows path with backslashes:**
+
+```
+driver : C:\Users\me\AppData\Local\Temp\fp-mergedriver\mydriver %O %A %B %P
+git    : C:\Users\...\mydriver .merge_file_DULjNk .merge_file_yAo41X .merge_file_ygd7B7 'f.md':
+         line 1: C:UssuperAppDataLocalTempfp-mergedrivermydriver: command not found
+git    : CONFLICT (content): Merge conflict in f.md
+exit   : 1
+f.md   : mine
+```
+
+Every backslash is gone from the path in the error message. `C:\Users\me\...` was
+consumed as escape sequences.
+
+**B — same driver, forward slashes, still extensionless with a shebang:**
+
+```
+driver : C:/Users/me/AppData/Local/Temp/fp-mergedriver/mydriver %O %A %B %P
+git    : Python was not found; run without arguments to install from the Microsoft Store, ...
+git    : CONFLICT (content): Merge conflict in f.md
+exit   : 1
+f.md   : mine
+```
+
+The path now resolves and the shebang is honoured — straight into the Microsoft
+Store `python3` execution alias.
+
+**C — explicit interpreter, forward slashes, both quoted:**
+
+```
+driver : "C:/Users/me/.../python3.cmd" "C:/Users/me/.../mydriver" %O %A %B %P
+git    : Auto-merging f.md
+git    : Merge made by the 'ort' strategy.
+exit   : 0
+f.md   : MERGED-BY-DRIVER
+```
+
+All three failures present identically to a caller that checks the exit code: exit
+1, conflict markers, no driver output.
+
+## Cause
+
+Git does not `CreateProcess` the driver command. It runs it through a shell, and on
+Windows that is Git's bundled `sh`. So the value of `merge.<name>.driver` is a
+**shell command line**, not an argv vector, and it gets shell tokenisation applied
+to it: backslash is an escape character, and `C:\Users\me` becomes `C:Usersme`.
+The placeholders `%O %A %B %P` are substituted by git before the shell sees them,
+which is why they must stay unquoted while everything around them must be quoted.
+
+The second layer is that an extensionless file is only executable through its
+shebang, and `#!/usr/bin/env python3` on Windows resolves `python3` through PATH,
+where the Store execution alias usually sits first. Git's own `chmod +x` is
+meaningless here too: with `core.filemode=false` on NTFS there is no executable bit
+to set.
+
+What makes it a landmine rather than a bug is git's fallback. A merge driver that
+exits non-zero is *defined* to mean "conflict", so a driver that could not be
+launched is indistinguishable from a driver that ran and disagreed. Git reports the
+documented outcome for a failure it did not cause.
+
+## Workaround
+
+Name the interpreter, use forward slashes, quote both paths, leave the placeholders bare:
+
+```bash
+PY=$(command -v python3 || command -v python)
+case "$PY" in *WindowsApps*) echo "Store stub; install real CPython" >&2; exit 1 ;; esac
+DRIVER=$(cygpath -m "$PWD/bin/mydriver")     # -m gives C:/... with forward slashes
+git config merge.mine.driver "\"$PY\" \"$DRIVER\" %O %A %B %P"
+```
+
+Quoting is not optional the moment a path contains a space — `Program Files` or any
+user whose name has one — and `cygpath -m` is the piece that avoids the backslash
+problem at the source rather than escaping around it.
+
+Verify by asserting on the *result*, never on git's exit code:
+
+```
+git merge other
+test "$(cat f.md)" = "MERGED-BY-DRIVER"
+```
+
+Do not debug this by reading the tail of git's output. The only line that explains
+it is printed before `Auto-merging`, and it is the first thing a log tail drops.
+
+---
+
+`dollar-backslash-vars` and `backslash-quote-ends-span` are the same backslash-as-escape
+mechanism in other quoting contexts; this is the git-config surface of it, where the
+consequence is a wrong merge rather than a failed command. `windowsapps-alias-eperm`
+is variant B's root cause — there it surfaces as EPERM at spawn, here as a friendly
+sentence on stdout that a merge driver treats as its output.
+
+
+---
+
+---
+id: join-semicolon-splits-startprocess
+title: "Joining command fragments with '; ' splits Start-Process mid-call"
+category: args-quoting
+versions: "both"
+failure: silent
+context: [script, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/opencodex/commit/ac8c0d2dfdae12904d6ed818763bc069cdb84764
+  - https://github.com/lidge-jun/opencodex/commit/ebf947ec579a4750b261e3247aabd7a5675b3764
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-start-process]
+  caused_by: [mechanism-statement-terminator]
+  mitigated_by: [workaround-space-join-params]
+---
 
 # Joining command fragments with '; ' splits Start-Process mid-call
 
@@ -589,6 +897,25 @@ at worst.
 
 ---
 
+---
+id: oss-native-arg-quoting
+title: Embedded quotes and empty args vanish before native commands see them
+category: args-quoting
+versions: "both"
+failure: silent
+context: [script, agent]
+source: third-party
+repro: verified
+refs:
+  - https://github.com/PowerShell/PowerShell/pull/14692
+  - https://github.com/lidge-jun/cli-jaw/commit/77153112420acaadd961defc6a2b9a170ee70d43
+  - https://github.com/PowerShell/PowerShell/pull/15408
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-node]
+  caused_by: [mechanism-native-argv-rebuild]
+  mitigated_by: [workaround-ps-native-argument-passing, workaround-file-payload]
+---
 
 # Embedded quotes and empty args vanish before native commands see them
 
@@ -626,6 +953,24 @@ depended on the broken behavior. The trap is version- and platform-dependent.
 
 ---
 
+---
+id: piped-iex-drops-params
+title: "irm | iex cannot pass parameters — your -Switch goes to iex, not the script"
+category: args-quoting
+versions: "both"
+failure: silent
+context: [interactive, script]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/cli-jaw/commit/0851921ae0b3ab382c2546b24e5aa67b0d163b37
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-iex, command-irm]
+  manifests_as: [error-parameterbinding]
+  caused_by: [mechanism-iex-session]
+  mitigated_by: [workaround-download-then-file]
+---
 
 # irm | iex cannot pass parameters — your -Switch goes to iex, not the script
 
@@ -661,6 +1006,24 @@ itself. The pipe-to-iex distribution form structurally cannot accept options.
 
 ---
 
+---
+id: prose-as-unknown-flags
+title: "when a CLI reports your prose as unknown flags, PowerShell shredded the argument - not the CLI"
+category: args-quoting
+versions: "both"
+failure: misleading-error
+context: [agent, ci, interactive]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/4
+ontology:
+  affects: [runtime-node, shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-gh, command-node]
+  manifests_as: [error-unknown-arguments]
+  caused_by: [mechanism-native-argv-rebuild, mechanism-string-interpolation]
+  mitigated_by: [workaround-file-payload, workaround-ps-native-argument-passing]
+---
 
 # when a CLI reports your prose as unknown flags, PowerShell shredded the argument - not the CLI
 
@@ -731,6 +1094,25 @@ create --body "$text"` shredded the markdown into flags. Switching to
 
 ---
 
+---
+id: ps-file-extension-dispatch
+title: "powershell -File refuses scripts that aren't named .ps1"
+category: args-quoting
+versions: "both"
+failure: hard-error
+context: [script, ci]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/cli-jaw/commit/0efd755ed938e13bb527105fd83500ad1001d0e6
+  - https://github.com/lidge-jun/opencodex/commit/b63f5c80fa4bff17e8dc7ad7c8ed666faaf3d29e
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-powershell]
+  manifests_as: [error-not-a-powershell-script]
+  caused_by: [mechanism-extension-dispatch]
+  mitigated_by: [workaround-shell-matching-suffix]
+---
 
 # powershell -File refuses scripts that aren't named .ps1
 
@@ -765,6 +1147,25 @@ Windows branch.
 
 ---
 
+---
+id: shell-true-fallback-injects
+title: "the shell:true fallback you added to fix a spawn error turns any user text in argv into a second command"
+category: args-quoting
+versions: "both"
+failure: silent
+context: [agent, script, ci]
+source: first-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/21
+  - https://github.com/lidge-jun/cli-jaw/commit/8f294b449a99acee7c0e0f7057898008fef9f441
+ontology:
+  affects: [shell-cmd, env-windows, runtime-node]
+  invokes: [command-cmd]
+  caused_by: [mechanism-cmd-reparse]
+  mitigated_by: [workaround-refuse-shell-on-untrusted-argv]
+  unsafe_fix: [workaround-shell-true]
+---
 
 # the shell:true fallback you added to fix a spawn error turns any user text in argv into a second command
 
@@ -864,6 +1265,25 @@ is now interpreted rather than passed.
 
 ---
 
+---
+id: windowstyle-hidden-vs-windowshide
+title: "-WindowStyle Hidden still flashes a console window"
+category: args-quoting
+versions: "both"
+failure: silent
+context: [script, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/opencodex/commit/93a083d1fc0a28853dc3eb385bf55e16af9e5b7f
+  - https://github.com/lidge-jun/opencodex/commit/26dc5aa2b78bf902b8b27a122d6ada1bd2184906
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows, env-win32-api]
+  invokes: [command-powershell]
+  caused_by: [mechanism-console-allocation]
+  mitigated_by: [workaround-create-no-window]
+  unsafe_fix: [workaround-windowstyle-hidden]
+---
 
 # -WindowStyle Hidden still flashes a console window
 

@@ -1,3 +1,23 @@
+---
+id: bom-less-ps1-cp949
+title: A BOM-less .ps1 is read as ANSI — non-ASCII corrupts before execution
+category: encoding
+versions: "5.1"
+failure: silent
+context: [script, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/cli-jaw/blob/main/src/prompt/templates/a1-system.md
+  - https://github.com/lidge-jun/cli-jaw/commit/7f0c655beb9eb3b3a426a3a155c88af232f12ff7
+  - https://github.com/lidge-jun/opencodex/commit/ff6916abcde01de60a1b1ac4ce7adb4c8efad6de
+  - https://github.com/lidge-jun/opencodex/commit/22e156e25aed5bc06fc73a6e9c1fa00eb38049b3
+ontology:
+  affects: [shell-powershell-51, env-windows, env-korean-codepage]
+  manifests_as: [error-mojibake]
+  caused_by: [mechanism-bom-sniffing, mechanism-default-encoding]
+  mitigated_by: [workaround-utf8-bom]
+---
 
 # A BOM-less .ps1 is read as ANSI — non-ASCII corrupts before execution
 
@@ -38,6 +58,25 @@ PowerShell 7 assumes UTF-8 by default, which is why the bug is invisible in
 
 ---
 
+---
+id: bomless-bat-oem-codepage
+title: "a batch file with a non-ASCII path dies with 9009, and adding a BOM to fix it fuses onto the first line and kills it differently"
+category: encoding
+versions: "both"
+failure: misleading-error
+context: [script, ci, agent]
+source: first-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/22
+  - https://github.com/lidge-jun/cli-jaw/commit/955d2b3f7bbac00874a73a07d130bc09bcf0ec93
+ontology:
+  affects: [shell-cmd, env-windows, env-korean-codepage]
+  invokes: [command-cmd]
+  manifests_as: [error-command-not-recognized, error-mojibake]
+  caused_by: [mechanism-default-encoding]
+  mitigated_by: [workaround-chcp-first-line]
+---
 
 # a batch file with a non-ASCII path dies with 9009, and adding a BOM to fix it fuses onto the first line and kills it differently
 
@@ -126,6 +165,25 @@ BOM helps PowerShell 5.1 and actively breaks a batch file.
 
 ---
 
+---
+id: cmd-lf-drops-first-byte
+title: "a batch file saved with Unix line endings makes cmd.exe eat the first byte of lines, so npm becomes pm and powershell becomes hell"
+category: encoding
+versions: "both"
+failure: misleading-error
+context: [script, agent, ci]
+source: third-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/49
+  - https://github.com/openclaw/openclaw/issues/119484
+ontology:
+  affects: [shell-cmd, env-windows]
+  invokes: [command-cmd]
+  manifests_as: [error-command-not-recognized]
+  caused_by: [mechanism-crlf-residue]
+  mitigated_by: [workaround-write-bat-crlf]
+---
 
 # a batch file saved with Unix line endings makes cmd.exe eat the first byte of lines, so npm becomes pm and powershell becomes hell
 
@@ -242,6 +300,24 @@ worth knowing together.
 
 ---
 
+---
+id: lf-pure-transform-mixes-eol
+title: "editing one section of a CRLF file with LF-pure string code leaves a mixed-EOL file that every later diff and hash disagrees about"
+category: encoding
+versions: "both"
+failure: silent
+context: [script, ci, agent]
+source: first-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/30
+  - https://github.com/lidge-jun/opencodex/commit/22561a4598bb75e7b254474c1f998f025dda7a58
+  - https://github.com/lidge-jun/opencodex/commit/b394b035b
+ontology:
+  affects: [runtime-node, runtime-bun, env-windows]
+  caused_by: [mechanism-crlf-residue]
+  mitigated_by: [workaround-eol-boundary-normalization]
+---
 
 # editing one section of a CRLF file with LF-pure string code leaves a mixed-EOL file that every later diff and hash disagrees about
 
@@ -342,6 +418,25 @@ becomes inconsistent.
 
 ---
 
+---
+id: oss-outfile-bom
+title: Out-File writes UTF-16; your POSIX tools read garbage
+category: encoding
+versions: "5.1"
+failure: silent
+context: [ci, script]
+source: third-party
+repro: verified
+refs:
+  - https://github.com/parsaesmaili038/ticketing-v1/commit/d5a4d513e34d557f345b41d9e1b9fdd2806d4a04
+ontology:
+  affects: [shell-powershell-51, runtime-node, runtime-python, env-windows, env-actions-runner]
+  invokes: [command-out-file]
+  manifests_as: [error-mojibake]
+  caused_by: [mechanism-default-encoding]
+  mitigated_by: [workaround-set-content-utf8nobom, workaround-dotnet-writealltext]
+  unsafe_fix: [workaround-out-file-utf8]
+---
 
 # Out-File writes UTF-16; your POSIX tools read garbage
 
@@ -379,6 +474,26 @@ default to BOM-less UTF-8, so the same script writes different bytes per runtime
 
 ---
 
+---
+id: python-subprocess-locale-encoding
+title: "subprocess text=True decodes the child with the ANSI codepage under strict errors, so one unmappable byte raises UnicodeDecodeError instead of returning output"
+category: encoding
+versions: "both"
+failure: hard-error
+context: [script, agent, ci]
+source: third-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/47
+  - https://github.com/NousResearch/hermes-agent/commit/5b5b5e8d
+  - https://github.com/NousResearch/hermes-agent/issues/83767
+  - https://github.com/NousResearch/hermes-agent/issues/89442
+ontology:
+  affects: [runtime-python, env-windows, env-korean-codepage]
+  manifests_as: [error-mojibake]
+  caused_by: [mechanism-locale-preferred-encoding]
+  mitigated_by: [workaround-explicit-subprocess-encoding]
+---
 
 # subprocess text=True decodes the child with the ANSI codepage under strict errors, so one unmappable byte raises UnicodeDecodeError instead of returning output
 
@@ -482,6 +597,23 @@ Popen versus base64 framing in the child — and a different reader.
 
 ---
 
+---
+id: python-textio-newline-translation
+title: "Python text mode injects carriage returns into a pipe, so the bytes that land on disk are not the string you sent"
+category: encoding
+versions: "both"
+failure: silent
+context: [script, agent, ci]
+source: third-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/48
+  - https://github.com/NousResearch/hermes-agent/commit/8f91d7bf
+ontology:
+  affects: [runtime-python, env-windows]
+  caused_by: [mechanism-universal-newline-write]
+  mitigated_by: [workaround-write-through-buffer]
+---
 
 # Python text mode injects carriage returns into a pipe, so the bytes that land on disk are not the string you sent
 
@@ -569,6 +701,25 @@ transit.
 
 ---
 
+---
+id: redirected-ps-output-mojibake
+title: "capturing PowerShell output from another program mangles every non-ASCII character, because redirected output is encoded in the console codepage"
+category: encoding
+versions: "5.1"
+failure: silent
+context: [script, agent, ci]
+source: first-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/32
+  - https://github.com/lidge-jun/opencodex/commit/f642a7b1f
+ontology:
+  affects: [shell-powershell-51, env-windows, env-korean-codepage, runtime-node]
+  invokes: [command-powershell]
+  manifests_as: [error-mojibake]
+  caused_by: [mechanism-default-encoding]
+  mitigated_by: [workaround-base64-utf16-payload]
+---
 
 # capturing PowerShell output from another program mangles every non-ASCII character, because redirected output is encoded in the console codepage
 
@@ -658,6 +809,23 @@ it dies.
 
 ---
 
+---
+id: split-n-leaves-cr
+title: "splitting on newline leaves an invisible carriage return, so the line that closes your parser never matches"
+category: encoding
+versions: "both"
+failure: silent
+context: [script, ci, agent]
+source: first-party
+repro: historical
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/20
+  - https://github.com/lidge-jun/codexclaw/commit/2c3801a1bf2a72aa83cdbf15a71fd0fbf224de25
+ontology:
+  affects: [runtime-node, runtime-bun, runtime-python, env-windows]
+  caused_by: [mechanism-crlf-residue]
+  mitigated_by: [workaround-crlf-tolerant-split]
+---
 
 # splitting on newline leaves an invisible carriage return, so the line that closes your parser never matches
 
@@ -741,6 +909,25 @@ fine, the file is valid, and one invisible byte per line breaks equality.
 
 ---
 
+---
+id: tee-object-utf16
+title: "Tee-Object writes UTF-16, so grepping your own log returns zero matches twice over"
+category: encoding
+versions: "5.1"
+failure: silent
+context: [ci, script, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/3
+ontology:
+  affects: [shell-powershell-51, runtime-node, env-windows, env-actions-runner]
+  invokes: [command-tee-object]
+  manifests_as: [error-mojibake]
+  caused_by: [mechanism-default-encoding]
+  mitigated_by: [workaround-set-content-utf8nobom, workaround-dotnet-writealltext]
+  unsafe_fix: [workaround-out-file-utf8]
+---
 
 # Tee-Object writes UTF-16, so grepping your own log returns zero matches twice over
 
@@ -806,6 +993,25 @@ produced no output at all.
 
 ---
 
+---
+id: utf8-bom-still-breaks-grep
+title: "the recommended fix still breaks anchored grep - Out-File -Encoding utf8 writes a BOM, and utf8NoBOM does not exist on 5.1"
+category: encoding
+versions: "5.1"
+failure: silent
+context: [ci, script, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/7
+ontology:
+  affects: [shell-powershell-51, env-windows, env-actions-runner]
+  invokes: [command-out-file, command-set-content]
+  manifests_as: [error-parameterbinding]
+  caused_by: [mechanism-default-encoding]
+  mitigated_by: [workaround-dotnet-writealltext]
+  unsafe_fix: [workaround-out-file-utf8, workaround-set-content-utf8nobom]
+---
 
 # the recommended fix still breaks anchored grep - Out-File -Encoding utf8 writes a BOM, and utf8NoBOM does not exist on 5.1
 

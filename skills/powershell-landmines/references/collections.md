@@ -1,3 +1,20 @@
+---
+id: get-content-scalar-collapse
+title: "a one-line file makes Get-Content return a String, so [0] gives a character and .Length counts characters"
+category: collections
+versions: "both"
+failure: silent
+context: [script, ci, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/12
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-get-content]
+  caused_by: [mechanism-collection-unrolling]
+  mitigated_by: [workaround-array-force]
+---
 
 # a one-line file makes Get-Content return a String, so [0] gives a character and .Length counts characters
 
@@ -95,6 +112,23 @@ the rule itself and the `[0]`/`.Length` semantic collision that makes it silent.
 
 ---
 
+---
+id: ne-filters-instead-of-compares
+title: "-ne against a list is a FILTER, so a two-entry denylist silently allows the value it blocks"
+category: collections
+versions: "both"
+failure: silent
+context: [script, ci, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/13
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
+  invokes: [command-ne]
+  caused_by: [mechanism-comparison-as-filter]
+  mitigated_by: [workaround-contains-membership, workaround-array-force]
+---
 
 # -ne against a list is a FILTER, so a two-entry denylist silently allows the value it blocks
 
@@ -191,6 +225,24 @@ behaviour is the expected boolean.
 
 ---
 
+---
+id: return-does-not-mean-return
+title: "return does not mean return - a side-effect cmdlet silently makes your function hand back two values"
+category: collections
+versions: "both"
+failure: silent
+context: [script, ci, agent]
+source: first-party
+repro: verified
+refs:
+  - https://github.com/lidge-jun/fuck-powershell/issues/14
+ontology:
+  affects: [shell-powershell-51, shell-pwsh-7, runtime-node, env-windows]
+  invokes: [command-return, command-write-host, command-test-path, command-new-item]
+  caused_by: [mechanism-host-vs-pipeline, mechanism-collection-unrolling]
+  mitigated_by: [workaround-out-null, workaround-array-force]
+  unsafe_fix: [workaround-gt-null]
+---
 
 # return does not mean return - a side-effect cmdlet silently makes your function hand back two values
 
