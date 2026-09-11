@@ -50,12 +50,16 @@ agent can turn "about to spawn npm on Windows" into "read these 3 cases first"
 ## Query before you patch (fp)
 
 ```
-git clone https://github.com/lidge-jun/fuck-powershell ~/.fuck-powershell
-bun ~/.fuck-powershell/scripts/fp.mjs preflight --runtime node --operation spawn --target npm
-bun ~/.fuck-powershell/scripts/fp.mjs errors einval
-bun ~/.fuck-powershell/scripts/fp.mjs search "iex exit terminal"
-bun ~/.fuck-powershell/scripts/fp.mjs case spawn-npm-enoent-einval
+git clone https://github.com/lidge-jun/fuck-powershell ~/Developers/fuck-powershell
+export FP_HOME=~/Developers/fuck-powershell
+bun $FP_HOME/scripts/fp.mjs preflight --runtime node --operation spawn --target npm
+bun $FP_HOME/scripts/fp.mjs errors einval
+bun $FP_HOME/scripts/fp.mjs search "iex exit terminal"
+bun $FP_HOME/scripts/fp.mjs case spawn-npm-enoent-einval
 ```
+
+Keep it as a working checkout, not a hidden cache — you will be adding to it.
+Agents resolve `$FP_HOME` -> `~/Developers/fuck-powershell` -> `~/.fuck-powershell`.
 
 Operations: `spawn · env-path · encoding · redirect · exit-code · quoting ·
 install · ci`. `preflight` walks the graph and returns ranked cases +
@@ -69,10 +73,15 @@ before Windows-shell-risk patches, postflight over the diff, compact fallback
 rules when the corpus is not installed.
 
 ```
-scripts/install-skill-from-github.py --repo lidge-jun/fuck-powershell --path skills/powershell-landmines
+bun scripts/install-skill.mjs                 # -> $CODEX_HOME/skills, else ~/.codex/skills
+bun scripts/install-skill.mjs --target DIR    # any other agent's skills directory
+bun scripts/install-skill.mjs --check         # CI/pre-commit: has the copy drifted?
 ```
 
-Or copy `skills/powershell-landmines/` into your agent's skills directory.
+The install is a **copy, not a symlink**. A symlink breaks when the checkout moves
+and needs Developer Mode or elevation to create on Windows in the first place.
+The tradeoff is that the copy is a build artifact: it does not track the repo, so
+rerun the install after any corpus change. `--check` is what tells you it is stale.
 
 ## Browse
 
@@ -109,8 +118,23 @@ Validate with `bun scripts/lint-cases.mjs`.
 
 ## Contributing
 
-PRs welcome. One case per file, schema-linted, with a reachable public citation.
-War stories without evidence go in Discussions until a commit URL exists.
+The loop is issue-first, and it is meant to be continuous — every real Windows
+failure you survive is corpus material while the evidence is still on your screen.
+
+1. **Search before filing.** `bun scripts/fp.mjs search "<keywords>"`. If a case
+   already covers it, say so in your issue and explain the distinction, or skip.
+2. **File the issue** with `.github/ISSUE_TEMPLATE/landmine.yml` — Symptom /
+   Repro / Cause / Workaround, plus a control run that works. One landmine per issue.
+   `gh issue create --repo lidge-jun/fuck-powershell --template landmine.yml`
+3. **Convert to a case** under `cases/<category>/<id>.md`, citing the issue URL in
+   `refs`. Then `bun scripts/lint-cases.mjs` and `bun scripts/build-graph.mjs &&
+   bun scripts/validate-graph.mjs`.
+4. **Regenerate and reinstall**: `bun scripts/build-skill.mjs` then
+   `bun scripts/install-skill.mjs`. Close the issue referencing the case.
+
+One case per file, schema-linted, with a reachable public citation. First-party
+incidents may cite your own commit. War stories without evidence stay open as
+issues until a reproduction exists — they are not deleted, they are just not cases.
 
 ## License
 

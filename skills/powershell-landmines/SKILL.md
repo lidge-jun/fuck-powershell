@@ -15,18 +15,26 @@ and CI runner behavior.
 
 ## Dynamic lookup (preferred)
 
-Pull the corpus once, then QUERY BEFORE PATCHING:
+Pull the corpus once, then QUERY BEFORE PATCHING. Resolve the checkout in this
+order and use the first that exists — do not hardcode one path, the corpus is a
+working repo and it moves:
 
 ```
-git clone https://github.com/lidge-jun/fuck-powershell ~/.fuck-powershell
+$FP_HOME  ->  ~/Developers/fuck-powershell  ->  ~/.fuck-powershell
+```
+
+If none exist, clone it and keep it somewhere you will actually update:
+
+```
+git clone https://github.com/lidge-jun/fuck-powershell ~/Developers/fuck-powershell
 ```
 
 Before modifying code that touches Windows process execution, PowerShell/cmd
 scripts, PATH/env, encodings, exit codes, or Windows CI steps, run a preflight:
 
 ```
-bun ~/.fuck-powershell/scripts/fp.mjs preflight --runtime node --operation spawn --target npm --json
-bun ~/.fuck-powershell/scripts/fp.mjs preflight --runtime powershell --operation encoding
+bun $FP_HOME/scripts/fp.mjs preflight --runtime node --operation spawn --target npm --json
+bun $FP_HOME/scripts/fp.mjs preflight --runtime powershell --operation encoding
 ```
 
 operations: spawn | env-path | encoding | redirect | exit-code | quoting | install | ci.
@@ -34,7 +42,27 @@ Read the top cases it returns (`fp case <id>`) and apply their constraints.
 After generating a diff, postflight risky tokens: `fp search "<tokens from diff>"`
 and `fp errors <enoent|einval|eperm|...>` when an error signature appears.
 risk: high means read the top case BEFORE writing code; medium means scan titles.
-The graph is rebuilt automatically on first query; `git -C ~/.fuck-powershell pull` to update.
+The graph is rebuilt automatically on first query; `git -C $FP_HOME pull` to update.
+
+## When the corpus is wrong or silent
+
+A miss is signal. If you hit a Windows failure that no case predicted, or a case
+told you something this machine contradicts, **file it** — that is how the corpus
+stays worth querying:
+
+```
+gh issue create --repo lidge-jun/fuck-powershell --template landmine.yml
+```
+
+Search first (`fp search`) and name the near-miss case ids in the issue, so the
+distinction is explicit rather than a duplicate. Evidence bar: exact commands,
+exact output, and a control run that works. Then update the corpus and reinstall
+this skill — it is a **copy**, not a symlink, so it does not update itself:
+
+```
+bun $FP_HOME/scripts/install-skill.mjs --check   # has my copy drifted?
+bun $FP_HOME/scripts/install-skill.mjs           # refresh it
+```
 
 ## Core rules (fallback when the corpus is not installed)
 

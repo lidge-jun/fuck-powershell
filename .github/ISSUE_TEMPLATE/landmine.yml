@@ -1,0 +1,52 @@
+name: Landmine report
+description: A reproducible Windows shell or process-interop failure that a POSIX assumption walked into.
+title: "<category>: <what actually happened, in one plain sentence>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One landmine per issue. An issue becomes a case file under `cases/<category>/`,
+        so the sections below map directly onto the case schema. An issue without a
+        reproduction or a citation stays open as a war story until evidence exists.
+  - type: input
+    id: meta
+    attributes:
+      label: Metadata line
+      description: "Copied verbatim into the case frontmatter."
+      placeholder: "**Category:** env-paths · **Versions:** both · **Failure:** silent · **Context:** agent, script · **Source:** first-party · **Repro:** verified"
+    validations: { required: true }
+  - type: textarea
+    id: symptom
+    attributes:
+      label: Symptom
+      description: What the operator sees. Lead with the misleading part — the reason this cost time.
+    validations: { required: true }
+  - type: textarea
+    id: repro
+    attributes:
+      label: Repro
+      description: Exact commands and exact output. Include a control run that works, so the difference is isolated.
+      render: shell
+    validations: { required: true }
+  - type: textarea
+    id: cause
+    attributes:
+      label: Cause
+      description: The mechanism. Name the Windows or shell behavior, not just "Windows is weird".
+    validations: { required: true }
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Workaround
+      description: What to write instead. Say which variants are unsafe and why.
+    validations: { required: true }
+  - type: textarea
+    id: relationship
+    attributes:
+      label: Relationship to existing cases
+      description: "Run `bun scripts/fp.mjs search \"<keywords>\"` first. List near-miss case ids and say why this is distinct."
+  - type: textarea
+    id: refs
+    attributes:
+      label: Citations
+      description: Public commit, PR, issue, or source-file URLs. First-party incidents may cite your own commit.
