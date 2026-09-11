@@ -63,14 +63,31 @@ if (cmd === "search") {
   if (f.runtime && RUNTIME_MAP[f.runtime]) queryNodes.add(RUNTIME_MAP[f.runtime]);
   if (f.runtime === "powershell" && String(f.shell) === "7") { queryNodes.delete("shell-powershell-51"); queryNodes.add("shell-pwsh-7"); }
   if (f.target && byId.has("command-" + f.target)) queryNodes.add("command-" + f.target);
+  // A target that is not a Command node may still be a Runtime or Shell the graph knows,
+  // e.g. --target python. Let its affects edges count normally instead of leaving the
+  // whole target signal to the text fallback below.
+  const targetKind = f.target && ["runtime-" + f.target, "shell-" + f.target].find(x => byId.has(x));
+  if (targetKind) queryNodes.add(targetKind);
   const results = [];
   for (const n of g.nodes.filter(n => n.type === "Case")) {
     const edges = caseEdges.get(n.id) ?? [];
     let score = 0; const reason = [];
     for (const e of edges) if (queryNodes.has(e.to)) { score += WEIGHT[e.rel] ?? 1; reason.push(e.rel + ":" + e.to); }
     if (f.target && !byId.has("command-" + f.target)) {
-      const hay = (n.id + " " + n.label).toLowerCase();
-      if (hay.includes(String(f.target).toLowerCase())) { score += 2; reason.push("text:" + f.target); }
+      // Separate "this case IS about the target" from "this case mentions it". The id is
+      // the corpus's own statement of subject, so an id hit is worth an invokes hit (3);
+      // a title-only mention is worth 1. Before this split, --target bash tied
+      // bash-on-path-may-be-wsl with actions-default-shell, which merely says "bash-ism".
+      //
+      // Tokens are compared whole, with a trailing-digit tolerance: --target python must
+      // match the python3 token in windowsapps-python3-stub-needs-probe, while an
+      // unanchored includes() would match pip against piped-iex-drops-params and sh
+      // against eighteen ids. Capped at 3 on purpose — scoring higher than invokes would
+      // push text matches past the score>=5 risk threshold and relabel the banner.
+      const t = String(f.target).toLowerCase();
+      const idHit = n.id.slice(5).toLowerCase().split("-").some(tok => tok.replace(/\d+$/, "") === t);
+      if (idHit) { score += 3; reason.push("id:" + f.target); }
+      else if (String(n.label ?? "").toLowerCase().includes(t)) { score += 1; reason.push("text:" + f.target); }
     }
     if (score > 0) results.push({ ...caseInfo(n.id), score, reason });
   }
