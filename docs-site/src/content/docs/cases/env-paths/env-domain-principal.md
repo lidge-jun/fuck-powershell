@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">ACCOUNT SID MAPPING</span></div><div class="row"><span class="k">Mechanism</span><span class="v">env derived identity</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">sid principal</span></span></div></div>
 
+# $env:USERDOMAIN is not your identity
+
 ## Symptom
 
 An ACL/permissions script builds a principal as `"$env:USERDOMAIN\$env:USERNAME"`

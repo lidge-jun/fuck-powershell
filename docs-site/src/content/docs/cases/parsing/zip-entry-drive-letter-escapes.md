@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">win32 path normalization</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">reject drive and raw dotdot</span></span></div></div>
 
+# your zip extractor rejects ../ and still writes to C:/Windows, because a drive letter is absolute without a leading slash
+
 ## Symptom
 
 There is no symptom until someone uses it. A path guard that reads as thorough —

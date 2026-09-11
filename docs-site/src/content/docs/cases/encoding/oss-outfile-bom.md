@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, node, python, windows, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default encoding</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">set content utf8nobom</span></span></div></div>
 
+# Out-File writes UTF-16; your POSIX tools read garbage
+
 ## Symptom
 
 A file generated in a Windows CI step looks fine in PowerShell but breaks every

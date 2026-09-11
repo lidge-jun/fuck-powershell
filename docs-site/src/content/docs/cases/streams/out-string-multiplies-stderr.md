@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">stream wrapping, errorrecord format</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">stringify errorrecord</span></span></div></div>
 
+# Out-String turns one stderr line into eight and injects your own script text into the log
+
 ## Symptom
 
 A tool writes **one** line to stderr. Your saved log has **eight**, and six of

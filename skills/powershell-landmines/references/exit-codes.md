@@ -1,21 +1,3 @@
----
-id: exit-code-vs-dollar-q
-title: "$? lies about native commands; check $LASTEXITCODE"
-category: exit-codes
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: third-party
-repro: verified
-refs:
-  - https://github.com/PowerShell/PowerShell/pull/10461
-  - https://github.com/lidge-jun/ima2-gen/commit/1442bd1fa555ebda0db9b2a4a86f48ab504fd122
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7, env-actions-runner]
-  invokes: [command-git]
-  caused_by: [mechanism-exit-code-propagation]
-  mitigated_by: [workaround-lastexitcode-gate]
----
 
 # $? lies about native commands; check $LASTEXITCODE
 
@@ -52,24 +34,6 @@ fixed it.
 
 ---
 
----
-id: explorer-exits-one
-title: "explorer.exe returns 1 on success — your spawn wrapper calls it failure"
-category: exit-codes
-versions: "both"
-failure: misleading-error
-context: [script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/0c20c014e4a9940f12a36d9e624e325e4d2fc2a8
-ontology:
-  affects: [runtime-node, env-windows]
-  invokes: [command-explorer]
-  manifests_as: [error-exit-code-leak]
-  caused_by: [mechanism-exit-code-propagation]
-  mitigated_by: [workaround-ignore-handoff-exit]
----
 
 # explorer.exe returns 1 on success — your spawn wrapper calls it failure
 
@@ -101,23 +65,6 @@ wrong for this binary.
 
 ---
 
----
-id: if-nativecmd-truthiness
-title: "if (nativecmd) branches on whether it PRINTED, so a silent success is falsy and a noisy failure is truthy"
-category: exit-codes
-versions: "both"
-failure: silent
-context: [script, ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/11
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7]
-  invokes: [command-node]
-  caused_by: [mechanism-output-truthiness, mechanism-collection-unrolling]
-  mitigated_by: [workaround-lastexitcode-gate, workaround-array-force]
----
 
 # if (nativecmd) branches on whether it PRINTED, so a silent success is falsy and a noisy failure is truthy
 
@@ -213,25 +160,6 @@ line-count behaviour is not recorded anywhere in the archive either.
 
 ---
 
----
-id: irm-iex-kills-host
-title: "exit 1 inside irm | iex kills the user's terminal"
-category: exit-codes
-versions: "both"
-failure: hard-error
-context: [interactive, script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/514f9a9cd0f3d40e37578fa641c33dec9aadff37
-  - https://github.com/lidge-jun/cli-jaw/commit/71dcfdd7a41f0b1d7b0bb489b883324d43eb6157
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7]
-  invokes: [command-irm, command-iex]
-  manifests_as: [error-terminal-killed]
-  caused_by: [mechanism-iex-session]
-  mitigated_by: [workaround-throw-not-exit]
----
 
 # exit 1 inside irm | iex kills the user's terminal
 
@@ -269,27 +197,6 @@ way to return a code. One script, two execution models, opposite semantics.
 
 ---
 
----
-id: kill-hits-one-pid-or-the-whole-tree
-title: "killing a child leaves its grandchildren running, and the fix for that kills the process asking for it"
-category: exit-codes
-versions: "both"
-failure: silent
-context: [agent, script, ci]
-source: third-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/50
-  - https://github.com/openclaw/openclaw/issues/111900
-  - https://github.com/openclaw/openclaw/issues/120134
-  - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/taskkill
-  - https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information
-ontology:
-  affects: [env-windows, runtime-node]
-  invokes: [command-taskkill]
-  caused_by: [mechanism-no-process-group]
-  mitigated_by: [workaround-job-object-or-scoped-tree-kill]
----
 
 # killing a child leaves its grandchildren running, and the fix for that kills the process asking for it
 
@@ -482,27 +389,6 @@ not mean what the manual says" case.
 
 ---
 
----
-id: process-exit-fastfail-0xc0000409
-title: "your CLI prints the right answer and then crashes with 0xC0000409, because process.exit ran while a socket was still closing"
-category: exit-codes
-versions: "both"
-failure: misleading-error
-context: [script, ci, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/28
-  - https://github.com/lidge-jun/ima2-gen/commit/fdc875930
-  - https://github.com/lidge-jun/ima2-gen/commit/35a703b0d
-  - https://github.com/lidge-jun/ima2-gen/commit/d066ab30d
-ontology:
-  affects: [runtime-node, env-windows]
-  invokes: [command-node]
-  manifests_as: [error-fastfail]
-  caused_by: [mechanism-handle-close-race]
-  mitigated_by: [workaround-exitcode-not-exit]
----
 
 # your CLI prints the right answer and then crashes with 0xC0000409, because process.exit ran while a socket was still closing
 
@@ -590,24 +476,6 @@ report success is what makes the process report corruption.
 
 ---
 
----
-id: pwsh-leaks-lastexitcode
-title: "A handled $LASTEXITCODE still fails your CI step"
-category: exit-codes
-versions: "7.x"
-failure: misleading-error
-context: [ci]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/d0b5989b7986c22e8539bf82544cfeb9bfebbe8c
-ontology:
-  affects: [shell-pwsh-7, env-actions-runner]
-  invokes: [command-schtasks]
-  manifests_as: [error-exit-code-leak]
-  caused_by: [mechanism-exit-code-propagation]
-  mitigated_by: [workaround-explicit-exit-zero]
----
 
 # A handled $LASTEXITCODE still fails your CI step
 
@@ -645,23 +513,6 @@ you READ `$LASTEXITCODE` correctly and it still leaks.
 
 ---
 
----
-id: start-process-no-lastexitcode
-title: "Start-Process never sets LASTEXITCODE, so a failed process inherits the previous command's success"
-category: exit-codes
-versions: "both"
-failure: silent
-context: [ci, script, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/17
-ontology:
-  affects: [runtime-node, shell-powershell-51, shell-pwsh-7]
-  invokes: [command-start-process, command-node]
-  caused_by: [mechanism-exit-code-propagation, mechanism-host-vs-pipeline]
-  mitigated_by: [workaround-passthru-exitcode]
----
 
 # Start-Process never sets LASTEXITCODE, so a failed process inherits the previous command's success
 
@@ -768,24 +619,6 @@ and the *result* is invisible.
 
 ---
 
----
-id: startup-artifact-is-not-a-process
-title: "Windows autostart has no supervisor, so a registered Startup entry reports the service as running when nothing is"
-category: exit-codes
-versions: "both"
-failure: silent
-context: [script, agent]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/25
-  - https://github.com/lidge-jun/cli-jaw/commit/955d2b3f7bbac00874a73a07d130bc09bcf0ec93
-ontology:
-  affects: [env-windows, shell-cmd]
-  invokes: [command-schtasks]
-  caused_by: [mechanism-exit-code-propagation]
-  mitigated_by: [workaround-pidfile-ownership]
----
 
 # Windows autostart has no supervisor, so a registered Startup entry reports the service as running when nothing is
 

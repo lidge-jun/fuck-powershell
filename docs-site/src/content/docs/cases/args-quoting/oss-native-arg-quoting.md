@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">native argv rebuild</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">ps native argument passing</span></span></div></div>
 
+# Embedded quotes and empty args vanish before native commands see them
+
 ## Symptom
 
 A native command receives mangled arguments: embedded double quotes are stripped,

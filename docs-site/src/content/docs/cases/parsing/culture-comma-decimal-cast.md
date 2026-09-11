@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">culture parsing</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">numberstyles float</span></span></div></div>
 
+# casting a comma-decimal string gives a number 100x too large, with no error
+
 ## Symptom
 
 A European-formatted decimal casts to a number **one hundred times too large**,

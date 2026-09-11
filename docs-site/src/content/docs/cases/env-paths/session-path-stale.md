@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">COMMAND NOT RECOGNIZED</span></div><div class="row"><span class="k">Mechanism</span><span class="v">registry env snapshot</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">env remerge</span></span></div></div>
 
+# Installed a tool, still 'not found' — your session's PATH is a snapshot
+
 ## Symptom
 
 An installer runs `winget install node` (or similar), the install succeeds, and

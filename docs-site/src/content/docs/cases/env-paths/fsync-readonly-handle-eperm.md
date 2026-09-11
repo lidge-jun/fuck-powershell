@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, bun, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EPERM</span></div><div class="row"><span class="k">Mechanism</span><span class="v">flush needs write access</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">fsync on rdwr handle</span></span></div></div>
 
+# fsyncSync on a handle opened with 'r' throws EPERM on Windows, so a durable write that reopens read-only to flush fails only there
+
 ## Symptom
 
 A write-then-flush routine that is correct on Linux and macOS dies on Windows at the flush:

@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">cmd, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">statement terminator</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">ampersand separator</span></span></div></div>
 
+# a newline inside cmd /c does not start a second command, so the half of your script after it never runs
+
 ## Symptom
 
 You build a two-line script, hand it to `cmd.exe /c`, and the second line silently

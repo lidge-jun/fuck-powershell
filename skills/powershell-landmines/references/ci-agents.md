@@ -1,23 +1,3 @@
----
-id: actions-default-shell
-title: GitHub Actions on Windows defaults to PowerShell — your bash-ism dies quietly
-category: ci-agents
-versions: "both"
-failure: hard-error
-context: [ci, agent]
-source: third-party
-repro: verified
-refs:
-  - https://github.com/parsaesmaili038/ticketing-v1/commit/d5a4d513e34d557f345b41d9e1b9fdd2806d4a04
-  - https://github.com/lidge-jun/ima2-gen/commit/43a935f9bc9b785dcde31390eaf27b6990e0d8cd
-  - https://github.com/adourish/robodog/commit/ecdc052ffbb3cede9526ae7001d21acf8f8f7f8b
-ontology:
-  affects: [shell-pwsh-7, shell-powershell-51, env-actions-runner, env-windows]
-  invokes: [command-export]
-  manifests_as: [error-command-not-recognized, error-parsererror]
-  caused_by: [mechanism-default-shell-selection]
-  mitigated_by: [workaround-explicit-shell]
----
 
 # GitHub Actions on Windows defaults to PowerShell — your bash-ism dies quietly
 
@@ -62,24 +42,6 @@ redirects that agents kept emitting.
 
 ---
 
----
-id: cmd-posix-env-prefix
-title: "VAR=value cmd is not cmd.exe syntax — npm scripts break on Windows"
-category: ci-agents
-versions: "both"
-failure: hard-error
-context: [ci, script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/0c20c014e4a9940f12a36d9e624e325e4d2fc2a8
-ontology:
-  affects: [runtime-node, shell-cmd, env-windows]
-  invokes: [command-npm]
-  manifests_as: [error-command-not-recognized]
-  caused_by: [mechanism-posix-inline-env]
-  mitigated_by: [workaround-node-env-wrapper]
----
 
 # VAR=value cmd is not cmd.exe syntax — npm scripts break on Windows
 
@@ -114,25 +76,6 @@ platform-locks the script.
 
 ---
 
----
-id: execution-policy-file-block
-title: "Execution policy blocks your downloaded installer — irm | iex is the workaround, not a style choice"
-category: ci-agents
-versions: "5.1"
-failure: hard-error
-context: [interactive, script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/ima2-gen/commit/1442bd1fa555ebda0db9b2a4a86f48ab504fd122
-ontology:
-  affects: [shell-powershell-51, env-windows]
-  invokes: [command-iex]
-  manifests_as: [error-pssecurityexception]
-  caused_by: [mechanism-execution-policy-gate]
-  mitigated_by: [workaround-irm-iex, workaround-process-executionpolicy-bypass, workaround-throw-not-exit]
-  unsafe_fix: [workaround-machine-execution-policy]
----
 
 # Execution policy blocks your downloaded installer
 
@@ -171,25 +114,6 @@ the session bypasses file policy. It is a distribution constraint, not slop.
 
 ---
 
----
-id: killed-run-contaminates-next-run
-title: "kill -9 on a wedged Windows test run leaves a held fixture directory; the next run reports 22 failures in a file that is green on a clean tree"
-category: ci-agents
-versions: "both"
-failure: misleading-error
-context: [ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/commit/8d04c8048
-  - https://github.com/lidge-jun/opencodex/blob/codex/260905-windows-suite-stabilization/devlog/_plan/260905_windows_suite_stabilization/007_acl_defect_retracted.md
-ontology:
-  affects: [env-windows, runtime-bun]
-  manifests_as: [error-eperm]
-  caused_by: [mechanism-mandatory-file-locking, mechanism-no-process-group, mechanism-unowned-child-lifetime]
-  mitigated_by: [workaround-clean-fixture-debris-before-measuring, workaround-handle-owner-snapshot-before-delete]
-  unsafe_fix: [workaround-diagnose-from-corpus-match]
----
 
 # kill -9 on a wedged Windows test run leaves a held fixture directory; the next run reports 22 failures in a file that is green on a clean tree
 
@@ -266,25 +190,6 @@ answer. A corpus match is a hypothesis with a good prior, not a diagnosis.
 
 ---
 
----
-id: npm-script-runs-under-cmd
-title: "your npm script is a bash one-liner everywhere and a literal filename on Windows, so the release silently ships without its Windows artifact"
-category: ci-agents
-versions: "both"
-failure: misleading-error
-context: [ci, script]
-source: first-party
-repro: historical
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/23
-  - https://github.com/lidge-jun/cli-jaw/commit/ddb347bf1421bff6f5ea7591d8582a83d264929a
-ontology:
-  affects: [shell-cmd, env-windows, env-actions-runner]
-  invokes: [command-npm, command-cmd]
-  manifests_as: [error-command-not-recognized]
-  caused_by: [mechanism-default-shell-selection]
-  mitigated_by: [workaround-node-script-not-shell]
----
 
 # your npm script is a bash one-liner everywhere and a literal filename on Windows, so the release silently ships without its Windows artifact
 
@@ -381,31 +286,6 @@ different interpreter based on the host, and `npm run` never says so.
 
 ---
 
----
-id: test-budget-sized-from-local-timing
-title: "A per-test timeout sized from a 450 ms local run kills a three-child test that takes 8-19 s on windows-latest, then the leftover children obscure the message"
-category: ci-agents
-versions: "both"
-failure: misleading-error
-context: [ci, agent]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/opencodex/actions/runs/33945431119
-  - https://github.com/lidge-jun/opencodex/pull/3629
-  - https://github.com/lidge-jun/opencodex/actions/runs/33941712300
-  - https://github.com/lidge-jun/opencodex/pull/3610
-  - https://github.com/lidge-jun/opencodex/actions/runs/33920624827
-  - https://github.com/lidge-jun/opencodex/actions/runs/33923803071
-  - https://github.com/lidge-jun/opencodex/actions/runs/33926041666
-  - https://github.com/lidge-jun/opencodex/commit/cfc8de963
-ontology:
-  affects: [env-windows, env-actions-runner, runtime-bun]
-  manifests_as: [error-test-timeout, error-enoent, error-unhandled-rejection]
-  caused_by: [mechanism-hosted-runner-variance, mechanism-unowned-child-lifetime]
-  mitigated_by: [workaround-named-spawn-budget, workaround-reap-before-delete, workaround-class-budget-not-case]
-  unsafe_fix: [workaround-raise-one-failing-case]
----
 
 # A per-test timeout sized from a 450 ms local run kills a three-child test that takes 8-19 s on windows-latest, then the leftover children obscure the message
 

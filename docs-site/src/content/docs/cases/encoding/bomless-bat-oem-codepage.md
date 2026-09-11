@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">cmd, windows, korean codepage</span></div><div class="row"><span class="k">Fails as</span><span class="v">COMMAND NOT RECOGNIZED, MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default encoding</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">chcp first line</span></span></div></div>
 
+# a batch file with a non-ASCII path dies with 9009, and adding a BOM to fix it fuses onto the first line and kills it differently
+
 ## Symptom
 
 You generate a `.cmd` wrapper — an autostart shim, a service launcher, a

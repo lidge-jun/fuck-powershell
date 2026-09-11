@@ -7,9 +7,10 @@ puts the round on `main`.
 
 1. **Rebuild and validate the graph.**
    `bun scripts/build-graph.mjs && bun scripts/validate-graph.mjs`.
-   `ontology/graph.json` is generated and committed. Record the before/after node and edge
-   counts; the round's growth is the evidence for criterion c3. V11 is the one that catches
-   a case file whose stem and graph id drifted.
+   `ontology/graph.json` and `ontology/INDEX.md` are in `.gitignore`: they are generated
+   locally and **not** committed, and CI rebuilds them inside the docs build. Record the
+   before/after node and edge counts; the round's growth is the evidence for criterion c3.
+   V11 is the one that catches a case file whose stem and graph id drifted.
 
 2. **Re-run the schema gate over the whole corpus.**
    `bun scripts/lint-cases.mjs` must print `108 cases OK`. It walks every file, so it

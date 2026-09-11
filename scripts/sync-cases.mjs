@@ -28,11 +28,15 @@ const indexEntries = {};
 
 for (const f of readdirSync(CASES, { recursive: true }).map(String).filter((f) => f.endsWith(".md"))) {
   const text = readFileSync(join(CASES, f), "utf8");
-  const m = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  // CRLF-tolerant, for the same reason lint-cases.mjs is: a Windows checkout with
+  // core.autocrlf=true hands us \r\n, and an \n-only anchor matches nothing. Here the
+  // failure was SILENT rather than loud — every CRLF case fell through this continue,
+  // so a sync deleted the whole docs-site case tree and rewrote only the LF files.
+  const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   if (!m) continue;
   const fm = {};
   let key = null;
-  for (const line of m[1].split("\n")) {
+  for (const line of m[1].split(/\r?\n/)) {
     const item = line.match(/^\s+-\s+(.+)$/);
     if (item && key) { (Array.isArray(fm[key]) ? fm[key] : (fm[key] = [])).push(item[1].trim()); continue; }
     const kv = line.match(/^([a-z_]+):\s*(.*)$/);

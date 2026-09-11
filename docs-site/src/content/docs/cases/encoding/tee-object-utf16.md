@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, node, windows, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default encoding</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">set content utf8nobom</span></span></div></div>
 
+# Tee-Object writes UTF-16, so grepping your own log returns zero matches twice over
+
 ## Symptom
 
 You tee a test run to a log so you can grep it afterwards. The console output is

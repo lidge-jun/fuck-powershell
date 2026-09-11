@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, cmd</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">exit code propagation</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">pidfile ownership</span></span></div></div>
 
+# Windows autostart has no supervisor, so a registered Startup entry reports the service as running when nothing is
+
 ## Symptom
 
 You port a background service from launchd or systemd to Windows. `status` says

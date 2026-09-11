@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, powershell 51</span></div><div class="row"><span class="k">Fails as</span><span class="v">EPERM</span></div><div class="row"><span class="k">Mechanism</span><span class="v">acl step order</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">grant before restrict</span></span></div></div>
 
+# icacls /inheritance:r before the grant leaves a file with no ACEs at all, so an interrupted hardening script locks every consumer out of a file that still says you own it
+
 ## Symptom
 
 A hardening routine that locks down a secrets file half-runs — a timeout, a

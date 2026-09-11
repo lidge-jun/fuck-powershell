@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">output truthiness, collection unrolling</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">lastexitcode gate</span></span></div></div>
 
+# if (nativecmd) branches on whether it PRINTED, so a silent success is falsy and a noisy failure is truthy
+
 ## Symptom
 
 You write the thing every other shell taught you:

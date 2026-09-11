@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">exit code propagation, host vs pipeline</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">passthru exitcode</span></span></div></div>
 
+# Start-Process never sets LASTEXITCODE, so a failed process inherits the previous command's success
+
 ## Symptom
 
 A CI gate passes on a process that failed.

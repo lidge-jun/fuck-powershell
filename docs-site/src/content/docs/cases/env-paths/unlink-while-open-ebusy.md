@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EBUSY, EPERM</span></div><div class="row"><span class="k">Mechanism</span><span class="v">mandatory file locking</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">kill process tree</span></span></div></div>
 
+# npm update fails with EBUSY because your server exited hours ago but its child process still holds the file
+
 ## Symptom
 
 A routine operation on a directory fails, and the error blames the filesystem for

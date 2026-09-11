@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, win32 api, node</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENAMETOOLONG</span></div><div class="row"><span class="k">Mechanism</span><span class="v">command line cap</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">payload off argv</span></span></div></div>
 
+# os error 206 says the filename is too long when the filename is fine — the command line hit the 32,767-character cap
+
 ## Symptom
 
 A spawn fails with an error about filenames, naming a path that is nowhere near

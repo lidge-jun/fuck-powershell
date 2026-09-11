@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, windows, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">path delimiter</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">path win32 delimiter</span></span></div></div>
 
+# node:path delimiter follows the HOST, so win32 PATH logic resolves nothing when tested from Linux
+
 ## Symptom
 
 Windows PATH-resolution code is correct on Windows and silently resolves

@@ -11,6 +11,8 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">NOT A POWERSHELL SCRIPT</span></div><div class="row"><span class="k">Mechanism</span><span class="v">extension dispatch</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">shell matching suffix</span></span></div></div>
 
+# powershell -File refuses scripts that aren't named .ps1
+
 ## Symptom
 
 A bootstrap downloads an installer script to a temp file and runs it with

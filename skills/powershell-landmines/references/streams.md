@@ -1,21 +1,3 @@
----
-id: dev-null-redirect
-title: "> /dev/null creates a literal file (or kills CI) on Windows"
-category: streams
-versions: "both"
-failure: hard-error
-context: [ci, script, agent]
-source: third-party
-repro: verified
-refs:
-  - https://github.com/adourish/robodog/commit/ecdc052ffbb3cede9526ae7001d21acf8f8f7f8b
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7, env-windows]
-  invokes: [command-out-file]
-  manifests_as: [error-enoent]
-  caused_by: [mechanism-posix-dev-null]
-  mitigated_by: [workaround-dollar-null-redirect]
----
 
 # > /dev/null creates a literal file (or kills CI) on Windows
 
@@ -50,26 +32,6 @@ with regression tests (see ref).
 
 ---
 
----
-id: native-stderr-errorrecord
-title: PS 5.1 turns native stderr into NativeCommandError
-category: streams
-versions: "5.1"
-failure: misleading-error
-context: [script, ci]
-source: third-party
-repro: verified
-refs:
-  - https://github.com/dqfront/NousResearch-hermes-agent/commit/ec1714e71f90691e1cf412796e9a4b4ba0d934f4
-  - https://github.com/lidge-jun/cli-jaw/commit/8c72d7568d0facf692b8adfa1429aa083c703ee3
-  - https://github.com/lidge-jun/cli-jaw/blob/main/scripts/install.ps1
-ontology:
-  affects: [shell-powershell-51, env-windows]
-  invokes: [command-uv, command-git, command-npm, command-curl]
-  manifests_as: [error-nativecommanderror]
-  caused_by: [mechanism-stream-wrapping]
-  mitigated_by: [workaround-continue-eap, workaround-lastexitcode-gate]
----
 
 # PS 5.1 turns native stderr into NativeCommandError
 
@@ -108,23 +70,6 @@ PowerShell 7.2+ no longer wraps native stderr this way.
 
 ---
 
----
-id: out-string-multiplies-stderr
-title: "Out-String turns one stderr line into eight and injects your own script text into the log"
-category: streams
-versions: "5.1"
-failure: silent
-context: [ci, agent, script]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/fuck-powershell/issues/8
-ontology:
-  affects: [runtime-node, shell-powershell-51]
-  invokes: [command-out-string, command-node]
-  caused_by: [mechanism-stream-wrapping, mechanism-errorrecord-format]
-  mitigated_by: [workaround-stringify-errorrecord]
----
 
 # Out-String turns one stderr line into eight and injects your own script text into the log
 
@@ -233,23 +178,6 @@ the archive today.
 
 ---
 
----
-id: write-host-not-success-stream
-title: "Write-Host output is invisible to 2>&1 | Out-String"
-category: streams
-versions: "both"
-failure: silent
-context: [script, ci]
-source: first-party
-repro: verified
-refs:
-  - https://github.com/lidge-jun/cli-jaw/commit/b46261a96eda8f51d91aa4eebd8483c564b41b2c
-ontology:
-  affects: [shell-powershell-51, shell-pwsh-7]
-  invokes: [command-write-host, command-out-string]
-  caused_by: [mechanism-host-vs-pipeline]
-  mitigated_by: [workaround-write-output, workaround-transcript]
----
 
 # Write-Host output is invisible to 2>&1 | Out-String
 
