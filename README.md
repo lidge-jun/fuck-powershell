@@ -6,7 +6,7 @@
 semantics, PATH/PATHEXT resolution, encodings, exit codes, cmd.exe re-parsing,
 mandatory file locking, CRLF residue, localized tool output, process-tree
 termination, PowerShell 5.1 legacy behavior — bound into a typed ontology
-(385 nodes, 811 edges) that an agent can QUERY BEFORE PATCHING instead of
+(387 nodes, 811 edges) that an agent can QUERY BEFORE PATCHING instead of
 debugging after the explosion. PowerShell is the brand; the corpus is the whole
 Windows interop minefield.
 

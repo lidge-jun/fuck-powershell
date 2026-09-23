@@ -7,17 +7,16 @@ sidebar:
 
 <p class="case-eyebrow">env paths · case</p>
 
-<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: historical</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#case-insensitive-filesystem">case-insensitive-filesystem</a></div>
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-misleading-error">misleading-error</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: historical</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#homedir-uses-userprofile">homedir-uses-userprofile</a></div>
 
-<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, bun</span></div><div class="row"><span class="k">Fails as</span><span class="v">ASSERTION MISMATCH</span></div><div class="row"><span class="k">Mechanism</span><span class="v">case insensitive filesystem</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">canonical path key</span></span></div></div>
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, bun</span></div><div class="row"><span class="k">Fails as</span><span class="v">ASSERTION MISMATCH</span></div><div class="row"><span class="k">Mechanism</span><span class="v">homedir uses userprofile</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">pin test userprofile</span></span></div></div>
 
 ## Symptom
 
 A test puts its temporary home under a sandbox and asserts every service state
 path begins with that directory. The assertion passes on POSIX but fails on a
 Windows runner: one state path points into the runner's effective user home
-instead of the test's temporary home. CI diagnostics may show `RUNNER~1` while
-the API returns the long profile spelling for the same location.
+instead of the test's temporary home.
 
 ## Repro
 
@@ -34,39 +33,52 @@ const statePath = join(homedir(), ".opencodex", "service.json");
 statePath.startsWith(process.env.HOME); // false
 ```
 
-Even when both strings name the same directory, raw `startsWith` can fail when
-the runner supplies different letter casing or an 8.3 short-name spelling.
-
 ## Cause
 
-On Windows, `os.homedir()` derives the home from `USERPROFILE`; setting `HOME`
-alone does not redirect it. A legacy code path that calls `homedir()` can
-therefore escape a test's sandbox if the fixture only overrides `HOME`.
+On Windows, `os.homedir()` reads `USERPROFILE`, not `HOME`. The test configured
+its own temporary home through `HOME`, but a legacy service-state path called
+`os.homedir()` and therefore resolved under the runner's user profile. The
+service path was outside the test's per-test sandbox, so the original
+`startsWith(tempHome)` assertion correctly failed. Pinning `USERPROFILE` to that
+test's temporary home makes the path and assertion agree.
 
-The assertion adds a second path-identity assumption. Windows paths can differ
-in letter casing or use a short-name alias while resolving to the same directory.
-String-prefix comparison neither resolves those aliases nor verifies a path
-boundary (`C:\\sandbox\\home-old` also starts with `C:\\sandbox\\home`).
-
-OpenCodex's `tests/service/service-claim.test.ts` exposed the assertion on
-`windows-latest` in run 35816970127. The exact patch was still under review when
-this case was recorded; this documents the observed mechanisms, not an unverified
-final fix.
+OpenCodex's `tests/service/service-claim.test.ts` exposed this on
+`windows-latest` in run 35816970127. PR #5634 sets `USERPROFILE` to the test's
+temp home on win32, keeps the original raw `startsWith` assertion unchanged,
+and restores the variable in `finally`.
 
 ## Workaround
 
-- Inject the test's home through the same configuration or resolver the code
-  under test uses. If a legacy path reads `os.homedir()`, set and restore the
-  platform's effective home variable (`USERPROFILE` on Windows) as part of the
-  fixture, without leaking it to later tests.
-- For containment of existing paths, resolve both sides with the platform's
-  native filesystem resolution (`realpathSync.native` on Bun/Node Windows),
-  then compare normalized path components with a separator boundary. Do not
-  rely on raw `startsWith`, casing alone, or suffix equality.
-- Do not skip the assertion on Windows: that hides an actual sandbox escape.
-- Do not weaken it to a suffix or basename check: a path outside the sandbox can
-  share the same suffix and still pass.
+For a Windows test that calls code using `os.homedir()`, set `USERPROFILE` to
+that test's own temporary home and restore its previous value in `finally`:
+
+```ts
+const previous = process.env.USERPROFILE;
+try {
+  if (process.platform === "win32") process.env.USERPROFILE = tempHome;
+  // Keep the original assertion: every state path starts with tempHome.
+  await exerciseServiceClaim();
+} finally {
+  if (process.platform === "win32") {
+    if (previous === undefined) delete process.env.USERPROFILE;
+    else process.env.USERPROFILE = previous;
+  }
+}
+```
+
+Keep this override local to the test. Do not pin `USERPROFILE` in a shared
+`createTempHome` helper when another suite relies on the shared sandbox.
+
+Unsafe fixes:
+
+- Widen the assertion to accept a shared sandbox such as `HOME/.opencodex`.
+  That allows paths outside this test's own temporary home and weakens isolation.
+- Canonicalize both paths merely to make the shared-sandbox variant pass. It
+  preserves the widened boundary and therefore has the same isolation defect.
+- Skip the Windows assertion or replace it with a suffix/basename check; either
+  hides a path escaping the test's sandbox.
 
 ## Refs
 
 - <https://github.com/lidge-jun/opencodex/actions/runs/35816970127>
+- <https://github.com/lidge-jun/opencodex/pull/5634>

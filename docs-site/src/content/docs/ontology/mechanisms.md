@@ -67,7 +67,7 @@ Cases: [caller-picks-interpreter-not-shebang](/fuck-powershell/cases/env-paths/c
 
 NTFS matches paths without regard to case while preserving the casing written, so two spellings name one file, but every ordinary string container treats them as distinct keys and the same lowercasing fix would be wrong on a case-sensitive filesystem.
 
-Cases: [homedir-escapes-test-sandbox](/fuck-powershell/cases/env-paths/homedir-escapes-test-sandbox/) · [path-case-sensitive-map](/fuck-powershell/cases/env-paths/path-case-sensitive-map/)
+Cases: [path-case-sensitive-map](/fuck-powershell/cases/env-paths/path-case-sensitive-map/)
 
 ## cmd bat spawn hardening
 
@@ -212,6 +212,12 @@ Cases: [fsync-readonly-handle-eperm](/fuck-powershell/cases/env-paths/fsync-read
 An immediate process exit tears the runtime down without waiting for libuv to finish closing handles; a handle still in the closing state trips an assertion, which Windows surfaces as a fastfail while POSIX teardown absorbs the same race silently.
 
 Cases: [process-exit-fastfail-0xc0000409](/fuck-powershell/cases/exit-codes/process-exit-fastfail-0xc0000409/)
+
+## homedir uses userprofile
+
+On Windows, os.homedir() reads USERPROFILE rather than HOME, so a test or process that overrides HOME alone still resolves the real user profile as its home.
+
+Cases: [homedir-escapes-test-sandbox](/fuck-powershell/cases/env-paths/homedir-escapes-test-sandbox/)
 
 ## host vs pipeline
 

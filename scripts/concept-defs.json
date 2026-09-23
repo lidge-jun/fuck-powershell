@@ -83,6 +83,9 @@
   "mechanism-env-casing": {
     "d": "Windows env names are case-insensitive but JS objects are not; Path and PATH can coexist and fight."
   },
+  "mechanism-homedir-uses-userprofile": {
+    "d": "On Windows, os.homedir() reads USERPROFILE rather than HOME, so a test or process that overrides HOME alone still resolves the real user profile as its home."
+  },
   "mechanism-appexeclink": {
     "d": "WindowsApps store aliases are zero-byte IO_REPARSE_TAG_APPEXECLINK files that pass stat probes but EPERM on spawn."
   },
@@ -491,8 +494,11 @@
     "u": "As the primary fix it masks an unowned child: the retry budget is a guess, the child still runs, and outside the test the same handle blocks an uninstaller or a home move."
   },
   "workaround-weaken-assertion": {
-    "d": "Replace a path containment assertion with a suffix, basename, or other weaker string check to make differing Windows path spellings pass.",
-    "u": "A path outside the sandbox can share the same suffix or basename. Weakening the assertion hides a real escape instead of resolving the effective home and comparing canonical path components."
+    "d": "Widen or weaken a per-test path-containment assertion to accept a shared sandbox, suffix, basename, or other broader string match.",
+    "u": "A path in a shared sandbox or outside the test's own temp home can then pass. The broader assertion hides a real per-test isolation failure instead of making the code resolve inside the test's configured home."
+  },
+  "workaround-pin-test-userprofile": {
+    "d": "On Windows, set USERPROFILE to the individual test's temporary home while exercising code that calls os.homedir(), then restore the previous value in finally. Keep the override test-local so other suites retain their own home configuration."
   },
   "mechanism-flush-needs-write-access": {
     "d": "On Windows fsync is FlushFileBuffers, which requires a handle opened with GENERIC_WRITE; a read-only handle is refused with ERROR_ACCESS_DENIED (EPERM), where POSIX fsync accepts any descriptor for the file."

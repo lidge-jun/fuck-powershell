@@ -6,8 +6,8 @@ label: "weaken assertion"
 
 ## Definition
 
-Replace a path containment assertion with a suffix, basename, or other weaker string check to make differing Windows path spellings pass.
+Widen or weaken a per-test path-containment assertion to accept a shared sandbox, suffix, basename, or other broader string match.
 
 ## Why it's unsafe
 
-A path outside the sandbox can share the same suffix or basename. Weakening the assertion hides a real escape instead of resolving the effective home and comparing canonical path components.
+A path in a shared sandbox or outside the test's own temp home can then pass. The broader assertion hides a real per-test isolation failure instead of making the code resolve inside the test's configured home.

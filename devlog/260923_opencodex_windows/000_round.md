@@ -11,14 +11,27 @@ failure remains a TODO because its cause is still under investigation.
 | Mixed-case `ALL_PROXY` / `all_proxy` assignments collapse to one Windows environment variable; the SOCKS-only case sees no SOCKS proxy. | Updated `env-path-vs-PATH-casing`; run 35816090505, PR #5634. |
 | Test temp-home removal returns `EBUSY` because the policy path left `routing-history.sqlite` open across cleanup. Repeated on two runs. | Updated `unlink-while-open-ebusy`; run 35816090505, PR #5634. |
 | A fixture simulating Linux/WSL used host `path.join`, producing backslashes that did not match POSIX WSL discovery paths. | Updated `node-path-host-delimiter`; PR #5634. |
-| A service path derived through `os.homedir()` escaped a sandbox whose `HOME` was overridden; raw prefix matching also fails across Windows case/8.3 aliases. | Added `homedir-escapes-test-sandbox`; run 35816970127. Exact patch remained under review. |
+| A service path derived through `os.homedir()` escaped a sandbox whose `HOME` was overridden. | Added `homedir-escapes-test-sandbox`; run 35816970127, PR #5634. Final fix pins `USERPROFILE` per test on win32 and restores it in `finally`; the original `startsWith` assertion remains unchanged. |
 
-## TODO — Bun 1.4.0 isolate batch
+## TODO — Batch-27: Bun 1.4.0 isolate batch
 
 One multi-file `bun test --isolate` batch segfaulted or hung on Windows while
 each file passed alone. Root cause is unconfirmed. Do not add a case until the
 failure is distinguished from runner/runtime contamination and there is a
 reproducible mechanism.
+
+## Follow-up — final service-claim fix
+
+PR #5634 was reviewed and finalized with a test-local `USERPROFILE` override on
+win32, restored in `finally`. The test keeps its original `startsWith` assertion.
+The alternative that widened acceptance to the shared `HOME/.opencodex` sandbox
+and canonicalized paths was rejected because it weakens per-test isolation. The
+shared `createTempHome` helper is unchanged because another suite depends on the
+shared sandbox. `homedir()` uses `USERPROFILE` on win32, not `HOME`.
+
+Follow-up gates passed: case lint (110); graph build (387 nodes, 811 edges);
+graph validation (0 warnings); OpenCodex inventory coverage (341/341); skill
+reference and docs synchronization; and `git diff --check`.
 
 ## Validation
 
