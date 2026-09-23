@@ -44,3 +44,20 @@ a new commit on `dev` (no force-push once pushed); CI is re-read at the new head
 - Rollback removes only this registration: `codex mcp remove fuck-powershell`. The
   config backup is a last resort for a corrupted file, compared by diff before any
   restore so later unrelated changes are not lost.
+
+## Audit amendments (reviewer 01a0cd90-721d, round 1)
+
+- c-3 is judged from ONE workflow run: the `CI` run with `event == "pull_request"`,
+  `headSha ==` the PR's `headRefOid`, its run id and attempt recorded, and all seven
+  named jobs of that same run/attempt `completed/success`. Jobs are never combined
+  across runs, events or attempts; `skipped`, `cancelled`, `neutral` or still-pending
+  jobs are not success. The evidence line records PR number, head SHA, event, run id,
+  attempt and the seven job conclusions.
+- The config backup is created exclusively: `cp -n` to
+  `~/.codex/config.toml.bak-260923-fp-mcp` after checking the path does not exist
+  (checked absent today); if it exists, stop. After `codex mcp add`, record
+  `diff backup current`; it must show only the new `[mcp_servers.fuck-powershell]`
+  block. Rollback is `codex mcp remove fuck-powershell` (only that block); the backup
+  is never restored wholesale over later changes.
+- c-4 evidence records the PR's `mergeCommit.oid`, the push-event Pages run id for it,
+  and the deployment record SHA, which must all be the same commit.
