@@ -95,6 +95,28 @@ error → `console.error(msg); process.exit(1)`), then write `graph.json` and
 
 ## Parity proof (c-2), run once in C
 
+### Tie order amendment (B-phase finding, 2026-09-23)
+
+Byte parity with the old CLI turned out to be the wrong target for one thing: the order
+of equal-score results. The old CLI inherited it from `readdirSync`, and that order is
+not a property of the corpus: on macOS Bun returns raw APFS order while Node returns
+names sorted, and Linux ext4 or NTFS give other orders again. The L1 lane first matched
+it by spawning `bun` from Node to borrow Bun's enumeration, which hid a runtime
+dependency inside a zero-dependency server; main rejected that. `buildGraph` now sorts
+category, case and concept names, so every runtime and OS builds the same graph.
+
+Consequence, recorded rather than hidden: against the old Bun-on-macOS output, 7 of the
+14 parity queries order their ties differently. Where ties straddle a cutoff (top 3 for
+constraints, top 6 for preflight, top 8 for search) a different equal-score case is
+shown. Example, `preflight --runtime node --operation spawn --target npm`: the
+3-point tie now lists `cmd-shim-reparses-argv` instead of `npm-script-runs-under-cmd`,
+and the constraints lose "absolute spawn" and "skip relative path entries". Scores,
+risk levels, stderr and exit codes are unchanged.
+
+`evidence/parity.sh` therefore checks: new Bun vs new Node byte-identical; old vs new
+stderr and exit code byte-identical, stdout identical or differing only in which
+equal-score items appear (same risk line, same score sequence).
+
 Both sides run against one isolated, identical corpus so the untracked WIP case in the
 working tree (113 files vs 112 at b59324b) cannot leak into either side:
 

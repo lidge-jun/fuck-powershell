@@ -13,7 +13,17 @@ live: https://lidge-jun.github.io/fuck-powershell/). PowerShell is the brand;
 the corpus covers cmd.exe, Node/Bun spawn, PATH/PATHEXT, encodings, Win32 paths,
 and CI runner behavior.
 
-## Dynamic lookup (preferred)
+## MCP tools (preferred when registered)
+
+If your host exposes `fp_preflight`, `fp_search`, `fp_errors` and `fp_case` (the
+fuck-powershell MCP server, `scripts/mcp.mjs`), use them instead of the CLI below: same
+operations, same risk rules, a few hundred bytes per answer, and the server reads the
+corpus fresh on every call. Call `fp_preflight` before the patch, `fp_case` on the top
+result, and `fp_search` / `fp_errors` over the diff and any error you hit. Registration
+is in the repository README ("Use it as an MCP server"). Use the CLI only when those
+tools are absent.
+
+## CLI lookup
 
 Pull the corpus once, then QUERY BEFORE PATCHING. Resolve the checkout in this
 order and use the first that exists — do not hardcode one path, the corpus is a
