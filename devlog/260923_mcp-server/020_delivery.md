@@ -45,5 +45,6 @@ this session ("PR 올리고 배포까지").
 8. Local `dev` checkout: fast-forward to the merge commit is not needed (`dev` is the
    merge's parent); report both SHAs.
 
-Rollback: `codex mcp remove fuck-powershell` and restore the config backup; the merge
-can be reverted with `git revert -m 1 <merge sha>` in a new PR.
+Rollback: `codex mcp remove fuck-powershell` (only that block; see 021 for why the
+backup is never restored wholesale); the merge can be reverted with
+`git revert -m 1 <merge sha>` in a new PR.

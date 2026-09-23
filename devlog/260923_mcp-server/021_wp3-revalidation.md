@@ -2,7 +2,7 @@
 
 wp2 D direction carried forward: "Next: wp3 delivery per 020." Unchanged.
 
-Current facts (2026-09-23): `dev` = origin/main b59324b + 11 commits, 0 behind. The
+Current facts (2026-09-23): `dev` = origin/main b59324b plus this unit's commits, 0 behind. The
 privacy check in 020 step 1 was run before pushing: every hit reviewed in context. The
 only real finding, workplace identifiers written into 020's own pattern list, was
 removed by rewriting the unpushed commit that introduced it (fixup + autosquash onto
