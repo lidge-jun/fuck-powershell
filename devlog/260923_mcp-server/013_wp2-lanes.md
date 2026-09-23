@@ -5,7 +5,7 @@ implementer builds them." Unchanged, with the build split across two sol impleme
 subagents so the server and the core are written in parallel against the interface
 fixed in 010.
 
-## Stale check (2026-09-23, HEAD abf9c5f)
+## Stale check (2026-09-23, HEAD 76bb7ac)
 
 `git diff --stat b59324b HEAD -- scripts tests .github README.md skills` is empty:
 the only commits since the audited base are this unit's docs. Line anchors in 010/011
@@ -19,7 +19,7 @@ the only commits since the audited base are this unit's docs. Line anchors in 01
 | L2 server | gpt-6-sol | `scripts/mcp.mjs`, `scripts/lib/auto-update.mjs`, `tests/helpers.mjs`, `tests/mcp.test.mjs`, `tests/auto-update.test.mjs` | 001, 011, 012 mcp/auto-update sections, 010 interface |
 | main | — | `.github/workflows/ci.yml`, `README.md`, `skills/powershell-landmines/SKILL.md`, this unit, all commits | everything |
 
-The parity verifier `evidence/parity.sh` already exists (committed in e576dd0, run once
+The parity verifier `evidence/parity.sh` already exists (committed in 77a134f, run once
 as a negative control); main owns running it at C. No lane writes it. 010 no longer
 mentions an uncommitted `.fp-parity.mjs` (checked: no match in 010).
 The case contract L2 relies on is `parseCaseMarkdown` in 010, now listing `versions`

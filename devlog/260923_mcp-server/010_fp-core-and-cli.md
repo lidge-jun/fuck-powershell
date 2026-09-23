@@ -119,7 +119,7 @@ The old scripts run under Node with `readdirSync` sorted by a preload (and
 sorted enumeration is the only behavior change. Old Bun vs new: stderr and exit code
 byte-identical; stdout may differ only in which equal-score items appear (same risk
 line, same score sequence), and those queries are listed as TIE-ORDER.
-Result at 07fb082 + C fixes: 126 comparisons, fail=0, 7 TIE-ORDER.
+Result at b95267f + C fixes: 126 comparisons, fail=0, 7 TIE-ORDER.
 
 Both sides run against one isolated, identical corpus so the untracked WIP case in the
 working tree (113 files vs 112 at b59324b) cannot leak into either side:

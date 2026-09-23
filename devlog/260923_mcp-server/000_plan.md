@@ -78,7 +78,7 @@ section names the MCP tools first. The repo has no separate architecture index.
 
 ## Cycle log
 
-**wp1 D (roadmap locked).** The roadmap is 000–020 as committed in e576dd0. The spec
+**wp1 D (roadmap locked).** The roadmap is 000–020 as committed in 77a134f. The spec
 check changed the design more than anything else: MCP 2026-07-28 removed `initialize`
 and `ping`, so the server is dual-era rather than a copy of the codemode server's
 2024-11-05 handshake. The audit's biggest catch was that the working tree carries an
@@ -97,6 +97,6 @@ appears at a cutoff in 7 of 14 parity queries versus the old Bun-on-macOS output
 new output byte for byte. The independent C reviewer (sol) found five real defects
 (bad-id handling, dirty corpus labeled with a clean SHA, an unguarded signature read,
 a parity check loose enough to pass real changes, weak assertions); all were fixed and
-re-verified. Local proof at f7f41b9: node 26/26, bun 26/26, parity 126/126, corpus
+re-verified. Local proof at c7ac524: node 26/26, bun 26/26, parity 126/126, corpus
 gate 112 cases 0 warnings. Not yet proven: Node 18 and Windows, which only hosted CI
 exercises. Next: wp3 delivery per 020.
