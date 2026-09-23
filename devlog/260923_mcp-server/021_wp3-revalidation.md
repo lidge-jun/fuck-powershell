@@ -28,3 +28,19 @@ from origin after the merge, config backup, `codex mcp add ... --env FP_AUTO_UPD
 
 Failure handling: a failing CI job is read from its job log at the exact head; a fix is
 a new commit on `dev` (no force-push once pushed); CI is re-read at the new head.
+
+## Architect reflection amendments
+
+- CI runs on both `push` to `dev` and `pull_request`. PR validation is the run with
+  `event == "pull_request"` whose `headSha` equals the PR head: record its run id,
+  attempt and all seven jobs from `gh run view <id> --json event,headSha,attempt,jobs`.
+  The push-event run on the same SHA is recorded separately and never substitutes.
+- Deploy proof uses the `Deploy docs to GitHub Pages` run with `event == "push"` and
+  `headSha == <merge sha>` (the workflow also allows manual dispatch), then the
+  github-pages deployment record for that SHA.
+- Registration preflight (checked 2026-09-23 before any change): `~/.fuck-powershell`
+  absent, no `fuck-powershell` MCP entry, no backup file at the chosen name. If any of
+  these exists at step time, stop and report instead of overwriting.
+- Rollback removes only this registration: `codex mcp remove fuck-powershell`. The
+  config backup is a last resort for a corrupted file, compared by diff before any
+  restore so later unrelated changes are not lost.
