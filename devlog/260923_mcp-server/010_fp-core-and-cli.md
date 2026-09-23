@@ -113,9 +113,13 @@ shown. Example, `preflight --runtime node --operation spawn --target npm`: the
 and the constraints lose "absolute spawn" and "skip relative path entries". Scores,
 risk levels, stderr and exit codes are unchanged.
 
-`evidence/parity.sh` therefore checks: new Bun vs new Node byte-identical; old vs new
-stderr and exit code byte-identical, stdout identical or differing only in which
-equal-score items appear (same risk line, same score sequence).
+`evidence/parity.sh` therefore checks three things. New Bun vs new Node: byte-identical.
+The old scripts run under Node with `readdirSync` sorted by a preload (and
+`import.meta.dir` rewritten so Node can load them) vs new: byte-identical, which proves
+sorted enumeration is the only behavior change. Old Bun vs new: stderr and exit code
+byte-identical; stdout may differ only in which equal-score items appear (same risk
+line, same score sequence), and those queries are listed as TIE-ORDER.
+Result at 07fb082 + C fixes: 126 comparisons, fail=0, 7 TIE-ORDER.
 
 Both sides run against one isolated, identical corpus so the untracked WIP case in the
 working tree (113 files vs 112 at b59324b) cannot leak into either side:

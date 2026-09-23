@@ -154,12 +154,31 @@ export function gitHead(root) {
   const out = spawnSync("git", ["-C", root, "rev-parse", "--short", "HEAD"], { encoding: "utf8", timeout: 5000, windowsHide: true });
   return out.status === 0 ? out.stdout.trim() : null;
 }
+// True when case or concept files differ from HEAD (edited, added, untracked), so the
+// answer is not exactly the corpus of the commit it reports. False outside git.
+export function gitDirty(root) {
+  const out = spawnSync("git", ["-C", root, "status", "--porcelain", "--untracked-files=all", "--", "cases", "ontology/concepts"],
+    { encoding: "utf8", timeout: 5000, windowsHide: true });
+  return out.status === 0 && out.stdout.trim() !== "";
+}
 export function loadSnapshot(root, prev, { isBusy = () => false, onBuilt } = {}) {
   const checkoutHead = gitHead(root);
   if (prev && isBusy()) return { ...prev, checkoutHead };
-  let before = corpusSignature(root);
-  if (prev && before === prev.sig) return { ...prev, head: checkoutHead, checkoutHead, warning: undefined };
+  let sigError = null;
+  const readSignature = () => {
+    try { return corpusSignature(root); } catch (error) { sigError = error; return null; }
+  };
+  const fallback = message => {
+    if (!prev) throw new Error(message);
+    return { ...prev, sig: null, checkoutHead: gitHead(root), warning: message + "; serving previous index" };
+  };
+  let before = readSignature();
+  if (prev && before !== null && before === prev.sig) {
+    return { ...prev, head: checkoutHead, checkoutHead, dirty: gitDirty(root), warning: undefined };
+  }
   for (let attempt = 0; attempt < 2; attempt++) {
+    if (before === null) before = readSignature();
+    if (before === null) continue;
     const buildHead = gitHead(root);
     let ix;
     try {
@@ -167,16 +186,15 @@ export function loadSnapshot(root, prev, { isBusy = () => false, onBuilt } = {})
       onBuilt?.();
     } catch (error) {
       if (!prev) throw error;
-      return { ...prev, sig: null, checkoutHead: gitHead(root), warning: "corpus rebuild failed: " + error.message + "; serving previous index" };
+      return fallback("corpus rebuild failed: " + error.message);
     }
-    const after = corpusSignature(root);
+    const after = readSignature();
     const endHead = gitHead(root);
-    if (before === after && buildHead === endHead) {
-      return { sig: after, ix, head: buildHead, checkoutHead: endHead,
+    if (after !== null && before === after && buildHead === endHead) {
+      return { sig: after, ix, head: buildHead, checkoutHead: endHead, dirty: gitDirty(root),
         caseCount: ix.graph.nodes.filter(n => n.type === "Case").length };
     }
     before = after;
   }
-  if (!prev) throw new Error("corpus is changing; retry");
-  return { ...prev, sig: null, checkoutHead: gitHead(root), warning: "corpus is changing; retry; serving previous index" };
+  return fallback(before === null && sigError ? "corpus unreadable: " + sigError.message : "corpus is changing; retry");
 }

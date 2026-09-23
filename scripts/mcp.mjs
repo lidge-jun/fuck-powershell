@@ -67,13 +67,14 @@ function corpus() {
 }
 function freshness(snapshot) {
   const result = { head: snapshot.head, caseCount: snapshot.caseCount, update: updater.status() };
+  if (snapshot.dirty) result.dirty = true;
   if (snapshot.checkoutHead !== snapshot.head) result.checkoutHead = snapshot.checkoutHead;
   if (snapshot.warning) result.warning = snapshot.warning;
   return result;
 }
 function header(snapshot) {
   const head = snapshot.head || "no-git";
-  let line = `corpus ${head}`;
+  let line = `corpus ${head}${snapshot.dirty ? "+dirty" : ""}`;
   if (snapshot.checkoutHead !== snapshot.head) line += ` (checkout ${snapshot.checkoutHead || "no-git"}, rebuild pending)`;
   line += ` · ${snapshot.caseCount} cases`;
   if (process.env.FP_AUTO_UPDATE === "1") line += ` · update: ${updater.status() || "pending"}`;
@@ -125,10 +126,15 @@ function executeTool(name, args) {
 }
 
 function dispatch(message) {
-  if (!plain(message)) return error(null, -32600, "Invalid Request");
+  // MCP ids are strings or numbers (never null). Anything that is not a well-formed
+  // request or notification gets -32600 with id null, never an echo of a bad id.
+  const validId = plain(message) && ["string", "number"].includes(typeof message.id);
+  if (!plain(message) || message.jsonrpc !== "2.0" || typeof message.method !== "string") {
+    return error(validId ? message.id : null, -32600, "Invalid Request");
+  }
   if (!Object.hasOwn(message, "id")) return;
+  if (!validId) return error(null, -32600, "Invalid Request");
   const id = message.id;
-  if (message.jsonrpc !== "2.0" || typeof message.method !== "string" || !["string", "number"].includes(typeof id)) return error(id ?? null, -32600, "Invalid Request");
   const params = message.params ?? {};
   if (message.method === "initialize") {
     legacy = true;

@@ -96,7 +96,10 @@ test("tools render compact text and structured content", async () => withServer(
   assert.match(short.content[0].text, /## Workaround/);
   assert.doesNotMatch(short.content[0].text, /## Repro/);
   assert.match(short.content[0].text, /\(repro omitted; call with full:true\)$/);
-  assert.equal(short.structuredContent.case.refs.length, 2);
+  const source = readFileSync(join(ROOT, "cases", "aliases", "curl-alias.md"), "utf8");
+  const frontRefs = [...source.split(/\r?\n---/)[0].matchAll(/^\s+-\s+(https?:\/\/\S+)\s*$/gm)].map((m) => m[1]);
+  assert.equal(frontRefs.length, 2);
+  assert.deepEqual(short.structuredContent.case.refs, frontRefs);
   const full = (await call(s, "fp_case", { id: "curl-alias", full: true })).result;
   assert.match(full.content[0].text, /## Repro/);
   assert.equal((await call(s, "fp_case", { id: "not-a-case" })).result.isError, true);
@@ -105,6 +108,11 @@ test("tools render compact text and structured content", async () => withServer(
 test("malformed lines do not stop serving; stdout is JSON-RPC only; EOF exits", async () => withServer(async (s) => {
   assert.equal((await s.raw("{not json")).error.code, -32700);
   for (const value of ["[1]", '"str"']) assert.equal((await s.raw(value)).error.code, -32600);
+  for (const value of ['{"jsonrpc":"2.0"}', '{"jsonrpc":"2.0","id":true,"method":"tools/list"}']) {
+    const reply = await s.raw(value);
+    assert.equal(reply.error.code, -32600);
+    assert.equal(reply.id, null);
+  }
   assert.ok((await s.request("tools/list")).result.tools.length);
   for (const line of s.lines) assert.equal(JSON.parse(line).jsonrpc, "2.0");
 }));
@@ -128,9 +136,19 @@ test("README-only commit updates answer HEAD", async () => {
     const first = (await call(s, "fp_search", { query: "curl" })).result.structuredContent.freshness;
     writeFileSync(join(root, "README"), "changed\n");
     git(root, "add", "README"); git(root, "commit", "-m", "readme");
-    const second = (await call(s, "fp_search", { query: "curl" })).result.structuredContent.freshness;
+    const reply = (await call(s, "fp_search", { query: "curl" })).result;
+    const second = reply.structuredContent.freshness;
     assert.notEqual(second.head, first.head);
     assert.equal(second.caseCount, first.caseCount);
+    const sha = git(root, "rev-parse", "--short", "HEAD");
+    assert.equal(second.head, sha);
+    assert.ok(reply.content[0].text.startsWith(`corpus ${sha} · `));
+    assert.equal(second.dirty, undefined);
+    const source = readFileSync(join(root, "cases", "aliases", "curl-alias.md"), "utf8");
+    writeFileSync(join(root, "cases", "aliases", "uncommitted-landmine.md"), source.replace(/curl-alias/g, "uncommitted-landmine"));
+    const dirty = (await call(s, "fp_search", { query: "curl" })).result;
+    assert.equal(dirty.structuredContent.freshness.dirty, true);
+    assert.ok(dirty.content[0].text.startsWith(`corpus ${sha}+dirty · `));
   }, { root });
 });
 

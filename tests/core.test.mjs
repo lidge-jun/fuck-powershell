@@ -6,6 +6,7 @@ import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { buildGraph, createIndex, search, preflight, errors, getCase, parseCaseMarkdown, corpusSignature, loadSnapshot, resolveRoot } from "../scripts/lib/fp-core.mjs";
+import { symlinkSync } from "node:fs";
 
 function git(root, ...args) {
   const r = spawnSync("git", ["-C", root, "-c", "user.name=t", "-c", "user.email=t@t", ...args], { encoding: "utf8", windowsHide: true });
@@ -102,4 +103,29 @@ test("unstable reads retry once, then fall back or throw", t => {
   assert.equal(fallback.sig, null);
   assert.match(fallback.warning, /corpus is changing/);
   assert.throws(() => loadSnapshot(root, null, { onBuilt: () => appendFileSync(file, "move\n") }), /corpus is changing; retry/);
+});
+
+test("uncommitted corpus files mark the snapshot dirty", t => {
+  const root = fixture(t);
+  const clean = loadSnapshot(root, null);
+  assert.equal(clean.dirty, false);
+  writeFileSync(join(root, "cases", "sample", "second.md"), readFileSync(join(root, "cases", "sample", "first.md"), "utf8").replace(/first/g, "second"));
+  const dirty = loadSnapshot(root, clean);
+  assert.equal(dirty.dirty, true);
+  assert.equal(dirty.caseCount, 2);
+  git(root, "add", "."); git(root, "commit", "-qm", "second");
+  const committed = loadSnapshot(root, dirty);
+  assert.equal(committed.dirty, false);
+  assert.equal(committed.ix, dirty.ix);
+});
+
+test("an unreadable corpus file falls back to the previous index", { skip: process.platform === "win32" && "symlinks need privilege on Windows" }, t => {
+  const root = fixture(t);
+  const prev = loadSnapshot(root, null);
+  symlinkSync("missing-target.md", join(root, "cases", "sample", "ghost.md"));
+  const snap = loadSnapshot(root, prev);
+  assert.equal(snap.ix, prev.ix);
+  assert.equal(snap.sig, null);
+  assert.match(snap.warning, /^corpus unreadable: .*serving previous index$/);
+  assert.throws(() => loadSnapshot(root, null), /corpus unreadable/);
 });

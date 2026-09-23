@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, writeFileSync, existsSync, rmSync } from "node:fs";
+import { mkdtempSync, writeFileSync, existsSync, rmSync, readdirSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
@@ -107,8 +107,15 @@ test("kick obeys throttle and disabled mode", async (t) => {
   const updater = f.updater({ intervalMs: 3600000, now: () => 1000, exec: real });
   assert.equal(await updater.run(), "up-to-date");
   const count = calls;
+  const stampDir = join(f.dir, "state");
+  const stampFile = join(stampDir, readdirSync(stampDir).find((name) => name.startsWith("update-")));
+  const stampBefore = readFileSync(stampFile, "utf8");
   updater.kick(); updater.kick();
+  await new Promise((resolve) => setTimeout(resolve, 50));
   assert.equal(calls, count);
+  assert.equal(readFileSync(stampFile, "utf8"), stampBefore);
+  assert.equal(updater.status(), "up-to-date");
+  assert.equal(updater.busy(), false);
   const disabled = f.updater({ enabled: false, stateDir: join(f.dir, "disabled") });
   disabled.kick();
   assert.equal(existsSync(join(f.dir, "disabled")), false);
