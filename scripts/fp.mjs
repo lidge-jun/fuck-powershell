@@ -5,31 +5,12 @@
 //   bun scripts/fp.mjs preflight --runtime node --operation spawn [--target npm] [--shell 5.1|7] [--json]
 //   bun scripts/fp.mjs case <id>
 //   bun scripts/fp.mjs errors <signature>
-import { readFileSync, existsSync } from "node:fs";
-import { execSync } from "node:child_process";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { buildGraph, createIndex, search, preflight, errors, getCase } from "./lib/fp-core.mjs";
 
-const ROOT = join(import.meta.dir, "..");
-const GRAPH = join(ROOT, "ontology", "graph.json");
-if (!existsSync(GRAPH)) execSync("bun " + join(import.meta.dir, "build-graph.mjs"), { stdio: "ignore" });
-const g = JSON.parse(readFileSync(GRAPH, "utf8"));
-const byId = new Map(g.nodes.map(n => [n.id, n]));
-const caseEdges = new Map();
-for (const e of g.edges) (caseEdges.get(e.from) ?? caseEdges.set(e.from, []).get(e.from)).push(e);
-
-const OPERATION_MAP = {
-  spawn: ["mechanism-pathext-resolution", "mechanism-cmd-reparse", "mechanism-cmd-bat-spawn-hardening"],
-  "env-path": ["mechanism-registry-env-snapshot", "mechanism-path-delimiter", "mechanism-env-casing"],
-  encoding: ["mechanism-bom-sniffing", "mechanism-default-encoding"],
-  redirect: ["mechanism-stream-wrapping", "mechanism-posix-dev-null", "mechanism-host-vs-pipeline"],
-  "exit-code": ["mechanism-exit-code-propagation", "mechanism-output-truthiness"],
-  quoting: ["mechanism-native-argv-rebuild", "mechanism-string-interpolation", "mechanism-statement-terminator"],
-  install: ["mechanism-execution-policy-gate", "mechanism-registry-env-snapshot", "mechanism-iex-session"],
-  ci: [],
-};
-const RUNTIME_MAP = { node: "runtime-node", bun: "runtime-bun", powershell: "shell-powershell-51", cmd: "shell-cmd" };
-const WEIGHT = { invokes: 3, caused_by: 2, manifests_as: 2, affects: 1 };
-
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const ix = createIndex(buildGraph(ROOT));
 const [cmd, ...rest] = process.argv.slice(2);
 
 function flags(args) {
@@ -40,73 +21,24 @@ function flags(args) {
   }
   return o;
 }
-function caseInfo(id) {
-  const n = byId.get(id);
-  return { id: id.slice(5), title: n.label, file: n.file, category: n.category, failure: n.failure };
-}
 
 if (cmd === "search") {
-  const q = rest.join(" ").toLowerCase().split(/\s+/).filter(Boolean);
-  const scored = g.nodes.filter(n => n.type === "Case").map(n => {
-    const hay = (n.id + " " + n.label + " " + n.category + " " +
-      (caseEdges.get(n.id) ?? []).map(e => e.to).join(" ")).toLowerCase();
-    const score = q.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0);
-    return { n, score };
-  }).filter(x => x.score > 0).sort((a, b) => b.score - a.score).slice(0, 8);
-  for (const { n, score } of scored) console.log(score + "  " + n.id.slice(5) + "  (" + n.file + ")");
-  if (!scored.length) console.log("no matches");
+  const hits = search(ix, rest.join(" "));
+  for (const h of hits) console.log(h.score + "  " + h.id + "  (" + h.file + ")");
+  if (!hits.length) console.log("no matches");
 } else if (cmd === "preflight") {
   const f = flags(rest);
-  const queryNodes = new Set();
-  if (f.operation && OPERATION_MAP[f.operation]) OPERATION_MAP[f.operation].forEach(x => queryNodes.add(x));
-  if (f.operation === "ci") queryNodes.add("env-actions-runner");
-  if (f.runtime && RUNTIME_MAP[f.runtime]) queryNodes.add(RUNTIME_MAP[f.runtime]);
-  if (f.runtime === "powershell" && String(f.shell) === "7") { queryNodes.delete("shell-powershell-51"); queryNodes.add("shell-pwsh-7"); }
-  if (f.target && byId.has("command-" + f.target)) queryNodes.add("command-" + f.target);
-  // A target that is not a Command node may still be a Runtime or Shell the graph knows,
-  // e.g. --target python. Let its affects edges count normally instead of leaving the
-  // whole target signal to the text fallback below.
-  const targetKind = f.target && ["runtime-" + f.target, "shell-" + f.target].find(x => byId.has(x));
-  if (targetKind) queryNodes.add(targetKind);
-  const results = [];
-  for (const n of g.nodes.filter(n => n.type === "Case")) {
-    const edges = caseEdges.get(n.id) ?? [];
-    let score = 0; const reason = [];
-    for (const e of edges) if (queryNodes.has(e.to)) { score += WEIGHT[e.rel] ?? 1; reason.push(e.rel + ":" + e.to); }
-    if (f.target && !byId.has("command-" + f.target)) {
-      // Separate "this case IS about the target" from "this case mentions it". The id is
-      // the corpus's own statement of subject, so an id hit is worth an invokes hit (3);
-      // a title-only mention is worth 1. Before this split, --target bash tied
-      // bash-on-path-may-be-wsl with actions-default-shell, which merely says "bash-ism".
-      //
-      // Tokens are compared whole, with a trailing-digit tolerance: --target python must
-      // match the python3 token in windowsapps-python3-stub-needs-probe, while an
-      // unanchored includes() would match pip against piped-iex-drops-params and sh
-      // against eighteen ids. Capped at 3 on purpose — scoring higher than invokes would
-      // push text matches past the score>=5 risk threshold and relabel the banner.
-      const t = String(f.target).toLowerCase();
-      const idHit = n.id.slice(5).toLowerCase().split("-").some(tok => tok.replace(/\d+$/, "") === t);
-      if (idHit) { score += 3; reason.push("id:" + f.target); }
-      else if (String(n.label ?? "").toLowerCase().includes(t)) { score += 1; reason.push("text:" + f.target); }
-    }
-    if (score > 0) results.push({ ...caseInfo(n.id), score, reason });
-  }
-  results.sort((a, b) => b.score - a.score);
-  const top = results.slice(0, 6);
-  const constraints = [...new Set(top.slice(0, 3).flatMap(r =>
-    (caseEdges.get("case:" + r.id) ?? []).filter(e => e.rel === "mitigated_by").map(e => byId.get(e.to)?.label ?? e.to)))];
-  const out = { risk: top[0]?.score >= 5 ? "high" : top.length ? "medium" : "low", cases: top, constraints };
+  const out = preflight(ix, f);
   console.log(f.json ? JSON.stringify(out, null, 2) : renderPreflight(out));
 } else if (cmd === "case") {
   const id = rest[0];
-  const n = byId.get("case:" + id);
-  if (!n) { console.error("unknown case " + id); process.exit(1); }
-  console.log(readFileSync(join(ROOT, n.file), "utf8"));
+  const found = getCase(ix, ROOT, id);
+  if (!found) { console.error("unknown case " + id); process.exit(1); }
+  console.log(found.markdown);
 } else if (cmd === "errors") {
-  const sig = rest[0]?.startsWith("error-") ? rest[0] : "error-" + rest[0];
-  const hits = g.edges.filter(e => e.rel === "manifests_as" && e.to === sig).map(e => caseInfo(e.from));
-  if (!hits.length) console.log("no cases manifest " + sig);
-  for (const h of hits) console.log(h.id + "  (" + h.file + ")");
+  const result = errors(ix, rest[0]);
+  if (!result.cases.length) console.log("no cases manifest " + result.signature);
+  for (const h of result.cases) console.log(h.id + "  (" + h.file + ")");
 } else {
   console.log("usage: fp <search|preflight|case|errors> ...");
   process.exit(cmd ? 1 : 0);

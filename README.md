@@ -34,6 +34,7 @@ constraints:
 | Cases | 112 markdown files, canonical source of truth | [cases/](cases/) |
 | Ontology | typed graph generated from case frontmatter, V1-V11 validated | [ontology/](ontology/) + `scripts/build-graph.mjs` |
 | fp engine | graph-walking lookup CLI: preflight / search / errors / case | `scripts/fp.mjs` |
+| MCP server | the same four lookups as read-only MCP tools, zero dependencies, updates itself from git | `scripts/mcp.mjs` |
 | Agent skill | query-first retrieval policy + fallback rules | [skills/powershell-landmines/](skills/powershell-landmines/) |
 | Docs site | Apple-clean live render with At-a-glance cards + symptom reverse index | [live site](https://lidge-jun.github.io/fuck-powershell/) |
 
@@ -65,6 +66,46 @@ Operations: `spawn · env-path · encoding · redirect · exit-code · quoting �
 install · ci`. `preflight` walks the graph and returns ranked cases +
 constraints (`--json` for machine use — wire it into your agent's pre-patch
 hook). `errors` is the symptom-first reverse index: saw EINVAL? Get the cases.
+
+## Use it as an MCP server
+
+`scripts/mcp.mjs` serves the same lookups over MCP's stdio transport. It has no
+dependencies and runs on Node 18+ or Bun. It speaks the current stateless MCP revision
+(2026-07-28, including `server/discover`) and still answers hosts that open with
+`initialize` (2025-11-25 back to 2024-11-05).
+
+Give the server its own clone, so the checkout you work in is never pulled under you:
+
+```
+git clone https://github.com/lidge-jun/fuck-powershell ~/.fuck-powershell
+codex mcp add fuck-powershell --env FP_AUTO_UPDATE=1 -- node /absolute/path/to/.fuck-powershell/scripts/mcp.mjs
+claude mcp add fuck-powershell -e FP_AUTO_UPDATE=1 -- node /absolute/path/to/.fuck-powershell/scripts/mcp.mjs
+```
+
+| tool | use it for |
+|---|---|
+| `fp_preflight` | before writing code: runtime / operation / target / shell -> ranked cases + constraints |
+| `fp_search` | free-text tokens from a diff or an error message |
+| `fp_errors` | an error signature (`einval`, `enoent`, `eperm`...) -> the cases that manifest it |
+| `fp_case` | one case: Symptom, Cause and Workaround by default; `full: true` adds Repro |
+
+Every answer starts with `corpus <sha> · <n> cases`, so you can tell which version of
+the corpus answered.
+
+How updates reach the server:
+
+- The server reads the cases from its clone on every call and rebuilds its index when a
+  case file changes. A `git pull` in that clone is enough: no reinstall, no restart.
+- With `FP_AUTO_UPDATE=1` the server does that pull itself: `git fetch` plus a
+  fast-forward at most every 6 hours, in the background, and only when the clone is
+  clean, on a branch with an upstream, and not diverged. Anything else is skipped and
+  shown in the answer header (`update: skipped:dirty`), never forced.
+- A change to the server script itself takes effect the next time the host starts the
+  server, which is normally the next session.
+
+Environment: `FP_HOME` (corpus root, defaults to the script's own checkout),
+`FP_AUTO_UPDATE=1`, `FP_UPDATE_INTERVAL_MS` (default 6 h), `FP_STATE_DIR` (where the
+last update attempt is recorded).
 
 ## Install the agent skill
 

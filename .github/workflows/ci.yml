@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, dev]
+
+permissions:
+  contents: read
+
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Graph build, validation and case lint
+        run: bun scripts/build-graph.mjs && bun scripts/validate-graph.mjs && bun scripts/lint-cases.mjs
+
+  mcp-node:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [18, 22]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Tests under Node
+        run: node --test tests/core.test.mjs tests/mcp.test.mjs tests/auto-update.test.mjs tests/cli.test.mjs
+
+  mcp-bun:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: oven-sh/setup-bun@v2
+      - name: Tests with the server and CLI under Bun
+        run: node --test tests/core.test.mjs tests/mcp.test.mjs tests/auto-update.test.mjs tests/cli.test.mjs
+        env:
+          FP_MCP_RUNTIME: bun
