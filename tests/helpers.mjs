@@ -56,7 +56,8 @@ export function startServer({ env = {}, root = ROOT } = {}) {
   function close() {
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => { child.kill(); reject(new Error("server did not exit on EOF")); }, 5000);
-      child.once("exit", (code) => {
+      // "close" fires after stdout has been fully read, so no trailing line is missed.
+      child.once("close", (code) => {
         clearTimeout(timer);
         // stdio rule: every stdout line of the whole session must be a JSON-RPC message.
         const bad = lines.find((line) => { try { return JSON.parse(line).jsonrpc !== "2.0"; } catch { return true; } });
