@@ -192,6 +192,61 @@ than cleanup.
 ---
 
 
+# Bun's numeric Windows file IDs can round together and pass a replacement check
+
+## Symptom
+
+A TOCTOU guard checks that a file still has the same identity between a
+pre-open check and opening SQLite. On Bun 1.4.0 for Windows, the replacement
+test failed intermittently: a different regular file at the path passed the
+identity comparison.
+
+The affected test was
+`codex-log-guard-maintenance-coderabbit`:
+`rejects a regular-file replacement between the pre-open check and SQLite open`
+(windows-latest job 107059048170).
+
+## Repro
+
+Read a file's `dev` and `ino` with ordinary numeric stats, replace the file at
+the same path, then compare the second numeric `dev` and `ino` to the first.
+On Bun 1.4.0/Windows, distinct 64-bit file IDs can round to the same JavaScript
+number, so the comparison can report an identity match. The CI replacement test
+observed this intermittently.
+
+## Cause
+
+Ordinary Bun 1.4.0 stats expose Windows `dev` and `ino` as JavaScript numbers.
+JavaScript numbers cannot exactly represent every 64-bit integer, so distinct
+Windows file IDs can round to the same value and make an identity comparison
+pass for a replacement.
+
+NTFS tunneling can also preserve a name's creation time after that name is
+deleted and recreated. `birthtime` therefore does not provide a reliable
+replacement identity either.
+
+PR #5656 switches the guard to `lstatSync(path, { bigint: true })` and fails
+closed if `dev` or `ino` is missing, null, or zero.
+
+## Workaround
+
+Read identity fields as `bigint` and reject unknown identity values before
+opening the file:
+
+```ts
+const info = lstatSync(path, { bigint: true });
+if (info.dev == null || info.ino == null || info.dev === 0n || info.ino === 0n) {
+  throw new Error("unknown file identity");
+}
+```
+
+Do not substitute `birthtime` as identity. NTFS tunneling can retain that time
+when a name is recreated, so the replacement may appear to be the original.
+
+
+---
+
+
 # the caller picks the interpreter and never reads your shebang, so a bash script handed to node dies as a SyntaxError in a language it was never written in
 
 ## Symptom
@@ -1120,10 +1175,10 @@ instead of the test's temporary home.
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-process.env.HOME = "C:\\sandbox\\home";
-process.env.USERPROFILE = "C:\\Users\\account";
+process.env.HOME = "C:\\sandbox\\requested-home";
+process.env.USERPROFILE = "C:\\sandbox\\home";
 console.log(homedir());
-// Windows: C:\Users\account, not C:\sandbox\home
+// Windows: C:\sandbox\home, not C:\sandbox\requested-home
 
 const statePath = join(homedir(), ".opencodex", "service.json");
 statePath.startsWith(process.env.HOME); // false
@@ -1730,6 +1785,9 @@ simulated Linux/WSL but built fake `/mnt/c/Users/...` paths with host `path.join
 so its backslashes never matched the POSIX paths produced by WSL discovery.
 Discovery fell back to the Linux home and three assertions flipped. The fix uses
 `path.posix` for paths belonging to the simulated platform (PR #5634).
+
+The WSL occurrence is caused by `mechanism-host-path-separator`: unlike the
+PATH-list issue above, the mismatched value here is each path's slash direction.
 
 
 ---
@@ -2642,13 +2700,13 @@ process. Here, no unlink semantics free your file.
 
 ## 2026-09-23 first-party CI occurrence
 
-OpenCodex's `tests/server/proxy-env.test.ts` also routed through a policy path
-that opened a process-lifetime SQLite index (`routing-history.sqlite`) under the
-temporary home. The fixture released its other lease but left the index open;
-Windows refused to remove the home with `EBUSY`. The same failure appeared on
-two CI runs, so this was a leaked handle rather than a transient antivirus lock.
-The fix closes the index and clears its cache in `afterEach` before cleanup
-(OpenCodex PR #5634).
+OpenCodex's `tests/claude-integration/claude-native-affinity.test.ts` routed
+through a policy path that opened a process-lifetime SQLite index
+(`routing-history.sqlite`) under the temporary home. The fixture released its
+other lease but left the index open; Windows refused to remove the home with
+`EBUSY`. The same failure appeared on two CI runs, so this was a leaked handle
+rather than a transient antivirus lock. The fix closes the index and clears its
+cache in `afterEach` before cleanup (OpenCodex PR #5634).
 
 
 ---

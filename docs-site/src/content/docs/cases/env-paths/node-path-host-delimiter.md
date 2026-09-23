@@ -7,9 +7,9 @@ sidebar:
 
 <p class="case-eyebrow">env paths · case</p>
 
-<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#path-delimiter">path-delimiter</a></div>
+<div class="case-badges"><span class="badge badge-version">both</span><span class="badge badge-failure-silent">silent</span><span class="badge badge-context">ci</span><span class="badge badge-context">script</span><span class="badge badge-context">agent</span><span class="badge badge-meta">first-party</span><span class="badge badge-meta">repro: verified</span><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#path-delimiter">path-delimiter</a><a class="badge badge-mech" href="/fuck-powershell/ontology/mechanisms/#host-path-separator">host-path-separator</a></div>
 
-<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, windows, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">path delimiter</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">path win32 delimiter</span></span></div></div>
+<div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, windows, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">path delimiter, host path separator</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">path win32 delimiter</span></span></div></div>
 
 ## Symptom
 
@@ -73,6 +73,9 @@ simulated Linux/WSL but built fake `/mnt/c/Users/...` paths with host `path.join
 so its backslashes never matched the POSIX paths produced by WSL discovery.
 Discovery fell back to the Linux home and three assertions flipped. The fix uses
 `path.posix` for paths belonging to the simulated platform (PR #5634).
+
+The WSL occurrence is caused by `mechanism-host-path-separator`: unlike the
+PATH-list issue above, the mismatched value here is each path's slash direction.
 
 ## Refs
 

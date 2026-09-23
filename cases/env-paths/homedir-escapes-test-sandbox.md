@@ -33,10 +33,10 @@ instead of the test's temporary home.
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-process.env.HOME = "C:\\sandbox\\home";
-process.env.USERPROFILE = "C:\\Users\\account";
+process.env.HOME = "C:\\sandbox\\requested-home";
+process.env.USERPROFILE = "C:\\sandbox\\home";
 console.log(homedir());
-// Windows: C:\Users\account, not C:\sandbox\home
+// Windows: C:\sandbox\home, not C:\sandbox\requested-home
 
 const statePath = join(homedir(), ".opencodex", "service.json");
 statePath.startsWith(process.env.HOME); // false

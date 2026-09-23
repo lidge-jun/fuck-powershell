@@ -219,6 +219,12 @@ On Windows, os.homedir() reads USERPROFILE rather than HOME, so a test or proces
 
 Cases: [homedir-escapes-test-sandbox](/fuck-powershell/cases/env-paths/homedir-escapes-test-sandbox/)
 
+## host path separator
+
+node:path join and separator behavior follows the host OS unless posix or win32 is selected explicitly, so host-built fixture paths can disagree with paths for a simulated platform.
+
+Cases: [node-path-host-delimiter](/fuck-powershell/cases/env-paths/node-path-host-delimiter/)
+
 ## host vs pipeline
 
 Write-Host and return semantics: host output bypasses the success pipeline, and functions emit every uncaptured value.
@@ -417,6 +423,12 @@ Windows retains the transmission control block for a closed socket so the endpoi
 
 Cases: [tcp-tcb-survives-listener](/fuck-powershell/cases/env-paths/tcp-tcb-survives-listener/)
 
+## test resource outlives file
+
+A test finishes without clearing its deadline or awaiting request/socket teardown, leaving timers or handles active in the shared test process after the file ends.
+
+Cases: [aside-sync-resources-outlive-isolate-file](/fuck-powershell/cases/ci-agents/aside-sync-resources-outlive-isolate-file/)
+
 ## cmd.exe cannot hold a UNC current directory
 
 The current directory is drive-relative in cmd.exe's model, so a UNC path cannot be one; started in a UNC directory it warns and silently relocates to the Windows directory, and every batch shim that hops through it inherits the wrong working directory.
@@ -440,6 +452,12 @@ Cases: [python-textio-newline-translation](/fuck-powershell/cases/encoding/pytho
 A spawned child whose promise or handle is dropped keeps running after its parent decides it is finished; Windows has no process group to tie the two, so the child's open handles outlive every shutdown step the parent awaited.
 
 Cases: [killed-run-contaminates-next-run](/fuck-powershell/cases/ci-agents/killed-run-contaminates-next-run/) · [test-budget-sized-from-local-timing](/fuck-powershell/cases/ci-agents/test-budget-sized-from-local-timing/) · [async-child-holds-dir-after-stop](/fuck-powershell/cases/env-paths/async-child-holds-dir-after-stop/)
+
+## win32 file id number rounding
+
+Bun 1.4.0 Windows stats expose 64-bit dev and ino values as JavaScript numbers, where distinct file IDs can round to the same represented value.
+
+Cases: [bigint-file-identity-on-windows](/fuck-powershell/cases/env-paths/bigint-file-identity-on-windows/)
 
 ## win32 path normalization
 

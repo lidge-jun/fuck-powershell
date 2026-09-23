@@ -105,13 +105,13 @@ process. Here, no unlink semantics free your file.
 
 ## 2026-09-23 first-party CI occurrence
 
-OpenCodex's `tests/server/proxy-env.test.ts` also routed through a policy path
-that opened a process-lifetime SQLite index (`routing-history.sqlite`) under the
-temporary home. The fixture released its other lease but left the index open;
-Windows refused to remove the home with `EBUSY`. The same failure appeared on
-two CI runs, so this was a leaked handle rather than a transient antivirus lock.
-The fix closes the index and clears its cache in `afterEach` before cleanup
-(OpenCodex PR #5634).
+OpenCodex's `tests/claude-integration/claude-native-affinity.test.ts` routed
+through a policy path that opened a process-lifetime SQLite index
+(`routing-history.sqlite`) under the temporary home. The fixture released its
+other lease but left the index open; Windows refused to remove the home with
+`EBUSY`. The same failure appeared on two CI runs, so this was a leaked handle
+rather than a transient antivirus lock. The fix closes the index and clears its
+cache in `afterEach` before cleanup (OpenCodex PR #5634).
 
 ## Refs
 

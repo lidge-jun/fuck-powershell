@@ -13,7 +13,7 @@ refs:
   - https://github.com/lidge-jun/opencodex/pull/5634
 ontology:
   affects: [runtime-node, env-windows, env-actions-runner]
-  caused_by: [mechanism-path-delimiter]
+  caused_by: [mechanism-path-delimiter, mechanism-host-path-separator]
   mitigated_by: [workaround-path-win32-delimiter]
 ---
 
@@ -81,3 +81,6 @@ simulated Linux/WSL but built fake `/mnt/c/Users/...` paths with host `path.join
 so its backslashes never matched the POSIX paths produced by WSL discovery.
 Discovery fell back to the Linux home and three assertions flipped. The fix uses
 `path.posix` for paths belonging to the simulated platform (PR #5634).
+
+The WSL occurrence is caused by `mechanism-host-path-separator`: unlike the
+PATH-list issue above, the mismatched value here is each path's slash direction.

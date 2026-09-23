@@ -80,6 +80,15 @@
   "mechanism-path-delimiter": {
     "d": "PATH list separator is host-dependent (';' Windows, ':' POSIX); colon-joined lists corrupt drive-letter entries."
   },
+  "mechanism-host-path-separator": {
+    "d": "node:path join and separator behavior follows the host OS unless posix or win32 is selected explicitly, so host-built fixture paths can disagree with paths for a simulated platform."
+  },
+  "mechanism-test-resource-outlives-file": {
+    "d": "A test finishes without clearing its deadline or awaiting request/socket teardown, leaving timers or handles active in the shared test process after the file ends."
+  },
+  "mechanism-win32-file-id-number-rounding": {
+    "d": "Bun 1.4.0 Windows stats expose 64-bit dev and ino values as JavaScript numbers, where distinct file IDs can round to the same represented value."
+  },
   "mechanism-env-casing": {
     "d": "Windows env names are case-insensitive but JS objects are not; Path and PATH can coexist and fight."
   },
@@ -499,6 +508,20 @@
   },
   "workaround-pin-test-userprofile": {
     "d": "On Windows, set USERPROFILE to the individual test's temporary home while exercising code that calls os.homedir(), then restore the previous value in finally. Keep the override test-local so other suites retain their own home configuration."
+  },
+  "workaround-own-request-deadline-and-teardown": {
+    "d": "Clear the sync deadline on every exit, bound request and socket teardown with one absolute timer, settle exactly once despite missing close or a throwing destroy(), and await server.stop(true) in teardown."
+  },
+  "workaround-mask-isolate-resource-leak": {
+    "d": "Raise the batch timeout, run the file alone, or reorder files to avoid a shared-process test resource leak.",
+    "u": "These changes only hide when leaked timers and sockets are observed; they do not make the request or test teardown own those resources."
+  },
+  "workaround-bigint-file-identity": {
+    "d": "Read Windows file identity using lstatSync(path, { bigint: true }) and fail closed when dev or ino is absent, null, or zero."
+  },
+  "workaround-use-birthtime-file-identity": {
+    "d": "Use birthtime as a substitute identity when numeric Windows dev or ino values appear unreliable.",
+    "u": "NTFS tunneling can preserve creation time when a name is deleted and recreated, so birthtime may match a replacement and admit the same false identity result."
   },
   "mechanism-flush-needs-write-access": {
     "d": "On Windows fsync is FlushFileBuffers, which requires a handle opened with GENERIC_WRITE; a read-only handle is refused with ERROR_ACCESS_DENIED (EPERM), where POSIX fsync accepts any descriptor for the file."

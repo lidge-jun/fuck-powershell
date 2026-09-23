@@ -15,7 +15,7 @@ Saw an error? Find the landmine.
 
 expect(received).toBe(expected) with Expected/Received differing — the test ran to its assertion and the observed value was wrong, as opposed to a crash, timeout, or setup error.
 
-[homedir-escapes-test-sandbox](/fuck-powershell/cases/env-paths/homedir-escapes-test-sandbox/) · [ntfs-atime-disabled-by-default](/fuck-powershell/cases/env-paths/ntfs-atime-disabled-by-default/)
+[bigint-file-identity-on-windows](/fuck-powershell/cases/env-paths/bigint-file-identity-on-windows/) · [homedir-escapes-test-sandbox](/fuck-powershell/cases/env-paths/homedir-escapes-test-sandbox/) · [ntfs-atime-disabled-by-default](/fuck-powershell/cases/env-paths/ntfs-atime-disabled-by-default/)
 
 ## bad-interpreter
 
@@ -171,7 +171,7 @@ The user's interactive session terminates because script text ran in-session (ie
 
 "this test timed out after N ms" from the test runner: the body was aborted, not an assertion. Children it spawned are still running until the runner reaps them at the end.
 
-[test-budget-sized-from-local-timing](/fuck-powershell/cases/ci-agents/test-budget-sized-from-local-timing/)
+[aside-sync-resources-outlive-isolate-file](/fuck-powershell/cases/ci-agents/aside-sync-resources-outlive-isolate-file/) · [test-budget-sized-from-local-timing](/fuck-powershell/cases/ci-agents/test-budget-sized-from-local-timing/)
 
 ## unexpected-at-this-time
 
