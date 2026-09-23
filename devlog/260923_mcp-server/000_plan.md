@@ -75,3 +75,14 @@ OUT: `cases/`, `ontology/concepts/`, `docs-site/`, `deploy.yml`,
 
 `README.md` "How it fits together" table gains an MCP row, and the skill's lookup
 section names the MCP tools first. The repo has no separate architecture index.
+
+## Cycle log
+
+**wp1 D (roadmap locked).** The roadmap is 000–020 as committed in e576dd0. The spec
+check changed the design more than anything else: MCP 2026-07-28 removed `initialize`
+and `ping`, so the server is dual-era rather than a copy of the codemode server's
+2024-11-05 handshake. The audit's biggest catch was that the working tree carries an
+untracked WIP case, so a naive parity run would compare different corpora; parity now
+runs in two isolated archives. What did not get settled: which era Codex actually sends
+is still an assumption until wp3's smoke observes it. Next: wp2 P re-verifies 010–012
+against the tree, then a sol implementer builds them.
