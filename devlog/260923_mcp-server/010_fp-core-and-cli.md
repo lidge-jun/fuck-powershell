@@ -46,7 +46,10 @@ export function errors(ix, sig)
 export function getCase(ix, root, id)
 
 // Splits a case body on "## <Name>" headings; tolerant of \r\n. Returns
-// { frontmatter, title, sections: { Symptom, Repro, Cause, Workaround, ... } }
+// { frontmatter, title, versions, refs, sections: { Symptom, Repro, Cause, Workaround, ... } }
+// title = first "# " heading (fallback frontmatter.title); versions = frontmatter.versions
+// (string or null); refs = string[] (regex rule below; [] when absent); section text is
+// the body under "## <Name>" up to the next "## ", trimmed, with \r\n normalized to \n.
 // refs: parseFrontmatter drops top-level dash lists (it returns refs: {} --
 // frontmatter.mjs:24-27 opens a nested object and never sets listKey), so refs are read
 // with a regex over the frontmatter block: the "- <url>" lines after "refs:" until the
