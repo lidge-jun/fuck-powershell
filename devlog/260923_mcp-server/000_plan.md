@@ -86,3 +86,17 @@ untracked WIP case, so a naive parity run would compare different corpora; parit
 runs in two isolated archives. What did not get settled: which era Codex actually sends
 is still an assumption until wp3's smoke observes it. Next: wp2 P re-verifies 010–012
 against the tree, then a sol implementer builds them.
+
+**wp2 D (implemented, local gates green).** Two sol lanes built the core/CLI and the
+server/updater in parallel against the 010 interface; main wrote CI and docs. Main
+rejected one lane decision: L1 had matched the old tie order by spawning `bun` from
+Node to borrow its directory order, a hidden runtime dependency inside a
+zero-dependency server. The graph now sorts names, which changes which equal-score case
+appears at a cutoff in 7 of 14 parity queries versus the old Bun-on-macOS output (010
+"Tie order amendment"); running the old scripts with sorted enumeration reproduces the
+new output byte for byte. The independent C reviewer (sol) found five real defects
+(bad-id handling, dirty corpus labeled with a clean SHA, an unguarded signature read,
+a parity check loose enough to pass real changes, weak assertions); all were fixed and
+re-verified. Local proof at f7f41b9: node 26/26, bun 26/26, parity 126/126, corpus
+gate 112 cases 0 warnings. Not yet proven: Node 18 and Windows, which only hosted CI
+exercises. Next: wp3 delivery per 020.
