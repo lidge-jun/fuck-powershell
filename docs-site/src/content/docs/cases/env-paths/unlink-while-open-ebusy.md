@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EBUSY, EPERM</span></div><div class="row"><span class="k">Mechanism</span><span class="v">mandatory file locking</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">kill process tree</span></span></div></div>
 
-# npm update fails with EBUSY because your server exited hours ago but its child process still holds the file
-
 ## Symptom
 
 A routine operation on a directory fails, and the error blames the filesystem for
@@ -105,8 +103,20 @@ This is the file-lifetime half of the Windows process model.
 `startup-artifact-is-not-a-process` is the liveness half: no supervisor owns your
 process. Here, no unlink semantics free your file.
 
+## 2026-09-23 first-party CI occurrence
+
+OpenCodex's `tests/server/proxy-env.test.ts` also routed through a policy path
+that opened a process-lifetime SQLite index (`routing-history.sqlite`) under the
+temporary home. The fixture released its other lease but left the index open;
+Windows refused to remove the home with `EBUSY`. The same failure appeared on
+two CI runs, so this was a leaked handle rather than a transient antivirus lock.
+The fix closes the index and clears its cache in `afterEach` before cleanup
+(OpenCodex PR #5634).
+
 ## Refs
 
 - <https://github.com/lidge-jun/fuck-powershell/issues/26>
 - <https://github.com/lidge-jun/ima2-gen/commit/19c7335b2>
 - <https://github.com/lidge-jun/ima2-gen/commit/513eab41e>
+- <https://github.com/lidge-jun/opencodex/actions/runs/35816090505>
+- <https://github.com/lidge-jun/opencodex/pull/5634>

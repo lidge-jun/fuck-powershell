@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">collection unrolling</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">array force</span></span></div></div>
 
-# a one-line file makes Get-Content return a String, so [0] gives a character and .Length counts characters
-
 ## Symptom
 
 Code that reads a file and inspects it works perfectly, ships, and then produces

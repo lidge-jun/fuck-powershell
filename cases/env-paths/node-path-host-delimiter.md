@@ -10,6 +10,7 @@ repro: verified
 refs:
   - https://github.com/lidge-jun/fuck-powershell/issues/5
   - https://github.com/lidge-jun/cli-jaw/commit/80b3d4ab039b9fc9e6d7029734c7cdd573e335e8
+  - https://github.com/lidge-jun/opencodex/pull/5634
 ontology:
   affects: [runtime-node, env-windows, env-actions-runner]
   caused_by: [mechanism-path-delimiter]
@@ -73,3 +74,10 @@ Shipped in three byte-identical copies of a shared helper in
 lidge-jun/codexclaw and only surfaced when a win32-only resolver was exercised
 from a WSL/Linux test lane.
 Fix: https://github.com/lidge-jun/codexclaw/commit/5c03acb
+
+OpenCodex's `tests/service/service-wsl-home-ownership.test.ts` hit the same
+host-versus-data mismatch on 2026-09-23 from `windows-latest`: the fixture
+simulated Linux/WSL but built fake `/mnt/c/Users/...` paths with host `path.join`,
+so its backslashes never matched the POSIX paths produced by WSL discovery.
+Discovery fell back to the Linux home and three assertions flipped. The fix uses
+`path.posix` for paths belonging to the simulated platform (PR #5634).

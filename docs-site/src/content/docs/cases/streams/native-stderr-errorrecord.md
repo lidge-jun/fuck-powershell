@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">NATIVECOMMANDERROR</span></div><div class="row"><span class="k">Mechanism</span><span class="v">stream wrapping</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">continue eap</span></span></div></div>
 
-# PS 5.1 turns native stderr into NativeCommandError
-
 ## Symptom
 
 A native tool that merely writes progress to stderr (git, uv, npm, curl) appears to

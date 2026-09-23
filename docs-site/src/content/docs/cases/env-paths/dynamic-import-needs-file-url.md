@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, bun, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">INVALID URL SCHEME</span></div><div class="row"><span class="k">Mechanism</span><span class="v">drive letter as scheme</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">pathtofileurl</span></span></div></div>
 
-# dynamic import of an absolute path works on POSIX and throws ERR_UNSUPPORTED_ESM_URL_SCHEME on Windows, because C: reads as a protocol
-
 ## Symptom
 
 Code that loads a module computed at runtime — a plugin, a generated file, a test

@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, cmd, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">cmd reparse</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">stdin payload</span></span></div></div>
 
-# argv to a .cmd shim is re-parsed by cmd.exe — untrusted text becomes commands
-
 ## Symptom
 
 A tool passes user text (a prompt, a title, a model name) as an argument to a

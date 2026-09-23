@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, windows, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">PARAMETERBINDING</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default encoding</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">dotnet writealltext</span></span></div></div>
 
-# the recommended fix still breaks anchored grep - Out-File -Encoding utf8 writes a BOM, and utf8NoBOM does not exist on 5.1
-
 ## Symptom
 
 You already know about the UTF-16 default, so you do the recommended thing and

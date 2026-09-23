@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">cmd, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">cmd reparse</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">caret escape cmd</span></span></div></div>
 
-# cmd /c start truncates your URL at the first &
-
 ## Symptom
 
 Opening a URL with cmd /c start opens the browser at ...?a=1 — the rest of the

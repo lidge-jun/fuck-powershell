@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, windows, korean codepage, node</span></div><div class="row"><span class="k">Fails as</span><span class="v">MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default encoding</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">base64 utf16 payload</span></span></div></div>
 
-# capturing PowerShell output from another program mangles every non-ASCII character, because redirected output is encoded in the console codepage
-
 ## Symptom
 
 You shell out to `powershell.exe -Command` from Node, Python, or Go to ask

@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, windows, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">path delimiter</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">path win32 delimiter</span></span></div></div>
 
-# node:path delimiter follows the HOST, so win32 PATH logic resolves nothing when tested from Linux
-
 ## Symptom
 
 Windows PATH-resolution code is correct on Windows and silently resolves
@@ -69,7 +67,15 @@ lidge-jun/codexclaw and only surfaced when a win32-only resolver was exercised
 from a WSL/Linux test lane.
 Fix: https://github.com/lidge-jun/codexclaw/commit/5c03acb
 
+OpenCodex's `tests/service/service-wsl-home-ownership.test.ts` hit the same
+host-versus-data mismatch on 2026-09-23 from `windows-latest`: the fixture
+simulated Linux/WSL but built fake `/mnt/c/Users/...` paths with host `path.join`,
+so its backslashes never matched the POSIX paths produced by WSL discovery.
+Discovery fell back to the Linux home and three assertions flipped. The fix uses
+`path.posix` for paths belonging to the simulated platform (PR #5634).
+
 ## Refs
 
 - <https://github.com/lidge-jun/fuck-powershell/issues/5>
 - <https://github.com/lidge-jun/cli-jaw/commit/80b3d4ab039b9fc9e6d7029734c7cdd573e335e8>
+- <https://github.com/lidge-jun/opencodex/pull/5634>

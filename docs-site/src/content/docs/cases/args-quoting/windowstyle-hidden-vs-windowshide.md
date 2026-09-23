@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7, windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">console allocation</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">create no window</span></span></div></div>
 
-# -WindowStyle Hidden still flashes a console window
-
 ## Symptom
 
 A background service launches `powershell.exe -WindowStyle Hidden -Command ...`

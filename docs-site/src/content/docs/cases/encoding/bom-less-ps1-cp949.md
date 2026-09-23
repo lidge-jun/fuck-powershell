@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, windows, korean codepage</span></div><div class="row"><span class="k">Fails as</span><span class="v">MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">bom sniffing, default encoding</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">utf8 bom</span></span></div></div>
 
-# A BOM-less .ps1 is read as ANSI — non-ASCII corrupts before execution
-
 ## Symptom
 
 A script containing non-ASCII string literals (Korean paths, emoji, accented

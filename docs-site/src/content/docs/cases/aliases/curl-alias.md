@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">PARAMETERBINDING</span></div><div class="row"><span class="k">Mechanism</span><span class="v">alias shadowing</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">curl exe</span></span></div></div>
 
-# curl silently becomes Invoke-WebRequest
-
 ## Symptom
 
 A script or coding agent runs `curl -s -o out.json https://api.example.com` under

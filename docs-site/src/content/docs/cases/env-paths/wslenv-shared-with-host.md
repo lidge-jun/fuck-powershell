@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">env derived identity</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">platform first classification</span></span></div></div>
 
-# WSLENV is shared with the Windows side by design, so the env var everyone reaches for to detect WSL cannot detect it
-
 ## Symptom
 
 Code that branches on "am I in WSL" takes the WSL branch on a native Windows

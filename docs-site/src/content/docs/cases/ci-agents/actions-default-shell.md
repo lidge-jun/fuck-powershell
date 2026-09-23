@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">pwsh 7, powershell 51, actions runner, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">COMMAND NOT RECOGNIZED, PARSERERROR</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default shell selection</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">explicit shell</span></span></div></div>
 
-# GitHub Actions on Windows defaults to PowerShell — your bash-ism dies quietly
-
 ## Symptom
 
 A workflow step that works on ubuntu-latest fails on windows-latest with baffling

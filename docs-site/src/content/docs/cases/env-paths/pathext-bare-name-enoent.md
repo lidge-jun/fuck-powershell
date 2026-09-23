@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENOENT</span></div><div class="row"><span class="k">Mechanism</span><span class="v">pathext resolution</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">pathext extension shim</span></span></div></div>
 
-# An extensionless shim on PATH is invisible to Windows spawn — ENOENT with the file right there
-
 ## Symptom
 
 A test fixture (or dotfiles setup) drops an extensionless shebang script named

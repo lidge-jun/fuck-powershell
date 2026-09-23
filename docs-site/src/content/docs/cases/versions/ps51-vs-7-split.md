@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7, actions runner, windows, korean codepage</span></div><div class="row"><span class="k">Fails as</span><span class="v">PARAMETERBINDING, MOJIBAKE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default encoding, alias shadowing</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">set content utf8nobom</span></span></div></div>
 
-# powershell.exe and pwsh are different languages wearing one syntax
-
 ## Symptom
 
 A script works in local testing but breaks in CI (or vice versa): encoding

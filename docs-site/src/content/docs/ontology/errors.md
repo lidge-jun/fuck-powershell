@@ -15,7 +15,7 @@ Saw an error? Find the landmine.
 
 expect(received).toBe(expected) with Expected/Received differing — the test ran to its assertion and the observed value was wrong, as opposed to a crash, timeout, or setup error.
 
-[ntfs-atime-disabled-by-default](/fuck-powershell/cases/env-paths/ntfs-atime-disabled-by-default/)
+[homedir-escapes-test-sandbox](/fuck-powershell/cases/env-paths/homedir-escapes-test-sandbox/) · [ntfs-atime-disabled-by-default](/fuck-powershell/cases/env-paths/ntfs-atime-disabled-by-default/)
 
 ## bad-interpreter
 
@@ -27,7 +27,7 @@ A POSIX exec layer reports the shebang target as missing, usually 'bad interpret
 
 'X is not recognized as an internal or external command' — stale PATH snapshot or wrong-shell syntax.
 
-[msys-rewrites-slash-args](/fuck-powershell/cases/args-quoting/msys-rewrites-slash-args/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [cmd-posix-env-prefix](/fuck-powershell/cases/ci-agents/cmd-posix-env-prefix/) · [npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [cmd-lf-drops-first-byte](/fuck-powershell/cases/encoding/cmd-lf-drops-first-byte/) · [path-unmatched-quote-swallows](/fuck-powershell/cases/env-paths/path-unmatched-quote-swallows/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/)
+[npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [cmd-posix-env-prefix](/fuck-powershell/cases/ci-agents/cmd-posix-env-prefix/) · [msys-rewrites-slash-args](/fuck-powershell/cases/args-quoting/msys-rewrites-slash-args/) · [session-path-stale](/fuck-powershell/cases/env-paths/session-path-stale/) · [path-unmatched-quote-swallows](/fuck-powershell/cases/env-paths/path-unmatched-quote-swallows/) · [cmd-lf-drops-first-byte](/fuck-powershell/cases/encoding/cmd-lf-drops-first-byte/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/)
 
 ## eaddrinuse
 
@@ -39,13 +39,13 @@ A bind is refused because the endpoint is occupied, and on Windows the occupant 
 
 Node reports EBUSY when Windows refuses a rename or delete because another handle holds the file without FILE_SHARE_DELETE; the error names neither the holder nor the reason.
 
-[async-child-holds-dir-after-stop](/fuck-powershell/cases/env-paths/async-child-holds-dir-after-stop/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [cwd-locked-cannot-unlink](/fuck-powershell/cases/env-paths/cwd-locked-cannot-unlink/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+[atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/) · [async-child-holds-dir-after-stop](/fuck-powershell/cases/env-paths/async-child-holds-dir-after-stop/) · [cwd-locked-cannot-unlink](/fuck-powershell/cases/env-paths/cwd-locked-cannot-unlink/)
 
 ## eftype
 
 Wrong file type for execution — e.g. attempting to CreateProcess a .ps1 script.
 
-[get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/) · [dot-sh-association-exits-zero](/fuck-powershell/cases/env-paths/dot-sh-association-exits-zero/)
+[dot-sh-association-exits-zero](/fuck-powershell/cases/env-paths/dot-sh-association-exits-zero/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
 
 ## einval
 
@@ -63,19 +63,19 @@ Win32 reports a path over the API ceiling as ERROR_FILENAME_EXCED_RANGE or ERROR
 
 File or command not found — on Windows often a PATHEXT/extension resolution miss, not a missing file.
 
-[get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/) · [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/) · [test-budget-sized-from-local-timing](/fuck-powershell/cases/ci-agents/test-budget-sized-from-local-timing/) · [cmd-unc-cwd-not-supported](/fuck-powershell/cases/env-paths/cmd-unc-cwd-not-supported/) · [file-url-encodes-backslash](/fuck-powershell/cases/env-paths/file-url-encodes-backslash/) · [file-url-pathname-drive-slash](/fuck-powershell/cases/env-paths/file-url-pathname-drive-slash/) · [pathext-bare-name-enoent](/fuck-powershell/cases/env-paths/pathext-bare-name-enoent/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [dev-null-redirect](/fuck-powershell/cases/streams/dev-null-redirect/)
+[test-budget-sized-from-local-timing](/fuck-powershell/cases/ci-agents/test-budget-sized-from-local-timing/) · [dev-null-redirect](/fuck-powershell/cases/streams/dev-null-redirect/) · [file-url-pathname-drive-slash](/fuck-powershell/cases/env-paths/file-url-pathname-drive-slash/) · [test-path-trailing-whitespace](/fuck-powershell/cases/env-paths/test-path-trailing-whitespace/) · [file-url-encodes-backslash](/fuck-powershell/cases/env-paths/file-url-encodes-backslash/) · [pathext-bare-name-enoent](/fuck-powershell/cases/env-paths/pathext-bare-name-enoent/) · [cmd-unc-cwd-not-supported](/fuck-powershell/cases/env-paths/cmd-unc-cwd-not-supported/) · [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
 
 ## eperm
 
 Operation not permitted — including WindowsApps appExecLink spawn denials.
 
-[killed-run-contaminates-next-run](/fuck-powershell/cases/ci-agents/killed-run-contaminates-next-run/) · [async-child-holds-dir-after-stop](/fuck-powershell/cases/env-paths/async-child-holds-dir-after-stop/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [fsync-readonly-handle-eperm](/fuck-powershell/cases/env-paths/fsync-readonly-handle-eperm/) · [icacls-inheritance-r-empty-dacl](/fuck-powershell/cases/env-paths/icacls-inheritance-r-empty-dacl/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/) · [windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [wsl-unc-rejects-nt-acl](/fuck-powershell/cases/env-paths/wsl-unc-rejects-nt-acl/)
+[killed-run-contaminates-next-run](/fuck-powershell/cases/ci-agents/killed-run-contaminates-next-run/) · [wsl-unc-rejects-nt-acl](/fuck-powershell/cases/env-paths/wsl-unc-rejects-nt-acl/) · [windowsapps-alias-eperm](/fuck-powershell/cases/env-paths/windowsapps-alias-eperm/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [icacls-inheritance-r-empty-dacl](/fuck-powershell/cases/env-paths/icacls-inheritance-r-empty-dacl/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/) · [fsync-readonly-handle-eperm](/fuck-powershell/cases/env-paths/fsync-readonly-handle-eperm/) · [async-child-holds-dir-after-stop](/fuck-powershell/cases/env-paths/async-child-holds-dir-after-stop/)
 
 ## exit-code-leak
 
 A handled or meaningless exit code propagates into step/process failure.
 
-[file-url-pathname-drive-slash](/fuck-powershell/cases/env-paths/file-url-pathname-drive-slash/) · [explorer-exits-one](/fuck-powershell/cases/exit-codes/explorer-exits-one/) · [perl-alarm-raw-wait-status](/fuck-powershell/cases/exit-codes/perl-alarm-raw-wait-status/) · [pwsh-leaks-lastexitcode](/fuck-powershell/cases/exit-codes/pwsh-leaks-lastexitcode/)
+[pwsh-leaks-lastexitcode](/fuck-powershell/cases/exit-codes/pwsh-leaks-lastexitcode/) · [explorer-exits-one](/fuck-powershell/cases/exit-codes/explorer-exits-one/) · [perl-alarm-raw-wait-status](/fuck-powershell/cases/exit-codes/perl-alarm-raw-wait-status/) · [file-url-pathname-drive-slash](/fuck-powershell/cases/env-paths/file-url-pathname-drive-slash/)
 
 ## fastfail
 
@@ -111,7 +111,7 @@ A runtime reports 'Cannot find module' for a path the author never wrote, becaus
 
 Corrupted text output from encoding mismatches (UTF-16/BOM/ANSI vs UTF-8).
 
-[bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/) · [python-subprocess-locale-encoding](/fuck-powershell/cases/encoding/python-subprocess-locale-encoding/) · [redirected-ps-output-mojibake](/fuck-powershell/cases/encoding/redirected-ps-output-mojibake/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/)
+[ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [redirected-ps-output-mojibake](/fuck-powershell/cases/encoding/redirected-ps-output-mojibake/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [python-subprocess-locale-encoding](/fuck-powershell/cases/encoding/python-subprocess-locale-encoding/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
 
 ## nativecommanderror
 
@@ -129,13 +129,13 @@ PS 5.1 wrapper around native stderr lines when redirected under strict error pre
 
 Parameter binding failure — often an alias hijack or interpolated/mangled arguments.
 
-[curl-alias](/fuck-powershell/cases/aliases/curl-alias/) · [english-and-not-separator](/fuck-powershell/cases/args-quoting/english-and-not-separator/) · [piped-iex-drops-params](/fuck-powershell/cases/args-quoting/piped-iex-drops-params/) · [utf8-bom-still-breaks-grep](/fuck-powershell/cases/encoding/utf8-bom-still-breaks-grep/) · [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/)
+[english-and-not-separator](/fuck-powershell/cases/args-quoting/english-and-not-separator/) · [piped-iex-drops-params](/fuck-powershell/cases/args-quoting/piped-iex-drops-params/) · [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [utf8-bom-still-breaks-grep](/fuck-powershell/cases/encoding/utf8-bom-still-breaks-grep/) · [curl-alias](/fuck-powershell/cases/aliases/curl-alias/)
 
 ## parsererror
 
 PowerShell parser rejection — e.g. && on 5.1.
 
-[ps-quoted-path-is-expression](/fuck-powershell/cases/args-quoting/ps-quoted-path-is-expression/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [ps51-no-and-and](/fuck-powershell/cases/versions/ps51-no-and-and/)
+[actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [ps-quoted-path-is-expression](/fuck-powershell/cases/args-quoting/ps-quoted-path-is-expression/) · [ps51-no-and-and](/fuck-powershell/cases/versions/ps51-no-and-and/)
 
 ## propertynotfound
 
@@ -147,7 +147,7 @@ StrictMode throw on missing property access.
 
 Execution policy refused to run a script file.
 
-[npm-ps1-not-comspec](/fuck-powershell/cases/aliases/npm-ps1-not-comspec/) · [execution-policy-file-block](/fuck-powershell/cases/ci-agents/execution-policy-file-block/)
+[execution-policy-file-block](/fuck-powershell/cases/ci-agents/execution-policy-file-block/) · [npm-ps1-not-comspec](/fuck-powershell/cases/aliases/npm-ps1-not-comspec/)
 
 ## python-not-found
 

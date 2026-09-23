@@ -336,7 +336,8 @@
     "d": "Trim trailing whitespace/dots from user-supplied paths before existence checks and IO."
   },
   "workaround-skip-windowsapps": {
-    "d": "Skip WindowsApps appExecLink aliases during command resolution; prefer real installs."
+    "d": "Skip WindowsApps appExecLink aliases during command resolution; prefer real installs.",
+    "u": "This is valid only when the question is whether CreateProcess can run the WindowsApps alias stub. Applying it as a general interpreter probe also rejects legitimate Microsoft Store installs, which can live in the same directory; execute the candidate when it is safe to do so."
   },
   "workaround-ignore-handoff-exit": {
     "d": "Treat Windows shell-handoff binaries (explorer, start) as fire-and-forget; never encode success as exit 0."
@@ -488,6 +489,10 @@
   "workaround-retry-transient-remove": {
     "d": "Retry rmSync on EPERM, EBUSY and ENOTEMPTY with a short bounded backoff to ride out antivirus and indexer handles on freshly written files.",
     "u": "As the primary fix it masks an unowned child: the retry budget is a guess, the child still runs, and outside the test the same handle blocks an uninstaller or a home move."
+  },
+  "workaround-weaken-assertion": {
+    "d": "Replace a path containment assertion with a suffix, basename, or other weaker string check to make differing Windows path spellings pass.",
+    "u": "A path outside the sandbox can share the same suffix or basename. Weakening the assertion hides a real escape instead of resolving the effective home and comparing canonical path components."
   },
   "mechanism-flush-needs-write-access": {
     "d": "On Windows fsync is FlushFileBuffers, which requires a handle opened with GENERIC_WRITE; a read-only handle is refused with ERROR_ACCESS_DENIED (EPERM), where POSIX fsync accepts any descriptor for the file."

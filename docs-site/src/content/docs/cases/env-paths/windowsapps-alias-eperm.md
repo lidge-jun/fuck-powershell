@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, cmd, windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EPERM</span></div><div class="row"><span class="k">Mechanism</span><span class="v">appexeclink</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">skip windowsapps</span></span></div></div>
 
-# a WindowsApps alias on PATH spawns EPERM while passing every readability and reparse-point probe
-
 ## Symptom
 
 A tool installed from the Microsoft Store (or any app that ships an execution

@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">cmd, windows, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">COMMAND NOT RECOGNIZED</span></div><div class="row"><span class="k">Mechanism</span><span class="v">default shell selection</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">node script not shell</span></span></div></div>
 
-# your npm script is a bash one-liner everywhere and a literal filename on Windows, so the release silently ships without its Windows artifact
-
 ## Symptom
 
 A `package.json` script that has worked for years fails only on the Windows leg of

@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, python, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENAMETOOLONG</span></div><div class="row"><span class="k">Mechanism</span><span class="v">max path ceiling</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">long path optin</span></span></div></div>
 
-# the 260-character path limit is still there, the registry switch alone does not lift it, and the tree you created may be one nothing can delete
-
 ## Symptom
 
 An install or a checkout dies partway down a nested directory:

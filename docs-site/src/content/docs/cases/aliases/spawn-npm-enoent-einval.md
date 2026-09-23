@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, cmd, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENOENT, EINVAL</span></div><div class="row"><span class="k">Mechanism</span><span class="v">pathext resolution, cmd bat spawn hardening</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">comspec dispatch</span></span></div></div>
 
-# bare npm is ENOENT and npm.cmd is EINVAL - the same tool, two different lies
-
 ## Symptom
 
 Any Node program that spawns a package-manager CLI dies on Windows, and the two

@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">path delimiter</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">path win32 delimiter</span></span></div></div>
 
-# Joining PATH with ':' silently no-ops on Windows
-
 ## Symptom
 
 A test or script prepends a directory to PATH with a colon:

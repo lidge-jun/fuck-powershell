@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">UNKNOWN ARGUMENTS</span></div><div class="row"><span class="k">Mechanism</span><span class="v">native argv rebuild, string interpolation</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">file payload</span></span></div></div>
 
-# when a CLI reports your prose as unknown flags, PowerShell shredded the argument - not the CLI
-
 ## Symptom
 
 You pass a multi-line document to a CLI as one argument. The receiving tool

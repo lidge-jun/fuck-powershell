@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, python</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENOENT</span></div><div class="row"><span class="k">Mechanism</span><span class="v">separator as url data</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">normalize before url</span></span></div></div>
 
-# building a file URL with a URL library percent-encodes the backslashes, so the database that exists cannot be opened
-
 ## Symptom
 
 A connection string built from a real path fails on Windows and only on Windows.

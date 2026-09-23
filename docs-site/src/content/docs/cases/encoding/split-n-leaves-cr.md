@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, bun, python, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">crlf residue</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">crlf tolerant split</span></span></div></div>
 
-# splitting on newline leaves an invisible carriage return, so the line that closes your parser never matches
-
 ## Symptom
 
 A line parser that works on every file you wrote yourself silently mis-parses a

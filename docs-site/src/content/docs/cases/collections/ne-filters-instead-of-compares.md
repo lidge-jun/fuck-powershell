@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">comparison as filter</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">contains membership</span></span></div></div>
 
-# -ne against a list is a FILTER, so a two-entry denylist silently allows the value it blocks
-
 ## Symptom
 
 A denylist check passes the thing it was written to block.

@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">statement terminator</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">space join params</span></span></div></div>
 
-# Joining command fragments with '; ' splits Start-Process mid-call
-
 ## Symptom
 
 An elevation launcher builds one `Start-Process` invocation from string

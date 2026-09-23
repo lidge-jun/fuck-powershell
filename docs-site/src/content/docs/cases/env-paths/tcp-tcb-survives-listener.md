@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EADDRINUSE</span></div><div class="row"><span class="k">Mechanism</span><span class="v">tcb retention</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">delete tcb entry</span></span></div></div>
 
-# the port is still busy after your server exited, because Windows keeps TCP state the dead socket left behind and SO_REUSEADDR does not clear it
-
 ## Symptom
 
 Your server exits cleanly and the next start cannot bind:

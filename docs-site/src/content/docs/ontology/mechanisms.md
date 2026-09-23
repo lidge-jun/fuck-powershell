@@ -25,7 +25,7 @@ Cases: [icacls-inheritance-r-empty-dacl](/fuck-powershell/cases/env-paths/icacls
 
 Built-in aliases (curl, wget) and PATH shims shadow the binaries users intend to run.
 
-Cases: [curl-alias](/fuck-powershell/cases/aliases/curl-alias/) · [timeout-is-not-a-command-wrapper](/fuck-powershell/cases/aliases/timeout-is-not-a-command-wrapper/) · [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/)
+Cases: [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [timeout-is-not-a-command-wrapper](/fuck-powershell/cases/aliases/timeout-is-not-a-command-wrapper/) · [curl-alias](/fuck-powershell/cases/aliases/curl-alias/)
 
 ## AltGr is reported as Ctrl+Alt
 
@@ -49,7 +49,7 @@ Cases: [git-merge-driver-sh-escapes](/fuck-powershell/cases/args-quoting/git-mer
 
 Windows PowerShell 5.1 decides a script file's encoding by BOM presence; no BOM means the legacy ANSI code page.
 
-Cases: [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [cmd-bom-displaces-label](/fuck-powershell/cases/encoding/cmd-bom-displaces-label/)
+Cases: [cmd-bom-displaces-label](/fuck-powershell/cases/encoding/cmd-bom-displaces-label/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/)
 
 ## bun windowstyle argv reject
 
@@ -67,7 +67,7 @@ Cases: [caller-picks-interpreter-not-shebang](/fuck-powershell/cases/env-paths/c
 
 NTFS matches paths without regard to case while preserving the casing written, so two spellings name one file, but every ordinary string container treats them as distinct keys and the same lowercasing fix would be wrong on a case-sensitive filesystem.
 
-Cases: [path-case-sensitive-map](/fuck-powershell/cases/env-paths/path-case-sensitive-map/)
+Cases: [homedir-escapes-test-sandbox](/fuck-powershell/cases/env-paths/homedir-escapes-test-sandbox/) · [path-case-sensitive-map](/fuck-powershell/cases/env-paths/path-case-sensitive-map/)
 
 ## cmd bat spawn hardening
 
@@ -79,13 +79,13 @@ Cases: [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent
 
 Any command line routed through cmd.exe is re-tokenized; metacharacters and newlines inside arguments become command syntax.
 
-Cases: [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/) · [cmd-shim-reparses-argv](/fuck-powershell/cases/args-quoting/cmd-shim-reparses-argv/) · [cmd-start-ampersand-splits](/fuck-powershell/cases/args-quoting/cmd-start-ampersand-splits/) · [shell-true-fallback-injects](/fuck-powershell/cases/args-quoting/shell-true-fallback-injects/)
+Cases: [cmd-start-ampersand-splits](/fuck-powershell/cases/args-quoting/cmd-start-ampersand-splits/) · [cmd-shim-reparses-argv](/fuck-powershell/cases/args-quoting/cmd-shim-reparses-argv/) · [shell-true-fallback-injects](/fuck-powershell/cases/args-quoting/shell-true-fallback-injects/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
 
 ## collection unrolling
 
 PowerShell unrolls pipelines: zero items become null, one item loses its array, many become Object[] — types change with count.
 
-Cases: [get-content-scalar-collapse](/fuck-powershell/cases/collections/get-content-scalar-collapse/) · [return-does-not-mean-return](/fuck-powershell/cases/collections/return-does-not-mean-return/) · [if-nativecmd-truthiness](/fuck-powershell/cases/exit-codes/if-nativecmd-truthiness/)
+Cases: [if-nativecmd-truthiness](/fuck-powershell/cases/exit-codes/if-nativecmd-truthiness/) · [get-content-scalar-collapse](/fuck-powershell/cases/collections/get-content-scalar-collapse/) · [return-does-not-mean-return](/fuck-powershell/cases/collections/return-does-not-mean-return/)
 
 ## CreateProcess command line capped at 32767
 
@@ -109,7 +109,7 @@ Cases: [windowstyle-hidden-vs-windowshide](/fuck-powershell/cases/args-quoting/w
 
 Windows tools end lines with CRLF, so splitting text on LF alone leaves a trailing CR on every line; exact comparisons and anchored patterns then fail against a character that is invisible in editors, diffs, and terminal output.
 
-Cases: [autocrlf-shebang-cr](/fuck-powershell/cases/encoding/autocrlf-shebang-cr/) · [cmd-lf-drops-first-byte](/fuck-powershell/cases/encoding/cmd-lf-drops-first-byte/) · [lf-pure-transform-mixes-eol](/fuck-powershell/cases/encoding/lf-pure-transform-mixes-eol/) · [split-n-leaves-cr](/fuck-powershell/cases/encoding/split-n-leaves-cr/)
+Cases: [autocrlf-shebang-cr](/fuck-powershell/cases/encoding/autocrlf-shebang-cr/) · [split-n-leaves-cr](/fuck-powershell/cases/encoding/split-n-leaves-cr/) · [cmd-lf-drops-first-byte](/fuck-powershell/cases/encoding/cmd-lf-drops-first-byte/) · [lf-pure-transform-mixes-eol](/fuck-powershell/cases/encoding/lf-pure-transform-mixes-eol/)
 
 ## culture parsing
 
@@ -127,13 +127,13 @@ Cases: [cwd-locked-cannot-unlink](/fuck-powershell/cases/env-paths/cwd-locked-ca
 
 5.1 cmdlets default to UTF-16LE or ANSI when writing; 7 defaults to BOM-less UTF-8 — same code, different bytes.
 
-Cases: [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/) · [redirected-ps-output-mojibake](/fuck-powershell/cases/encoding/redirected-ps-output-mojibake/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [utf8-bom-still-breaks-grep](/fuck-powershell/cases/encoding/utf8-bom-still-breaks-grep/) · [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/)
+Cases: [ps51-vs-7-split](/fuck-powershell/cases/versions/ps51-vs-7-split/) · [redirected-ps-output-mojibake](/fuck-powershell/cases/encoding/redirected-ps-output-mojibake/) · [utf8-bom-still-breaks-grep](/fuck-powershell/cases/encoding/utf8-bom-still-breaks-grep/) · [tee-object-utf16](/fuck-powershell/cases/encoding/tee-object-utf16/) · [bom-less-ps1-cp949](/fuck-powershell/cases/encoding/bom-less-ps1-cp949/) · [bomless-bat-oem-codepage](/fuck-powershell/cases/encoding/bomless-bat-oem-codepage/) · [oss-outfile-bom](/fuck-powershell/cases/encoding/oss-outfile-bom/)
 
 ## default shell selection
 
 CI runners pick a default shell per OS (pwsh on windows-latest); unmarked run: steps inherit it.
 
-Cases: [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/) · [npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/)
+Cases: [npm-script-runs-under-cmd](/fuck-powershell/cases/ci-agents/npm-script-runs-under-cmd/) · [actions-default-shell](/fuck-powershell/cases/ci-agents/actions-default-shell/)
 
 ## MS-DOS device names reserved in every directory
 
@@ -163,7 +163,7 @@ Cases: [env-path-vs-PATH-casing](/fuck-powershell/cases/env-paths/env-path-vs-PA
 
 USERDOMAIN/USERNAME env vars are writable, unreliable identity sources; workgroup machines put the computer name in USERDOMAIN.
 
-Cases: [env-domain-principal](/fuck-powershell/cases/env-paths/env-domain-principal/) · [wslenv-shared-with-host](/fuck-powershell/cases/env-paths/wslenv-shared-with-host/)
+Cases: [wslenv-shared-with-host](/fuck-powershell/cases/env-paths/wslenv-shared-with-host/) · [env-domain-principal](/fuck-powershell/cases/env-paths/env-domain-principal/)
 
 ## errorrecord format
 
@@ -175,13 +175,13 @@ Cases: [out-string-multiplies-stderr](/fuck-powershell/cases/streams/out-string-
 
 Execution policy gates script FILES (.ps1, -File) while in-memory command text bypasses it.
 
-Cases: [npm-ps1-not-comspec](/fuck-powershell/cases/aliases/npm-ps1-not-comspec/) · [execution-policy-file-block](/fuck-powershell/cases/ci-agents/execution-policy-file-block/)
+Cases: [execution-policy-file-block](/fuck-powershell/cases/ci-agents/execution-policy-file-block/) · [npm-ps1-not-comspec](/fuck-powershell/cases/aliases/npm-ps1-not-comspec/)
 
 ## exit code propagation
 
 Exit codes cross process/host boundaries by convention, not guarantee: hosts, wrappers, and CI steps each apply their own rule.
 
-Cases: [exit-code-vs-dollar-q](/fuck-powershell/cases/exit-codes/exit-code-vs-dollar-q/) · [explorer-exits-one](/fuck-powershell/cases/exit-codes/explorer-exits-one/) · [perl-alarm-raw-wait-status](/fuck-powershell/cases/exit-codes/perl-alarm-raw-wait-status/) · [pwsh-leaks-lastexitcode](/fuck-powershell/cases/exit-codes/pwsh-leaks-lastexitcode/) · [start-process-no-lastexitcode](/fuck-powershell/cases/exit-codes/start-process-no-lastexitcode/) · [startup-artifact-is-not-a-process](/fuck-powershell/cases/exit-codes/startup-artifact-is-not-a-process/)
+Cases: [pwsh-leaks-lastexitcode](/fuck-powershell/cases/exit-codes/pwsh-leaks-lastexitcode/) · [explorer-exits-one](/fuck-powershell/cases/exit-codes/explorer-exits-one/) · [start-process-no-lastexitcode](/fuck-powershell/cases/exit-codes/start-process-no-lastexitcode/) · [exit-code-vs-dollar-q](/fuck-powershell/cases/exit-codes/exit-code-vs-dollar-q/) · [perl-alarm-raw-wait-status](/fuck-powershell/cases/exit-codes/perl-alarm-raw-wait-status/) · [startup-artifact-is-not-a-process](/fuck-powershell/cases/exit-codes/startup-artifact-is-not-a-process/)
 
 ## expression vs command mode
 
@@ -217,7 +217,7 @@ Cases: [process-exit-fastfail-0xc0000409](/fuck-powershell/cases/exit-codes/proc
 
 Write-Host and return semantics: host output bypasses the success pipeline, and functions emit every uncaptured value.
 
-Cases: [return-does-not-mean-return](/fuck-powershell/cases/collections/return-does-not-mean-return/) · [start-process-no-lastexitcode](/fuck-powershell/cases/exit-codes/start-process-no-lastexitcode/) · [write-host-not-success-stream](/fuck-powershell/cases/streams/write-host-not-success-stream/)
+Cases: [write-host-not-success-stream](/fuck-powershell/cases/streams/write-host-not-success-stream/) · [start-process-no-lastexitcode](/fuck-powershell/cases/exit-codes/start-process-no-lastexitcode/) · [return-does-not-mean-return](/fuck-powershell/cases/collections/return-does-not-mean-return/)
 
 ## hosted runner variance
 
@@ -265,7 +265,7 @@ Cases: [config-string-eats-windows-path](/fuck-powershell/cases/parsing/config-s
 
 Windows enforces file locks at the OS level: a handle opened without FILE_SHARE_DELETE blocks deletes and renames until it closes, where POSIX unlink only removes a name and lets the data outlive its last reference.
 
-Cases: [killed-run-contaminates-next-run](/fuck-powershell/cases/ci-agents/killed-run-contaminates-next-run/) · [async-child-holds-dir-after-stop](/fuck-powershell/cases/env-paths/async-child-holds-dir-after-stop/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [cwd-locked-cannot-unlink](/fuck-powershell/cases/env-paths/cwd-locked-cannot-unlink/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/)
+Cases: [killed-run-contaminates-next-run](/fuck-powershell/cases/ci-agents/killed-run-contaminates-next-run/) · [atomic-rename-loses-to-scanner](/fuck-powershell/cases/env-paths/atomic-rename-loses-to-scanner/) · [unlink-while-open-ebusy](/fuck-powershell/cases/env-paths/unlink-while-open-ebusy/) · [async-child-holds-dir-after-stop](/fuck-powershell/cases/env-paths/async-child-holds-dir-after-stop/) · [cwd-locked-cannot-unlink](/fuck-powershell/cases/env-paths/cwd-locked-cannot-unlink/)
 
 ## MAX_PATH is an API ceiling, not a filesystem limit
 
@@ -283,7 +283,7 @@ Cases: [msys-rewrites-slash-args](/fuck-powershell/cases/args-quoting/msys-rewri
 
 PowerShell historically rebuilds one command-line string for native processes, re-quoting heuristically; quotes and empty args are lost.
 
-Cases: [backslash-quote-ends-span](/fuck-powershell/cases/args-quoting/backslash-quote-ends-span/) · [oss-native-arg-quoting](/fuck-powershell/cases/args-quoting/oss-native-arg-quoting/) · [prose-as-unknown-flags](/fuck-powershell/cases/args-quoting/prose-as-unknown-flags/)
+Cases: [prose-as-unknown-flags](/fuck-powershell/cases/args-quoting/prose-as-unknown-flags/) · [oss-native-arg-quoting](/fuck-powershell/cases/args-quoting/oss-native-arg-quoting/) · [backslash-quote-ends-span](/fuck-powershell/cases/args-quoting/backslash-quote-ends-span/)
 
 ## no POSIX process group
 
@@ -319,7 +319,7 @@ Cases: [node-path-host-delimiter](/fuck-powershell/cases/env-paths/node-path-hos
 
 Windows resolves extensionless command names by walking PATH entries and PATHEXT extensions in order; results differ from POSIX execvp and between resolvers.
 
-Cases: [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/) · [npm-ps1-not-comspec](/fuck-powershell/cases/aliases/npm-ps1-not-comspec/) · [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/) · [timeout-is-not-a-command-wrapper](/fuck-powershell/cases/aliases/timeout-is-not-a-command-wrapper/) · [path-dot-hijacks-bare-npm](/fuck-powershell/cases/env-paths/path-dot-hijacks-bare-npm/) · [pathext-bare-name-enoent](/fuck-powershell/cases/env-paths/pathext-bare-name-enoent/) · [pathext-exe-beats-cmd](/fuck-powershell/cases/env-paths/pathext-exe-beats-cmd/)
+Cases: [path-dot-hijacks-bare-npm](/fuck-powershell/cases/env-paths/path-dot-hijacks-bare-npm/) · [pathext-exe-beats-cmd](/fuck-powershell/cases/env-paths/pathext-exe-beats-cmd/) · [pathext-bare-name-enoent](/fuck-powershell/cases/env-paths/pathext-bare-name-enoent/) · [timeout-is-not-a-command-wrapper](/fuck-powershell/cases/aliases/timeout-is-not-a-command-wrapper/) · [spawn-npm-enoent-einval](/fuck-powershell/cases/aliases/spawn-npm-enoent-einval/) · [npm-ps1-not-comspec](/fuck-powershell/cases/aliases/npm-ps1-not-comspec/) · [get-command-where-disagree](/fuck-powershell/cases/aliases/get-command-where-disagree/)
 
 ## percent-star unshifted
 
@@ -403,7 +403,7 @@ Cases: [strictmode-missing-property](/fuck-powershell/cases/versions/strictmode-
 
 Double-quoted PowerShell strings interpolate $tokens; backslash is not an escape — backtick is.
 
-Cases: [dollar-backslash-vars](/fuck-powershell/cases/args-quoting/dollar-backslash-vars/) · [dq-regex-interpolates](/fuck-powershell/cases/args-quoting/dq-regex-interpolates/) · [prose-as-unknown-flags](/fuck-powershell/cases/args-quoting/prose-as-unknown-flags/)
+Cases: [dollar-backslash-vars](/fuck-powershell/cases/args-quoting/dollar-backslash-vars/) · [prose-as-unknown-flags](/fuck-powershell/cases/args-quoting/prose-as-unknown-flags/) · [dq-regex-interpolates](/fuck-powershell/cases/args-quoting/dq-regex-interpolates/)
 
 ## TCP control block outlives the socket
 

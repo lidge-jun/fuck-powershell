@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51</span></div><div class="row"><span class="k">Fails as</span><span class="v">PARSERERROR</span></div><div class="row"><span class="k">Mechanism</span><span class="v">pipeline chain ops</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">lastexitcode gate</span></span></div></div>
 
-# PowerShell 5.1 has no && or || — agents loop on parser errors
-
 ## Symptom
 
 An AI agent (or a developer used to bash/pwsh 7) runs `build.cmd && deploy.cmd`

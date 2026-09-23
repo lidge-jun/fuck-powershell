@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, bun</span></div><div class="row"><span class="k">Fails as</span><span class="v">ENOENT, EXIT CODE LEAK</span></div><div class="row"><span class="k">Mechanism</span><span class="v">file url scheme path</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">file url to path</span></span></div></div>
 
-# new URL(...).pathname of a file: URL is '/D:/a/...' on Windows, so bun and node cannot open the script you just resolved
-
 ## Symptom
 
 A test that spawns a sibling CLI script exits 1 on Windows only, and the assertion that catches

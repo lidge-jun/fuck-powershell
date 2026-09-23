@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">FASTFAIL</span></div><div class="row"><span class="k">Mechanism</span><span class="v">handle close race</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">exitcode not exit</span></span></div></div>
 
-# your CLI prints the right answer and then crashes with 0xC0000409, because process.exit ran while a socket was still closing
-
 ## Symptom
 
 The command works. The output is correct and complete. Then the process dies with

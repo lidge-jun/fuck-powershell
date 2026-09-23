@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, bun, node, actions runner</span></div><div class="row"><span class="k">Fails as</span><span class="v">EPERM, EBUSY</span></div><div class="row"><span class="k">Mechanism</span><span class="v">mandatory file locking, unowned child lifetime</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">shutdown owns children</span></span></div></div>
 
-# rmSync hits EPERM right after a clean server.stop() because a fire-and-forget icacls.exe still holds the directory
-
 ## Symptom
 
 A test suite that starts a server, stops it with `await server.stop(true)`, and then removes its

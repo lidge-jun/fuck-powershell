@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, actions runner, bun, node</span></div><div class="row"><span class="k">Fails as</span><span class="v">VACUOUS PASS, ASSERTION MISMATCH</span></div><div class="row"><span class="k">Mechanism</span><span class="v">ntfs last access disabled</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">spy the syscall not the metadata</span></span></div></div>
 
-# A test that proves 'the file was read' by watching atime move cannot see the read on Windows: NTFS last-access updates are disabled by default
-
 ## Symptom
 
 A cache test wants to prove two things: a burst of calls inside the TTL does NOT read the

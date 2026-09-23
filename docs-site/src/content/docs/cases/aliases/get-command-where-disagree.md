@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, cmd, windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EFTYPE, ENOENT</span></div><div class="row"><span class="k">Mechanism</span><span class="v">pathext resolution, cmd reparse</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">get command</span></span></div></div>
 
-# Get-Command and where.exe disagree about which npm exists, and both hand you an unrunnable path
-
 ## Symptom
 
 You ask PowerShell where a tool lives, spawn what it tells you, and get an error

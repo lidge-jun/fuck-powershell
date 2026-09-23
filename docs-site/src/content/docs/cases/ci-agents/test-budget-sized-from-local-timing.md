@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, actions runner, bun</span></div><div class="row"><span class="k">Fails as</span><span class="v">TEST TIMEOUT, ENOENT, UNHANDLED REJECTION</span></div><div class="row"><span class="k">Mechanism</span><span class="v">hosted runner variance, unowned child lifetime</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">named spawn budget</span></span></div></div>
 
-# A per-test timeout sized from a 450 ms local run kills a three-child test that takes 8-19 s on windows-latest, then the leftover children obscure the message
-
 ## Symptom
 
 One case in a file of six times out on the hosted Windows shard. Three things print, and only

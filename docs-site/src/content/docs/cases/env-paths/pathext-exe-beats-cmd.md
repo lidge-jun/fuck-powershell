@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, powershell 51, pwsh 7, windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">pathext resolution</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">shim all siblings</span></span></div></div>
 
-# A sibling .exe silently beats your .cmd shim — PATHEXT rank order
-
 ## Symptom
 
 A wrapper that rewrites `tool.cmd` works for months. Then an updater drops

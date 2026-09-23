@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EPERM</span></div><div class="row"><span class="k">Mechanism</span><span class="v">unc provider semantics</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">skip acl unsupported roots</span></span></div></div>
 
-# your ACL hardening fails on a WSL path because a wsl.localhost UNC root has no NTFS security descriptor to harden
-
 ## Symptom
 
 A routine that locks down directories — a sandbox setting deny-write roots, an

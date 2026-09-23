@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">win32 path normalization</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">normalize separators first</span></span></div></div>
 
-# your allowlist matches on a basename computed with split slash, so every Windows client silently bypasses it
-
 ## Symptom
 
 A filter works. You tested it, the tests pass, and it does nothing for a subset

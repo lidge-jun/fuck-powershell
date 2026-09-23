@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, bun, node</span></div><div class="row"><span class="k">Fails as</span><span class="v">EBUSY</span></div><div class="row"><span class="k">Mechanism</span><span class="v">mandatory file locking, cwd handle held</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">platform skip with reason</span></span></div></div>
 
-# A test that chdir()s into a temp dir and deletes it cannot exist on Windows: the process's own cwd is locked
-
 ## Symptom
 
 A regression test for "the CLI survives being launched from a deleted directory" passes on macOS

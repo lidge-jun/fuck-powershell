@@ -697,6 +697,15 @@ CreateProcess dedupes one way, Node libraries another.
 - Never introduce a second casing into a copied env (the referenced fix's
   lookup() does exactly this).
 
+## 2026-09-23 first-party CI occurrence
+
+In OpenCodex's `tests/server/proxy-env.test.ts`, a table assigned `ALL_PROXY`
+and `all_proxy` to different proxy URLs, including a SOCKS-only expectation.
+Windows treats the names as one variable, so the later assignment replaced the
+earlier one and the SOCKS proxy was absent. CI run 35816090505 exposed it on
+`windows-latest`; PR #5634 makes the Windows assertion match the collapsed
+environment instead of skipping the test.
+
 
 ---
 
@@ -1091,6 +1100,68 @@ Pin it with a test that spies on `openSync` and asserts no `"r"` reaches the flu
 contract is invisible on POSIX otherwise. Directory handles are a separate story — Windows
 cannot fsync them at all, and that path should be best-effort.
 
+
+
+---
+
+
+# os.homedir() escapes a Windows test sandbox when HOME disagrees with USERPROFILE
+
+## Symptom
+
+A test puts its temporary home under a sandbox and asserts every service state
+path begins with that directory. The assertion passes on POSIX but fails on a
+Windows runner: one state path points into the runner's effective user home
+instead of the test's temporary home. CI diagnostics may show `RUNNER~1` while
+the API returns the long profile spelling for the same location.
+
+## Repro
+
+```ts
+import { homedir } from "node:os";
+import { join } from "node:path";
+
+process.env.HOME = "C:\\sandbox\\home";
+process.env.USERPROFILE = "C:\\Users\\account";
+console.log(homedir());
+// Windows: C:\Users\account, not C:\sandbox\home
+
+const statePath = join(homedir(), ".opencodex", "service.json");
+statePath.startsWith(process.env.HOME); // false
+```
+
+Even when both strings name the same directory, raw `startsWith` can fail when
+the runner supplies different letter casing or an 8.3 short-name spelling.
+
+## Cause
+
+On Windows, `os.homedir()` derives the home from `USERPROFILE`; setting `HOME`
+alone does not redirect it. A legacy code path that calls `homedir()` can
+therefore escape a test's sandbox if the fixture only overrides `HOME`.
+
+The assertion adds a second path-identity assumption. Windows paths can differ
+in letter casing or use a short-name alias while resolving to the same directory.
+String-prefix comparison neither resolves those aliases nor verifies a path
+boundary (`C:\\sandbox\\home-old` also starts with `C:\\sandbox\\home`).
+
+OpenCodex's `tests/service/service-claim.test.ts` exposed the assertion on
+`windows-latest` in run 35816970127. The exact patch was still under review when
+this case was recorded; this documents the observed mechanisms, not an unverified
+final fix.
+
+## Workaround
+
+- Inject the test's home through the same configuration or resolver the code
+  under test uses. If a legacy path reads `os.homedir()`, set and restore the
+  platform's effective home variable (`USERPROFILE` on Windows) as part of the
+  fixture, without leaking it to later tests.
+- For containment of existing paths, resolve both sides with the platform's
+  native filesystem resolution (`realpathSync.native` on Bun/Node Windows),
+  then compare normalized path components with a separator boundary. Do not
+  rely on raw `startsWith`, casing alone, or suffix equality.
+- Do not skip the assertion on Windows: that hides an actual sandbox escape.
+- Do not weaken it to a suffix or basename check: a path outside the sandbox can
+  share the same suffix and still pass.
 
 
 ---
@@ -1641,6 +1712,13 @@ Shipped in three byte-identical copies of a shared helper in
 lidge-jun/codexclaw and only surfaced when a win32-only resolver was exercised
 from a WSL/Linux test lane.
 Fix: https://github.com/lidge-jun/codexclaw/commit/5c03acb
+
+OpenCodex's `tests/service/service-wsl-home-ownership.test.ts` hit the same
+host-versus-data mismatch on 2026-09-23 from `windows-latest`: the fixture
+simulated Linux/WSL but built fake `/mnt/c/Users/...` paths with host `path.join`,
+so its backslashes never matched the POSIX paths produced by WSL discovery.
+Discovery fell back to the Linux home and three assertions flipped. The fix uses
+`path.posix` for paths belonging to the simulated platform (PR #5634).
 
 
 ---
@@ -2550,6 +2628,16 @@ second or two.
 This is the file-lifetime half of the Windows process model.
 `startup-artifact-is-not-a-process` is the liveness half: no supervisor owns your
 process. Here, no unlink semantics free your file.
+
+## 2026-09-23 first-party CI occurrence
+
+OpenCodex's `tests/server/proxy-env.test.ts` also routed through a policy path
+that opened a process-lifetime SQLite index (`routing-history.sqlite`) under the
+temporary home. The fixture released its other lease but left the index open;
+Windows refused to remove the home with `EBUSY`. The same failure appeared on
+two CI runs, so this was a leaked handle rather than a transient antivirus lock.
+The fix closes the index and clears its cache in `afterEach` before cleanup
+(OpenCodex PR #5634).
 
 
 ---

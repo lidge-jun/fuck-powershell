@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">powershell 51, pwsh 7, node, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">silent</span></div><div class="row"><span class="k">Mechanism</span><span class="v">host vs pipeline, collection unrolling</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">out null</span></span></div></div>
 
-# return does not mean return - a side-effect cmdlet silently makes your function hand back two values
-
 ## Symptom
 
 A function with a single, explicit `return` gives back **two** values, and the

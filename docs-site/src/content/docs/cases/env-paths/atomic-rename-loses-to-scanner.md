@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, node, win32 api</span></div><div class="row"><span class="k">Fails as</span><span class="v">EBUSY, EPERM</span></div><div class="row"><span class="k">Mechanism</span><span class="v">mandatory file locking</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">bounded rename retry</span></span></div></div>
 
-# your atomic write fails intermittently on Windows because antivirus opened the file you are replacing, milliseconds ago
-
 ## Symptom
 
 The write-temp-then-rename pattern — the standard way to publish a file without

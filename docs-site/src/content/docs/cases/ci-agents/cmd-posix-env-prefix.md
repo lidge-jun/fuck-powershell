@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">node, cmd, windows</span></div><div class="row"><span class="k">Fails as</span><span class="v">COMMAND NOT RECOGNIZED</span></div><div class="row"><span class="k">Mechanism</span><span class="v">posix inline env</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">node env wrapper</span></span></div></div>
 
-# VAR=value cmd is not cmd.exe syntax — npm scripts break on Windows
-
 ## Symptom
 
 A package.json script like `"test": "NODE_ENV=test node run.js"` works for

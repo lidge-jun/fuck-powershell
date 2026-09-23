@@ -11,8 +11,6 @@ sidebar:
 
 <div class="case-glance"><div class="row"><span class="k">Affects</span><span class="v">windows, bun</span></div><div class="row"><span class="k">Fails as</span><span class="v">EPERM</span></div><div class="row"><span class="k">Mechanism</span><span class="v">mandatory file locking, no process group, unowned child lifetime</span></div><div class="row"><span class="k">Safe fix</span><span class="v"><span class="fix">clean fixture debris before measuring</span></span></div></div>
 
-# kill -9 on a wedged Windows test run leaves a held fixture directory; the next run reports 22 failures in a file that is green on a clean tree
-
 ## Symptom
 
 A full-suite shard on a self-hosted Windows box wedges; you `kill -9` it and move on. The
