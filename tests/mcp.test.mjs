@@ -169,3 +169,23 @@ test("rebuild failure serves previous index; first-call failure is visible", asy
     assert.match(failed.content[0].text, /mechanism-bom-sniffing/);
   }, { root });
 });
+
+test("advertised text makes the tools mandatory for Windows work", async () => withServer(async (s) => {
+  const list = (await s.request("tools/list")).result.tools;
+  for (const tool of list) {
+    assert.ok(tool.title, tool.name + " has a title");
+    assert.match(tool.description, /Windows/, tool.name + " description names Windows");
+    for (const [field, rule] of Object.entries(tool.inputSchema.properties)) {
+      assert.ok(typeof rule.description === "string" && rule.description.length > 0, tool.name + "." + field + " has a description");
+    }
+  }
+  const byName = Object.fromEntries(list.map((tool) => [tool.name, tool]));
+  assert.match(byName.fp_preflight.description, /^REQUIRED /);
+  assert.match(byName.fp_search.description, /filesystem and process-lifecycle/);
+  const discover = (await s.request("server/discover")).result;
+  assert.match(discover.instructions, /^MANDATORY /);
+  assert.equal(discover._meta["io.modelcontextprotocol/serverInfo"].version, "0.2.0");
+  const init = (await s.request("initialize", { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "t", version: "1" } }, { modern: false })).result;
+  assert.match(init.instructions, /^MANDATORY /);
+  assert.equal(init.serverInfo.version, "0.2.0");
+}));
