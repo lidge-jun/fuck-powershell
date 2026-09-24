@@ -2,7 +2,7 @@
 import { resolveRoot, loadSnapshot, search, preflight, errors, getCase, parseCaseMarkdown } from "./lib/fp-core.mjs";
 import { createUpdater } from "./lib/auto-update.mjs";
 
-const SERVER_INFO = { name: "fuck-powershell", version: "0.1.0" };
+const SERVER_INFO = { name: "fuck-powershell", version: "0.2.0" };
 const MODERN = ["2026-07-28"];
 const LEGACY = ["2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05"];
 const SUPPORTED = [...MODERN, ...LEGACY];
@@ -10,7 +10,7 @@ const META_VERSION = "io.modelcontextprotocol/protocolVersion";
 const META_CAPS = "io.modelcontextprotocol/clientCapabilities";
 const META_SERVER = "io.modelcontextprotocol/serverInfo";
 const LIST_TTL_MS = 3_600_000;
-const INSTRUCTIONS = "Windows shell/process landmine corpus. Call fp_preflight BEFORE writing code that spawns processes, touches PATH/env, encodings, redirects, exit codes, quoting, installers or Windows CI; read the top case with fp_case. fp_errors maps an error signature (einval, enoent, eperm...) to cases.";
+const INSTRUCTIONS = "MANDATORY for any task whose code, script or command will run on Windows or in Windows CI: consult this corpus of reproduced Windows failures BEFORE writing, editing or running that code, and again before you finalize. Use fp_preflight for process spawning, PowerShell/cmd, PATH/env, encodings, redirects, exit codes, argument quoting and installers; for filesystem and process-lifecycle work (fsync, rename/replace, locked or held files, deleting directories, a process's cwd, stopping child processes or process trees, ports) use fp_search with the API and error names; the moment a Windows error appears, call fp_errors with its code before debugging. Read the top cases with fp_case and apply their workarounds. Skipping this has cost past agents long trial-and-error runs on failures already documented here.";
 const ROOT = resolveRoot(import.meta.url);
 const updater = createUpdater({ root: ROOT, log: (message) => process.stderr.write(`${message}\n`) });
 let state = null;
@@ -19,22 +19,33 @@ let legacy = false;
 function schema(properties, required = []) {
   return { type: "object", properties, ...(required.length ? { required } : {}), additionalProperties: false };
 }
-const str = (minLength, maxLength) => ({ type: "string", minLength, maxLength });
+const str = (minLength, maxLength, description) => ({ type: "string", minLength, maxLength, description });
 const tool = (name, title, description, inputSchema) => Object.freeze({
   name, title, description, inputSchema,
   annotations: { readOnlyHint: true, openWorldHint: false },
 });
 const TOOLS = Object.freeze([
-  tool("fp_preflight", "PowerShell preflight", "Find risks before editing Windows process and shell code.", schema({
-    runtime: { type: "string", enum: ["node", "bun", "powershell", "cmd"] },
-    operation: { type: "string", enum: ["spawn", "env-path", "encoding", "redirect", "exit-code", "quoting", "install", "ci"] },
-    target: str(1, 64), shell: { type: "string", enum: ["5.1", "7"] },
-  })),
-  tool("fp_search", "Search landmines", "Search case titles and graph connections.", schema({ query: str(1, 200) }, ["query"])),
-  tool("fp_errors", "Find error cases", "Find cases by error signature.", schema({ signature: { type: "string", pattern: "^[a-z0-9-]{1,64}$" } }, ["signature"])),
-  tool("fp_case", "Read a case", "Read a case summary or full markdown.", schema({
-    id: { type: "string", pattern: "^[a-z0-9-]{1,120}$" }, full: { type: "boolean" },
-  }, ["id"])),
+  tool("fp_preflight", "Windows preflight (call first)",
+    "REQUIRED before writing, editing or running any code, script or command that will run on Windows or in Windows CI and spawns processes, uses PowerShell or cmd, touches PATH/env, encodings, redirects, exit codes or argument quoting, or installs tools. Returns the reproduced Windows failures for that combination, ranked, with the constraints to follow. Then read the top results with fp_case. Filesystem and process-lifecycle work is not in the operation list: use fp_search for it.",
+    schema({
+      runtime: { type: "string", enum: ["node", "bun", "powershell", "cmd"], description: "Runtime that will run the code." },
+      operation: { type: "string", enum: ["spawn", "env-path", "encoding", "redirect", "exit-code", "quoting", "install", "ci"],
+        description: "Kind of work. Filesystem and process-lifecycle work is not listed: use fp_search." },
+      target: str(1, 64, "Command or tool being invoked, e.g. npm, git, curl, python."),
+      shell: { type: "string", enum: ["5.1", "7"], description: "Windows PowerShell 5.1 or PowerShell 7, if a PowerShell is involved." },
+    })),
+  tool("fp_search", "Search Windows failures",
+    "REQUIRED for Windows filesystem and process-lifecycle work, and for any Windows-specific API or command in your plan or diff: search by API, command and error names, e.g. \"fsync EPERM\", \"rename EPERM\", \"cwd delete EBUSY\", \"npm spawn\". Call it before coding, not after the failure.",
+    schema({ query: str(1, 200, "API, command, error or symptom words, e.g. fsync EPERM.") }, ["query"])),
+  tool("fp_errors", "Explain a Windows error",
+    "Call this FIRST whenever an error appears on Windows, before debugging it: pass the error code (eperm, ebusy, enoent, einval, eaddrinuse...) and get the reproduced cases that produce it; then read the relevant ones with fp_case for the workaround.",
+    schema({ signature: { type: "string", pattern: "^[a-z0-9-]{1,64}$", description: "Error code, lowercase, with or without the error- prefix, e.g. eperm." } }, ["signature"])),
+  tool("fp_case", "Read a Windows failure case",
+    "Read a case returned by fp_preflight, fp_search or fp_errors before writing the code it warns about on Windows: symptom, cause, the tested workaround and its references. full:true returns the whole case markdown, including the reproduction.",
+    schema({
+      id: { type: "string", pattern: "^[a-z0-9-]{1,120}$", description: "Case id returned by fp_preflight, fp_search or fp_errors." },
+      full: { type: "boolean", description: "true returns the whole case markdown, including the reproduction." },
+    }, ["id"])),
 ]);
 
 function send(value) { process.stdout.write(`${JSON.stringify(value)}\n`); }
