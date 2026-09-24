@@ -23,6 +23,11 @@ result, and `fp_search` / `fp_errors` over the diff and any error you hit. Regis
 is in the repository README ("Use it as an MCP server"). Use the CLI only when those
 tools are absent.
 
+In Codex Code Mode these tools may not be in your own tool list at all: they sit inside
+`exec` as `mcp__fuck_powershell__fp_preflight`, `..._fp_search`, `..._fp_errors` and
+`..._fp_case` (look them up in `ALL_TOOLS`). Call them there before assuming they are
+absent.
+
 ## CLI lookup
 
 Pull the corpus once, then QUERY BEFORE PATCHING. Resolve the checkout in this

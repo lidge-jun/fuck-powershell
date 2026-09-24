@@ -82,6 +82,21 @@ codex mcp add fuck-powershell --env FP_AUTO_UPDATE=1 -- node /absolute/path/to/.
 claude mcp add fuck-powershell -e FP_AUTO_UPDATE=1 -- node /absolute/path/to/.fuck-powershell/scripts/mcp.mjs
 ```
 
+On Codex, check whether the host runs in Code Mode. OpenCodex model catalogs set
+`tool_mode = "code_mode_only"` by default, and `features.code_mode` does the same. In that
+mode MCP tools are left out of the model's own tool list and exist only inside `exec`, so
+the model never reads their descriptions and does not call them. Make this server's tools
+direct in `~/.codex/config.toml`:
+
+```toml
+[features.code_mode]
+direct_only_tool_namespaces = ["mcp__fuck_powershell"]
+```
+
+The namespace is `mcp__` followed by the server name, with `-` turned into `_`. To check,
+ask a fresh session to quote `fp_preflight`'s description from its own tool list without
+calling any tool.
+
 | tool | use it for |
 |---|---|
 | `fp_preflight` | before writing code: runtime / operation / target / shell -> ranked cases + constraints |
